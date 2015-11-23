@@ -1,0 +1,27 @@
+require "rails"
+require "#{Rails.root}/app/controllers/concerns/sqs_usable"
+include SqsUsable
+require "#{Rails.root}/app/controllers/concerns/common"
+include Common
+
+namespace :ossjob do
+  desc 'Handling SQS messages to convert slides...'
+  task :handle_slides => :environment do
+    Oss::BatchLogger.info('Start convert process')
+    resp = receive_message(1)
+    if !resp.instance_of?(Array) or resp.count == 0
+      Oss::BatchLogger.info('No SQS message found')
+    end
+    resp.messages.each do |msg|
+      obj = JSON.parse(msg.body)
+      Oss::BatchLogger.info("Start converting slide. id=#{obj['id']} key=#{obj['key']}")
+      result = convert_slide(obj["key"])
+      if result
+        Oss::BatchLogger.info("Delete message from SQS. id=#{obj['id']} key=#{obj['key']}")
+        delete_message(msg)
+      else
+        Oss::BatchLogger.error("Slide conversion failed. id=#{obj['id']} key=#{obj['key']}")
+      end
+    end
+  end
+end

@@ -1,0 +1,38 @@
+<% page_list = get_pages_list(slide.key) %>
+<%
+if page_list.instance_of?(Array)
+  page_count = page_list.count
+else
+  page_count = 0
+end
+%>
+<% if page_count > 0 %>
+<% count = 0 %>
+<% page_list.each do |f| %>
+<% count +=1 %>
+<% u = get_url("/#{f}") %>
+<div class="vertical_slide_box">
+    <% if count <= 2 %>
+        <img class="lazy img-responsive" src="<%= u %>" />
+    <% else %>
+        <img class="lazy img-responsive" src="/assets/spacer64.png" data-original="<%= u %>" />
+    <% end %>
+</div>
+<div class="icon_right">
+<a href="#top"><span class="glyphicon glyphicon-arrow-up"></span></a>
+</div>
+<% end %>
+<% elsif slide.convert_status < 0 %>
+    <img class="lazy img-responsive" src="/assets/failed_to_convert.jpg" />
+<% else %>
+    <img class="lazy img-responsive" src="/assets/converting.jpg" />
+<% end %>
+
+<script type="text/javascript">
+$1102(function() {
+    $1102(".openslideshare_body img.lazy").lazyload({
+        threshold : 200,
+        effect: "fadeIn"
+    });
+});
+</script>

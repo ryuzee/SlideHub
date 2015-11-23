@@ -1,0 +1,35 @@
+<h3><%= t(:user_list) %>&nbsp;&nbsp;<small><a href="/managements/dashboard"><%=  t :back_to_dashboard %></a></small></h3>
+
+<div class="panel panel-default">
+    <!-- Table -->
+    <table class="table table-striped table-bordered small">
+        <thead>
+            <tr>
+                <th class="col-md-1"><%= sort_link(@q, :id) %></th>
+                <th class="col-md-2"><%= sort_link(@q, :email) %></th>
+                <th class="col-md-2"><%= sort_link(@q, :display_name) %></th>
+                <th class="col-md-1"><%= sort_link(@q, :admin) %></th>
+                <th class="col-md-1"><%= sort_link(@q, :slides_count) %></th>
+                <th class="col-md-2"><%= sort_link(@q, :created_at) %></th>
+                <th class="col-md-2"><%= sort_link(@q, :modified_at) %></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @users.each do |user| %>
+            <tr>
+                <td><a href="/users/<%= user.id %>"><%= user.id %></a>&nbsp;</td>
+                <td><%= user.email %></td>
+                <td><%= user.display_name %></td>
+                <td><%= user.admin %></td>
+                <td><%= user.slides_count %></td>
+                <td><%= user.created_at %></td>
+                <td><%= user.modified_at %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <%= will_paginate @users, :renderer => BootstrapPagination::Rails %>
+</div>

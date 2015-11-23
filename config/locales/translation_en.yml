@@ -1,0 +1,96 @@
+en:
+  activerecord:
+    models:
+      category: "Category"  #g
+      comment: "Comment"  #g
+      config: "Confif"  #g
+      custom_setting: "Custom Setting"  #g
+      rails_settings/cached_settings: "Cached Settings"  #g
+      rails_settings/scoped_settings: "Scoped Settings"  #g
+      rails_settings/settings: "Settings"  #g
+      slide: "Slide"  #g
+      tag: "Tag"  #g
+      user: User  #g
+
+    attributes:
+      category:
+        name: "Name"  #g
+
+      comment:
+        comment: "Comment"  #g
+        commentable: :activerecord.models.commentable  #g
+        commentable_type: "Commentable Type"  #g
+        modified_at: "Modified at"  #g
+        role: "Role"  #g
+        user: :activerecord.models.user  #g
+
+      config:
+        created: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        modified: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        value: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+
+      custom_setting:
+        thing: :activerecord.models.thing  #g
+        thing_type: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        value: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        var: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+
+      rails_settings/cached_settings:
+        thing: :activerecord.models.thing  #g
+        thing_type: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        value: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        var: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+
+      rails_settings/scoped_settings:
+        thing: :activerecord.models.thing  #g
+        thing_type: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        value: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        var: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+
+      rails_settings/settings:
+        thing: :activerecord.models.thing  #g
+        thing_type: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        value: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        var: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+
+      slide:
+        all_comments: "All Comments"  #g
+        base_tags: "Base tags"  #g
+        category: :activerecord.models.category  #g
+        comments: "Comments"  #g
+        convert_status: "Convert Status"  #g
+        description: "Description"  #g
+        downloadable: "Downloadable"  #g
+        embedded_view: "Embedded View"  #g
+        extension: "Extension"  #g
+        key: "Key"  #g
+        modified_at: "Modified at"  #g
+        name: "Name"  #g
+        page_view: "Page View"  #g
+        private_comments: "Private Comments"  #g
+        tag_taggings: "Tag Taggings"  #g
+        taggings: "Taggings"  #g
+        tags: "Tags"  #g
+        total_view: "Total View"  #g
+        user: :activerecord.models.user  #g
+
+      tag:
+        name: "Name"  #g
+
+      user:
+        admin: "Administrator"  #g
+        biography: "Biography"  #g
+        current_sign_in_at: Signed in at  #g
+        current_sign_in_ip: "Signed-in from IP"  #g
+        disabled: "Disabled"  #g
+        display_name: "Display Name"  #g
+        email: Email  #g
+        encrypted_password: "Encrypted Password"  #g
+        last_sign_in_at: Last signed in at  #g
+        last_sign_in_ip: "Last signed in from IP"  #g
+        modified_at: "Modified"  #g
+        password: Password  #g
+        remember_created_at: "Remember created at"  #g
+        reset_password_sent_at: "Reset password sent at"  #g
+        reset_password_token: "Reset password token"  #g
+        slides: "Slides"  #g

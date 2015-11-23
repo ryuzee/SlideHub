@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: "RailsSlideshare", reverse: true %>
+    <%= display_meta_tags %>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" type="text/css" href="/mc/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/mc/css/AdminLTE.min.css?<%= Time.now.strftime('%Y%m%d%H%M%S') %>">
+    <link rel="stylesheet" type="text/css" href="/mc/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- REQUIRED JS SCRIPTS -->
+    <!-- jQuery 2.1.4 -->
+    <script src="/mc/js/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="/mc/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/mc/js/app.min.js"></script>
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      <!-- Main Header -->
+      <header class="main-header">
+
+        <!-- Logo -->
+        <a href="/managements/dashboard" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>O</b>SM</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>OpenSlideshare</b>MC</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <!-- Navbar Right Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+
+              <!-- User Account Menu -->
+              <li class="dropdown user user-menu">
+                <!-- Menu Toggle Button -->
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                  <span class="hidden-xs"><%= current_user.display_name %></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- Menu Body -->
+                  <li class="user-body">
+                    <div class="col-xs-6 text-center">
+                      <a href="/users/statistics"><%= t(:my_tatistics) %></a>
+                    </div>
+                    <div class="col-xs-6 text-center">
+                        <a href="/users/<%= current_user.id %>"><%= t(:my_slides) %></a>
+                    </div>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a class="btn btn-default btn-flat" href="/users/edit/"><%= t(:my_account) %></a>
+                    </div>
+                    <div class="pull-right">
+                      <a class="btn btn-default btn-flat" href="/users/sign_out"><%= t(:logout) %></a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+          <!-- search form (Optional) -->
+          <form action="/managements/slide_list" method="get" class="sidebar-form">
+            <div class="input-group">
+              <input type="text" name="q[name_cont]" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+              </span>
+            </div>
+          </form>
+          <!-- /.search form -->
+
+          <!-- Sidebar Menu -->
+          <ul class="sidebar-menu">
+            <li class="header">Admin Menu</li>
+            <li><a href="/managements/dashboard"><i class="fa fa-link"></i> <span><%= t :admin_dashboard %></span></a></li>
+            <li><a href="/managements/slide_list"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
+            <li><a href="/managements/user_list"><i class="fa fa-link"></i> <span><%= t(:user_list) %></span></a></li>
+            <li><a href="/managements/site_setting"><i class="fa fa-link"></i> <span><%= t(:site_settings) %></span></a></li>
+            <li><a href="/managements/custom_contents_setting"><i class="fa fa-link"></i> <span><%= t(:custom_contents_settings) %></span></a></li>
+            <li class="header">Public Site</li>
+            <li><a href="/slides/"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
+            <li><a href="/slides/popular"><i class="fa fa-link"></i> <span><%= t(:popular_slides) %></span></a></li>
+            <li><a href="/slides/latest"><i class="fa fa-link"></i> <span><%= t(:latest_slides) %></span></a></li>
+            <li class="treeview">
+            <a href="#"><i class="fa fa-link"></i> <span><%= t('activerecord.models.category') %></span> <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <% @categories.each do |cat| %>
+                <li><a href="/slides/category/<%= cat.id %>"><%= cat.name %></a></li>
+                <% end %>
+              </ul>
+            </li>
+          </ul><!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+      </aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Main content -->
+        <section class="content">
+          <!-- Your Page Content Here -->
+          <%= bootstrap_flash %>
+          <!-- start contents -->
+          <%= yield %>
+          <!-- end contents -->
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
+      <!-- Main Footer -->
+      <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            See <a href="https://github.com/ryuzee/open-slideshare/" target="_blank">project page</a>.
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2015 Ryuzee. </strong> MIT License.
+      </footer>
+    </div><!-- ./wrapper -->
+
+
+  </body>
+</html>

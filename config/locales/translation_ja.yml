@@ -1,0 +1,100 @@
+ja:
+  activerecord:
+    models:
+      category: "カテゴリ"  #g
+      comment: "コメント"  #g
+      config: "設定"  #g
+      custom_setting: "カスタム設定"  #g
+      rails_settings/cached_settings: "設定/キャッシュされた設定をレール"  #g
+      rails_settings/scoped_settings: "設定/スコープの設定をレール"  #g
+      rails_settings/settings: "設定/設定をレール"  #g
+      slide: "スライド"  #g
+      tag: "タグ"  #g
+      user: "ユーザ"  #g
+
+    attributes:
+      category:
+        name: "名"  #g
+
+      comment:
+        comment: "コメント"  #g
+        commentable: :activerecord.models.commentable  #g
+        commentable_type: Commentableタイプ  #g
+        modified_at: "変更されました"  #g
+        role: "役割"  #g
+        user: :activerecord.models.user  #g
+
+      config:
+        created: "作成"  #g
+        modified: "修正されました"  #g
+        value: "値"  #g
+
+      custom_setting:
+        thing: :activerecord.models.thing  #g
+        thing_type: "シングタイプ"  #g
+        value: "値"  #g
+        var: "項目"  #g
+
+      rails_settings/cached_settings:
+        thing: :activerecord.models.thing  #g
+        thing_type: "シングタイプ"  #g
+        value: "値"  #g
+        var: "項目"  #g
+
+      rails_settings/scoped_settings:
+        thing: :activerecord.models.thing  #g
+        thing_type: "シングタイプ"  #g
+        value: "値"  #g
+        var: "項目"  #g
+
+      rails_settings/settings:
+        thing: :activerecord.models.thing  #g
+        thing_type: "シングタイプ"  #g
+        value: "値"  #g
+        var: "項目"  #g
+
+      slide:
+        all_comments: "すべてのコメント"  #g
+        base_tags: "ベースタグ"  #g
+        category: :activerecord.models.category  #g
+        created_at: "登録日時"  #g
+        comments: "コメント"  #g
+        convert_status: "変換状況"  #g
+        description: "詳細"  #g
+        downloadable: "ダウンロード可否"  #g
+        download_count: "ダウンロード数"
+        embedded_view: "埋め込みビュー"  #g
+        extension: "拡張子"  #g
+        key: "キー"  #g
+        modified_at: "更新日時"  #g
+        name: "タイトル"  #g
+        page_view: "ページビュー"  #g
+        private_comments: "プライベートのコメント"  #g
+        tag_taggings: "タグタギング"  #g
+        taggings: "タギング"  #g
+        tags: "タグ"  #g
+        total_view: "合計ページビュー"  #g
+        user: :activerecord.models.user  #g
+        user_id: "ユーザーID"
+
+      tag:
+        name: "タグ"  #g
+
+      user:
+        admin: "管理者"  #g
+        biography: "自己紹介"  #g
+        current_sign_in_at: "サインイン時刻"  #g
+        current_sign_in_ip: "サインイン元IPアドレス"  #g
+        disabled: "無効"  #g
+        display_name: "表示名"  #g
+        email: "メールアドレス"  #g
+        encrypted_password: "暗号化されたパスワード"  #g
+        last_sign_in_at: "前回のサインイン時刻"  #g
+        last_sign_in_ip: "前回のサインイン元IPアドレス"  #g
+        modified_at: "更新日時"  #g
+        created_at: "登録日時"  #g
+        password: "パスワード"  #g
+        remember_created_at: "リメンバー作成日時"  #g
+        reset_password_sent_at: "パスワードリセット送信日時"  #g
+        reset_password_token: "パスワードリセット用トークン"  #g
+        slides: "スライド"  #g

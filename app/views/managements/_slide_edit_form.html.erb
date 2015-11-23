@@ -1,0 +1,147 @@
+<link rel="stylesheet" type="text/css" href="/assets/bootstrap-datetimepicker.min.css">
+<script src="/assets/moment.js"></script>
+<script src="/assets/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+$(function(){
+  $('.datetimepicker').datetimepicker({
+    useCurrent: false,
+    sideBySide: false,
+    showTodayButton: true,
+    showClear: true,
+    showClose: true
+  });
+});
+</script>
+
+<%= form_for @slide, html: { method: "post", :class => "form-horizontal slide" }, :url => {:controller => :managements, :action => :slide_update} do |f| %>
+    <% if @slide.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@slide.errors.count, "error") %> prohibited this slide from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @slide.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  <%= f.hidden_field :id %>
+
+  <div class="control-group">
+    <%= f.label :id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field "_id", :value => @slide[:id], :disabled => "disabled", :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:user_id]) %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :user_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :user_id, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:user_id]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :description, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:description]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :downloadable, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :downloadable, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:downloadable]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label t('activerecord.models.category'), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select :category_id, Category.all, :id, :name %>
+    </div>
+    <%= error_span(@slide[:category_id]) %>
+  </div>
+  <div class="control-group" style="position: relative">
+    <%= f.label :created_at, :class => 'control-label' %>
+    <div class="input-group datetimepicker">
+      <%= f.text_field :created_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
+      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+    </div>
+    <%= error_span(@slide[:created_at]) %>
+  </div>
+  <div class="control-group" style="position: relative">
+    <%= f.label :modified_at, :class => 'control-label' %>
+    <div class="input-group datetimepicker">
+      <%= f.text_field :modified_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
+      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+    </div>
+    <%= error_span(@slide[:modified_at]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :key, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :key, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:key]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :extension, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :extension, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:extension]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :convert_status, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :convert_status, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:convert_status]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :total_view, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :total_view, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:total_view]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :page_view, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :page_view, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:page_view]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :embedded_view, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :embedded_view, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:embedded_view]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label t('activerecord.models.tag'), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :tag_list, :value => @slide.tag_list.join(','), :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:tag_list]) %>
+  </div>
+  <br clear="all" />
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            slides_path, :class => 'btn btn-default' %>
+
+<% end %>

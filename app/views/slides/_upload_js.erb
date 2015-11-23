@@ -1,0 +1,81 @@
+<script type="text/javascript">
+$1102(document).ready(function() {
+  <% if command == 'add' %>
+    $1102('#file').on("change", function(event) {
+        var file = this.files[0];
+  <% else %>
+    $1102("#upload-form").submit(function(event) {
+        var file = $1102("#file")[0].files[0];
+  <% end %>
+        if(file != null) {
+            console.log(file.name); // ファイル名をログに出力する
+        } else {
+            return;
+        }
+        var buf = file.name.split('.');
+        var ext = (buf[buf.length-1]).toLowerCase();
+        if(ext != "ppt" && ext != "pptx" && ext != "pdf") {
+            alert("No acceptable extension...");
+            return;
+        }
+        event.preventDefault();
+
+        var formData = new FormData();
+        var url = "<%= upload_endpoint %>";
+
+        var form = $1102('#upload-form');
+        $1102(form.serializeArray()).each(function(i, v) {
+            if(v.name != "file") {
+                formData.append(v.name, v.value);
+            }
+        });
+        formData.append("file", $1102("#file").prop("files")[0]);
+
+        // You need to set CORS options in target S3 bucket
+        $1102.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'xml',
+            data: formData,
+            async: true,
+            crossDomain: true,
+            xhr: function() {
+                xhr = $1102.ajaxSettings.xhr();
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        var p = Math.round(percentComplete * 100);
+                        $1102(".progress-bar").html(p + "%");
+                        $1102(".progress-bar").attr("aria-valuenow", p);
+                        $1102(".progress-bar").attr("style", "width: " + p + "%");
+                    }
+                }, false);
+                return xhr;
+            },
+            statusCode: {
+                201: function(){
+                    console.log("201:OK");
+                },
+                403: function(){
+                    console.log("403:Forbidden");
+                },
+                404: function(){
+                    console.log("404:NOT Found");
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function( data, textStatus, jqXHR ) {
+            var key   = $1102(data).find("Key").text();
+            $1102("#SlideKey").val(key);
+            $1102("#save_button").removeAttr("disabled");
+        }) .fail(function( jqXHR, textStatus, errorThrown ) {
+            // ...
+        });
+        return false;
+    });
+});
+</script>
+
+

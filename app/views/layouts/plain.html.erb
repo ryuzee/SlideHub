@@ -1,0 +1,23 @@
+<%
+require 'packr'
+def conv(str)
+  str.gsub!(/(\r\n|\r|\n)/,"")
+  str.gsub!(/\\/,"\\\\")
+  str.gsub!(/"/,"\\\\\"")
+  str.gsub!(/\s+/," ")
+  #str.gsub!(/<\//,"<\\/")
+  "document.write(\"#{str}\\n\");"
+end
+script = ""
+str = raw yield
+str.each_line do |s|
+  script = script.concat(conv(s)) + "\n"
+end
+%>
+<%
+  #### workaround code ####
+  #### https://github.com/jcoglan/packr/issues/4
+  s =Packr.pack(script, :shrink_vars => false, :base62 => true)
+  s.gsub!(/document.getElementsByTagName\(\'script\'\)/, "Array.apply(null,document.getElementsByTagName('script'))")
+ %>
+<%= raw s %>

@@ -1,0 +1,108 @@
+<% content_for :title, t(:edit_slide) %>
+
+<%= render :partial => 'upload_js', :locals => { :command => 'edit' } %>
+
+<div class="row">
+    <div class="col-md-8">
+    <h3><%= t(:re_upload_slide) %></h3>
+
+    <form id="upload-form" class="well" method="post" enctype="multipart/form-data" action="javascript:void(0); return false;">
+    <div class="form-group">
+        <label><%= t('File') %></label>
+    <input type="file" name="file" id="file" class="form-control" />
+    </div>
+
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+    </div>
+    <% policy = create_policy %>
+    <input class="fval" type="hidden" id="key"  name="key" value='<%= @slide.key %>' class="form-control"/>
+    <input class="fval" type="hidden" name="acl" value="<%= policy['acl'] %>" />
+    <input class="fval" type="hidden" name="success_action_status" value="<%= policy['success_action_status'] %>" />
+    <input class="fval" type="hidden" id="content_type" name="Content-Type" value="application/octetstream" class="form-control"/>
+    <input class="fval" type="hidden" name="x-amz-meta-uuid" value="14365123651274" />
+    <input class="fval" type="hidden" name="X-Amz-Credential" value="<%= "#{policy['access_id']}/#{policy['date_ymd']}/#{ENV['OSS_REGION']}/s3/aws4_request" %>" class="form-control"/>
+    <input class="fval" type="hidden" name="X-Amz-Algorithm" value="AWS4-HMAC-SHA256" class="form-control" />
+    <input class="fval" type="hidden" name="X-Amz-Date" value="<%= policy['date_gm'] %>" class="form-control" />
+    <input class="fval" type="hidden" name="Policy" value='<%= policy['base64_policy'] %>' />
+    <input class="fval" type="hidden" name="X-Amz-Signature" value="<%= policy['signature'] %>" />
+    <% if not policy['security_token'].empty? %>
+    <input class="fval" type="hidden" name="x-amz-security-token" value="<%= policy['security_token'] %>" />
+    <% end %>
+    <input class="fval" type="hidden" id="x-amz-meta-tag" name="x-amz-meta-tag" value="open-slideshare" class="form-control"/>
+
+    <input type="submit" id="re-upload" class="btn btn-primary" value="<%= t :re_upload_slide %>" />
+
+</form>
+
+
+<%= form_for @slide, :html => { :class => "form-horizontal slide" } do |f| %>
+
+    <% if @slide.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@slide.errors.count, "error") %> prohibited this slide from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @slide.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:description]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :downloadable, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :downloadable, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:downloadable]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :category_id, :class => 'control-label' %>
+    <div class="controls">
+    <%= f.collection_select :category_id, Category.all, :id, :name %>
+    </div>
+    <%= error_span(@slide[:category_id]) %>
+  </div>
+  <%= f.hidden_field :id, :value => @slide.id %>
+  <%= f.hidden_field :key, :id => 'SlideKey', :value => @slide.key %>
+  <div class="control-group">
+    <%= f.label t('activerecord.models.tag'), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :tag_list, :value => @slide.tag_list.join(','), :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:tag_list]) %>
+  </div>
+  <br />
+  <%= f.submit nil, :id => 'save_button', :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            slides_path, :class => 'btn btn-default' %>
+
+<% end %>
+<br clear="all" />
+
+    </div>
+
+    <div class="col-md-4">
+    <%= render 'users/right_side_bar', user: current_user %>
+    </div>
+
+</div>
+

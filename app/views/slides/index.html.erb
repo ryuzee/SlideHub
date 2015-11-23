@@ -1,0 +1,28 @@
+<% content_for :title, t(:top_page) %>
+<div class="row" id="popular">
+  <div class="col-md-12">
+    <%- model_class = Slide -%>
+    <h3><%=t :popular_slides %>&nbsp;&nbsp;<small><a href="/slides/popular"><%= t :more_slides %></a></small></h3>
+
+    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @popular_slides %>
+
+  </div>
+</div>
+
+<div class="row" id="latest">
+  <div class="col-md-12">
+    <%- model_class = Slide -%>
+    <h3><%=t :latest_slides %>&nbsp;&nbsp;<small><a href="/slides/latest"><%= t :more_slides %></a></small></h3>
+
+    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @latest_slides %>
+
+  </div>
+</div>
+
+<br />
+
+<script type="text/javascript">
+$1102(window).load(function () {
+    $1102('.col-md-3').equalHeights();
+});
+</script>

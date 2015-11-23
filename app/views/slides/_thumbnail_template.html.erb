@@ -1,0 +1,19 @@
+    <div class="row" style="max-width:1024px; margin:0 auto;">
+    <% slides.each do |slide| %>
+      <% if slide.convert_status < 0 then %>
+        <% image_url = "/assets/failed_to_convert_small.jpg" %>
+      <% elsif slide.convert_status < 100 then %>
+        <% image_url = "/assets/converting_small.jpg" %>
+      <% else %>
+        <% image_url =  thumbnail_url(slide.key) %>
+      <% end %>
+
+      <div class="<%= column_class %> bottom_margin">
+        <a href="/slides/<%= slide.id %>"><img src="<%= image_url %>" class="img-responsive slide_thumbnail" /></a>
+        <span class="h4"><%= slide.name.truncate(20) %></span><br />
+        <span class="small"><%= slide.created_at.to_s(:default) %> by <a href="/users/<%= slide.user_id %>"><%= slide.user.display_name %></a></span>
+      </div>
+
+      <% end %>
+    </div>
+
