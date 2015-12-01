@@ -13,27 +13,36 @@
 # Ubuntu: sudo apt-get install nfs-kernel-server
 # Mac   : sudo nfsd enable
 Vagrant.configure(2) do |config|
-  unless Vagrant.has_plugin?("Bindfs")
-    puts "--- WARNING ---"
-    puts "exec vagrant plugin install vagrant-bindfs"
-    puts "exit program..."
+
+  if RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/
+    puts '--- ERROR ---'
+    puts 'This Vagrantfile is not compatible with Windows environment'
+    puts 'exit program...'
     exit
   end
 
-  config.vm.box = "opscode-ubuntu-14.04"
-  # config.vm.box_check_update = false
-  config.vm.network "forwarded_port", guest: 3000, host: 3001
-  config.vm.network "private_network", ip: "192.168.200.10"
-  ### It's better to use NFS for performance
-  config.vm.synced_folder File.dirname(__FILE__), "/vagrant-nfs", :nfs => { mount_options: ['dmode=777', 'fmode=777'] }
-  config.bindfs.bind_folder "/vagrant-nfs", "/home/vagrant/myapp", :owner => "vagrant", :group => "vagrant", :'create-as-user' => true, :perms => "u=rwx:g=rx:o=rx", :'create-with-perms' => "u=wrx:g=rwx:o=rwx", :'chown-ignore' => true, :'chgrp-ignore' => true, :'chmod-ignore' => true
-
-  config.vm.provider "virtualbox" do |vb|
-    vb.gui = false
-    vb.memory = "1024"
+  unless Vagrant.has_plugin?('Bindfs')
+    puts '--- WARNING ---'
+    puts 'You need to install vagrant-bindfs plugin by the command as follow'
+    puts 'exec vagrant plugin install vagrant-bindfs'
+    puts 'exit program...'
+    exit
   end
 
-  config.vm.provision "shell", :privileged => false, inline: <<-SHELL
+  config.vm.box = 'opscode-ubuntu-14.04'
+  # config.vm.box_check_update = false
+  config.vm.network 'forwarded_port', guest: 3000, host: 3001
+  config.vm.network 'private_network', ip: '192.168.200.10'
+  ### It's better to use NFS for performance
+  config.vm.synced_folder File.dirname(__FILE__), '/vagrant-nfs', :nfs => { mount_options: ['dmode=777', 'fmode=777'] }
+  config.bindfs.bind_folder '/vagrant-nfs', '/home/vagrant/myapp', :owner => 'vagrant', :group => 'vagrant', :'create-as-user' => true, :perms => 'u=rwx:g=rx:o=rx', :'create-with-perms' => 'u=wrx:g=rwx:o=rwx', :'chown-ignore' => true, :'chgrp-ignore' => true, :'chmod-ignore' => true
+
+  config.vm.provider 'virtualbox' do |vb|
+    vb.gui = false
+    vb.memory = '1024'
+  end
+
+  config.vm.provision 'shell', :privileged => false, inline: <<-SHELL
     echo "====== Installing packages via apt ======"
     sudo apt-get update
     sudo apt-get -y install language-pack-ja wget curl zip unzip git sqlite3 libsqlite3-dev
