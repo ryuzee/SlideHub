@@ -24,4 +24,11 @@ namespace :ossjob do
       end
     end
   end
+
+  task :install => :environment do
+    if ActiveRecord::Base.connection.table_exists?('schema_migrations') && ActiveRecord::Base.connection.column_exists?('schema_migrations', 'type')
+      ActiveRecord::Base.connection.execute('rename table schema_migrations to cakephp_schema_migrations')
+    end
+    Rake::Task["db:migrate"].invoke
+  end
 end

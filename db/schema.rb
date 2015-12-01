@@ -11,12 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151129025719) do
-
-  create_table "cake_sessions", force: :cascade do |t|
-    t.text    "data",    limit: 65535, null: false
-    t.integer "expires", limit: 4,     null: false
-  end
+ActiveRecord::Schema.define(version: 20151201234626) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", limit: 255, null: false
@@ -37,18 +32,6 @@ ActiveRecord::Schema.define(version: 20151129025719) do
   add_index "comments", ["commentable_type"], name: "index_comments_on_commentable_type", using: :btree
   add_index "comments", ["user_id"], name: "idx_comments_user_id_key", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
-
-  create_table "configs", primary_key: "name", force: :cascade do |t|
-    t.string   "value",    limit: 255, default: "", null: false
-    t.datetime "created",                           null: false
-    t.datetime "modified"
-  end
-
-  create_table "custom_contents", primary_key: "name", force: :cascade do |t|
-    t.text     "value",    limit: 65535, null: false
-    t.datetime "created",                null: false
-    t.datetime "modified"
-  end
 
   create_table "likes", force: :cascade do |t|
     t.string   "model",      limit: 50, null: false
@@ -90,20 +73,6 @@ ActiveRecord::Schema.define(version: 20151129025719) do
   add_index "slides", ["page_view"], name: "idx_slides_page_view_key", using: :btree
   add_index "slides", ["user_id"], name: "idx_slides_user_id_key", using: :btree
 
-  create_table "tagged", force: :cascade do |t|
-    t.string   "foreign_key",  limit: 36,              null: false
-    t.string   "tag_id",       limit: 36,              null: false
-    t.string   "model",        limit: 255,             null: false
-    t.string   "language",     limit: 6
-    t.datetime "created"
-    t.datetime "modified"
-    t.integer  "times_tagged", limit: 4,   default: 1, null: false
-  end
-
-  add_index "tagged", ["language"], name: "INDEX_LANGUAGE", using: :btree
-  add_index "tagged", ["model", "foreign_key", "tag_id", "language"], name: "UNIQUE_TAGGING", unique: true, using: :btree
-  add_index "tagged", ["model"], name: "INDEX_TAGGED", using: :btree
-
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id",        limit: 4
     t.integer  "taggable_id",   limit: 4
@@ -123,17 +92,6 @@ ActiveRecord::Schema.define(version: 20151129025719) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
-
-  create_table "tags_old", force: :cascade do |t|
-    t.string   "identifier", limit: 30
-    t.string   "name",       limit: 30,             null: false
-    t.string   "keyname",    limit: 30,             null: false
-    t.datetime "created"
-    t.datetime "modified"
-    t.integer  "occurrence", limit: 4,  default: 0, null: false
-  end
-
-  add_index "tags_old", ["identifier", "keyname"], name: "UNIQUE_TAG", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 32,                    null: false
