@@ -64,4 +64,6 @@ Rails.application.configure do
     # even if they are not in your main app
     # Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
   end
+
+  config.rack_dev_mark.enable = true
 end

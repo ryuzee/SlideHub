@@ -132,5 +132,9 @@ group :development do
 
   # Generate ER
   gem 'rails-erd'
+
+  # Display the environment name
+  # https://github.com/dtaniwaki/rack-dev-mark
+  gem "rack-dev-mark"
 end
 
