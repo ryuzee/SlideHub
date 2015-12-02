@@ -30,10 +30,9 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.box = 'opscode-ubuntu-14.04'
-  # config.vm.box_check_update = false
-  config.vm.network 'forwarded_port', guest: 3000, host: 3001
+  config.vm.box_url = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box'
+  config.vm.network 'forwarded_port', guest: 3000, host: 3000
   config.vm.network 'private_network', ip: '192.168.200.10'
-  ### It's better to use NFS for performance
   config.vm.synced_folder File.dirname(__FILE__), '/vagrant-nfs', :nfs => { mount_options: ['dmode=777', 'fmode=777'] }
   config.bindfs.bind_folder '/vagrant-nfs', '/home/vagrant/myapp', :owner => 'vagrant', :group => 'vagrant', :'create-as-user' => true, :perms => 'u=rwx:g=rx:o=rx', :'create-with-perms' => 'u=wrx:g=rwx:o=rwx', :'chown-ignore' => true, :'chgrp-ignore' => true, :'chmod-ignore' => true
 
@@ -49,6 +48,7 @@ Vagrant.configure(2) do |config|
     sudo apt-get -y install build-essential libmagickcore-dev libmagic-dev libmagickwand-dev nginx
 
     echo "====== set locale ======"
+    sudo apt-get install -y language-pack-ja
     sudo update-locale LANGUAGE=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 LANG=ja_JP.UTF-8
 
     echo "====== set timezone ======"

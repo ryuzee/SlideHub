@@ -11,16 +11,17 @@ class InitialDb < ActiveRecord::Migration
       t.string "name", limit: 255, null: false
     end unless ActiveRecord::Base.connection.table_exists?('categories')
 
-    create_table "comments" do |t|
-      t.integer  "user_id",  limit: 4,     null: false
-      t.integer  "slide_id", limit: 4,     null: false
-      t.text     "content",  limit: 65535, null: false
-      t.datetime "created",                null: false
-      t.datetime "modified"
-    end unless ActiveRecord::Base.connection.table_exists?('comments')
-
-    add_index "comments", ["slide_id"], name: "idx_comments_slide_id_key", using: :btree unless ActiveRecord::Base.connection.index_exists?('comments', ["slide_id"], :name => 'idx_comments_slide_id_key')
-    add_index "comments", ["user_id"], name: "idx_comments_user_id_key", using: :btree unless ActiveRecord::Base.connection.index_exists?('comments', ["user_id"], :name => 'idx_comments_user_id_key')
+    unless ActiveRecord::Base.connection.table_exists?('comments')
+      create_table "comments" do |t|
+        t.integer  "user_id",  limit: 4,     null: false
+        t.integer  "slide_id", limit: 4,     null: false
+        t.text     "content",  limit: 65535, null: false
+        t.datetime "created",                null: false
+        t.datetime "modified"
+      end
+      add_index "comments", ["slide_id"], name: "idx_comments_slide_id_key", using: :btree
+      add_index "comments", ["user_id"], name: "idx_comments_user_id_key", using: :btree
+    end
 
     create_table "configs", primary_key: "name" do |t|
       t.string   "value",    limit: 255, default: "", null: false
@@ -69,30 +70,32 @@ class InitialDb < ActiveRecord::Migration
     add_index "tagged", ["model", "foreign_key", "tag_id", "language"], name: "UNIQUE_TAGGING", unique: true, using: :btree unless ActiveRecord::Base.connection.index_exists?('tagged', ["model", "foreign_key", "tag_id", "language"], :name => 'UNIQUE_TAGGING')
     add_index "tagged", ["model"], name: "INDEX_TAGGED", using: :btree unless ActiveRecord::Base.connection.index_exists?('tagged', ["model"], :name => 'INDEX_TAGGED')
 
-    create_table "tags" do |t|
-      t.string   "identifier", limit: 30
-      t.string   "name",       limit: 30,             null: false
-      t.string   "keyname",    limit: 30,             null: false
-      t.datetime "created"
-      t.datetime "modified"
-      t.integer  "occurrence", limit: 4,  default: 0, null: false
-    end unless ActiveRecord::Base.connection.table_exists?('tags')
+    unless ActiveRecord::Base.connection.table_exists?('tags')
+      create_table "tags" do |t|
+        t.string   "identifier", limit: 30
+        t.string   "name",       limit: 30,             null: false
+        t.string   "keyname",    limit: 30,             null: false
+        t.datetime "created"
+        t.datetime "modified"
+        t.integer  "occurrence", limit: 4,  default: 0, null: false
+      end
+      add_index "tags", ["identifier", "keyname"], name: "UNIQUE_TAG", unique: true, using: :btree
+    end
 
-    add_index "tags", ["identifier", "keyname"], name: "UNIQUE_TAG", unique: true, using: :btree unless ActiveRecord::Base.connection.index_exists?('tags', ["identifier", "keyname"], :name => 'UNIQUE_TAG')
-
-    create_table "users" do |t|
-      t.string   "username",     limit: 32,                    null: false
-      t.string   "display_name", limit: 128,                   null: false
-      t.string   "password",     limit: 255,                   null: false
-      t.boolean  "admin",                      default: false, null: false
-      t.boolean  "disabled",                   default: false
-      t.datetime "created",                                    null: false
-      t.datetime "modified"
-      t.text     "biography",    limit: 65535
-      t.integer  "slides_count", limit: 4,     default: 0
-    end unless ActiveRecord::Base.connection.table_exists?('users')
-
-    add_index "users", ["username"], name: "idx_username_ukey", unique: true, using: :btree unless ActiveRecord::Base.connection.index_exists?('users', ["username"], :name => 'idx_username_ukey')
+    unless ActiveRecord::Base.connection.table_exists?('users')
+      create_table "users" do |t|
+        t.string   "username",     limit: 32,                    null: false
+        t.string   "display_name", limit: 128,                   null: false
+        t.string   "password",     limit: 255,                   null: false
+        t.boolean  "admin",                      default: false, null: false
+        t.boolean  "disabled",                   default: false
+        t.datetime "created",                                    null: false
+        t.datetime "modified"
+        t.text     "biography",    limit: 65535
+        t.integer  "slides_count", limit: 4,     default: 0
+      end
+      add_index "users", ["username"], name: "idx_username_ukey", unique: true, using: :btree
+    end
 
   end
 end

@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(version: 20151202000621) do
   add_index "comments", ["user_id"], name: "idx_comments_user_id_key", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
+  create_table "likes", force: :cascade do |t|
+    t.string   "model",      limit: 50, null: false
+    t.integer  "foreign_id", limit: 4,  null: false
+    t.integer  "user_id",    limit: 4,  null: false
+    t.datetime "created",               null: false
+  end
+
   create_table "settings", force: :cascade do |t|
     t.string   "var",        limit: 255,   null: false
     t.text     "value",      limit: 65535
@@ -85,6 +92,17 @@ ActiveRecord::Schema.define(version: 20151202000621) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "tags_old", force: :cascade do |t|
+    t.string   "identifier", limit: 30
+    t.string   "name",       limit: 30,             null: false
+    t.string   "keyname",    limit: 30,             null: false
+    t.datetime "created"
+    t.datetime "modified"
+    t.integer  "occurrence", limit: 4,  default: 0, null: false
+  end
+
+  add_index "tags_old", ["identifier", "keyname"], name: "UNIQUE_TAG", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 32,                    null: false
