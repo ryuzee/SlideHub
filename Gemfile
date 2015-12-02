@@ -129,5 +129,8 @@ group :development do
   # Visualize Rails Console
   gem 'hirb'
   gem 'hirb-unicode'
+
+  # Generate ER
+  gem 'rails-erd'
 end
 
