@@ -80,7 +80,7 @@ gem 'aws-sdk-resources'
 gem 'ruby-filemagic'
 
 # Handle images
-gem 'rmagick'
+gem 'rmagick', :require => 'RMagick'
 
 # retrieve page count of pdf
 gem 'pdf-reader'
