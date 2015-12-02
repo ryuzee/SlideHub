@@ -29,26 +29,27 @@ class InitialDb < ActiveRecord::Migration
       t.datetime "modified"
     end unless ActiveRecord::Base.connection.table_exists?('custom_contents')
 
-    create_table "slides" do |t|
-      t.integer  "user_id",        limit: 4,                     null: false
-      t.string   "name",           limit: 255,                   null: false
-      t.text     "description",    limit: 65535,                 null: false
-      t.boolean  "downloadable",                 default: false, null: false
-      t.integer  "category_id",    limit: 4,                     null: false
-      t.datetime "created",                                      null: false
-      t.datetime "modified"
-      t.string   "key",            limit: 255,   default: ""
-      t.string   "extension",      limit: 10,    default: "",    null: false
-      t.integer  "convert_status", limit: 4,     default: 0
-      t.integer  "total_view",     limit: 4,     default: 0,     null: false
-      t.integer  "page_view",      limit: 4,     default: 0
-      t.integer  "download_count", limit: 4,     default: 0,     null: false
-      t.integer  "embedded_view",  limit: 4,     default: 0,     null: false
-    end unless ActiveRecord::Base.connection.table_exists?('slides')
-
-    add_index "slides", ["category_id"], name: "idx_slides_category_id_key", using: :btree unless ActiveRecord::Base.connection.index_exists?('slides', ["category_id"], :name => 'idx_slides_category_id_key')
-    add_index "slides", ["page_view"], name: "idx_slides_page_view_key", using: :btree unless ActiveRecord::Base.connection.index_exists?('slides', ["page_view"], :name => 'idx_slides_page_view_key')
-    add_index "slides", ["user_id"], name: "idx_slides_user_id_key", using: :btree unless ActiveRecord::Base.connection.index_exists?('slides', ["user_id"], :name => 'idx_slides_user_id_key')
+    unless ActiveRecord::Base.connection.table_exists?('slides')
+      create_table "slides" do |t|
+        t.integer  "user_id",        limit: 4,                     null: false
+        t.string   "name",           limit: 255,                   null: false
+        t.text     "description",    limit: 65535,                 null: false
+        t.boolean  "downloadable",                 default: false, null: false
+        t.integer  "category_id",    limit: 4,                     null: false
+        t.datetime "created",                                      null: false
+        t.datetime "modified"
+        t.string   "key",            limit: 255,   default: ""
+        t.string   "extension",      limit: 10,    default: "",    null: false
+        t.integer  "convert_status", limit: 4,     default: 0
+        t.integer  "total_view",     limit: 4,     default: 0,     null: false
+        t.integer  "page_view",      limit: 4,     default: 0
+        t.integer  "download_count", limit: 4,     default: 0,     null: false
+        t.integer  "embedded_view",  limit: 4,     default: 0,     null: false
+      end
+      add_index "slides", ["category_id"], name: "idx_slides_category_id_key", using: :btree
+      add_index "slides", ["page_view"], name: "idx_slides_page_view_key", using: :btree
+      add_index "slides", ["user_id"], name: "idx_slides_user_id_key", using: :btree
+    end
 
     unless ActiveRecord::Base.connection.table_exists?('tags')
       create_table "tags" do |t|
