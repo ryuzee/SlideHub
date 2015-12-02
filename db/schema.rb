@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201234626) do
+ActiveRecord::Schema.define(version: 20151202000621) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", limit: 255, null: false
@@ -32,13 +32,6 @@ ActiveRecord::Schema.define(version: 20151201234626) do
   add_index "comments", ["commentable_type"], name: "index_comments_on_commentable_type", using: :btree
   add_index "comments", ["user_id"], name: "idx_comments_user_id_key", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
-
-  create_table "likes", force: :cascade do |t|
-    t.string   "model",      limit: 50, null: false
-    t.integer  "foreign_id", limit: 4,  null: false
-    t.integer  "user_id",    limit: 4,  null: false
-    t.datetime "created",               null: false
-  end
 
   create_table "settings", force: :cascade do |t|
     t.string   "var",        limit: 255,   null: false
