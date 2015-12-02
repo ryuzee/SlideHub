@@ -114,6 +114,10 @@ GEM
       guard (~> 2.0)
       rubocop (~> 0.20)
     hashery (2.1.1)
+    hirb (0.7.3)
+    hirb-unicode (0.0.5)
+      hirb (~> 0.5)
+      unicode-display_width (~> 0.1.1)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
@@ -296,6 +300,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
+    unicode-display_width (0.1.1)
     unicorn (5.0.1)
       kgio (~> 2.6)
       rack
@@ -335,6 +340,8 @@ DEPENDENCIES
   execjs
   guard
   guard-rubocop
+  hirb
+  hirb-unicode
   i18n_generators
   jbuilder (~> 2.0)
   jquery-rails

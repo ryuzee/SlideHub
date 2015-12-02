@@ -125,5 +125,9 @@ group :development do
 
   # Find N+1 issue
   gem 'bullet'
+
+  # Visualize Rails Console
+  gem 'hirb'
+  gem 'hirb-unicode'
 end
 
