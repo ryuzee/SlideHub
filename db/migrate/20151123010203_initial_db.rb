@@ -17,18 +17,6 @@ class InitialDb < ActiveRecord::Migration
       add_index "comments", ["user_id"], name: "idx_comments_user_id_key", using: :btree
     end
 
-    create_table "configs", primary_key: "name" do |t|
-      t.string   "value",    limit: 255, default: "", null: false
-      t.datetime "created",                           null: false
-      t.datetime "modified"
-    end unless ActiveRecord::Base.connection.table_exists?('configs')
-
-    create_table "custom_contents", primary_key: "name" do |t|
-      t.text     "value",    limit: 65535, null: false
-      t.datetime "created",                null: false
-      t.datetime "modified"
-    end unless ActiveRecord::Base.connection.table_exists?('custom_contents')
-
     unless ActiveRecord::Base.connection.table_exists?('slides')
       create_table "slides" do |t|
         t.integer  "user_id",        limit: 4,                     null: false
