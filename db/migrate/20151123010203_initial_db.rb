@@ -1,11 +1,5 @@
 class InitialDb < ActiveRecord::Migration
   def self.up
-    #drop_table "schema_migrations"
-
-    create_table "cake_sessions" do |t|
-      t.text    "data",    limit: 65535, null: false
-      t.integer "expires", limit: 4,     null: false
-    end unless ActiveRecord::Base.connection.table_exists?('cake_sessions')
 
     create_table "categories" do |t|
       t.string "name", limit: 255, null: false
@@ -55,20 +49,6 @@ class InitialDb < ActiveRecord::Migration
     add_index "slides", ["category_id"], name: "idx_slides_category_id_key", using: :btree unless ActiveRecord::Base.connection.index_exists?('slides', ["category_id"], :name => 'idx_slides_category_id_key')
     add_index "slides", ["page_view"], name: "idx_slides_page_view_key", using: :btree unless ActiveRecord::Base.connection.index_exists?('slides', ["page_view"], :name => 'idx_slides_page_view_key')
     add_index "slides", ["user_id"], name: "idx_slides_user_id_key", using: :btree unless ActiveRecord::Base.connection.index_exists?('slides', ["user_id"], :name => 'idx_slides_user_id_key')
-
-    create_table "tagged" do |t|
-      t.string   "foreign_key",  limit: 36,              null: false
-      t.string   "tag_id",       limit: 36,              null: false
-      t.string   "model",        limit: 255,             null: false
-      t.string   "language",     limit: 6
-      t.datetime "created"
-      t.datetime "modified"
-      t.integer  "times_tagged", limit: 4,   default: 1, null: false
-    end unless ActiveRecord::Base.connection.table_exists?('tagged')
-
-    add_index "tagged", ["language"], name: "INDEX_LANGUAGE", using: :btree unless ActiveRecord::Base.connection.index_exists?('tagged', ["language"], :name => 'INDEX_LANGUAGE')
-    add_index "tagged", ["model", "foreign_key", "tag_id", "language"], name: "UNIQUE_TAGGING", unique: true, using: :btree unless ActiveRecord::Base.connection.index_exists?('tagged', ["model", "foreign_key", "tag_id", "language"], :name => 'UNIQUE_TAGGING')
-    add_index "tagged", ["model"], name: "INDEX_TAGGED", using: :btree unless ActiveRecord::Base.connection.index_exists?('tagged', ["model"], :name => 'INDEX_TAGGED')
 
     unless ActiveRecord::Base.connection.table_exists?('tags')
       create_table "tags" do |t|
