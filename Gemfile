@@ -136,5 +136,8 @@ group :development do
   # Display the environment name
   # https://github.com/dtaniwaki/rack-dev-mark
   gem "rack-dev-mark"
+
+  # Include template path
+  gem "view_source_map"
 end
 
