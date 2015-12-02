@@ -14,8 +14,16 @@ class ManagementsController < ApplicationController
     @download_count = rec.download_count
     @embedded_view = rec.embedded_view
 
-    @latest_slides = Slide.where('convert_status = 100').order('created_at desc').limit(10)
-    @popular_slides = Slide.where('convert_status = 100').order('total_view desc'). limit(10)
+    @latest_slides = Slide
+      .where('convert_status = 100')
+      .order('created_at desc')
+      .includes(:user)
+      .limit(10)
+    @popular_slides = Slide
+      .where('convert_status = 100')
+      .order('total_view desc')
+      .includes(:user)
+      .limit(10)
   end
 
   def user_list

@@ -122,5 +122,8 @@ group :development do
   gem 'guard-rubocop'
 
   gem 'i18n_generators'
+
+  # Find N+1 issue
+  gem 'bullet'
 end
 

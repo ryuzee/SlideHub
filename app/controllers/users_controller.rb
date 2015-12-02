@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     @user = User.find(current_user.id)
     @slides = Slide
       .where('user_id = ?', current_user.id)
+      .includes(:user)
       .order("created_at desc")
       .paginate(page: params[:page], per_page: 20)
     @tags = Slide
@@ -19,6 +20,7 @@ class UsersController < ApplicationController
     @slides = Slide.where('convert_status = 100')
       .where('user_id = ?', params[:id])
       .order("created_at desc")
+      .includes(:user)
       .paginate(page: params[:page], per_page: 20)
     @tags = Slide.where('convert_status = 100')
       .where('user_id = ?', params[:id])

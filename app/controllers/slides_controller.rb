@@ -7,20 +7,24 @@ class SlidesController < ApplicationController
     @latest_slides = Slide.where('convert_status = 100')
       .order('created_at desc')
       .limit(8)
+      .includes(:user)
     @popular_slides = Slide.where('convert_status = 100')
       .order('total_view desc')
       .limit(8)
+      .includes(:user)
   end
 
   def latest
     @slides = Slide.where('convert_status = 100')
       .order('created_at desc')
+      .includes(:user)
       .paginate(page: params[:page], per_page: 20)
   end
 
   def popular
     @slides = Slide.where('convert_status = 100')
       .order('total_view desc')
+      .includes(:user)
       .paginate(page: params[:page], per_page: 20)
   end
 
@@ -28,6 +32,7 @@ class SlidesController < ApplicationController
     @slides = Slide.where('convert_status = 100')
       .where('category_id = ?', params[:id])
       .order('created_at desc')
+      .includes(:user)
       .paginate(page: params[:page], per_page: 20)
 
     Category.select('name')
@@ -47,6 +52,7 @@ class SlidesController < ApplicationController
       .where('id != ?', @slide.id)
       .order('created_at desc')
       .limit(10)
+      .includes(:user)
   end
 
   def new
@@ -115,6 +121,7 @@ class SlidesController < ApplicationController
     @slides = @q.result(distinct: true)
       .where('convert_status = 100')
       .order('created_at desc')
+      .includes(:user)
       .paginate(page: params[:page], per_page: 20)
   end
 
