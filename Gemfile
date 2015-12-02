@@ -139,5 +139,8 @@ group :development do
 
   # Include template path
   gem "view_source_map"
-end
 
+  # Display nice error screen
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end

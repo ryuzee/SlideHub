@@ -66,4 +66,7 @@ Rails.application.configure do
   end
 
   config.rack_dev_mark.enable = true
+
+  config.consider_all_requests_local = true
+  BetterErrors::Middleware.allow_ip! '10.0.2.2'
 end
