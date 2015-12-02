@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_filter :set_category_data
   before_filter :signup_enabled!, if: :devise_controller?
-  before_filter :configure_permitted_parameters, if: :devise_controller?
 
   include ActsAsTaggableOn::TagsHelper
   include Common
@@ -25,12 +24,6 @@ class ApplicationController < ActionController::Base
     else
       I18n.default_locale
     end
-  end
-
-  def configure_permitted_parameters
-    ## Strong parameter
-    devise_parameter_sanitizer.for(:sign_up) << :display_name
-    devise_parameter_sanitizer.for(:sign_up) << :biography
   end
 
   def set_category_data
