@@ -46,7 +46,7 @@ class SlidesController < ApplicationController
     if user_signed_in?
       @comment = @slide.comments.new
     end
-    @posted_comments = @slide.comments.recent.limit(10).all
+    @posted_comments = @slide.comments.recent.limit(10).all.includes(:user)
     @other_slides = Slide.where('convert_status = 100')
       .where('category_id = ?', @slide.category_id)
       .where('id != ?', @slide.id)
