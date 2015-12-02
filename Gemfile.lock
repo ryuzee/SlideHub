@@ -56,6 +56,10 @@ GEM
     aws-sdk-resources (2.2.3)
       aws-sdk-core (= 2.2.3)
     bcrypt (3.1.10)
+    better_errors (2.1.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap3-datetimepicker-rails (4.17.37)
@@ -338,6 +342,8 @@ DEPENDENCIES
   annotate
   aws-sdk-core
   aws-sdk-resources
+  better_errors
+  binding_of_caller
   bootstrap3-datetimepicker-rails (~> 4.17.37)
   bullet
   byebug
