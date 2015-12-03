@@ -100,6 +100,9 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 
 gem 'packr'
 
+# https://github.com/alexspeller/non-stupid-digest-assets
+gem 'non-stupid-digest-assets'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -143,4 +146,12 @@ group :development do
   # Display nice error screen
   gem 'better_errors'
   gem 'binding_of_caller'
+end
+
+group :deployment do
+  gem 'capistrano', '~> 3.2.1'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+  gem 'capistrano3-unicorn' # unicornを使っている場合のみ
 end

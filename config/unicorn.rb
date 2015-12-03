@@ -5,9 +5,13 @@ timeout 15
 preload_app true  # 更新時ダウンタイム無し
 
 listen "/tmp/unicorn.sock"
+# listen "#{rails_root}/tmp/unicorn.sock"
 pid "/tmp/unicorn.pid"
+# pid "#{rails_root}/tmp/unicorn.pid"
 
 before_fork do |server, worker|
+  ENV['BUNDLE_GEMFILE'] = File.expand_path('Gemfile', ENV['RAILS_ROOT'])
+
   Signal.trap 'TERM' do
     puts 'Unicorn master intercepting TERM and sending myself QUIT instead'
     Process.kill 'QUIT', Process.pid

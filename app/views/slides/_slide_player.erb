@@ -14,16 +14,16 @@ end
     <% page_list.each do |f| %>
     <% u = get_url("/#{f}") %>
     <% if count >= 2 %>
-      <li><img style="border:0px !important" class="lazy image-<%= count %>" src="<%= root_url %>assets/spacer.gif" data-src="<%= u %>" /></li>
+      <li><img style="border:0px !important" class="lazy image-<%= count %>" src="<%= root_url %>oss/images/spacer.gif" data-src="<%= u %>" /></li>
     <% else %>
     <li><img style="border:0px !important" src="<%= u %>" /></li>
     <% end %>
     <% count +=1 %>
     <% end %>
 <% elsif slide.convert_status < 0 %>
-    <li><img style="border:0px !important" class="image-0" src="<%= root_url %>assets/failed_to_convert.jpg" /></li>
+    <li><img style="border:0px !important" class="image-0" src="<%= root_url %>oss/images/failed_to_convert.jpg" /></li>
 <% else %>
-    <li><img style="border:0px !important" class="image-0" src="<%= root_url %>assets/converting.jpg" /></li>
+    <li><img style="border:0px !important" class="image-0" src="<%= root_url %>oss/images/converting.jpg" /></li>
 <% end %>
 </ul>
 </div>
@@ -103,8 +103,8 @@ $1102(document).ready(function(){
 
         myslider = $1102('.openslideshare_body .bxslider_<%= slide.key %>').bxSlider(slider_config);
         /** Add links to move backward or next. **/
-        $1102('.openslideshare_body .bx-wrapper').append($1102('<img src="<%= root_url %>assets/spacer.png" style="z-index:9999;width:128px;height:128px;position:absolute;top:50%;left:0%;margin-top:-64px;margin-left:0px;cursor:pointer;border:0px !important" onclick="javascript:myslider.goToPrevSlide();" />'));
-        $1102('.openslideshare_body .bx-wrapper').append($1102('<img src="<%= root_url %>assets/spacer.png" style="z-index:9999;width:128px;height:128px;position:absolute;top:50%;left:100%;margin-top:-64px;margin-left:-128px;display:inline;cursor:pointer;border:0px !important" onclick="javascript:myslider.goToNextSlide();" />'));
+        $1102('.openslideshare_body .bx-wrapper').append($1102('<img src="<%= root_url %>oss/images/spacer.png" style="z-index:9999;width:128px;height:128px;position:absolute;top:50%;left:0%;margin-top:-64px;margin-left:0px;cursor:pointer;border:0px !important" onclick="javascript:myslider.goToPrevSlide();" />'));
+        $1102('.openslideshare_body .bx-wrapper').append($1102('<img src="<%= root_url %>oss/images/spacer.png" style="z-index:9999;width:128px;height:128px;position:absolute;top:50%;left:100%;margin-top:-64px;margin-left:-128px;display:inline;cursor:pointer;border:0px !important" onclick="javascript:myslider.goToNextSlide();" />'));
 
         /** Add keyboard shortcut **/
         Mousetrap.bind(['j', 'right'], function(e) {
