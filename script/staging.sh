@@ -10,7 +10,7 @@ sudo chmod 755 /tmp/oss_env.sh
 /tmp/oss_env.sh
 
 sudo mkdir -p /opt/application
-sudo chmod -R 777 /opt/application
+sudo chown -R $OSS_USER:`id -G -n $OSS_USER | awk '{print $1}'` /opt/application
 
 if [ -e /tmp/environment ]; then
   sudo mv /tmp/environment /etc/environment
