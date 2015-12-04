@@ -1,5 +1,6 @@
 class SlidesController < ApplicationController
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
+  before_action :duplicate_key_check!, only: [:create]
   include SqsUsable
   protect_from_forgery except: :embedded
 
@@ -64,10 +65,6 @@ class SlidesController < ApplicationController
 
   def create
     key = params[:slide][:key]
-    if Slide.where('slides.key = ?', key).count > 0
-      redirect_to '/slides'
-    end
-
     slide_params = params.require(:slide).permit(:name, :description, :key, :downloadable, :category_id, :tag_list)
     @slide = Slide.new(slide_params)
     @slide.user_id = current_user.id
@@ -139,6 +136,14 @@ class SlidesController < ApplicationController
     @start_position = 0 # 0? 1?
     s = render_to_string :layout => 'plain', collection: @slide
     render text: s, :layout => false, content_type: "text/javascript"
+  end
+
+  private
+  def duplicate_key_check!
+    key = params[:slide][:key]
+    if Slide.where('slides.key = ?', key).count > 0
+      redirect_to '/slides'
+    end
   end
 
 end

@@ -23,7 +23,7 @@ class Slide < ActiveRecord::Base
   belongs_to :user
   counter_culture :user
   belongs_to :category
-  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :delete_all
   acts_as_commentable :private
   acts_as_taggable
   validates :user_id, presence: true
