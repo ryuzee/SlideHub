@@ -29,22 +29,25 @@ Vagrant.configure(2) do |config|
     exit
   end
 
-  config.vm.box = 'opscode-ubuntu-14.04'
-  config.vm.box_url = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box'
-  config.vm.network 'forwarded_port', guest: 3000, host: 3000
-  config.vm.network 'private_network', ip: '192.168.200.10'
-  config.vm.synced_folder File.dirname(__FILE__), '/vagrant-nfs', :nfs => { mount_options: ['dmode=777', 'fmode=777'] }
-  config.bindfs.bind_folder '/vagrant-nfs', '/home/vagrant/myapp', :owner => 'vagrant', :group => 'vagrant', :'create-as-user' => true, :perms => 'u=rwx:g=rx:o=rx', :'create-with-perms' => 'u=wrx:g=rwx:o=rwx', :'chown-ignore' => true, :'chgrp-ignore' => true, :'chmod-ignore' => true
+  config.vm.define :develop do |develop|
+    develop.vm.box = 'opscode-ubuntu-14.04'
+    develop.vm.box_url = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box'
+    develop.vm.network 'forwarded_port', guest: 3000, host: 3000
+    develop.vm.network 'private_network', ip: '192.168.33.10'
+    develop.vm.synced_folder File.dirname(__FILE__), '/vagrant-nfs', :nfs => { mount_options: ['dmode=777', 'fmode=777'] }
+    develop.bindfs.bind_folder '/vagrant-nfs', '/home/vagrant/myapp', :owner => 'vagrant', :group => 'vagrant', :'create-as-user' => true, :perms => 'u=rwx:g=rx:o=rx', :'create-with-perms' => 'u=wrx:g=rwx:o=rwx', :'chown-ignore' => true, :'chgrp-ignore' => true, :'chmod-ignore' => true
 
-  config.vm.provider 'virtualbox' do |vb|
-    vb.gui = false
-    vb.memory = '1024'
+    develop.vm.provider 'virtualbox' do |vb|
+      vb.gui = false
+      vb.memory = '1024'
+    end
+
+    if Vagrant.has_plugin?("vagrant-cachier")
+      develop.cache.scope = :box
+    end
+
+    develop.vm.provision "file", source: "script/ruby_env.sh", destination: "/tmp/ruby_env.sh"
+    develop.vm.provision "file", source: "script/oss_env.sh", destination: "/tmp/oss_env.sh"
+    develop.vm.provision "shell", path: "script/develop.sh"
   end
-
-  if Vagrant.has_plugin?("vagrant-cachier")
-    config.cache.scope = :box
-  end
-
-  config.vm.provision "shell", path: "script/ruby_env.sh"
-  config.vm.provision "shell", path: "script/oss_env.sh"
 end

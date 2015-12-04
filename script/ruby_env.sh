@@ -24,18 +24,18 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password passwor
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_PASSWORD"
 sudo apt-get -y install mysql-server libmysqlclient-dev
 
-if [ ! -e '/home/`whoami`/.rbenv' ]; then
+if [ ! -e "/home/$OSS_USER/.rbenv" ]; then
   echo "====== Installing ruby ======"
-  git clone https://github.com/sstephenson/rbenv.git /home/`whoami`/.rbenv
-  echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> /home/`whoami`/.bash_profile
-  echo 'eval "$(rbenv init -)"' >> /home/`whoami`/.bash_profile
-  git clone https://github.com/sstephenson/ruby-build.git /home/`whoami`/.rbenv/plugins/ruby-build
+  sudo -H -u $OSS_USER -s bash -c "git clone https://github.com/sstephenson/rbenv.git /home/$OSS_USER/.rbenv"
+  sudo -H -u $OSS_USER -s bash -c "echo 'export PATH=/home/$OSS_USER/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' >> /home/$OSS_USER/.bash_profile"
+  sudo -H -u $OSS_USER -s bash -c "echo 'eval \"\$(rbenv init -)\"' >> /home/$OSS_USER/.bash_profile"
+  sudo -H -u $OSS_USER -s bash -c "git clone https://github.com/sstephenson/ruby-build.git /home/$OSS_USER/.rbenv/plugins/ruby-build"
   echo "reload shell..."
-  source /home/`whoami`/.bash_profile
+  sudo -H -u $OSS_USER -s bash -c "source /home/$OSS_USER/.bash_profile"
   echo "installing ruby $RUBY_VERSION..."
-  rbenv install $RUBY_VERSION
+  sudo -H -u $OSS_USER -s bash -c "source /home/$OSS_USER/.bash_profile && rbenv install $RUBY_VERSION"
   echo "set ruby global..."
-  rbenv global $RUBY_VERSION
-  rbenv exec gem install bundler
-  rbenv rehash
+  sudo -H -u $OSS_USER -s bash -c "source /home/$OSS_USER/.bash_profile && rbenv global $RUBY_VERSION"
+  sudo -H -u $OSS_USER -s bash -c "source /home/$OSS_USER/.bash_profile && rbenv exec gem install bundler"
+  sudo -H -u $OSS_USER -s bash -c "source /home/$OSS_USER/.bash_profile && rbenv rehash"
 fi
