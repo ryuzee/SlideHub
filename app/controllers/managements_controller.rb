@@ -3,8 +3,8 @@ class ManagementsController < ApplicationController
   before_action :admin_user!
 
   def dashboard
-    @slide_count = User.count
-    @user_count = Slide.count
+    @slide_count = Slide.count
+    @user_count = User.count
     @conversion_failed_count = Slide.where('convert_status != 100').count
     @comment_count = Comment.count
 
