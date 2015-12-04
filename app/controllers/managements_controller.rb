@@ -5,7 +5,7 @@ class ManagementsController < ApplicationController
   def dashboard
     @slide_count = Slide.count
     @user_count = User.count
-    @conversion_failed_count = Slide.where('convert_status != 100').count
+    @conversion_failed_count = Slide.failed.count
     @comment_count = Comment.count
 
     s = Slide.arel_table
@@ -14,14 +14,10 @@ class ManagementsController < ApplicationController
     @download_count = rec.download_count
     @embedded_view = rec.embedded_view
 
-    @latest_slides = Slide
-      .where('convert_status = 100')
-      .order('created_at desc')
+    @latest_slides = Slide.published.latest
       .includes(:user)
       .limit(10)
-    @popular_slides = Slide
-      .where('convert_status = 100')
-      .order('total_view desc')
+    @popular_slides = Slide.published.popular
       .includes(:user)
       .limit(10)
   end
@@ -30,7 +26,7 @@ class ManagementsController < ApplicationController
     ransack_params = params[:q]
     @q = User.search(ransack_params)
     @users = @q.result(distinct: true)
-      .order('created_at desc')
+      .latest
       .paginate(page: params[:page], per_page: 20)
   end
 
@@ -38,7 +34,7 @@ class ManagementsController < ApplicationController
     ransack_params = params[:q]
     @q = Slide.search(ransack_params)
     @slides = @q.result(distinct: true)
-      .order('created_at desc')
+      .latest
       .paginate(page: params[:page], per_page: 20)
   end
 

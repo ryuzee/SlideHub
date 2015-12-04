@@ -4,34 +4,28 @@ class SlidesController < ApplicationController
   protect_from_forgery except: :embedded
 
   def index
-    @latest_slides = Slide.where('convert_status = 100')
-      .order('created_at desc')
+    @latest_slides = Slide.published.latest
       .limit(8)
       .includes(:user)
-    @popular_slides = Slide.where('convert_status = 100')
-      .order('total_view desc')
+    @popular_slides = Slide.published.popular
       .limit(8)
       .includes(:user)
   end
 
   def latest
-    @slides = Slide.where('convert_status = 100')
-      .order('created_at desc')
+    @slides = Slide.published.latest
       .includes(:user)
       .paginate(page: params[:page], per_page: 20)
   end
 
   def popular
-    @slides = Slide.where('convert_status = 100')
-      .order('total_view desc')
+    @slides = Slide.published.popular
       .includes(:user)
       .paginate(page: params[:page], per_page: 20)
   end
 
   def category
-    @slides = Slide.where('convert_status = 100')
-      .where('category_id = ?', params[:id])
-      .order('created_at desc')
+    @slides = Slide.published.latest.category(params[:id])
       .includes(:user)
       .paginate(page: params[:page], per_page: 20)
 
@@ -47,10 +41,9 @@ class SlidesController < ApplicationController
       @comment = @slide.comments.new
     end
     @posted_comments = @slide.comments.recent.limit(10).all.includes(:user)
-    @other_slides = Slide.where('convert_status = 100')
+    @other_slides = Slide.published.latest
       .where('category_id = ?', @slide.category_id)
       .where('id != ?', @slide.id)
-      .order('created_at desc')
       .limit(10)
       .includes(:user)
   end
@@ -119,8 +112,7 @@ class SlidesController < ApplicationController
     table = tag_search ? Slide.tagged_with(tag_search, :any => true) : Slide
     @q = table.search(ransack_params)
     @slides = @q.result(distinct: true)
-      .where('convert_status = 100')
-      .order('created_at desc')
+      .published.latest
       .includes(:user)
       .paginate(page: params[:page], per_page: 20)
   end
