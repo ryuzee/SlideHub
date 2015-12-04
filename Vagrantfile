@@ -72,14 +72,17 @@ Vagrant.configure(2) do |config|
         out += l.gsub(/OSS\_/, "export OSS_")
       end
       require "tempfile"
-      file = Tempfile.new('env', Dir.pwd)
+      file = Tempfile.new('env', '/tmp/')
       begin
         file.write(out)
         file.close
         staging.vm.provision "file", source: file.path, destination: "/tmp/environment"
-      ensure
-        file.close unless file.closed?
       end
+    end
+
+    ## Deploy ssh secret key
+    if ENV.has_key?('OSS_STAGING_SSH_SECRET_KEY') && File.exists?(ENV['OSS_STAGING_SSH_SECRET_KEY'])
+      staging.vm.provision "file", source: ENV['OSS_STAGING_SSH_SECRET_KEY'], destination: "/tmp/id_rsa"
     end
 
     staging.vm.provision "file", source: "script/ruby_env.sh", destination: "/tmp/ruby_env.sh"

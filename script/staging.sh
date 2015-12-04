@@ -13,6 +13,11 @@ if [ -e /tmp/environment ]; then
   sudo mv /tmp/environment /etc/environment
 fi
 
+if [ -e /tmp/id_rsa ]; then
+  sudo mv /tmp/id_rsa /home/$OSS_USER/.ssh/id_rsa
+  sudo chmod 600 /home/$OSS_USER/.ssh/id_rsa
+fi
+
 mysql -uroot -p$MYSQL_PASSWORD mysql -e "create database openslideshare default character set 'utf8'"
 
 sudo \rm /etc/nginx/sites-enabled/default
