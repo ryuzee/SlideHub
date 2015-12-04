@@ -10,4 +10,5 @@ sudo chmod 755 /tmp/oss_env.sh
 /tmp/oss_env.sh
 
 mysql -uroot -p$MYSQL_PASSWORD mysql -e "create database openslideshare default character set 'utf8'"
+mysql -uroot -p$MYSQL_PASSWORD mysql -e "create database test_openslideshare default character set 'utf8'"
 

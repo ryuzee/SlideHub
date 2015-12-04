@@ -9,6 +9,10 @@ sudo chmod 755 /tmp/oss_env.sh
 /tmp/ruby_env.sh
 /tmp/oss_env.sh
 
+if [ -e /tmp/environment ]; then
+  sudo mv /tmp/environment /etc/environment
+fi
+
 mysql -uroot -p$MYSQL_PASSWORD mysql -e "create database openslideshare default character set 'utf8'"
 
 sudo \rm /etc/nginx/sites-enabled/default

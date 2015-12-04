@@ -65,8 +65,26 @@ Vagrant.configure(2) do |config|
       staging.cache.scope = :box
     end
 
+    ## Generate environment file for staging
+    if File.exists?(File.dirname(__FILE__) + '/.env')
+      out = ''
+      File.read(File.dirname(__FILE__) + '/.env').each_line do |l|
+        out += l.gsub(/OSS\_/, "export OSS_")
+      end
+      require "tempfile"
+      file = Tempfile.new('env', Dir.pwd)
+      begin
+        file.write(out)
+        file.close
+        staging.vm.provision "file", source: file.path, destination: "/tmp/environment"
+      ensure
+        file.close unless file.closed?
+      end
+    end
+
     staging.vm.provision "file", source: "script/ruby_env.sh", destination: "/tmp/ruby_env.sh"
     staging.vm.provision "file", source: "script/oss_env.sh", destination: "/tmp/oss_env.sh"
     staging.vm.provision "shell", path: "script/staging.sh"
+
   end
 end

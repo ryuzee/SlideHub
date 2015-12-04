@@ -5,7 +5,7 @@ set :rails_env, 'production'
 # role :web, %w{vagrant@192.168.1.222}
 # role :db,  %w{vagrant@192.168.1.222}
 
-server '192.168.1.222', user: 'vagrant', roles: %w{web app db}, password: 'vagrant'
+server '192.168.33.200', user: 'vagrant', roles: %w{web app db}, password: 'vagrant'
 
 # set :ssh_options, {
 #    keys: [File.expand_path(ENV['OSS_DEPLOY_KEY_PATH'])],
