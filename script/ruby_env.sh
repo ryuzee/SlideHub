@@ -2,7 +2,7 @@
 
 set -e
 RUBY_VERSION=2.2.3
-MYSQL_PASSWORD=passw0rd
+
 
 echo "====== Installing packages via apt ======"
 sudo apt-get update

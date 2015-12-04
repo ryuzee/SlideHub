@@ -50,4 +50,23 @@ Vagrant.configure(2) do |config|
     develop.vm.provision "file", source: "script/oss_env.sh", destination: "/tmp/oss_env.sh"
     develop.vm.provision "shell", path: "script/develop.sh"
   end
+
+  config.vm.define :staging do |staging|
+    staging.vm.box = 'opscode-ubuntu-14.04'
+    staging.vm.box_url = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box'
+    staging.vm.network 'private_network', ip: '192.168.33.200'
+
+    staging.vm.provider 'virtualbox' do |vb|
+      vb.gui = false
+      vb.memory = '1024'
+    end
+
+    if Vagrant.has_plugin?("vagrant-cachier")
+      staging.cache.scope = :box
+    end
+
+    staging.vm.provision "file", source: "script/ruby_env.sh", destination: "/tmp/ruby_env.sh"
+    staging.vm.provision "file", source: "script/oss_env.sh", destination: "/tmp/oss_env.sh"
+    staging.vm.provision "shell", path: "script/staging.sh"
+  end
 end
