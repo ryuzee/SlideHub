@@ -21,3 +21,5 @@ vendor
 .env
 .DS_Store
 erd.pdf
+/config/deploy/production.rb
+.sass-cache

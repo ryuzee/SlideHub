@@ -7,7 +7,7 @@ RUBY_VERSION=2.2.3
 echo "====== Installing packages via apt ======"
 sudo apt-get update
 sudo apt-get -y install language-pack-ja wget curl zip unzip git sqlite3 libsqlite3-dev
-sudo apt-get -y install build-essential libmagickcore-dev libmagic-dev libmagickwand-dev graphviz nginx
+sudo apt-get -y install build-essential libssl-dev libreadline-dev libmagickcore-dev libmagic-dev libmagickwand-dev graphviz nginx
 
 echo "====== set locale ======"
 sudo apt-get install -y language-pack-ja
