@@ -80,6 +80,9 @@ module Common
   end
 
   def get_download_path (key)
+    signer = Aws::S3::Presigner.new(client: self.s3)
+    url = signer.presigned_url(:get_object, bucket: ENV['OSS_BUCKET_NAME'], key: key)
+    url
   end
 
   def get_file_list_from_s3 (bucket, prefix)

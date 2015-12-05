@@ -138,6 +138,14 @@ class SlidesController < ApplicationController
     render text: s, :layout => false, content_type: "text/javascript"
   end
 
+  def download
+    @slide = Slide.find(params[:id])
+    url = get_download_path(@slide.key)
+    require 'open-uri'
+    data = open(url).read
+    send_data data, :disposition => 'attachment', :filename=> "#{@slide.key}#{@slide.extension}"
+  end
+
   private
   def duplicate_key_check!
     key = params[:slide][:key]
