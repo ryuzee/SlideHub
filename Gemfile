@@ -146,6 +146,9 @@ group :development do
   # Display nice error screen
   gem 'better_errors'
   gem 'binding_of_caller'
+
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
 end
 
 group :deployment do
