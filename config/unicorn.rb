@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # From http://qiita.com/Salinger/items/5350b23f8b4e0dcdbe23
-worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
+worker_processes Integer(ENV['WEB_CONCURRENCY'] || 3)
 timeout 15
-preload_app true  # 更新時ダウンタイム無し
+preload_app true # 更新時ダウンタイム無し
 
-listen "/tmp/unicorn.sock"
+listen '/tmp/unicorn.sock'
 # listen "#{rails_root}/tmp/unicorn.sock"
-pid "/tmp/unicorn.pid"
+pid '/tmp/unicorn.pid'
 # pid "#{rails_root}/tmp/unicorn.pid"
 
 before_fork do |server, worker|

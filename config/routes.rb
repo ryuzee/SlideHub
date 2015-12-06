@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     get 'statistics', on: :collection
   end
   resources :slides
-  resources :comments, :only => [:create, :destroy]
+  resources :comments, only: [:create, :destroy]
 
   resources :managements do
     get 'dashboard', on: :collection

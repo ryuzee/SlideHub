@@ -10,8 +10,8 @@
 #  category_id    :integer          not null
 #  created_at     :datetime         not null
 #  modified_at    :datetime
-#  key            :string(255)      default("")
-#  extension      :string(10)       default(""), not null
+#  key            :string(255)      default('')
+#  extension      :string(10)       default(''), not null
 #  convert_status :integer          default(0)
 #  total_view     :integer          default(0), not null
 #  page_view      :integer          default(0)
@@ -35,14 +35,14 @@ class Slide < ActiveRecord::Base
   validates :key, uniqueness: true
   validates :category_id, presence: true
 
-  scope :published, ->  { where('convert_status = 100') }
-  scope :failed, ->  { where('convert_status != 100') }
+  scope :published, -> { where('convert_status = 100') }
+  scope :failed, -> { where('convert_status != 100') }
   scope :latest, -> { order('created_at desc') }
   scope :popular, -> { order('total_view desc') }
-  scope :category, -> (category_id) { where("category_id = ?", category_id) }
-  scope :owner, -> (user_id) { where("user_id = ?", user_id) }
+  scope :category, -> (category_id) { where('category_id = ?', category_id) }
+  scope :owner, -> (user_id) { where('user_id = ?', user_id) }
 
-  def self.ransackable_attributes auth_object = nil
+  def self.ransackable_attributes(auth_object = nil)
     (column_names + ['tag_search']) + _ransackers.keys
   end
 end

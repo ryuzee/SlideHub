@@ -38,10 +38,8 @@ namespace :unicorn do
   end
 
   def unicorn_pid
-    begin
-      File.read('/tmp/unicorn.pid').to_i
-    rescue Errno::ENOENT
-      raise "Unicorn doesn't seem to be running"
-    end
+    File.read('/tmp/unicorn.pid').to_i
+  rescue Errno::ENOENT
+    raise "Unicorn doesn't seem to be running"
   end
 end

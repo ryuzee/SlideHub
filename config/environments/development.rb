@@ -44,7 +44,7 @@ Rails.application.configure do
   # Bullet
   # See http://ruby-rails.hatenadiary.com/entry/20150204/1423055537
   config.after_initialize do
-    Bullet.enable  = true   # bullet を有効にする
+    Bullet.enable  = true # bullet を有効にする
 
     # 以下はN+1問題を発見した時のユーザーへの通知方法
     Bullet.alert   = true        # ブラウザのJavaScriptアラート

@@ -1,24 +1,24 @@
 module Oss
   class ConvertUtil
-    def rename_to_pdf (dir, file)
+    def rename_to_pdf(dir, file)
       cmd = "cd #{dir} && mv #{file} #{file}.pdf"
       result = system(cmd)
       result
     end
 
-    def pdf_to_ppm (dir, file)
+    def pdf_to_ppm(dir, file)
       cmd = "cd #{dir} && pdftoppm #{file} slide"
       result = system(cmd)
       result
     end
 
-    def ppt_to_pdf (dir, file)
+    def ppt_to_pdf(dir, file)
       cmd = "cd #{dir} && unoconv -f pdf -o #{file}.pdf #{file}"
       result = system(cmd)
       result
     end
 
-    def ppm_to_jpg (dir)
+    def ppm_to_jpg(dir)
       cmd = "cd #{dir} && mogrify -format jpg slide*.ppm"
       result = system(cmd)
       if result
@@ -29,7 +29,7 @@ module Oss
       end
     end
 
-    def jpg_to_thumbnail (list)
+    def jpg_to_thumbnail(list)
       i = Oss::Image.new
       thumbnail_list = Array.new
 
@@ -45,7 +45,7 @@ module Oss
       thumbnail_list
     end
 
-    def pdf_to_transcript (dir, file)
+    def pdf_to_transcript(dir, file)
       transcript = Array.new
       reader = PDF::Reader.new("#{dir}/#{file}")
       page_count = reader.page_count.to_i
@@ -60,7 +60,7 @@ module Oss
       "#{dir}/transcript.txt"
     end
 
-    def get_slide_file_type (file)
+    def get_slide_file_type(file)
       ext = FileMagic.new(FileMagic::MAGIC_MIME).file(file).split(';').first
       case ext
       when 'application/pdf'
@@ -74,11 +74,11 @@ module Oss
       end
     end
 
-    def get_local_file_list (dir, extension)
+    def get_local_file_list(dir, extension)
       list = Array.new
-      Dir::glob("#{dir}/*#{extension}").each {|f|
+      Dir::glob("#{dir}/*#{extension}").each do |f|
         list.push(f)
-      }
+      end
       list.sort
     end
   end

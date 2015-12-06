@@ -1,6 +1,6 @@
 class MigrateCustomContentsAndSetting < ActiveRecord::Migration
   def up
-    execute("TRUNCATE TABLE settings")
+    execute('TRUNCATE TABLE settings')
 
     if ActiveRecord::Base.connection.table_exists?('configs')
       execute("INSERT INTO settings(var, value, thing_id, thing_type) select concat('site.', name),  concat('--- ''', value, ''''), NULL, NULL from configs;")
