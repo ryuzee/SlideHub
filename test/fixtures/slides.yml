@@ -7,12 +7,12 @@
 one:
   id: 1
   user_id: 1
-  name: "Slide Name 1"
-  description: "Slide Description 1"
+  name: 'Slide Name 1'
+  description: 'Slide Description 1'
   downloadable: true
   category_id: 1
-  key: "abcdefghijklmn1"
-  extension: ".pptx"
+  key: 'abcdefghijklmn1'
+  extension: '.pptx'
   convert_status: 100
   total_view: 2
   page_view: 1
@@ -22,12 +22,12 @@ one:
 two:
   id: 2
   user_id: 2
-  name: "Slide Name 2"
-  description: "Slide Description 2"
+  name: 'Slide Name 2'
+  description: 'Slide Description 2'
   downloadable: true
   category_id: 2
-  key: "abcdefghijklmn2"
-  extension: ".pdf"
+  key: 'abcdefghijklmn2'
+  extension: '.pdf'
   convert_status: 100
   total_view: 2
   page_view: 1

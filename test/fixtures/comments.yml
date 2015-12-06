@@ -7,13 +7,13 @@
 one:
   user_id: 1
   commentable_id: 1
-  comment: "comment by admin to slide 1"
-  commentable_type: "Slide"
-  role: "comments"
+  comment: 'comment by admin to slide 1'
+  commentable_type: 'Slide'
+  role: 'comments'
 
 two:
   user_id: 2
   commentable_id: 2
-  comment: "comment by user1 to slide 2"
-  commentable_type: "Slide"
-  role: "comments"
+  comment: 'comment by user1 to slide 2'
+  commentable_type: 'Slide'
+  role: 'comments'

@@ -1,4 +1,4 @@
-require "rails"
+require 'rails'
 require "#{Rails.root}/app/controllers/concerns/sqs_usable"
 include SqsUsable
 require "#{Rails.root}/app/controllers/concerns/common"
@@ -9,13 +9,13 @@ namespace :ossjob do
   task :handle_slides => :environment do
     Oss::BatchLogger.info('Start convert process')
     resp = receive_message(1)
-    if !resp.instance_of?(Array) or resp.count == 0
+    if !resp.instance_of?(Array) || resp.count == 0
       Oss::BatchLogger.info('No SQS message found')
     end
     resp.messages.each do |msg|
       obj = JSON.parse(msg.body)
       Oss::BatchLogger.info("Start converting slide. id=#{obj['id']} key=#{obj['key']}")
-      result = convert_slide(obj["key"])
+      result = convert_slide(obj['key'])
       if result
         Oss::BatchLogger.info("Delete message from SQS. id=#{obj['id']} key=#{obj['key']}")
         delete_message(msg)
@@ -32,7 +32,7 @@ namespace :ossjob do
   end
 
   task :install => :environment do
-    Rake::Task["ossjob:db_compatibility_check"].invoke
-    Rake::Task["db:migrate"].invoke
+    Rake::Task['ossjob:db_compatibility_check'].invoke
+    Rake::Task['db:migrate'].invoke
   end
 end

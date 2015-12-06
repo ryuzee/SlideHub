@@ -13,12 +13,12 @@ class SlidesControllerTest < ActionController::TestCase
   end
 
   def login
-    @request.env["devise.mapping"] = Devise.mappings[:admin]
+    @request.env['devise.mapping'] = Devise.mappings[:admin]
     sign_in FactoryGirl.create(:admin)
   end
 
   def logout
-    @request.env["devise.mapping"] = Devise.mappings[:admin]
+    @request.env['devise.mapping'] = Devise.mappings[:admin]
     sign_out FactoryGirl.create(:admin)
   end
 
@@ -31,42 +31,42 @@ class SlidesControllerTest < ActionController::TestCase
     CustomSetting['custom_content.right_top'] = ''
   end
 
-  test "should get index" do
+  test 'should get index' do
     self.logout
     self.custom_setting
     get :index
     assert_response :success
-    assert_no_match "Admin Dashboard", response.body
-    assert_match "Signup", response.body
-    assert_match "Signin", response.body
-    assert_no_match "My Account", response.body
-    assert_no_match "Logout", response.body
+    assert_no_match 'Admin Dashboard', response.body
+    assert_match 'Signup', response.body
+    assert_match 'Signin', response.body
+    assert_no_match 'My Account', response.body
+    assert_no_match 'Logout', response.body
   end
 
-  test "should get index with loggedin user" do
+  test 'should get index with loggedin user' do
     self.login
     get :index
     assert_response :success
-    assert_match "Admin Dashboard", response.body
-    assert_match "My Account", response.body
-    assert_match "Logout", response.body
+    assert_match 'Admin Dashboard', response.body
+    assert_match 'My Account', response.body
+    assert_match 'Logout', response.body
   end
 
-  test "should get popular" do
+  test 'should get popular' do
     get :popular
     assert_response :success
-    assert_match "Popular Slides", response.body
+    assert_match 'Popular Slides', response.body
   end
 
-  test "should get latest" do
+  test 'should get latest' do
     get :latest
     assert_response :success
-    assert_match "Latest Slides", response.body
+    assert_match 'Latest Slides', response.body
   end
 
-  test "should get search" do
+  test 'should get search' do
     get :search
     assert_response :success
-    assert_match "Search Slides", response.body
+    assert_match 'Search Slides', response.body
   end
 end

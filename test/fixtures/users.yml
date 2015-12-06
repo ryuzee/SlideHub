@@ -7,17 +7,17 @@
 admin:
   id: 1
   email: admin@example.com
-  display_name: "ADMIN"
+  display_name: 'ADMIN'
   admin: true
   disabled: false
-  biography: "I am administrator"
+  biography: 'I am administrator'
   slides_count: 0
 
 user1:
   id: 2
   email: user1@example.com
-  display_name: "USER1"
+  display_name: 'USER1'
   admin: false
   disabled: false
-  biography: "I am normal user"
+  biography: 'I am normal user'
   slides_count: 0
