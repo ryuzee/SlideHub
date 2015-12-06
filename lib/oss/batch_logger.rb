@@ -7,7 +7,7 @@ module Oss
         :warn,
         :error,
         :fatal,
-        to: :logger
+        to: :logger,
       )
 
       def logger

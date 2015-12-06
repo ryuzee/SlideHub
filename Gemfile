@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
 # Use sqlite3 as the database for Active Record
@@ -67,7 +66,7 @@ gem 'acts_as_commentable'
 gem 'acts-as-taggable-on'
 
 # Complicated Search
-gem "ransack"
+gem 'ransack'
 
 # Manage Title and meta tags
 gem 'meta-tags'
@@ -80,7 +79,7 @@ gem 'aws-sdk-resources'
 gem 'ruby-filemagic'
 
 # Handle images
-gem 'rmagick', :require => 'RMagick'
+gem 'rmagick'
 
 # retrieve page count of pdf
 gem 'pdf-reader'
@@ -89,7 +88,7 @@ gem 'pdf-reader'
 gem 'counter_culture'
 
 # save settings
-gem "rails-settings-cached", "= 0.4.4"
+gem 'rails-settings-cached', '= 0.4.4'
 
 # AP Server
 gem 'unicorn'
@@ -138,10 +137,10 @@ group :development do
 
   # Display the environment name
   # https://github.com/dtaniwaki/rack-dev-mark
-  gem "rack-dev-mark"
+  gem 'rack-dev-mark'
 
   # Include template path
-  gem "view_source_map"
+  gem 'view_source_map'
 
   # Display nice error screen
   gem 'better_errors'

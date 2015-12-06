@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   devise_for :users
   resources :slides do
     get 'latest', on: :collection

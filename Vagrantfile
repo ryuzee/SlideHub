@@ -13,7 +13,6 @@
 # Ubuntu: sudo apt-get install nfs-kernel-server
 # Mac   : sudo nfsd enable
 Vagrant.configure(2) do |config|
-
   if RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/
     puts '--- ERROR ---'
     puts 'This Vagrantfile is not compatible with Windows environment'
@@ -34,21 +33,21 @@ Vagrant.configure(2) do |config|
     develop.vm.box_url = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box'
     develop.vm.network 'forwarded_port', guest: 3000, host: 3000
     develop.vm.network 'private_network', ip: '192.168.33.10'
-    develop.vm.synced_folder File.dirname(__FILE__), '/vagrant-nfs', :nfs => { mount_options: ['dmode=777', 'fmode=777'] }
-    develop.bindfs.bind_folder '/vagrant-nfs', '/home/vagrant/myapp', :owner => 'vagrant', :group => 'vagrant', :'create-as-user' => true, :perms => 'u=rwx:g=rx:o=rx', :'create-with-perms' => 'u=wrx:g=rwx:o=rwx', :'chown-ignore' => true, :'chgrp-ignore' => true, :'chmod-ignore' => true
+    develop.vm.synced_folder File.dirname(__FILE__), '/vagrant-nfs', nfs: { mount_options: ['dmode=777', 'fmode=777'] }
+    develop.bindfs.bind_folder '/vagrant-nfs', '/home/vagrant/myapp', owner: 'vagrant', group: 'vagrant', :'create-as-user' => true, perms: 'u=rwx:g=rx:o=rx', :'create-with-perms' => 'u=wrx:g=rwx:o=rwx', :'chown-ignore' => true, :'chgrp-ignore' => true, :'chmod-ignore' => true
 
     develop.vm.provider 'virtualbox' do |vb|
       vb.gui = false
       vb.memory = '1024'
     end
 
-    if Vagrant.has_plugin?("vagrant-cachier")
+    if Vagrant.has_plugin?('vagrant-cachier')
       develop.cache.scope = :box
     end
 
-    develop.vm.provision "file", source: "script/ruby_env.sh", destination: "/tmp/ruby_env.sh"
-    develop.vm.provision "file", source: "script/oss_env.sh", destination: "/tmp/oss_env.sh"
-    develop.vm.provision "shell", path: "script/develop.sh"
+    develop.vm.provision 'file', source: 'script/ruby_env.sh', destination: '/tmp/ruby_env.sh'
+    develop.vm.provision 'file', source: 'script/oss_env.sh', destination: '/tmp/oss_env.sh'
+    develop.vm.provision 'shell', path: 'script/develop.sh'
   end
 
   config.vm.define :staging do |staging|
@@ -61,33 +60,32 @@ Vagrant.configure(2) do |config|
       vb.memory = '1024'
     end
 
-    if Vagrant.has_plugin?("vagrant-cachier")
+    if Vagrant.has_plugin?('vagrant-cachier')
       staging.cache.scope = :box
     end
 
     ## Generate environment file for staging
-    if File.exists?(File.dirname(__FILE__) + '/.env')
+    if File.exist?(File.dirname(__FILE__) + '/.env')
       out = ''
       File.read(File.dirname(__FILE__) + '/.env').each_line do |l|
-        out += l.gsub(/OSS\_/, "export OSS_")
+        out += l.gsub(/OSS\_/, 'export OSS_')
       end
-      require "tempfile"
+      require 'tempfile'
       file = Tempfile.new('env', '/tmp/')
       begin
         file.write(out)
         file.close
-        staging.vm.provision "file", source: file.path, destination: "/tmp/environment"
+        staging.vm.provision 'file', source: file.path, destination: '/tmp/environment'
       end
     end
 
     ## Deploy ssh secret key
-    if ENV.has_key?('OSS_STAGING_SSH_SECRET_KEY') && File.exists?(ENV['OSS_STAGING_SSH_SECRET_KEY'])
-      staging.vm.provision "file", source: ENV['OSS_STAGING_SSH_SECRET_KEY'], destination: "/tmp/id_rsa"
+    if ENV.has_key?('OSS_STAGING_SSH_SECRET_KEY') && File.exist?(ENV['OSS_STAGING_SSH_SECRET_KEY'])
+      staging.vm.provision 'file', source: ENV['OSS_STAGING_SSH_SECRET_KEY'], destination: '/tmp/id_rsa'
     end
 
-    staging.vm.provision "file", source: "script/ruby_env.sh", destination: "/tmp/ruby_env.sh"
-    staging.vm.provision "file", source: "script/oss_env.sh", destination: "/tmp/oss_env.sh"
-    staging.vm.provision "shell", path: "script/staging.sh"
-
+    staging.vm.provision 'file', source: 'script/ruby_env.sh', destination: '/tmp/ruby_env.sh'
+    staging.vm.provision 'file', source: 'script/oss_env.sh', destination: '/tmp/oss_env.sh'
+    staging.vm.provision 'shell', path: 'script/staging.sh'
   end
 end

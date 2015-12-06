@@ -31,11 +31,11 @@ module Myapp
 
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-      :address => ENV['OSS_SMTP_SERVER'],
-      :port => ENV['OSS_SMTP_PORT'],
-      :authentication => ENV['OSS_SMTP_AUTH_METHOD'],
-      :user_name => ENV['OSS_SMTP_USERNAME'],
-      :password => ENV['OSS_SMTP_PASSWORD']
+      address: ENV['OSS_SMTP_SERVER'],
+      port: ENV['OSS_SMTP_PORT'],
+      authentication: ENV['OSS_SMTP_AUTH_METHOD'],
+      user_name: ENV['OSS_SMTP_USERNAME'],
+      password: ENV['OSS_SMTP_PASSWORD'],
     }
   end
 end

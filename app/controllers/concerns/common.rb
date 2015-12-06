@@ -38,15 +38,15 @@ module Common
     url
   end
 
-  def transcript_url (key)
+  def transcript_url(key)
     self.get_url("/#{key}/transcript.txt")
   end
 
-  def page_list_url (key)
+  def page_list_url(key)
     self.get_url("/#{key}/list.json")
   end
 
-  def get_url (path)
+  def get_url(path)
     unless ENV['OSS_CDN_BASE_URL'].empty?
       url = "#{ENV['OSS_CDN_BASE_URL']}#{path}"
     else
@@ -55,12 +55,12 @@ module Common
     url
   end
 
-  def get_pages_list (key)
+  def get_pages_list(key)
     response = self.get_json(self.get_url("/#{key}/list.json"))
     response
   end
 
-  def get_transcript (key)
+  def get_transcript(key)
     begin
       response =  Net::HTTP.get_response(URI.parse(self.get_url("/#{key}/transcript.txt")))
       case response
@@ -70,7 +70,7 @@ module Common
         return PhpSerialization::Unserializer.new.run(response)
       else
         puts response.value
-        return Array.new
+        return []
         # handle error
       end
     rescue => e
@@ -79,19 +79,19 @@ module Common
     end
   end
 
-  def get_download_path (key)
+  def get_download_path(key)
     signer = Aws::S3::Presigner.new(client: self.s3)
     url = signer.presigned_url(:get_object, bucket: ENV['OSS_BUCKET_NAME'], key: key)
     url
   end
 
-  def get_file_list_from_s3 (bucket, prefix)
+  def get_file_list_from_s3(bucket, prefix)
     resp = self.s3.list_objects({
       bucket: bucket,
       max_keys: 1000,
       prefix: prefix,
-    })
-    files = Array.new
+    },)
+    files = []
     resp.contents.each do |f|
       files.push({ key: f.key })
     end
@@ -100,22 +100,22 @@ module Common
 
   def s3
     s3 = Aws::S3::Client.new(
-      region: ENV['OSS_REGION']
+      region: ENV['OSS_REGION'],
     )
     s3
   end
 
-  def delete_files_from_s3 (bucket, files)
+  def delete_files_from_s3(bucket, files)
     self.s3.delete_objects({
       bucket: bucket,
       delete: {
         objects: files,
         quiet: true,
       },
-    }) unless files.empty?
+    },) unless files.empty?
   end
 
-  def delete_slide_from_s3 (key)
+  def delete_slide_from_s3(key)
     if key.empty?
       return false
     end
@@ -124,7 +124,7 @@ module Common
     true
   end
 
-  def delete_generated_files_from_s3 (key)
+  def delete_generated_files_from_s3(key)
     if key.empty?
       return false
     end
@@ -310,7 +310,7 @@ module Common
   end
 
   def generate_json_list(list, prefix, filename)
-    save_list = Array.new
+    save_list = []
     list.each do |item|
       save_list.push("#{prefix}/#{File.basename(item)}")
     end
@@ -319,17 +319,17 @@ module Common
     end
   end
 
-  def upload_files_to_s3 (bucket, files, prefix)
+  def upload_files_to_s3(bucket, files, prefix)
     s3 = self.s3
     files.each do |f|
       # @TODO: retry and error handling
       s3.put_object(
-        :bucket => bucket,
-        :key => "#{prefix}/#{File.basename(f)}",
-        :body => File.read(f),
-        :acl => 'public-read',
-        :storage_class => 'REDUCED_REDUNDANCY'
-      ) if File.exists?(f)
+        bucket: bucket,
+        key: "#{prefix}/#{File.basename(f)}",
+        body: File.read(f),
+        acl: 'public-read',
+        storage_class: 'REDUCED_REDUNDANCY',
+      ) if File.exist?(f)
     end
   end
 end

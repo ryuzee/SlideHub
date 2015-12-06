@@ -31,7 +31,7 @@ module Oss
 
     def jpg_to_thumbnail(list)
       i = Oss::Image.new
-      thumbnail_list = Array.new
+      thumbnail_list = []
 
       save_to = "#{File.dirname(list[0])}/thumbnail.jpg"
       i.thumbnail(list[0], save_to)
@@ -46,14 +46,14 @@ module Oss
     end
 
     def pdf_to_transcript(dir, file)
-      transcript = Array.new
+      transcript = []
       reader = PDF::Reader.new("#{dir}/#{file}")
       page_count = reader.page_count.to_i
       page_count.times do |i|
-        current_page = i+1
+        current_page = i + 1
         cmd = "cd #{dir} && pdftotext #{file} -f #{current_page} -l #{current_page} - > #{dir}/#{current_page}.txt"
         system(cmd)
-        transcript.push(File.read("#{dir}/#{current_page}.txt").gsub(/([\r|\n|\t| |　]+)/," "))
+        transcript.push(File.read("#{dir}/#{current_page}.txt").gsub(/([\r|\n|\t| |　]+)/, ' '))
       end
       require 'php_serialization/serializer'
       File.write("#{dir}/transcript.txt", PhpSerialization::Serializer.new.run(transcript))
@@ -66,7 +66,7 @@ module Oss
       when 'application/pdf'
         'pdf'
       when 'application/vnd.ms-powerpoint'
-      'ppt'
+        'ppt'
       when 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
         'pptx'
       else
@@ -75,8 +75,8 @@ module Oss
     end
 
     def get_local_file_list(dir, extension)
-      list = Array.new
-      Dir::glob("#{dir}/*#{extension}").each do |f|
+      list = []
+      Dir.glob("#{dir}/*#{extension}").each do |f|
         list.push(f)
       end
       list.sort
