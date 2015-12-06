@@ -13,35 +13,36 @@ class ApplicationController < ActionController::Base
   helper_method :thumbnail_url, :transcript_url, :page_list_url, :endpoint_s3, :upload_endpoint, :get_url, :get_transcript, :get_pages_list, :get_download_path, :get_json, :create_policy
 
   private
-  def set_locale
-    locale = locale_from_accept_language
-    I18n.locale = (I18n::available_locales.include? locale.to_sym) ? locale.to_sym : I18n.default_locale
-  end
 
-  def locale_from_accept_language
-    if request.env.has_key?('HTTP_ACCEPT_LANGUAGE')
-      request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
-    else
-      I18n.default_locale
+    def set_locale
+      locale = locale_from_accept_language
+      I18n.locale = (I18n.available_locales.include? locale.to_sym) ? locale.to_sym : I18n.default_locale
     end
-  end
 
-  def set_category_data
-    @categories = Category.order("id asc")
-  end
-
-  def signup_enabled!
-    return unless request.get?
-    if request.path == '/users/sign_up' && CustomSetting['site.signup_enabled'] != "1"
-      raise ActionController::RoutingError.new('Not Found')
+    def locale_from_accept_language
+      if request.env.has_key?('HTTP_ACCEPT_LANGUAGE')
+        request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+      else
+        I18n.default_locale
+      end
     end
-  end
 
-  def configure_permitted_parameters
-    actions = [:sign_up, :account_update]
-    actions.each do |a|
-      devise_parameter_sanitizer.for(a) << :display_name
-      devise_parameter_sanitizer.for(a) << :biography
+    def set_category_data
+      @categories = Category.order('id asc')
     end
-  end
+
+    def signup_enabled!
+      return unless request.get?
+      if request.path == '/users/sign_up' && CustomSetting['site.signup_enabled'] != '1'
+        raise ActionController::RoutingError.new('Not Found')
+      end
+    end
+
+    def configure_permitted_parameters
+      actions = [:sign_up, :account_update]
+      actions.each do |a|
+        devise_parameter_sanitizer.for(a) << :display_name
+        devise_parameter_sanitizer.for(a) << :biography
+      end
+    end
 end

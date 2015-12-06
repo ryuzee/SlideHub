@@ -14,28 +14,28 @@ class ManagementsController < ApplicationController
     @download_count = rec.download_count
     @embedded_view = rec.embedded_view
 
-    @latest_slides = Slide.published.latest
-      .includes(:user)
-      .limit(10)
-    @popular_slides = Slide.published.popular
-      .includes(:user)
-      .limit(10)
+    @latest_slides = Slide.published.latest.
+                     includes(:user).
+                     limit(10)
+    @popular_slides = Slide.published.popular.
+                      includes(:user).
+                      limit(10)
   end
 
   def user_list
     ransack_params = params[:q]
     @q = User.search(ransack_params)
-    @users = @q.result(distinct: true)
-      .latest
-      .paginate(page: params[:page], per_page: 20)
+    @users = @q.result(distinct: true).
+             latest.
+             paginate(page: params[:page], per_page: 20)
   end
 
   def slide_list
     ransack_params = params[:q]
     @q = Slide.search(ransack_params)
-    @slides = @q.result(distinct: true)
-      .latest
-      .paginate(page: params[:page], per_page: 20)
+    @slides = @q.result(distinct: true).
+              latest.
+              paginate(page: params[:page], per_page: 20)
   end
 
   def slide_edit
@@ -79,9 +79,9 @@ class ManagementsController < ApplicationController
 
   private
 
-  def admin_user!
-    if !user_signed_in? or !current_user.admin
-      redirect_to new_user_session_path
+    def admin_user!
+      if !user_signed_in? || !current_user.admin
+        redirect_to new_user_session_path
+      end
     end
-  end
 end
