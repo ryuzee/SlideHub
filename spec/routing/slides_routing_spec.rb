@@ -51,6 +51,22 @@ describe SlidesController do
     it 'routes to #destroy' do
       expect(delete('/slides/1')).to route_to('slides#destroy', id: '1')
     end
-    # @TODO: need to add compatibility check with previous version
+
+    # backward compatibility
+    it 'routes to #index (BC)' do
+      expect(get('/slides/index')).to route_to('slides#index')
+    end
+
+    it 'routes to #show (BC)' do
+      expect(get('/slides/view/1')).to route_to('slides#show', id: '1')
+    end
+
+    it 'routes to #download (BC)' do
+      expect(get('/slides/download/1')).to route_to('slides#download', id: '1')
+    end
+
+    it 'routes to #embedded (BC)' do
+      expect(get('/slides/embedded/1')).to route_to('slides#embedded', id: '1')
+    end
   end
 end
