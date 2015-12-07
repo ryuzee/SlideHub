@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
 
   include ActsAsTaggableOn::TagsHelper
   include Common
-  helper_method :create_policy
 
   private
 
