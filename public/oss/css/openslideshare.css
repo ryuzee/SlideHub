@@ -112,10 +112,10 @@ body.openslideshare_body {
 }
 
 .openslideshare_body div.slider {
-    padding-right: 0px !important;
-    border-top:1px solid #000;
-    border-left:1px solid #000;
-    border-right:1px solid #000 !important;
+    padding-right: 1px !important;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000 !important;
 }
 
 .openslideshare_body div#slide_div_box {
