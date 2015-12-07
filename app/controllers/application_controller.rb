@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   include ActsAsTaggableOn::TagsHelper
   include Common
-  helper_method :thumbnail_url, :transcript_url, :page_list_url, :endpoint_s3, :upload_endpoint, :get_url, :get_transcript, :get_pages_list, :get_json, :create_policy
+  helper_method :create_policy
 
   private
 

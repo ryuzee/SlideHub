@@ -1,4 +1,4 @@
-<% page_list = get_pages_list(slide.key) %>
+<% page_list = slide.page_list %>
 <%
 if page_list.instance_of?(Array)
   page_count = page_list.count
@@ -10,7 +10,7 @@ end
 <% count = 0 %>
 <% page_list.each do |f| %>
 <% count +=1 %>
-<% u = get_url("/#{f}") %>
+<% u = "#{Myapp::Application.config.oss_resource_endpoint}/#{f}") %>
 <div class="vertical_slide_box">
     <% if count <= 2 %>
         <img class="lazy img-responsive" src="<%= u %>" />

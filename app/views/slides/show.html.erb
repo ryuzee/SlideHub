@@ -68,7 +68,7 @@
     <% end %>
 
     <%
-        transcripts = get_transcript(@slide.key)
+        transcripts = @slide.transcript
         show_tran = false
         if transcripts.instance_of?(Array)
           transcripts.each do |tran|
@@ -129,7 +129,7 @@
         <% @other_slides.each do |s| %>
         <div class="col-md-12 col-sm-6" style="padding:8px;">
             <a href="/slides/<%= s.id %>">
-                <img width="120px" src="<%= thumbnail_url(s.key) %>" class="related_slide_thumbnail" />
+                <img width="120px" src="<%= s.thumbnail_url %>" class="related_slide_thumbnail" />
             </a>
             <span class="h6"><%= s.name %></span><br />
             <span class="h6"><%= s.created_at %> by <a href="/users/<%= s.user_id %>"><%= s.user.display_name %></a></span>

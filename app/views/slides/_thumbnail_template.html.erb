@@ -5,7 +5,7 @@
       <% elsif slide.convert_status < 100 then %>
         <% image_url = "/oss/images/converting_small.jpg" %>
       <% else %>
-        <% image_url =  thumbnail_url(slide.key) %>
+        <% image_url = slide.thumbnail_url %>
       <% end %>
 
       <div class="<%= column_class %> bottom_margin">

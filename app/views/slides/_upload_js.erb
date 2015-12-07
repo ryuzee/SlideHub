@@ -21,7 +21,7 @@ $1102(document).ready(function() {
         event.preventDefault();
 
         var formData = new FormData();
-        var url = "<%= upload_endpoint %>";
+        var url = "<%= Myapp::Application.config.oss_upload_endpoint %>";
 
         var form = $1102('#upload-form');
         $1102(form.serializeArray()).each(function(i, v) {

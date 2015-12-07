@@ -1,6 +1,6 @@
 <div id="slide_player">
 <div class="slider" id="slide_body">
-<% page_list = get_pages_list(slide.key) %>
+<% page_list = slide.page_list %>
 <%
 if page_list.instance_of?(Array)
   page_count = page_list.count
@@ -12,7 +12,7 @@ end
 <% if page_count > 0 %>
     <% count = 0 %>
     <% page_list.each do |f| %>
-    <% u = get_url("/#{f}") %>
+      <% u = "#{Myapp::Application.config.oss_resource_endpoint}/#{f}" %>
     <% if count >= 2 %>
       <li><img style="border:0px !important" class="lazy image-<%= count %>" src="<%= root_url %>oss/images/spacer.gif" data-src="<%= u %>" /></li>
     <% else %>

@@ -1,3 +1,8 @@
+require 'net/http'
+require 'uri'
+require 'json'
+require 'securerandom'
+
 # == Schema Information
 #
 # Table name: slides
@@ -20,6 +25,7 @@
 #
 
 class Slide < ActiveRecord::Base
+  include WebResource
   belongs_to :user
   counter_culture :user
   belongs_to :category
@@ -44,5 +50,39 @@ class Slide < ActiveRecord::Base
 
   def self.ransackable_attributes(auth_object = nil)
     (column_names + ['tag_search']) + _ransackers.keys
+  end
+
+  def thumbnail_url
+    "#{Myapp::Application.config.oss_resource_endpoint}/#{key}/thumbnail.jpg"
+  end
+
+  def transcript_url
+    "#{Myapp::Application.config.oss_resource_endpoint}/#{key}/transcript.txt"
+  end
+
+  def page_list_url
+    "#{Myapp::Application.config.oss_resource_endpoint}/#{key}/list.json"
+  end
+
+  def page_list
+    url = self.page_list_url
+    return get_json(url)
+  end
+
+  def transcript
+    begin
+      response =  Net::HTTP.get_response(URI.parse(self.transcript_url))
+      case response
+      when Net::HTTPSuccess
+        response = response.body.dup.force_encoding('utf-8')
+        require 'php_serialization/unserializer'
+        return PhpSerialization::Unserializer.new.run(response)
+      else
+        puts response.value
+        return []
+      end
+    rescue => e
+      puts [e.class, e].join(' : ')
+    end
   end
 end

@@ -48,5 +48,36 @@ module Myapp
         request_specs: false
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
+
+    def resource_endpoint
+      bucket_name = ENV['OSS_IMAGE_BUCKET_NAME']
+      unless ENV['OSS_CDN_BASE_URL'].empty?
+        url = "#{ENV['OSS_CDN_BASE_URL']}"
+      else
+        if (ENV['OSS_USE_S3_STATIC_HOSTING'] == '1')
+          url = "http://#{bucket_name}"
+        else
+          if (ENV['OSS_REGION'] == 'us-east-1')
+            url = "https://#{bucket_name}.s3.amazonaws.com"
+          else
+            url = "https://#{bucket_name}.s3-#{ENV['OSS_REGION']}.amazonaws.com"
+          end
+        end
+      end
+      url
+    end
+
+    def upload_endpoint
+      bucket_name = ENV['OSS_BUCKET_NAME']
+      if (ENV['OSS_REGION'] == 'us-east-1')
+        url = "https://#{bucket_name}.s3.amazonaws.com"
+      else
+        url = "https://#{bucket_name}.s3-#{ENV['OSS_REGION']}.amazonaws.com"
+      end
+      url
+    end
+
+    config.oss_resource_endpoint = self.resource_endpoint
+    config.oss_upload_endpoint = self.upload_endpoint
   end
 end

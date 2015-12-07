@@ -112,7 +112,7 @@ class SlidesController < ApplicationController
     count = 0
     begin
       @slide = Slide.find(params[:id])
-      resp = get_pages_list(@slide.key)
+      resp = @slide.page_list
       if resp
         count = resp.count
       else

@@ -31,7 +31,7 @@
                 <td><%= slide.embedded_view %></td>
                 <td><%= slide.download_count %></td>
                 <td><%= slide.comments.count %></td>
-                <td><a href="<%= transcript_url(slide.key) %>" target="_blank"><i class="fa fa-file-text"></i></a>&nbsp;<a href="<%= page_list_url(slide.key) %>" target="_blank"><i class="fa fa-jsfiddle"></i></a>&nbsp;<a href="/managements/download/<%= slide.id %>"><i class="fa fa-cloud-download"></i></a>&nbsp;<a href="/managements/slide_edit/<%= slide.id %>"><i class="fa fa-pencil"></i></a></td>
+                <td><a href="<%= slide.transcript_url %>" target="_blank"><i class="fa fa-file-text"></i></a>&nbsp;<a href="<%= slide.page_list_url %>" target="_blank"><i class="fa fa-jsfiddle"></i></a>&nbsp;<a href="/managements/download/<%= slide.id %>"><i class="fa fa-cloud-download"></i></a>&nbsp;<a href="/managements/slide_edit/<%= slide.id %>"><i class="fa fa-pencil"></i></a></td>
             </tr>
             <% end %>
         </tbody>
