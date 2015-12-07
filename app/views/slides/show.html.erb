@@ -40,7 +40,7 @@
     <div class="h5">
     <%= t ('activerecord.models.tag') %>:
     <% @slide.tags.each do |t| %>
-    <a href="/slides/search?q%5Btag_search%5D=<%= t %>"><%= t %></a>&nbsp;
+      <a href="/slides/search?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;
     <% end %>
     </div>
 
