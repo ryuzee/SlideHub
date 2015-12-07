@@ -5,29 +5,22 @@ class SlidesController < ApplicationController
   protect_from_forgery except: :embedded
 
   def index
-    @latest_slides = Slide.published.latest.
-                     limit(8).
-                     includes(:user)
-    @popular_slides = Slide.published.popular.
-                      limit(8).
-                      includes(:user)
+    @latest_slides = Slide.published.latest.limit(8).includes(:user)
+    @popular_slides = Slide.published.popular.limit(8).includes(:user)
   end
 
   def latest
-    @slides = Slide.published.latest.
-              includes(:user).
+    @slides = Slide.published.latest.includes(:user).
               paginate(page: params[:page], per_page: 20)
   end
 
   def popular
-    @slides = Slide.published.popular.
-              includes(:user).
+    @slides = Slide.published.popular.includes(:user).
               paginate(page: params[:page], per_page: 20)
   end
 
   def category
-    @slides = Slide.published.latest.category(params[:id]).
-              includes(:user).
+    @slides = Slide.published.latest.category(params[:id]).includes(:user).
               paginate(page: params[:page], per_page: 20)
 
     Category.select('name')
@@ -56,8 +49,9 @@ class SlidesController < ApplicationController
   def destroy
     @slide = Slide.find(params[:id])
     if @slide.user_id == current_user.id
-      delete_slide_from_s3(@slide.key)
-      delete_generated_files_from_s3(@slide.key)
+      storage = Storage.new
+      storage.delete_slide(@slide.key)
+      storage.delete_generated_files(@slide.key)
       @slide.destroy
     end
     redirect_to '/users/index'
@@ -140,7 +134,8 @@ class SlidesController < ApplicationController
 
   def download
     @slide = Slide.find(params[:id])
-    url = get_download_path(@slide.key)
+    storage = Storage.new
+    url = storage.get_slide_download_url(@slide.key)
     require 'open-uri'
     data = open(url).read
     send_data data, disposition: 'attachment', filename: "#{@slide.key}#{@slide.extension}"

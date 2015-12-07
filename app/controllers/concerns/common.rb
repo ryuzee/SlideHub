@@ -79,60 +79,6 @@ module Common
     end
   end
 
-  def get_download_path(key)
-    signer = Aws::S3::Presigner.new(client: self.s3)
-    url = signer.presigned_url(:get_object, bucket: ENV['OSS_BUCKET_NAME'], key: key)
-    url
-  end
-
-  def get_file_list_from_s3(bucket, prefix)
-    resp = self.s3.list_objects({
-      bucket: bucket,
-      max_keys: 1000,
-      prefix: prefix,
-    },)
-    files = []
-    resp.contents.each do |f|
-      files.push({ key: f.key })
-    end
-    files
-  end
-
-  def s3
-    s3 = Aws::S3::Client.new(
-      region: ENV['OSS_REGION'],
-    )
-    s3
-  end
-
-  def delete_files_from_s3(bucket, files)
-    self.s3.delete_objects({
-      bucket: bucket,
-      delete: {
-        objects: files,
-        quiet: true,
-      },
-    },) unless files.empty?
-  end
-
-  def delete_slide_from_s3(key)
-    if key.empty?
-      return false
-    end
-    files = self.get_file_list_from_s3(ENV['OSS_BUCKET_NAME'], key)
-    self.delete_files_from_s3(ENV['OSS_BUCKET_NAME'], files)
-    true
-  end
-
-  def delete_generated_files_from_s3(key)
-    if key.empty?
-      return false
-    end
-    files = self.get_file_list_from_s3(ENV['OSS_IMAGE_BUCKET_NAME'], key)
-    self.delete_files_from_s3(ENV['OSS_IMAGE_BUCKET_NAME'], files)
-    true
-  end
-
   def get_json(location, limit = 10)
     raise ArgumentError, 'too many HTTP redirects' if limit == 0
     uri = URI.parse(location)
@@ -259,10 +205,8 @@ module Common
       Oss::BatchLogger.info("Current directory is #{dir}")
       file = "#{SecureRandom.hex}"
       # @TODO:needs to be method and retry
-      self.s3.get_object(
-        response_target: "#{dir}/#{file}",
-        bucket: ENV['OSS_BUCKET_NAME'],
-        key: key)
+      storage = Storage.new
+      storage.save_file(ENV['OSS_BUCKET_NAME'], key, "#{dir}/#{file}")
       ft = Oss::ConvertUtil.new.get_slide_file_type("#{dir}/#{file}")
       Oss::BatchLogger.info("File Type is #{ft}")
       case ft
@@ -300,7 +244,8 @@ module Common
       final_list.push(transcript) if transcript
 
       Oss::BatchLogger.info(final_list.inspect)
-      self.upload_files_to_s3(ENV['OSS_IMAGE_BUCKET_NAME'], final_list, key)
+      storage = Storage.new
+      storage.upload_files(ENV['OSS_IMAGE_BUCKET_NAME'], final_list, key)
 
       slide = Slide.where('slides.key = ?', key).first
       slide.convert_status = 100
@@ -316,20 +261,6 @@ module Common
     end
     open(filename, 'w') do |io|
       JSON.dump(save_list, io)
-    end
-  end
-
-  def upload_files_to_s3(bucket, files, prefix)
-    s3 = self.s3
-    files.each do |f|
-      # @TODO: retry and error handling
-      s3.put_object(
-        bucket: bucket,
-        key: "#{prefix}/#{File.basename(f)}",
-        body: File.read(f),
-        acl: 'public-read',
-        storage_class: 'REDUCED_REDUNDANCY',
-      ) if File.exist?(f)
     end
   end
 end
