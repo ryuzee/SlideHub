@@ -105,6 +105,9 @@ gem 'non-stupid-digest-assets'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'rspec-rails'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
 end
 
 group :development do
@@ -145,9 +148,14 @@ group :development do
   # Display nice error screen
   gem 'better_errors'
   gem 'binding_of_caller'
+end
 
-  gem 'factory_girl'
-  gem 'factory_girl_rails'
+group :test do
+  gem 'faker'
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'selenium-webdriver'
 end
 
 group :deployment do
