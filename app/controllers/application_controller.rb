@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   before_filter :signup_enabled!, if: :devise_controller?
 
   include ActsAsTaggableOn::TagsHelper
-  include Common
 
   private
 
