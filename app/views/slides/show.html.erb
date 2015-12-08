@@ -80,50 +80,30 @@ end
   <%= render 'users/right_side_bar', user: @slide.user %>
 
   <div class="panel panel-default h6">
-    <table class="table">
-      <tr>
-        <th>Published</th><td><%= @slide.created_at %></td>
-      </tr>
-      <tr>
-        <th>Category</th><td><a href="/slides/category/<%= @slide.category_id %>"><%= @slide.category.name %></a></td>
-      </tr>
-      <tr>
-        <th>Total View</th><td><%= @slide.total_view %></td>
-      </tr>
-      <tr>
-        <th>Embedded View</th><td><%= @slide.embedded_view %></td>
-      </tr>
+    <ul class="list-group">
+      <li class="list-group-item"><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;Published<span class="pull-right"><%= @slide.created_at %></span></li>
+      <li class="list-group-item"><i class="glyphicon glyphicon-th"></i>&nbsp;&nbsp;Category<span class="pull-right"><a href="/slides/category/<%= @slide.category_id %>"><%= @slide.category.name %></a></span></li>
+      <li class="list-group-item"><i class="fa fa-eye"></i>&nbsp;&nbsp;Total View<span class="pull-right"><%= @slide.total_view %></span></li>
+      <li class="list-group-item"><i class="fa fa-desktop"></i>&nbsp;&nbsp;Embedded View<span class="pull-right"><%= @slide.embedded_view %></span></li>
       <% if @slide.downloadable == 1 %>
-      <tr>
-        <th>Downloads</th><td><%= @slide.download_count %></td>
-      </tr>
+        <li class="list-group-item"><i class="fa fa-circle-down"></i>&nbsp;&nbsp;Downloads<span><%= @slide.download_count %></span></li>
       <% end %>
-      <tr>
-        <th><%= t ('activerecord.models.tag') %></th><td><% @slide.tags.each do |t| %>
+        <li class="list-group-item"><i class="fa fa-tags"></i>&nbsp;&nbsp;<%= t ('activerecord.models.tag') %><span class="pull-right"><% @slide.tags.each do |t| %>
           <a href="/slides/search?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;
         <% end %>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <div class="panel panel-default h6">
-    <!-- Default panel contents -->
-    <div class="panel-heading"><%= t :actions %></div>
-    <!-- List group -->
-    <ul class="list-group">
+    </span></li>
       <% if params[:vertical] == "1" %>
-        <li class="list-group-item"><%= link_to t(:show_slide_with_normal_mode), "/slides/#{@slide.id}" %></li>
+        <li class="list-group-item"><i class="fa fa-play"></i>&nbsp;&nbsp;<%= link_to t(:show_slide_with_normal_mode), "/slides/#{@slide.id}" %></li>
       <% else %>
-        <li class="list-group-item"><%= link_to t(:show_slide_vertically), "/slides/#{@slide.id}?vertical=1" %></li>
+        <li class="list-group-item"><i class="fa fa-film"></i>&nbsp;&nbsp;<%= link_to t(:show_slide_vertically), "/slides/#{@slide.id}?vertical=1" %></li>
       <% end %>
       <% if @slide.downloadable %>
-        <li class="list-group-item"><%= link_to t(:download_slide), "/slides/#{@slide.id}/download" %></li>
+        <li class="list-group-item"><i class="fa fa-download"></i>&nbsp;&nbsp;<%= link_to t(:download_slide), "/slides/#{@slide.id}/download" %></li>
       <% end %>
-      <li class="list-group-item"><%= link_to t(:show_embedded_code), "#", :id => "show_embedded" %></li>
+      <li class="list-group-item"><i class="fa fa-code"></i>&nbsp;&nbsp;<%= link_to t(:show_embedded_code), "#", :id => "show_embedded" %></li>
       <% if user_signed_in? and current_user.id == @slide.user_id %>
-        <li class="list-group-item"><%= link_to t(:edit_slide), "/slides/#{@slide.id}/edit" %></li>
-        <li class="list-group-item"><%= link_to t(:delete_slide), "/slides/#{@slide.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?"} %></li>
+        <li class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<%= link_to t(:edit_slide), "/slides/#{@slide.id}/edit" %></li>
+        <li class="list-group-item"><i class="fa fa-trash"></i>&nbsp;&nbsp;<%= link_to t(:delete_slide), "/slides/#{@slide.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?"} %></li>
       <% end %>
         <li class="list-group-item"><%= render 'slides/share_buttons' %></li>
     </ul>
