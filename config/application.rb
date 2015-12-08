@@ -50,6 +50,32 @@ module Myapp
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
 
+    if ENV.has_key?('OSS_AWS_ACCESS_ID') && !ENV['OSS_AWS_ACCESS_ID'].empty? &&
+       ENV.has_key?('OSS_AWS_SECRET_KEY') && !ENV['OSS_AWS_SECRET_KEY'].empty?
+      cred = {
+        bucket: ENV['OSS_IMAGE_BUCKET_NAME'],
+      }
+    else
+      cred = {
+        bucket: ENV['OSS_IMAGE_BUCKET_NAME'],
+        access_key_id: ENV['OSS_AWS_ACCESS_ID'],
+        secret_access_key: ENV['OSS_AWS_SECRET_KEY']
+      }
+    end
+
+    if (ENV['OSS_REGION'] == 'us-east-1')
+      s3_host_name = "s3.amazonaws.com"
+    else
+      s3_host_name = "s3-#{ENV['OSS_REGION']}.amazonaws.com"
+    end
+
+    config.paperclip_defaults = {
+      s3_host_name: s3_host_name,
+      storage: :s3,
+      s3_region: ENV['OSS_REGION'],
+      s3_credentials: cred,
+    }
+
     def resource_endpoint
       bucket_name = ENV['OSS_IMAGE_BUCKET_NAME']
       unless ENV['OSS_CDN_BASE_URL'].empty?

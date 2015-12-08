@@ -72,6 +72,7 @@ gem 'ransack'
 gem 'meta-tags'
 
 # AWS!!
+gem 'aws-sdk', '>= 2.0.0'
 gem 'aws-sdk-core'
 gem 'aws-sdk-resources'
 
@@ -101,6 +102,9 @@ gem 'packr'
 
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
+
+# see https://github.com/thoughtbot/paperclip/issues/2021
+gem 'paperclip', :git => 'https://github.com/thoughtbot/paperclip.git'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

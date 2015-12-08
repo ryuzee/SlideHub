@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/thoughtbot/paperclip.git
+  revision: 850a199da1f827571d3a21b075be45fe7d853e8f
+  specs:
+    paperclip (4.3.1)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      cocaine (~> 0.5.5)
+      mime-types
+      mimemagic (= 0.3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -40,7 +51,7 @@ GEM
     acts-as-taggable-on (3.5.0)
       activerecord (>= 3.2, < 5)
     acts_as_commentable (4.0.2)
-    addressable (2.3.8)
+    addressable (2.4.0)
     afm (0.2.2)
     after_commit_action (1.0.0)
       activerecord (>= 3.0.0)
@@ -52,10 +63,12 @@ GEM
     ast (2.1.0)
     astrolabe (1.3.1)
       parser (~> 2.2)
-    aws-sdk-core (2.2.3)
+    aws-sdk (2.2.4)
+      aws-sdk-resources (= 2.2.4)
+    aws-sdk-core (2.2.4)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.3)
-      aws-sdk-core (= 2.2.3)
+    aws-sdk-resources (2.2.4)
+      aws-sdk-core (= 2.2.4)
     bcrypt (3.1.10)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -69,7 +82,7 @@ GEM
     bullet (4.14.10)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.9.0)
-    byebug (8.2.0)
+    byebug (8.2.1)
     capistrano (3.2.1)
       i18n
       rake (>= 10.0.0)
@@ -94,6 +107,10 @@ GEM
     childprocess (0.5.8)
       ffi (~> 1.0, >= 1.0.11)
     choice (0.2.0)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -103,6 +120,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     commonjs (0.2.7)
+    concurrent-ruby (1.0.0)
     counter_culture (0.1.34)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -118,7 +136,7 @@ GEM
       warden (~> 1.2.3)
     devise-bootstrap-views (0.0.7)
     devise-i18n (0.12.1)
-    devise-i18n-views (0.3.6)
+    devise-i18n-views (0.3.7)
     diff-lcs (1.2.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
@@ -203,20 +221,21 @@ GEM
       actionpack (>= 3.0.0)
     method_source (0.8.2)
     mime-types (2.99)
-    mini_portile (0.6.2)
+    mimemagic (0.3.0)
+    mini_portile2 (2.0.0)
     minitest (5.8.3)
     momentjs-rails (2.10.6)
       railties (>= 3.1)
     multi_json (1.11.2)
-    mysql2 (0.4.1)
+    mysql2 (0.4.2)
     nenv (0.2.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.0.1)
-    nokogiri (1.6.6.4)
-      mini_portile (~> 0.6.0)
+    nokogiri (1.6.7)
+      mini_portile2 (~> 2.0.0.rc2)
     non-stupid-digest-assets (1.0.6)
       sprockets (>= 2.0)
     notiffany (0.0.8)
@@ -345,15 +364,16 @@ GEM
       websocket (~> 1.0)
     shellany (0.0.1)
     slop (3.6.0)
-    spring (1.4.4)
-    sprockets (3.4.0)
+    spring (1.5.0)
+    sprockets (3.5.1)
+      concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (2.3.3)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.11)
-    sshkit (1.8.0)
+    sshkit (1.8.1)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     therubyracer (0.12.2)
@@ -366,11 +386,11 @@ GEM
     ttfunk (1.4.0)
     turbolinks (2.5.3)
       coffee-rails
-    twitter-bootstrap-rails (3.2.0)
-      actionpack (~> 4.1)
-      execjs (~> 2.2)
-      rails (~> 4.1)
-      railties (~> 4.1)
+    twitter-bootstrap-rails (3.2.2)
+      actionpack (>= 3.1)
+      execjs (>= 2.2.2, >= 2.2)
+      less-rails (>= 2.5.0)
+      railties (>= 3.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
@@ -409,6 +429,7 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_commentable
   annotate
+  aws-sdk (>= 2.0.0)
   aws-sdk-core
   aws-sdk-resources
   better_errors
@@ -448,6 +469,7 @@ DEPENDENCIES
   mysql2
   non-stupid-digest-assets
   packr
+  paperclip!
   pdf-reader
   php-serialization
   rack-dev-mark

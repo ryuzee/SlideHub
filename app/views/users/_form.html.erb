@@ -72,6 +72,14 @@
     <%= error_span(@user[:biography]) %>
   </div>
 
+  <div class="control-group">
+    <%= f.label :avatar, class: 'control-label'  %>
+    <div class="controls">
+      <%= f.file_field :avatar %>
+    </div>
+    <%= error_span(@user[:avatar]) %>
+  </div>
+
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

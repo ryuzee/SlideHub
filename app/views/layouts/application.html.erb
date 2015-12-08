@@ -79,7 +79,7 @@
           <% if user_signed_in? %>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<%= current_user.email %><span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="avatar20" aria-hidden="true"><%= image_tag(current_user.avatar.url(:thumb)) %></span>&nbsp;<%= current_user.email %><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li><a href="/slides/new"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;<%= t 'Upload' %>!!</a></li>
               <li><a href="/users/index"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;<%= t :my_slides %></a></li>
@@ -91,6 +91,7 @@
               <!-- // admin -->
               <li class="divider"></li>
               <li><%= link_to t(:logout), destroy_user_session_path, method: :delete %></li>
+
             </ul>
             </li>
           </ul>
@@ -110,6 +111,7 @@
     <div class="container" id="main_container" role="main">
       <%= raw CustomSetting['custom_content.center_top'] %>
       <%= bootstrap_flash %>
+
       <%= yield %>
       <%= raw CustomSetting['custom_content.center_bottom'] %>
       <br clear="all" />

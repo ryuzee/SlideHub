@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base
       actions.each do |a|
         devise_parameter_sanitizer.for(a) << :display_name
         devise_parameter_sanitizer.for(a) << :biography
+        devise_parameter_sanitizer.for(a) << :avatar
       end
     end
 end

@@ -330,6 +330,33 @@ body.openslideshare_body {
   margin:20px ;
 }
 
+.openslideshare_body div.avatar50 {
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 25px;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    height: 50px !important;
+    width: 50px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.openslideshare_body .avatar50 img {
+  width:50px;
+  height:50px;
+}
+
+.openslideshare_body .avatar20 img {
+  width:18px;
+  height:18px;
+  border: 1px solid #666;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  padding:0px;
+}
+
 /** Embedded Player **/
 @media screen and (max-width: 400px) {
   .openslideshare_body div#slide_progress {
