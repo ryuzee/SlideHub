@@ -26,7 +26,6 @@ class ManagementsController < ApplicationController
     ransack_params = params[:q]
     @q = User.search(ransack_params)
     @users = @q.result(distinct: true).
-             latest.
              paginate(page: params[:page], per_page: 20)
   end
 

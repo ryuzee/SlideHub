@@ -56,4 +56,10 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   #
   config.include FactoryGirl::Syntax::Methods
+
+  # deviseのテストヘルパーをロードする
+  require 'devise'
+  require 'support/controller_macros'
+  config.include Devise::TestHelpers, :type => :controller
+  config.include ControllerMacros, :type => :controller
 end
