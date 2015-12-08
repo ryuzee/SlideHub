@@ -4,10 +4,10 @@
   </div>
   <div class="profile-usertitle">
     <div class="profile-usertitle-name">
-      <%= user.display_name %>
+      <%= strip_tags user.display_name %>
     </div>
     <div class="profile-usertitle-job">
-      <%= user.biography %>
+      <%= strip_tags user.biography %>
     </div>
   </div>
   <!-- for future release

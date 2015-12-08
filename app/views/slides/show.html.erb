@@ -14,8 +14,8 @@
     <% end %>
 
     <div class="slide_detail_row">
-        <span class="h3"><%= @slide.name %></span>
-      <p><%= simple_format @slide.description %></p>
+        <span class="h3"><%= strip_tags @slide.name %></span>
+      <p><%= strip_tags @slide.description %></p>
     </div>
 
 
@@ -88,10 +88,7 @@ end
       <% if @slide.downloadable == 1 %>
         <li class="list-group-item"><i class="fa fa-circle-down"></i>&nbsp;&nbsp;Downloads<span><%= @slide.download_count %></span></li>
       <% end %>
-        <li class="list-group-item clearfix"><i class="fa fa-tags"></i>&nbsp;&nbsp;<%= t ('activerecord.models.tag') %><span class="pull-right"><% @slide.tags.each do |t| %>
-          <a href="/slides/search?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;
-        <% end %>
-    </span></li>
+
       <% if params[:vertical] == "1" %>
         <li class="list-group-item"><i class="fa fa-play"></i>&nbsp;&nbsp;<%= link_to t(:show_slide_with_normal_mode), "/slides/#{@slide.id}" %></li>
       <% else %>
@@ -105,28 +102,31 @@ end
         <li class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<%= link_to t(:edit_slide), "/slides/#{@slide.id}/edit" %></li>
         <li class="list-group-item"><i class="fa fa-trash"></i>&nbsp;&nbsp;<%= link_to t(:delete_slide), "/slides/#{@slide.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?"} %></li>
       <% end %>
-        <li class="list-group-item"><%= render 'slides/share_buttons' %></li>
+      <% if @slide.tags.count > 0 %>
+        <li class="list-group-item clearfix"><span class="pull-right"><% @slide.tags.each do |t| %>
+            <a href="/slides/search?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;<% end %>
+        </li>
+      <% end %>
+      <li class="list-group-item"><%= render 'slides/share_buttons' %></li>
     </ul>
   </div>
 
   <% if @other_slides %>
     <!-- Default panel contents -->
     <h3 class="h4"><%= t(:related_slides) %></h3>
-    <div class="row2 related_slide_row">
-      <% @other_slides.each do |s| %>
-        <div class="col-md-12 col-sm-6" style="padding:8px;">
-          <a href="/slides/<%= s.id %>">
-            <img width="120px" src="<%= s.thumbnail_url %>" class="related_slide_thumbnail" />
-          </a>
-          <span class="h6"><%= s.name %></span><br />
-          <span class="h6"><%= s.created_at %> by <a href="/users/<%= s.user_id %>"><%= s.user.display_name %></a></span>
-        </div>
-        <br clear="all" />
-      <% end %>
+    <div style="border:1px solid #ccc;padding-bottom:0px;">
+    <ul class="thumbnail_with_text">
+    <% @other_slides.each do |s| %>
+    <li>
+      <a href="/slides/<%= s.id %>"><img src="<%= s.thumbnail_url %>"></a>
+      <h3 class="h5"><%= strip_tags s.name.truncate(24) %></h3>
+      <p class="h6"><%= s.created_at %> by <a href="/users/<%= s.user_id %>"><%= strip_tags s.user.display_name %></a></p>
+    </li>
+    <% end %>
+    </ul>
     </div>
-    <br clear="all" />
   <% end %>
-</div><!-- end of row -->
+</div>
 
 <script type="text/javascript">
   $1102(document).ready(function(){
