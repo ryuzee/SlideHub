@@ -414,6 +414,19 @@ body.openslideshare_body {
   margin-top: 30px;
 }
 
+/** Comment Form **/
+.openslideshare_body .comment_post {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  padding-bottom:10px;
+}
+
+.openslideshare_body .comment_form_avatar {
+  margin-right:20px;
+  margin-bottom:10px;
+}
+
+
 /** Embedded Player **/
 @media screen and (max-width: 400px) {
   .openslideshare_body div#slide_progress {
