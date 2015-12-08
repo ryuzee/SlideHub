@@ -39,7 +39,7 @@ gem 'mysql2'
 
 # Apply bootstrap
 gem 'less-rails'
-gem 'twitter-bootstrap-rails'
+gem 'twitter-bootstrap-rails', '= 3.2.0'
 gem 'execjs'
 
 # Paginate
