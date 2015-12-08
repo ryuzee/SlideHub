@@ -85,4 +85,17 @@ class Slide < ActiveRecord::Base
       puts [e.class, e].join(' : ')
     end
   end
+
+  def transcript_exist?(transcript)
+    result = false
+    if transcript.instance_of?(Array)
+      transcript.each do |tran|
+        if not tran.empty?
+          result = true
+          break
+        end
+      end
+    end
+    result
+  end
 end

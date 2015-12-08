@@ -18,61 +18,62 @@
       <p><%= strip_tags @slide.description %></p>
     </div>
 
-
-
-    <a name="comment"></a>
-    <h3 class="h4"><%= t 'activerecord.models.comment' %></h3>
-    <% if not @posted_comments.empty? %>
-      <% @posted_comments.each do |c| %>
-        <div class="media comment_post">
-          <div class="pull-left avatar50">
-            <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
-          </div>
-          <div class="media-body">
-            <div class="h6" style="margin-top:0px"><a href="/users/<%= c.user.id %>"><%= c.user.display_name %></a></div>
-            <div class="h6"><%= simple_format c.comment %></div>
-            <div class="h6"><%= c.created_at %>
-            <% if (user_signed_in? and current_user.id == c.user_id) %>
-              &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to t(:delete), "/comments/#{c.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?" } %>
+    <!--tab-->
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1" data-toggle="tab"><%= t :transcripts %></a></li>
+      <li><a href="#tab2" data-toggle="tab"><%= t 'activerecord.models.comment' %></a></li>
+    </ul>
+    <!-- / tab-->
+    <div id="myTabContent" class="tab-content">
+      <!-- Transcript -->
+      <div class="tab-pane fade in active" id="tab1">
+      <% transcripts = @slide.transcript %>
+      <% show_tran = @slide.transcript_exist?(transcripts) %>
+      <% if show_tran %>
+      <% page_count = 0 %>
+        <div class="slide_description">
+          <% transcripts.each do |tran| %>
+          <% page_count += 1 %>
+          <% if not tran.empty? %>
+          <div class="h6"><a href="#page_top" onclick="javascript:myslider.goToSlide(<%= page_count -1 %>);"><%= page_count %>.</a> <%= tran %></div>
+          <% end %>
           <% end %>
         </div>
+        <div>&nbsp;</div>
+      <% end %>
+      </div>
 
+      <!-- Comment -->
+      <div class="tab-pane fade" id="tab2">
+        <a name="comment"></a>
+        <% if not @posted_comments.empty? %>
+          <% @posted_comments.each do |c| %>
+            <div class="media comment_post">
+              <div class="pull-left avatar50">
+                <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
+              </div>
+              <div class="media-body">
+                <div class="h6" style="margin-top:0px"><a href="/users/<%= c.user.id %>"><%= c.user.display_name %></a></div>
+                <div class="h6"><%= simple_format c.comment %></div>
+                <div class="h6"><%= c.created_at %>
+                <% if (user_signed_in? and current_user.id == c.user_id) %>
+                  &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to t(:delete), "/comments/#{c.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?" } %>
+                <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+        <% if user_signed_in? %>
+          <br />
+          <div class="comments form">
+            <%= render :partial => 'comments/form' %>
+          </div>
+        <% end %>
       </div>
     </div>
-  <% end %>
-<% end %>
-<% if user_signed_in? %>
-  <br />
-  <div class="comments form">
-    <%= render :partial => 'comments/form' %>
-  </div>
-<% end %>
 
-<%
-transcripts = @slide.transcript
-show_tran = false
-if transcripts.instance_of?(Array)
-  transcripts.each do |tran|
-    if not tran.empty?
-      show_tran = true
-      break
-    end
-  end
-end
-    %>
-  <% if show_tran %>
-    <% page_count = 0 %>
-    <h3 class="h4"><%= t :transcripts %></h3>
-    <div class="slide_description">
-      <% transcripts.each do |tran| %>
-        <% page_count += 1 %>
-        <% if not tran.empty? %>
-          <div class="h6"><a href="#page_top" onclick="javascript:myslider.goToSlide(<%= page_count -1 %>);"><%= page_count %>.</a> <%= tran %></div>
-        <% end %>
-      <% end %>
-    </div>
-    <div>&nbsp;</div>
-  <% end %>
 </div>
 
 <div class="col-md-4" id="rightside">
