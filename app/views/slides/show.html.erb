@@ -55,8 +55,8 @@
                 <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
               </div>
               <div class="media-body">
-                <div class="h6" style="margin-top:0px"><a href="/users/<%= c.user.id %>"><%= c.user.display_name %></a></div>
-                <div class="h6"><%= simple_format c.comment %></div>
+                <div class="h6" style="margin-top:0px"><a href="/users/<%= c.user.id %>"><%= strip_tags c.user.display_name %></a></div>
+                <div class="h6"><%= strip_tags c.comment %></div>
                 <div class="h6"><%= c.created_at %>
                 <% if (user_signed_in? and current_user.id == c.user_id) %>
                   &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to t(:delete), "/comments/#{c.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?" } %>
@@ -67,6 +67,7 @@
           <% end %>
         <% else %>
           <div class="media comment_post"><div class="h6">No comments...</div></div>
+          <div>&nbsp;</div>
         <% end %>
 
         <% if user_signed_in? %>
