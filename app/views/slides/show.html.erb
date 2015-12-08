@@ -48,25 +48,25 @@
     <h3 class="h4"><%= t 'activerecord.models.comment' %></h3>
     <% if not @posted_comments.empty? %>
     <% @posted_comments.each do |c| %>
-    <div class="comment_post">
-      <div style="float:left" class="avatar50 comment_form_avatar">
+    <div class="media comment_post">
+      <div class="pull-left avatar50">
         <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
       </div>
-      <div style="float:left">
-        <div class="h5" style="margin-top:0px"><a href="/users/<%= c.user.id %>"><%= c.user.display_name %></a></div>
-        <div class="h5"><%= simple_format c.comment %></div>
-        <div class="h6"><%= c.created_at %></div>
-        <% if (user_signed_in? and current_user.id == c.user_id) %>
-          <div>
-            <%= link_to t(:delete), "/comments/#{c.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?" } %>
-          </div>
-        <% end %>
+      <div class="media-body">
+        <div class="h6" style="margin-top:0px"><a href="/users/<%= c.user.id %>"><%= c.user.display_name %></a></div>
+        <div class="h6"><%= simple_format c.comment %></div>
+        <div class="h6"><%= c.created_at %>
+          <% if (user_signed_in? and current_user.id == c.user_id) %>
+          &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to t(:delete), "/comments/#{c.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?" } %>
+          <% end %>
+        </div>
+
       </div>
     </div>
-    <br clear="all" />
     <% end %>
     <% end %>
     <% if user_signed_in? %>
+    <br />
     <div class="comments form">
       <%= render :partial => 'comments/form' %>
     </div>
