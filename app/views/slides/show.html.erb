@@ -82,24 +82,24 @@ end
   <div class="panel panel-default h6">
     <table class="table">
       <tr>
-        <td>Published</td><td><%= @slide.created_at %></td>
+        <th>Published</th><td><%= @slide.created_at %></td>
       </tr>
       <tr>
-        <td>Category</td><td><a href="/slides/category/<%= @slide.category_id %>"><%= @slide.category.name %></a></td>
+        <th>Category</th><td><a href="/slides/category/<%= @slide.category_id %>"><%= @slide.category.name %></a></td>
       </tr>
       <tr>
-        <td>Total View</td><td><%= @slide.total_view %></td>
+        <th>Total View</th><td><%= @slide.total_view %></td>
       </tr>
       <tr>
-        <td>Embedded View</td><td><%= @slide.embedded_view %></td>
+        <th>Embedded View</th><td><%= @slide.embedded_view %></td>
       </tr>
       <% if @slide.downloadable == 1 %>
       <tr>
-        <td>Downloads</td><td><%= @slide.download_count %></td>
+        <th>Downloads</th><td><%= @slide.download_count %></td>
       </tr>
       <% end %>
       <tr>
-        <td><%= t ('activerecord.models.tag') %></td><td><% @slide.tags.each do |t| %>
+        <th><%= t ('activerecord.models.tag') %></th><td><% @slide.tags.each do |t| %>
           <a href="/slides/search?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;
         <% end %>
         </td>
