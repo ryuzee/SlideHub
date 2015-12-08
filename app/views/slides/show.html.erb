@@ -88,7 +88,7 @@ end
       <% if @slide.downloadable == 1 %>
         <li class="list-group-item"><i class="fa fa-circle-down"></i>&nbsp;&nbsp;Downloads<span><%= @slide.download_count %></span></li>
       <% end %>
-        <li class="list-group-item"><i class="fa fa-tags"></i>&nbsp;&nbsp;<%= t ('activerecord.models.tag') %><span class="pull-right"><% @slide.tags.each do |t| %>
+        <li class="list-group-item clearfix"><i class="fa fa-tags"></i>&nbsp;&nbsp;<%= t ('activerecord.models.tag') %><span class="pull-right"><% @slide.tags.each do |t| %>
           <a href="/slides/search?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;
         <% end %>
     </span></li>
