@@ -3,172 +3,174 @@
 <%- model_class = Slide -%>
 <% slide_id = @slide.id %>
 <div class="row">
-<div class="col-md-8" id="slide_div_box">
+  <div class="col-md-8" id="slide_div_box">
 
-<!-- @TODO: vertical -->
-<% if params[:vertical] != "1" %>
-<%= render 'slides/slide_player', slide: @slide, start_position: @start_position %>
-<% else %>
-<%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
+    <!-- @TODO: vertical -->
+    <% if params[:vertical] != "1" %>
+      <%= render 'slides/slide_player', slide: @slide, start_position: @start_position %>
+    <% else %>
+      <%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
 
-<% end %>
-
-    <div class="row slide_detail_row">
-        <div class="col-md-9">
-            <span class="h3"><%= @slide.name %></span>
-            <div class="bottom_margin">
-            By <%= link_to @slide.user.display_name, "#{root_url}users/#{@slide.user_id}" %>&nbsp;Published: <%= @slide.created_at %> in <a href="/slides/category/<%= @slide.category_id %>"><%= @slide.category.name %></a>
-            </div>
-        </div>
-        <div class="col-md-3" style="text-align:right">
-            <strong><%= @slide.total_view %></strong> <small>total views</small><br />
-            <strong><%= @slide.embedded_view %></strong> <small>embedded views</small><br />
-            <% if @slide.downloadable == 1 %>
-            <strong><%= @slide.download_count %></strong> <small>downloads</small>
-            <% end %>
-        </div>
-    </div>
-
-    <div>
-      <%= render 'slides/share_buttons' %>
-    </div>
-
-    <div class="slide_description">
-    <p><%= simple_format @slide.description %></p>
-    </div>
-
-    <div class="h5">
-    <%= t ('activerecord.models.tag') %>:
-    <% @slide.tags.each do |t| %>
-      <a href="/slides/search?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;
     <% end %>
+
+    <div class="slide_detail_row">
+        <span class="h3"><%= @slide.name %></span>
+      <p><%= simple_format @slide.description %></p>
     </div>
+
+
 
     <a name="comment"></a>
     <h3 class="h4"><%= t 'activerecord.models.comment' %></h3>
     <% if not @posted_comments.empty? %>
-    <% @posted_comments.each do |c| %>
-    <div class="media comment_post">
-      <div class="pull-left avatar50">
-        <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
-      </div>
-      <div class="media-body">
-        <div class="h6" style="margin-top:0px"><a href="/users/<%= c.user.id %>"><%= c.user.display_name %></a></div>
-        <div class="h6"><%= simple_format c.comment %></div>
-        <div class="h6"><%= c.created_at %>
-          <% if (user_signed_in? and current_user.id == c.user_id) %>
-          &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to t(:delete), "/comments/#{c.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?" } %>
+      <% @posted_comments.each do |c| %>
+        <div class="media comment_post">
+          <div class="pull-left avatar50">
+            <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
+          </div>
+          <div class="media-body">
+            <div class="h6" style="margin-top:0px"><a href="/users/<%= c.user.id %>"><%= c.user.display_name %></a></div>
+            <div class="h6"><%= simple_format c.comment %></div>
+            <div class="h6"><%= c.created_at %>
+            <% if (user_signed_in? and current_user.id == c.user_id) %>
+              &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to t(:delete), "/comments/#{c.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?" } %>
           <% end %>
         </div>
 
       </div>
     </div>
-    <% end %>
-    <% end %>
-    <% if user_signed_in? %>
-    <br />
-    <div class="comments form">
-      <%= render :partial => 'comments/form' %>
-    </div>
-    <% end %>
+  <% end %>
+<% end %>
+<% if user_signed_in? %>
+  <br />
+  <div class="comments form">
+    <%= render :partial => 'comments/form' %>
+  </div>
+<% end %>
 
-    <%
-        transcripts = @slide.transcript
-        show_tran = false
-        if transcripts.instance_of?(Array)
-          transcripts.each do |tran|
-            if not tran.empty?
-              show_tran = true
-              break
-            end
-          end
-        end
+<%
+transcripts = @slide.transcript
+show_tran = false
+if transcripts.instance_of?(Array)
+  transcripts.each do |tran|
+    if not tran.empty?
+      show_tran = true
+      break
+    end
+  end
+end
     %>
-    <% if show_tran %>
+  <% if show_tran %>
     <% page_count = 0 %>
     <h3 class="h4"><%= t :transcripts %></h3>
     <div class="slide_description">
-        <% transcripts.each do |tran| %>
+      <% transcripts.each do |tran| %>
         <% page_count += 1 %>
         <% if not tran.empty? %>
-        <div class="h6"><a href="#page_top" onclick="javascript:myslider.goToSlide(<%= page_count -1 %>);"><%= page_count %>.</a> <%= tran %></div>
+          <div class="h6"><a href="#page_top" onclick="javascript:myslider.goToSlide(<%= page_count -1 %>);"><%= page_count %>.</a> <%= tran %></div>
         <% end %>
-        <% end %>
+      <% end %>
     </div>
     <div>&nbsp;</div>
-    <% end %>
+  <% end %>
 </div>
 
 <div class="col-md-4" id="rightside">
 
-    <%= render 'users/right_side_bar', user: @slide.user %>
+  <%= render 'users/right_side_bar', user: @slide.user %>
 
-    <% if user_signed_in? and current_user.id == @slide.user_id %>
-    <div class="panel panel-default h5">
-        <!-- Default panel contents -->
-        <div class="panel-heading"><%= t :actions %></div>
-        <!-- List group -->
-        <ul class="list-group">
-            <li class="list-group-item"><%= link_to t(:edit_slide), "/slides/#{@slide.id}/edit" %></li>
-            <li class="list-group-item"><%= link_to t(:delete_slide), "/slides/#{@slide.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?"} %></li>
-        </ul>
-    </div>
-    <% end %>
+  <div class="panel panel-default h6">
+    <table class="table">
+      <tr>
+        <td>Published</td><td><%= @slide.created_at %></td>
+      </tr>
+      <tr>
+        <td>Category</td><td><a href="/slides/category/<%= @slide.category_id %>"><%= @slide.category.name %></a></td>
+      </tr>
+      <tr>
+        <td>Total View</td><td><%= @slide.total_view %></td>
+      </tr>
+      <tr>
+        <td>Embedded View</td><td><%= @slide.embedded_view %></td>
+      </tr>
+      <% if @slide.downloadable == 1 %>
+      <tr>
+        <td>Downloads</td><td><%= @slide.download_count %></td>
+      </tr>
+      <% end %>
+      <tr>
+        <td><%= t ('activerecord.models.tag') %></td><td><% @slide.tags.each do |t| %>
+          <a href="/slides/search?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;
+        <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-    <ul class="list-group h5">
-        <% if params[:vertical] == "1" %>
+  <div class="panel panel-default h6">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><%= t :actions %></div>
+    <!-- List group -->
+    <ul class="list-group">
+      <% if params[:vertical] == "1" %>
         <li class="list-group-item"><%= link_to t(:show_slide_with_normal_mode), "/slides/#{@slide.id}" %></li>
-        <% else %>
+      <% else %>
         <li class="list-group-item"><%= link_to t(:show_slide_vertically), "/slides/#{@slide.id}?vertical=1" %></li>
-        <% end %>
-        <% if @slide.downloadable %>
+      <% end %>
+      <% if @slide.downloadable %>
         <li class="list-group-item"><%= link_to t(:download_slide), "/slides/#{@slide.id}/download" %></li>
-        <% end %>
-        <li class="list-group-item"><%= link_to t(:show_embedded_code), "#", :id => "show_embedded" %></li>
+      <% end %>
+      <li class="list-group-item"><%= link_to t(:show_embedded_code), "#", :id => "show_embedded" %></li>
+      <% if user_signed_in? and current_user.id == @slide.user_id %>
+        <li class="list-group-item"><%= link_to t(:edit_slide), "/slides/#{@slide.id}/edit" %></li>
+        <li class="list-group-item"><%= link_to t(:delete_slide), "/slides/#{@slide.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?"} %></li>
+      <% end %>
+        <li class="list-group-item"><%= render 'slides/share_buttons' %></li>
     </ul>
+  </div>
 
-    <% if @other_slides %>
-        <!-- Default panel contents -->
-        <h3 class="h4"><%= t(:related_slides) %></h3>
-        <div class="row2 related_slide_row">
-        <% @other_slides.each do |s| %>
+  <% if @other_slides %>
+    <!-- Default panel contents -->
+    <h3 class="h4"><%= t(:related_slides) %></h3>
+    <div class="row2 related_slide_row">
+      <% @other_slides.each do |s| %>
         <div class="col-md-12 col-sm-6" style="padding:8px;">
-            <a href="/slides/<%= s.id %>">
-                <img width="120px" src="<%= s.thumbnail_url %>" class="related_slide_thumbnail" />
-            </a>
-            <span class="h6"><%= s.name %></span><br />
-            <span class="h6"><%= s.created_at %> by <a href="/users/<%= s.user_id %>"><%= s.user.display_name %></a></span>
+          <a href="/slides/<%= s.id %>">
+            <img width="120px" src="<%= s.thumbnail_url %>" class="related_slide_thumbnail" />
+          </a>
+          <span class="h6"><%= s.name %></span><br />
+          <span class="h6"><%= s.created_at %> by <a href="/users/<%= s.user_id %>"><%= s.user.display_name %></a></span>
         </div>
         <br clear="all" />
-        <% end %>
-        </div>
-        <br clear="all" />
-    <% end %>
+      <% end %>
+    </div>
+    <br clear="all" />
+  <% end %>
 </div><!-- end of row -->
 
 <script type="text/javascript">
-$1102(document).ready(function(){
+  $1102(document).ready(function(){
     $1102("#show_embedded").click(function(){
-        var x = $1102("<div></div>").dialog({autoOpen:false});
-        x.html("<p><%= "<script src=\"#{root_url}slides/#{@slide.id}/embedded\"></script>" %></p>");
-        x.dialog("option", {
-            title: "<%= t :embedded_code %>",
-            width:600,
-            height:200,
-            buttons: {
-                "OK": function() { $1102(this).dialog("close"); }
-            }
-        });
-        x.dialog("open");
-    });
+      var x = $1102("<div></div>").dialog({autoOpen:false});
+x.html("<p><%= "<script src=\"#{root_url}slides/#{@slide.id}/embedded\"></script>" %></p>");
+x.dialog("option", {
+  title: "<%= t :embedded_code %>",
+    width:600,
+    height:200,
+    buttons: {
+      "OK": function() { $1102(this).dialog("close"); }
+    }
 });
+x.dialog("open");
+    });
+  });
 </script>
 
 </div><!-- end of row -->
 
 <script type="text/javascript">
-$1102(document).ready(function(){
-   // fix sidebar position
-   $1102("#rightside").stick_in_parent();
-});
+  $1102(document).ready(function(){
+    // fix sidebar position
+    $1102("#rightside").stick_in_parent();
+  });
 </script>
