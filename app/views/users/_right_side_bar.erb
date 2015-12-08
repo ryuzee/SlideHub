@@ -1,6 +1,19 @@
-<h3 class="h4"><%= t :speaker_details %></h3>
-<div class="row2 bordered_box h5">
-<h4 class="h5"><%= user.display_name %></h4>
-<%= user.biography %>
+<div class="profile-sidebar">
+  <div class="profile-userpic">
+    <%= image_tag(current_user.avatar.url(:medium), class: 'img-responsive') %>
+  </div>
+  <div class="profile-usertitle">
+    <div class="profile-usertitle-name">
+      <%= user.display_name %>
+    </div>
+    <div class="profile-usertitle-job">
+      <%= user.biography %>
+    </div>
+  </div>
+  <!-- for future release
+  <div class="profile-userbuttons">
+    <button type="button" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-heart"></i> Follow</button>
+    <button type="button" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-comment"></i> Message</button>
+  </div>
+  -->
 </div>
-<br clear="all" />

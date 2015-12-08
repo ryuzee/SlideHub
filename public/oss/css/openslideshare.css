@@ -331,15 +331,15 @@ body.openslideshare_body {
 }
 
 .openslideshare_body div.avatar50 {
-    background-color: white;
-    border: 1px solid #d9d9d9;
-    border-radius: 25px;
-    -moz-border-radius: 25px;
-    -webkit-border-radius: 25px;
-    height: 50px !important;
-    width: 50px;
-    overflow: hidden;
-    text-align: center;
+  background-color: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 25px;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  height: 50px !important;
+  width: 50px;
+  overflow: hidden;
+  text-align: center;
 }
 
 .openslideshare_body .avatar50 img {
@@ -355,6 +355,63 @@ body.openslideshare_body {
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   padding:0px;
+}
+
+/* Profile sidebar */
+.openslideshare_body .profile-sidebar {
+  margin-top:20px;
+  padding: 20px 0 10px 0;
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+.openslideshare_body .profile-userpic img {
+  float: none;
+  margin: 0 auto;
+  width: 40%;
+  height: 40%;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+}
+
+.openslideshare_body .profile-usertitle {
+  text-align: center;
+  margin-top: 14px;
+}
+
+.openslideshare_body .profile-usertitle-name {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.openslideshare_body .profile-usertitle-job {
+  text-align:left;
+  font-size: 0.8em;
+  margin-left:1em;
+  margin-right:1em;
+  margin-bottom: 15px;
+}
+
+.openslideshare_body .profile-userbuttons {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.openslideshare_body .profile-userbuttons .btn {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 15px;
+  margin-right: 5px;
+}
+
+.openslideshare_body .profile-userbuttons .btn:last-child {
+  margin-right: 0px;
+}
+
+.openslideshare_body .profile-usermenu {
+  margin-top: 30px;
 }
 
 /** Embedded Player **/
