@@ -9,14 +9,21 @@
       <% end %>
 
       <div class="<%= column_class %>" style="padding:4px;">
-        <div class="slide_thumbnail_box" style="position:relative;border:1px solid #000; padding: 8px; background-color:#fff; border:1px solid #ccc">
-          <a href="/slides/<%= slide.id %>"><img src="<%= image_url %>" class="img-responsive slide_thumbnail" /></a>
-          <div class="h5" style="margin-top:2px;margin-bottom:2px;"><%= slide.name.truncate(20) %></div>
-          <div class="h5" style="margin-top:2px;margin-bottom:2px;">by <a href="/users/<%= slide.user_id %>"><%= slide.user.display_name %></a></div>
-          <div class="h5" style="height:auto;overflow:hidden;margin-top:2px;margin-bottom:2px;"><%= slide.description.truncate(40) %></div>
-
+        <div class="slidecard">
+          <div class="slidecard-image">
+          <a href="/slides/<%= slide.id %>"><img src="<%= image_url %>" class="img-responsive" /></a>
+          </div>
+          <div class="slidecard-content">
+            <div class="slidecard-basic-info">
+            <div class="slidecard-title"><%= slide.name.truncate(40) %></div>
+            <div class="slidecard-description"><%= slide.description.truncate(80) %></div>
+            </div>
+            <div class="slidecard-information">
+              <div class="h5" style="margin-top:2px;margin-bottom:2px;">by <a href="/users/<%= slide.user_id %>"><%= slide.user.display_name %></a></div>
+              <%= slide.created_at.to_s(:default) %> | <%= slide.total_view %> views
+            </div>
+          </div>
         </div>
-        <div class="h6" style="background-color:#ccc;padding:4px;margin-top:0px;margin-bottom:2px;"><%= slide.created_at.to_s(:default) %> | <%= slide.total_view %> views</div>
       </div>
 
       <% end %>
@@ -24,6 +31,6 @@
 
 <script type="text/javascript">
 $1102(window).load(function () {
-    $1102('.slide_thumbnail_box').equalHeights();
+    $1102('.slidecard').equalHeights();
 });
 </script>
