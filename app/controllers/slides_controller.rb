@@ -12,11 +12,19 @@ class SlidesController < ApplicationController
   def latest
     @slides = Slide.published.latest.includes(:user).
               paginate(page: params[:page], per_page: 20)
+    respond_to do |format|
+      format.html
+      format.rss
+    end
   end
 
   def popular
     @slides = Slide.published.popular.includes(:user).
               paginate(page: params[:page], per_page: 20)
+    respond_to do |format|
+      format.html
+      format.rss
+    end
   end
 
   def category
