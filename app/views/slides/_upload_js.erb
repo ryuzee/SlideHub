@@ -69,6 +69,9 @@ $1102(document).ready(function() {
         }).done(function( data, textStatus, jqXHR ) {
             var key   = $1102(data).find("Key").text();
             $1102("#SlideKey").val(key);
+            <% if command != 'add' %>
+            $1102("#SlideConvertStatus").val(0);
+            <% end %>
             $1102("#save_button").removeAttr("disabled");
         }) .fail(function( jqXHR, textStatus, errorThrown ) {
             // ...

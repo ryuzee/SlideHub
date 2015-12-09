@@ -84,11 +84,11 @@ class SlidesController < ApplicationController
     if current_user.id != @slide.user_id
       redirect_to "/slides/#{@slide.id}"
     end
-    slide_key = @slide.key
+    slide_convert_status = params[:slide][:convert_status].to_i
 
     @slide.assign_attributes(params[:slide])
     if @slide.update_attributes(params[:slide])
-      if slide_key != params[:slide][:key]
+      if slide_convert_status == 0
         send_message({ id: @slide.id, key: @slide.key }.to_json)
       end
       redirect_to "/slides/#{@slide.id}"
