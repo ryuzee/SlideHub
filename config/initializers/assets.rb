@@ -15,6 +15,7 @@ Rails.application.config.assets.precompile += ['jquery-1.10.2.min.js']
 Rails.application.config.assets.precompile += ['jquery.lazyload.js']
 Rails.application.config.assets.precompile += ['jquery.sticky-kit.min.js']
 Rails.application.config.assets.precompile += ['mousetrap.min.js']
+Rails.application.config.assets.precompile += ['js.cookie-2.0.4.min.js']
 Rails.application.config.assets.precompile += %w( *.svg *.eot *.woff *.ttf )
 
 NonStupidDigestAssets.whitelist = [/glyphicons-halflings-regular\.(eot|svg|woff|ttf)/]
