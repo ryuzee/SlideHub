@@ -46,7 +46,7 @@
 </form>
 
 
-<%= form_for @slide, :html => { :class => "form-horizontal slide" } do |f| %>
+<%= form_for @slide, :url => {:action => 'create'}, :html => { :class => "form-horizontal slide" } do |f| %>
 
     <% if @slide.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
