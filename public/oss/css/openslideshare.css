@@ -131,6 +131,7 @@ body.openslideshare_body {
   background-color:#eee;
   padding:0.8em;
   margin-top:0.8em;
+  padding-bottom:0px;
 }
 
 .openslideshare_body div.slide_detail_row {
@@ -198,6 +199,10 @@ body.openslideshare_body {
 
 .openslideshare_body .bottom_margin {
   margin-bottom: 4px;
+}
+
+.openslideshare_body .bottom_padding_20 {
+  padding-bottom: 20px;
 }
 
 /** Show slide vertically **/

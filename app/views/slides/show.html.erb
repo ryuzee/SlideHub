@@ -3,7 +3,7 @@
 <%- model_class = Slide -%>
 <% slide_id = @slide.id %>
 <div class="row">
-  <div class="col-md-8" id="slide_div_box">
+  <div class="col-md-8 bottom_padding_20" id="slide_div_box">
 
     <!-- @TODO: vertical -->
     <% if params[:vertical] != "1" %>
@@ -42,7 +42,6 @@
       <% else %>
         <div class="slide_description"><div class="h6">No Transcript...</div></div>
       <% end %>
-        <div>&nbsp;</div>
       </div>
 
       <!-- Comment -->
@@ -67,7 +66,6 @@
           <% end %>
         <% else %>
           <div class="media comment_post"><div class="h6">No comments...</div></div>
-          <div>&nbsp;</div>
         <% end %>
 
         <% if user_signed_in? %>

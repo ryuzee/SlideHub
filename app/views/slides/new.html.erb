@@ -3,21 +3,29 @@
 <%= render :partial => 'upload_js', :locals => { :command => 'add' } %>
 
 <div class="row">
-    <div class="col-md-8">
+  <div class="col-md-8 bottom_padding_20">
     <h3><%= t('Upload Slide') %></h3>
-
-    <form id="upload-form" class="well" method="post" enctype="multipart/form-data">
+    <div class="panel panel-default">
+    <div class="panel-body">
+    <form id="upload-form" class="form-horizontal" method="post" enctype="multipart/form-data">
     <% require 'securerandom'
        require "digest/md5"
        rand_name = Digest::MD5.hexdigest(SecureRandom.hex + Time.now.strftime("%Y%m%d%H%M%S"))
     %>
     <div class="form-group">
-        <label><%= t('File') %></label>
-    <input type="file" name="file" id="file" class="form-control" />
+      <label class="control-label col-sm-2"><%= t('File') %></label>
+      <div class="col-sm-10">
+        <input type="file" name="file" id="file" class="form-control" />
+      </div>
     </div>
 
-    <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+    <div class="form-group">
+      <label class="control-label col-sm-2"></label>
+      <div class="col-sm-10">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+        </div>
+      </div>
     </div>
     <% policy = create_policy %>
     <input class="fval" type="hidden" id="key"  name="key" value='<%= rand_name %>' class="form-control"/>
@@ -55,54 +63,60 @@
     </div>
   <% end %>
 
-  <div class="control-group">
-    <%= f.label :name, :class => 'control-label' %>
-    <div class="controls">
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label col-sm-2' %>
+    <div class="col-sm-10">
       <%= f.text_field :name, :class => 'form-control' %>
     </div>
     <%= error_span(@slide[:name]) %>
   </div>
-  <div class="control-group">
-    <%= f.label :description, :class => 'control-label' %>
-    <div class="controls">
+  <div class="form-group">
+    <%= f.label :description, :class => 'control-label col-sm-2' %>
+    <div class="col-sm-10">
       <%= f.text_area :description, :class => 'form-control' %>
     </div>
     <%= error_span(@slide[:description]) %>
   </div>
-  <div class="control-group">
-    <%= f.label :downloadable, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :downloadable, :class => 'form-control' %>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :downloadable %><%= t('activerecord.attributes.slide.downloadable') %>
+        </label>
+      </div>
     </div>
     <%= error_span(@slide[:downloadable]) %>
   </div>
-  <div class="control-group">
-    <%= f.label :category_id, :class => 'control-label' %>
-    <div class="controls">
-    <%= f.collection_select :category_id, Category.all, :id, :name %>
+
+  <div class="form-group">
+    <%= f.label t('activerecord.models.category'), :class => 'control-label col-sm-2' %>
+    <div class="col-sm-10">
+      <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: 'form-control'} %>
     </div>
     <%= error_span(@slide[:category_id]) %>
   </div>
   <%= f.hidden_field :key, :id => 'SlideKey' %>
-  <div class="control-group">
-    <%= f.label t('activerecord.models.tag'), :class => 'control-label' %>
-    <div class="controls">
+  <div class="form-group">
+    <%= f.label t('activerecord.models.tag'), :class => 'control-label col-sm-2' %>
+    <div class="col-sm-10">
       <%= f.text_field :tag_list, :class => 'form-control' %>
     </div>
     <%= error_span(@slide[:tag_list]) %>
   </div>
 
-
+  <br />
   <%= f.submit nil, :id => 'save_button', :disabled => 'disabled', :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
             slides_path, :class => 'btn btn-default' %>
 
 <% end %>
 
-    </div>
+  </div>
+  </div>
+  </div>
 
-    <div class="col-md-4">
+  <div class="col-md-4">
     <%= render 'users/right_side_bar', user: current_user %>
-    </div>
+  </div>
 
 </div>
