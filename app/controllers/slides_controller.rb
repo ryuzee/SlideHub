@@ -84,10 +84,13 @@ class SlidesController < ApplicationController
     if current_user.id != @slide.user_id
       redirect_to "/slides/#{@slide.id}"
     end
+    slide_key = @slide.key
 
     @slide.assign_attributes(params[:slide])
     if @slide.update_attributes(params[:slide])
-      send_message({ id: @slide.id, key: @slide.key }.to_json)
+      if slide_key != params[:slide][:key]
+        send_message({ id: @slide.id, key: @slide.key }.to_json)
+      end
       redirect_to "/slides/#{@slide.id}"
     else
       render :edit
