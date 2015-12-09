@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :slides do
-    get 'index', on: :collection
     get 'latest', on: :collection
     get 'popular', on: :collection
     get 'search', on: :collection
@@ -13,6 +12,7 @@ Rails.application.routes.draw do
   get 'slides/view/:id' => 'slides#show'
   get 'slides/download/:id' => 'slides#download'
   get 'slides/embedded/:id' => 'slides#embedded'
+  get 'slides/index' => 'slides#index'
 
   resources :users do
     get 'index', on: :collection

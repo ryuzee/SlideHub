@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208043537) do
+ActiveRecord::Schema.define(version: 20151209030634) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", limit: 255, null: false
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20151208043537) do
     t.integer  "page_view",      limit: 4,     default: 0
     t.integer  "download_count", limit: 4,     default: 0,     null: false
     t.integer  "embedded_view",  limit: 4,     default: 0,     null: false
+    t.integer  "num_of_pages",   limit: 4,     default: 0
   end
 
   add_index "slides", ["category_id"], name: "idx_slides_category_id_key", using: :btree
