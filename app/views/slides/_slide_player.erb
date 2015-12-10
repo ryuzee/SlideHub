@@ -14,16 +14,16 @@ end
     <% page_list.each do |f| %>
       <% u = "#{Myapp::Application.config.oss_resource_endpoint}/#{f}" %>
     <% if count >= 2 %>
-    <li><img style="border:0px solid #000 !important" class="lazy image-<%= count %>" src="<%= root_url %>oss/images/spacer.gif" data-src="<%= u %>" /></li>
+      <li><img class="bximage lazy image-<%= count %>" src="<%= root_url %>oss/images/spacer.gif" data-src="<%= u %>" /></li>
     <% else %>
-    <li><img style="border:0px solid #000 !important" src="<%= u %>" /></li>
+      <li><img class="bximage" src="<%= u %>" /></li>
     <% end %>
     <% count +=1 %>
     <% end %>
 <% elsif slide.convert_status < 0 %>
-    <li><img style="border:0px solid #000 !important" class="image-0" src="<%= root_url %>oss/images/failed_to_convert.jpg" /></li>
+    <li><img class="bximage image-0" src="<%= root_url %>oss/images/failed_to_convert.jpg" /></li>
 <% else %>
-    <li><img style="border:0px solid #000 !important" class="image-0" src="<%= root_url %>oss/images/converting.jpg" /></li>
+    <li><img class="bximage image-0" src="<%= root_url %>oss/images/converting.jpg" /></li>
 <% end %>
 </ul>
 </div>

@@ -46,6 +46,11 @@ body.openslideshare_body {
   background: transparent;
   height: auto;
   display: block;
+  /**
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000 !important;
+  **/
 }
 .openslideshare_body .bx-wrapper img {
   height: auto;
@@ -112,10 +117,25 @@ body.openslideshare_body {
 }
 
 .openslideshare_body div.slider {
-  padding-right: 1px !important;
   border-top: 1px solid #000;
   border-left: 1px solid #000;
   border-right: 1px solid #000 !important;
+  z-index:9999;
+}
+
+@-moz-document url-prefix() {
+  div.slider {
+     padding-right: 1px;
+  }
+}
+
+.openslideshare_body .bximage {
+  /** reserve **/
+}
+
+_::-webkit-full-page-media, _:future, :root .bx-wrapper .bx-viewport {
+  /** reserve **/
+  padding-left:0px;
 }
 
 .openslideshare_body div#slide_div_box {
