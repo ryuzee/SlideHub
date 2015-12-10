@@ -133,16 +133,16 @@
 </div>
 
 <script type="text/javascript">
-  $1102(document).ready(function(){
-    $1102("#show_embedded").click(function(){
-      var x = $1102("<div></div>").dialog({autoOpen:false});
+  $1113(document).ready(function(){
+    $1113("#show_embedded").click(function(){
+      var x = $1113("<div></div>").dialog({autoOpen:false});
 x.html("<p><%= "<script src=\"#{root_url}slides/#{@slide.id}/embedded\"></script>" %></p>");
 x.dialog("option", {
   title: "<%= t :embedded_code %>",
     width:600,
     height:200,
     buttons: {
-      "OK": function() { $1102(this).dialog("close"); }
+      "OK": function() { $1113(this).dialog("close"); }
     }
 });
 x.dialog("open");
@@ -153,9 +153,9 @@ x.dialog("open");
 </div><!-- end of row -->
 
 <script type="text/javascript">
-  $1102(document).ready(function(){
+  $1113(document).ready(function(){
     // fix sidebar position
-    $1102("#rightside").stick_in_parent();
+    $1113("#rightside").stick_in_parent();
   });
 </script>
 
