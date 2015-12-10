@@ -160,15 +160,15 @@ x.dialog("open");
 </script>
 
 <script type="text/javascript">
-$(function() {
-  if (Cookies.get("SlideTab")) {
-    $('a[data-toggle="tab"]').parent().removeClass('active');
-    $('a[href=#' + Cookies.get("SlideTab") +']').click();
-  }
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-    var tabName = e.target.href;
-    var items = tabName.split("#");
-    Cookies.set("SlideTab",items[1], { expires: 365 });
+  $1113(document).ready(function(){
+    if (Cookies.get("SlideTab")) {
+      $1113('a[data-toggle="tab"]').parent().removeClass('active');
+      $1113('a[href=#' + Cookies.get("SlideTab") +']').click();
+    }
+    $1113('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      var tabName = e.target.href;
+      var items = tabName.split("#");
+      Cookies.set("SlideTab",items[1], { expires: 365 });
+    });
   });
-});
 </script>
