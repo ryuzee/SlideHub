@@ -36,22 +36,19 @@ body.openslideshare_body {
 .openslideshare_body div#pager {
   display: inline; font-weight:bold; font-color:#fff !important;
 }
+
 .openslideshare_body .bx-wrapper .bx-viewport
 {
   -moz-box-shadow: 0;
   -webkit-box-shadow: 0;
   box-shadow: none;
-  border: 0;
+  border:0;
   left: 0;
   background: transparent;
   height: auto;
   display: block;
-  /**
-  border-top: 1px solid #000;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000 !important;
-  **/
 }
+
 .openslideshare_body .bx-wrapper img {
   height: auto;
   display: block;
