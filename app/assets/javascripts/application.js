@@ -13,6 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+// jquery-1.10.2 must be loaded after bootstrap
+//= require jquery-1.10.2.min
+//= require jquery.lazyload
+//= require jquery.sticky-kit.min
+//= require js.cookie-2.0.4.min
+//= require mousetrap.min
 //= require moment
 //= require moment/ja
 //= require bootstrap-datetimepicker

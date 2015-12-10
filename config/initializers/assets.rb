@@ -22,4 +22,3 @@ NonStupidDigestAssets.whitelist = [/glyphicons-halflings-regular\.(eot|svg|woff|
 NonStupidDigestAssets.whitelist += ['jquery-1.10.2.min.js']
 NonStupidDigestAssets.whitelist += ['jquery.lazyload.js']
 NonStupidDigestAssets.whitelist += ['mousetrap.min.js']
-NonStupidDigestAssets.whitelist += ['bootstrap.js']
