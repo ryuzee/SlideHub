@@ -9,10 +9,12 @@ Rails.application.routes.draw do
   get 'slides/category/:id' => 'slides#category'
   get 'slides/:id/update_view' => 'slides#update_view'
   get 'slides/:id/embedded' => 'slides#embedded'
+  get 'slides/:id/embedded_v2' => 'slides#embedded_v2'
   get 'slides/:id/download' => 'slides#download'
   get 'slides/view/:id' => 'slides#show'
   get 'slides/download/:id' => 'slides#download'
   get 'slides/embedded/:id' => 'slides#embedded'
+  get 'slides/embedded_v2/:id' => 'slides#embedded_v2'
 
   resources :users do
     get 'index', on: :collection
