@@ -120,7 +120,7 @@ div#<%= prefix %>command_inner ul li {
   <% end %>
   </ul>
 
-  <div class="<%= prefix %>slidebox">
+  <div class="<%= prefix %>slidebox" id="<%= prefix %>slidebox">
     <div id="<%= prefix %>slide_area"></div>
     <div id="<%= prefix %>command_area">
       <div id="<%= prefix %>command_inner">
@@ -198,24 +198,27 @@ div#<%= prefix %>command_inner ul li {
     OSSJSPARTS<%= prefix %>.set_slider_position(OSSJSPARTS<%= prefix %>.slider_value);
     OSSJSPARTS<%= prefix %>.display_slider_value();
 
+    // Event Source
+    var src = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slidebox'));
+
     // Click slider
     OSSJSPARTS<%= prefix %>.slider.onclick = function(evt){
       dragging = true;
-      document.onmousemove(evt);
-      document.onmouseup();
+      src.onmousemove(evt);
+      src.onmouseup();
     };
     // Drag start
-    input.onmousedown = function(evt){
+    src.onmousedown = function(evt){
       dragging = true;
       return false;
     };
     // Drag end
-    document.onmouseup = function(evt){
+    src.onmouseup = function(evt){
       if (dragging) {
         dragging = false;
       }
     };
-    document.onmousemove = function(evt){
+    src.onmousemove = function(evt){
       if(dragging){
         // drag is in progress
         if(!evt){
