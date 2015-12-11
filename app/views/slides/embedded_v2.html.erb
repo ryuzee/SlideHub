@@ -64,6 +64,12 @@ form.<%= prefix %>slider-form {
   padding: 0px;
 }
 
+@media screen and (max-width: 480px) {
+  form.<%= prefix %>slider-form {
+    display: none !important;
+  }
+}
+
 form.<%= prefix %>slider-form input#<%= prefix %>slider_value {
   margin-right:10px;
 }
