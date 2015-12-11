@@ -40,6 +40,20 @@ div.<%= prefix %>right {
   border-right:1px solid #000;
 }
 
+div#<%= prefix %>progress_area {
+  height: 10px;
+  border-top:1px solid #000;
+  border-left:1px solid #000;
+  border-right:1px solid #000;
+  background-color: #555;
+}
+
+div#<%= prefix %>thumb {
+  width:20px;
+  border:0px;
+  background-color: green;
+}
+
 div#<%= prefix %>command_area {
   /** height: 40px; **/
   border:1px solid #000;
@@ -60,49 +74,9 @@ div#<%= prefix %>command_inner a {
   text-decoration: none;
 }
 
-form.<%= prefix %>slider-form {
-  display: inline-flex;
-  margin: 0px;
-  padding: 0px;
-}
-
-@media screen and (max-width: 480px) {
-  form.<%= prefix %>slider-form {
-    display: none !important;
-  }
-}
-
-form.<%= prefix %>slider-form input#<%= prefix %>slider_value {
-  margin-right:10px;
-}
-
-div.<%= prefix %>slider {
-  position:relative;
-  width:200px;
-  /** height:20px; **/
-  display:inline;
-}
-
-div.<%= prefix %>slider div {
-  background:#ddd;
-  height:3px;
-  border:1px inset #aaa;
-  position:relative;
-  top:8.5px;
-  font-size:0px;
-  display: block;
-}
-
-div.<%= prefix %>slider input {
-  position:absolute;
-  width: 10px;
-  height:20px;
-  top:3.0px;
-  display:block;
-}
-
 div#<%= prefix %>command_inner ul {
-  margin: 0;
+  width: 200px;
+  margin: 0 auto;
   padding: 0;
   list-style-type: none;
 }
@@ -117,10 +91,9 @@ div#<%= prefix %>command_inner ul li a {
   color: #ccc;
 }
 
-div#<%= prefix %>progress{
+div#<%= prefix %>page_positions{
   width: 50px !important;
   text-align: center;
-  /*: display:inline; **/
   color: #ccc;
 }
 </style>
@@ -141,24 +114,18 @@ div#<%= prefix %>progress{
 
   <div class="<%= prefix %>slidebox" id="<%= prefix %>slidebox">
     <div id="<%= prefix %>slide_area"></div>
+    <div id="<%= prefix %>progress_area">
+      <div id="<%= prefix %>thumb">&nbsp;</div>
+    </div>
     <div id="<%= prefix %>command_area">
       <div id="<%= prefix %>command_inner">
         <ul>
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(0);">&nbsp;<i class="fa fa-fast-backward"></i>&nbsp;</a></li>
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index-1);">&nbsp<i class="fa fa-step-backward"></i>&nbsp;</a></li>
-          <li><div id="<%= prefix %>progress"></div></li>
+          <li><div id="<%= prefix %>page_positions"></div></li>
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index+1);">&nbsp;<i class="fa fa-step-forward"></i>&nbsp;</a></li>
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.slides.length-1);">&nbsp;<i class="fa fa-fast-forward"></i>&nbsp;</a></li>
         </ul>
-        <div class="<%= prefix %>right">
-          <form class="<%= prefix %>slider-form" onsubmit="return false;">
-            &nbsp;
-            <div id="<%= prefix %>slider1" class="<%= prefix %>slider">
-              <div></div>
-              <input type="button" value="">
-            </div>
-          </form>
-        </div>
         <span class="<%= prefix %>clearfix"></span>
       </div>
     </div>
@@ -174,8 +141,6 @@ div#<%= prefix %>progress{
   OSSJSPARTS<%= prefix %>.current_page_index = 0;
   OSSJSPARTS<%= prefix %>.slides = [];
   OSSJSPARTS<%= prefix %>.class_prefix = "<%= prefix %>"
-  OSSJSPARTS<%= prefix %>.slider_value = 0;
-  OSSJSPARTS<%= prefix %>.slider = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slider1'));
 
   /** Initialization **/
   OSSJSPARTS<%= prefix %>.load_slide = function() {
@@ -228,67 +193,35 @@ div#<%= prefix %>progress{
     }
     OSSJSPARTS<%= prefix %>.show_progress();
 
-    // Slider
-    var input = OSSJSPARTS<%= prefix %>.slider.getElementsByTagName('input')[0];
-    var root = document.documentElement;
-    var dragging = false;
-    var width = input.clientWidth / 2;
+    var src = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slidebox'));
+    var progressbar = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('progress_area'));
+    var thumb = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('thumb'));
+    var progressbar_rect = progressbar.getBoundingClientRect();
 
+    // Slider
     OSSJSPARTS<%= prefix %>.set_slider_position = function (val){
-      // button width is taken into consideration...
-      input.style.left = (val - input.clientWidth/2) + 'px';
+      var w = (Math.round(progressbar_rect.right - progressbar_rect.left) * val / OSSJSPARTS<%= prefix %>.slides.length);
+      if (w >= (progressbar_rect.right - progressbar_rect.left)) {
+        w = progressbar_rect.right - progressbar_rect.left -1;
+      }
+      thumb.style.width = w + 'px';
     };
-    OSSJSPARTS<%= prefix %>.get_current_page_number_from_position = function() {
-      var val = Math.round(OSSJSPARTS<%= prefix %>.slider_value / OSSJSPARTS<%= prefix %>.slider.clientWidth * (OSSJSPARTS<%= prefix %>.slides.length -1) ) + 1;
-      return val;
-    };
-    OSSJSPARTS<%= prefix %>.set_slider_position(OSSJSPARTS<%= prefix %>.slider_value);
+    OSSJSPARTS<%= prefix %>.set_slider_position(OSSJSPARTS<%= prefix %>.current_page_index + 1);
 
     // Event Source
-    var src = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slidebox'));
-
-    // Click slider
-    OSSJSPARTS<%= prefix %>.slider.onclick = function(evt){
-      dragging = true;
-      src.onmousemove(evt);
-      src.onmouseup();
-    };
-    // Drag start
-    src.onmousedown = function(evt){
-      dragging = true;
-      return false;
-    };
-    // Drag end
-    src.onmouseup = function(evt){
-      if (dragging) {
-        dragging = false;
+    progressbar.onclick = function(evt) {
+      if(!evt){
+        evt = window.event;
       }
-    };
-    src.onmousemove = function(evt){
-      if(dragging){
-        // drag is in progress
-        if(!evt){
-          evt = window.event;
-        }
-        // mousu click position
-        var left = evt.clientX;
-        var rect = OSSJSPARTS<%= prefix %>.slider.getBoundingClientRect();
-        OSSJSPARTS<%= prefix %>.slider_value = Math.round(left - rect.left - width);
-        if (OSSJSPARTS<%= prefix %>.slider_value < 0) {
-          OSSJSPARTS<%= prefix %>.slider_value = 0;
-        } else if (OSSJSPARTS<%= prefix %>.slider_value > OSSJSPARTS<%= prefix %>.slider.clientWidth) {
-          OSSJSPARTS<%= prefix %>.slider_value = OSSJSPARTS<%= prefix %>.slider.clientWidth;
-        }
-        OSSJSPARTS<%= prefix %>.set_slider_position(OSSJSPARTS<%= prefix %>.slider_value);
-        // OSSJSPARTS<%= prefix %>.display_slider_value();
-        OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.get_current_page_number_from_position() -1);
-        return false;
-      }
+      var left = evt.clientX;
+      var len = Math.round(OSSJSPARTS<%= prefix %>.slides.length * (left - progressbar_rect.left) / (progressbar_rect.right - progressbar_rect.left));
+      thumb.style.width = (left - progressbar_rect.left) + 'px';
+      OSSJSPARTS<%= prefix %>.move_to(len);
     };
   };
 
   OSSJSPARTS<%= prefix %>.show_progress = function() {
-    var progress_area = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('progress'));
+    var progress_area = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('page_positions'));
     if (progress_area != undefined && progress_area != null) {
       progress_area.innerHTML = (OSSJSPARTS<%= prefix %>.current_page_index + 1) + " / " + OSSJSPARTS<%= prefix %>.slides.length;
     }
@@ -304,11 +237,8 @@ div#<%= prefix %>progress{
     if (index < OSSJSPARTS<%= prefix %>.slides.length -2) {
       OSSJSPARTS<%= prefix %>.preload_image(index+1);
     }
-    // if (index > 1) {
-    //  preload_image(index-1);
-    // }
     OSSJSPARTS<%= prefix %>.show_progress();
-    OSSJSPARTS<%= prefix %>.set_slider_position(index * OSSJSPARTS<%= prefix %>.slider.clientWidth / (OSSJSPARTS<%= prefix %>.slides.length -1));
+    OSSJSPARTS<%= prefix %>.set_slider_position(index+1);
   };
 
   OSSJSPARTS<%= prefix %>.preload_image = function(index) {
