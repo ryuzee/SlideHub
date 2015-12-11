@@ -1,8 +1,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <% page_list = @slide.page_list %>
-<% require 'securerandom'
-   require "digest/md5"
-   prefix = "js" + Digest::MD5.hexdigest(SecureRandom.hex + Time.now.strftime("%Y%m%d%H%M%S"))
+<%
+  if params.has_key?(:prefix) && !params[:prefix].empty?
+    prefix = params[:prefix]
+  else
+    prefix = js_prefix
+  end
 %>
 <%
   if page_list.instance_of?(Array)
