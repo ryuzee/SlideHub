@@ -7,10 +7,10 @@
 
     <!-- @TODO: vertical -->
     <% if params[:vertical] != "1" %>
-      <%= render 'slides/slide_player', slide: @slide, start_position: @start_position %>
+      <%# = render 'slides/slide_player', slide: @slide, start_position: @start_position %>
+      <script type="application/javascript" src="<%= "#{root_url}slides/#{@slide.id}/embedded_v2" %>"></script>
     <% else %>
       <%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
-
     <% end %>
 
     <div class="slide_detail_row">

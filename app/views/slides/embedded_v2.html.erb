@@ -111,7 +111,7 @@ div#<%= prefix %>command_inner ul li {
   <% if page_count > 0 %>
     <% page_list.each do |f| %>
       <% u = "#{Myapp::Application.config.oss_resource_endpoint}/#{f}" %>
-      <li><img class="lazy src="<%= root_url %>oss/images/spacer.gif" data-original="<%= u %>" /></li>
+      <li><img class="lazy" src="<%= root_url %>oss/images/spacer.gif" data-original="<%= u %>" /></li>
     <% end %>
   <% elsif slide.convert_status < 0 %>
     <li><img class="lazy" data-original="<%= root_url %>oss/images/failed_to_convert.jpg" /></li>

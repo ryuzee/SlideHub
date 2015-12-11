@@ -140,7 +140,7 @@ class SlidesController < ApplicationController
     @slide.increment(:page_view).increment(:embedded_view).save
     @start_position = 0 # 0? 1?
     s = render_to_string layout: 'plain', collection: @slide
-    render text: s, layout: false, content_type: 'text/javascript'
+    render text: s, layout: false, content_type: 'application/javascript'
   end
 
   def embedded_v2
@@ -148,7 +148,7 @@ class SlidesController < ApplicationController
     @slide.increment(:page_view).increment(:embedded_view).save
     @start_position = 0 # 0? 1?
     s = render_to_string layout: 'plain', collection: @slide
-    render text: s, layout: false, content_type: 'text/javascript'
+    render text: s, layout: false, content_type: 'application/javascript'
   end
 
   def download
