@@ -12,7 +12,9 @@
       <script type="application/javascript" src="<%= "#{root_url}slides/#{@slide.id}/embedded" %>"></script>
       </div>
     <% else %>
+      <div style="padding-top:20px;">
       <%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
+      </div>
     <% end %>
 
    <div id="slide_div_box" style="padding:20px;">
