@@ -173,10 +173,44 @@ div#<%= prefix %>command_inner ul li {
       OSSJSPARTS<%= prefix %>.slides.push(img.getAttribute('data-original'));
     }
     if (OSSJSPARTS<%= prefix %>.current_page_index == 0) {
+      var slide_area = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slide_area'));
       var element = document.createElement('img');
       element.id = OSSJSPARTS<%= prefix %>.add_css_prefix("slide_image");
       element.src = OSSJSPARTS<%= prefix %>.slides[0];
-      document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slide_area')).appendChild(element);
+      element.onload = function(){
+        var prev_transparent_element = document.createElement('img');
+        prev_transparent_element.src = '<%= "#{root_url}oss/images/spacer.gif" %>';
+        prev_transparent_element.style.zindex = 9999;
+        prev_transparent_element.style.width = (element.width / 2) + 'px';
+        prev_transparent_element.style.height = (element.height) + 'px';
+        prev_transparent_element.style.position = 'absolute';
+        prev_transparent_element.style.top = slide_area.style.marginTop;
+        prev_transparent_element.style.left = '15px';
+        prev_transparent_element.style.marginTop = '0px';
+        prev_transparent_element.style.marginLeft = '0px';
+        prev_transparent_element.style.cursor = 'pointer';
+        prev_transparent_element.style.border = '0px';
+        prev_transparent_element.onclick = function(){ OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index -1);};
+        slide_area.appendChild(prev_transparent_element);
+        var next_transparent_element = document.createElement('img');
+        next_transparent_element.src = '<%= "#{root_url}oss/images/spacer.gif" %>';
+        next_transparent_element.style.zindex = 9999;
+        next_transparent_element.style.width = (element.width / 2) + 'px';
+        next_transparent_element.style.height = (element.height) + 'px';
+        next_transparent_element.style.position = 'absolute';
+        prev_transparent_element.style.top = slide_area.style.marginTop;
+        next_transparent_element.style.left = (element.width / 2 + 15) + 'px';
+        next_transparent_element.style.marginTop = '0px';
+        next_transparent_element.style.marginLeft = '0px';
+        next_transparent_element.style.cursor = 'pointer';
+        next_transparent_element.style.border = '0px';
+        next_transparent_element.onclick = function(){ OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index +1);};
+        slide_area.appendChild(next_transparent_element);
+      };
+      slide_area.appendChild(element);
+
+
+
       if (findLi.length > 1) {
         OSSJSPARTS<%= prefix %>.preload_image[1];
       }
