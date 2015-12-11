@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <% page_list = @slide.page_list %>
 <% require 'securerandom'
    require "digest/md5"
@@ -43,6 +44,7 @@ div#<%= prefix %>command_area {
   /** height: 40px; **/
   border:1px solid #000;
   background-color: #222;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, "Arial", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "游ゴシック", YuGothic, sans-serif;
 }
 
 div#<%= prefix %>command_inner {
@@ -110,6 +112,17 @@ div#<%= prefix %>command_inner ul li {
   margin-right: 5px;
   border: 0px;
 }
+
+div#<%= prefix %>command_inner ul li a {
+  color: #ccc;
+}
+
+div#<%= prefix %>progress{
+  width: 50px !important;
+  text-align: center;
+  /*: display:inline; **/
+  color: #ccc;
+}
 </style>
 
 <div>
@@ -131,15 +144,15 @@ div#<%= prefix %>command_inner ul li {
     <div id="<%= prefix %>command_area">
       <div id="<%= prefix %>command_inner">
         <ul>
-          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(0);"><span>&lt;&lt;</span></a></li>
-          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index-1);"><span>&lt;</span></a></li>
-          <li><span id="<%= prefix %>progress"></span></li>
-          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index+1);"><span>&gt;</span></a></li>
-          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.slides.length-1);"><span>&gt;&gt;</span></a></li>
+          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(0);">&nbsp;<i class="fa fa-fast-backward"></i>&nbsp;</a></li>
+          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index-1);">&nbsp<i class="fa fa-step-backward"></i>&nbsp;</a></li>
+          <li><div id="<%= prefix %>progress"></div></li>
+          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index+1);">&nbsp;<i class="fa fa-step-forward"></i>&nbsp;</a></li>
+          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.slides.length-1);">&nbsp;<i class="fa fa-fast-forward"></i>&nbsp;</a></li>
         </ul>
         <div class="<%= prefix %>right">
           <form class="<%= prefix %>slider-form" onsubmit="return false;">
-            <input type="text" name="slider" id="<%= prefix %>slider_value" value="0" style="width:40px;">&nbsp;
+            &nbsp;
             <div id="<%= prefix %>slider1" class="<%= prefix %>slider">
               <div></div>
               <input type="button" value="">
@@ -209,8 +222,6 @@ div#<%= prefix %>command_inner ul li {
       };
       slide_area.appendChild(element);
 
-
-
       if (findLi.length > 1) {
         OSSJSPARTS<%= prefix %>.preload_image[1];
       }
@@ -218,7 +229,6 @@ div#<%= prefix %>command_inner ul li {
     OSSJSPARTS<%= prefix %>.show_progress();
 
     // Slider
-    var output = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slider_value'));
     var input = OSSJSPARTS<%= prefix %>.slider.getElementsByTagName('input')[0];
     var root = document.documentElement;
     var dragging = false;
@@ -232,11 +242,7 @@ div#<%= prefix %>command_inner ul li {
       var val = Math.round(OSSJSPARTS<%= prefix %>.slider_value / OSSJSPARTS<%= prefix %>.slider.clientWidth * (OSSJSPARTS<%= prefix %>.slides.length -1) ) + 1;
       return val;
     };
-    OSSJSPARTS<%= prefix %>.display_slider_value = function(){
-      output.value = OSSJSPARTS<%= prefix %>.current_page_index + 1;
-    };
     OSSJSPARTS<%= prefix %>.set_slider_position(OSSJSPARTS<%= prefix %>.slider_value);
-    OSSJSPARTS<%= prefix %>.display_slider_value();
 
     // Event Source
     var src = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slidebox'));
@@ -274,7 +280,7 @@ div#<%= prefix %>command_inner ul li {
           OSSJSPARTS<%= prefix %>.slider_value = OSSJSPARTS<%= prefix %>.slider.clientWidth;
         }
         OSSJSPARTS<%= prefix %>.set_slider_position(OSSJSPARTS<%= prefix %>.slider_value);
-        OSSJSPARTS<%= prefix %>.display_slider_value();
+        // OSSJSPARTS<%= prefix %>.display_slider_value();
         OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.get_current_page_number_from_position() -1);
         return false;
       }
@@ -303,7 +309,6 @@ div#<%= prefix %>command_inner ul li {
     // }
     OSSJSPARTS<%= prefix %>.show_progress();
     OSSJSPARTS<%= prefix %>.set_slider_position(index * OSSJSPARTS<%= prefix %>.slider.clientWidth / (OSSJSPARTS<%= prefix %>.slides.length -1));
-    OSSJSPARTS<%= prefix %>.display_slider_value(index);
   };
 
   OSSJSPARTS<%= prefix %>.preload_image = function(index) {

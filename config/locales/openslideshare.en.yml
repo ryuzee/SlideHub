@@ -21,6 +21,7 @@ en:
   number_of_comments: "# of Comments"
   number_of_conversion_failed": "# of Conversion Failed"
   popular: "Popular"
+  popular_slides: "Popular Slides"
   popular_tags: "Popular Tags"
   published_date_from: "Published Date (From)"
   published_date_to: "Published Date (To)"
