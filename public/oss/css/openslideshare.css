@@ -138,7 +138,7 @@ _::-webkit-full-page-media, _:future, :root .bx-wrapper .bx-viewport {
 .openslideshare_body div#slide_div_box {
   background-color: #fff !important;
   border:1px solid #ccc;
-  padding-top:20px !important;
+  padding:20px !important;
   margin-top:20px;
   margin-bottom:20px
 }
@@ -152,7 +152,7 @@ _::-webkit-full-page-media, _:future, :root .bx-wrapper .bx-viewport {
 }
 
 .openslideshare_body div.slide_detail_row {
-  padding-top:8px;
+  /** padding-top:8px; **/
   background-color:#fff !important;
 }
 

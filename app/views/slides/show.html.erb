@@ -3,16 +3,19 @@
 <%- model_class = Slide -%>
 <% slide_id = @slide.id %>
 <div class="row">
-  <div class="col-md-8 bottom_padding_20" id="slide_div_box">
+  <div class="col-md-8 bottom_padding_20" id="slide_div_box2">
 
     <!-- @TODO: vertical -->
     <% if params[:vertical] != "1" %>
       <%# = render 'slides/slide_player', slide: @slide, start_position: @start_position %>
+      <div style="padding-top:20px;">
       <script type="application/javascript" src="<%= "#{root_url}slides/#{@slide.id}/embedded_v2" %>"></script>
+      </div>
     <% else %>
       <%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
     <% end %>
 
+   <div id="slide_div_box" style="padding:20px;">
     <div class="slide_detail_row">
         <span class="h3"><%= strip_tags @slide.name %></span>
       <p><%= strip_tags @slide.description %></p>
@@ -76,7 +79,7 @@
         <% end %>
       </div>
     </div>
-
+  </div>
 </div>
 
 <div class="col-md-4" id="rightside">
