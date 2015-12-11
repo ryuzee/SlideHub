@@ -1,25 +1,264 @@
-<script src="<%= root_url %>assets/jquery.js"></script>
-<script src="<%= root_url %>jquery.bxslider/jquery.bxslider.js"></script>
-<script src="<%= root_url %>assets/jquery.lazyload.js"></script>
-<script src="<%= root_url %>jquery-ui-1.11.4/jquery-ui.min.js"></script>
-<script type="text/javascript">
-$1113 = jQuery.noConflict(true);
-</script>
-<link rel="stylesheet" type="text/css" href="<%= root_url %>jquery-ui-1.11.4/jquery-ui.min.css">
-<link rel="stylesheet" type="text/css" href="<%= root_url %>jquery.bxslider/jquery.bxslider.css">
-<link rel="stylesheet" type="text/css" href="<%= root_url %>oss/css/openslideshare.css">
-<link rel="stylesheet" type="text/css" href="<%= root_url %>oss/css/openslideshare_embedded.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<% page_list = @slide.page_list %>
+<% require 'securerandom'
+   require "digest/md5"
+   prefix = "js" + Digest::MD5.hexdigest(SecureRandom.hex + Time.now.strftime("%Y%m%d%H%M%S"))
+%>
+<%
+  if page_list.instance_of?(Array)
+    page_count = page_list.count
+  else
+    page_count = 0
+  end
+%>
 
-<script src="<%= root_url %>assets/mousetrap.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<style type="text/css">
-    .openslideshare_body { font-size: 0.8em;}
-    .openslideshare_body ul { padding: 0px; margin: 0px !important}
+<style>
+.<%= prefix %>clearfix:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+div.<%= prefix %>right {
+  display:inline;
+  float: right;
+  margin-right:10px;
+}
+
+.<%= prefix %>slidebox {
+  max-width: 768px;
+}
+
+#<%= prefix %>slide_area, #<%= prefix %>command_area {
+  width:100%;
+}
+
+#<%= prefix %>slide_area img {
+  width: 100%;
+  border-top:1px solid #000;
+  border-left:1px solid #000;
+  border-right:1px solid #000;
+}
+
+div#<%= prefix %>progress_area {
+  height: 10px;
+  border-top:1px solid #000;
+  border-left:1px solid #000;
+  border-right:1px solid #000;
+  background-color: #555;
+}
+
+div#<%= prefix %>thumb {
+  width:20px;
+  border:0px;
+  background-color: green;
+}
+
+div#<%= prefix %>command_area {
+  /** height: 40px; **/
+  border:1px solid #000;
+  background-color: #222;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, "Arial", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "游ゴシック", YuGothic, sans-serif;
+}
+
+div#<%= prefix %>command_inner {
+  padding:8px;
+}
+
+div#<%= prefix %>command_inner span {
+  font-size: 16px;
+  color: #fff;
+}
+
+div#<%= prefix %>command_inner a {
+  text-decoration: none;
+}
+
+div#<%= prefix %>command_inner ul {
+  width: 200px;
+  margin: 0 auto;
+  padding: 0;
+  list-style-type: none;
+}
+
+div#<%= prefix %>command_inner ul li {
+  float: left;
+  margin-right: 5px;
+  border: 0px;
+}
+
+div#<%= prefix %>command_inner ul li a {
+  color: #ccc;
+}
+
+div#<%= prefix %>page_positions{
+  width: 50px !important;
+  text-align: center;
+  color: #ccc;
+}
 </style>
 
-<div class="openslideshare_body">
-<div id="slide_div_box">
-<% puts @slide %>
-<%= render 'slides/slide_player', slide: @slide, start_position: @start_position %>
+<div>
+  <ul style="display:none" id="<%= prefix %>slide_list">
+  <% if page_count > 0 %>
+    <% page_list.each do |f| %>
+      <% u = "#{Myapp::Application.config.oss_resource_endpoint}/#{f}" %>
+      <li><img class="lazy" src="<%= root_url %>oss/images/spacer.gif" data-original="<%= u %>" /></li>
+    <% end %>
+  <% elsif slide.convert_status < 0 %>
+    <li><img class="lazy" data-original="<%= root_url %>oss/images/failed_to_convert.jpg" /></li>
+  <% else %>
+    <li><img class="lazy" data-original="<%= root_url %>oss/images/converting.jpg" /></li>
+  <% end %>
+  </ul>
+
+  <div class="<%= prefix %>slidebox" id="<%= prefix %>slidebox">
+    <div id="<%= prefix %>slide_area"></div>
+    <div id="<%= prefix %>progress_area">
+      <div id="<%= prefix %>thumb">&nbsp;</div>
+    </div>
+    <div id="<%= prefix %>command_area">
+      <div id="<%= prefix %>command_inner">
+        <ul>
+          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(0);">&nbsp;<i class="fa fa-fast-backward"></i>&nbsp;</a></li>
+          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index-1);">&nbsp<i class="fa fa-step-backward"></i>&nbsp;</a></li>
+          <li><div id="<%= prefix %>page_positions"></div></li>
+          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index+1);">&nbsp;<i class="fa fa-step-forward"></i>&nbsp;</a></li>
+          <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.slides.length-1);">&nbsp;<i class="fa fa-fast-forward"></i>&nbsp;</a></li>
+        </ul>
+        <span class="<%= prefix %>clearfix"></span>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
+
+<script type="text/javascript">
+  var OSSJSPARTS<%= prefix %> = {};
+  OSSJSPARTS<%= prefix %>.add_css_prefix = function(class_var) {
+    return OSSJSPARTS<%= prefix %>.class_prefix.concat(class_var);
+  };
+  OSSJSPARTS<%= prefix %>.name = "OpenSlideshare Javascript Player";
+  OSSJSPARTS<%= prefix %>.current_page_index = 0;
+  OSSJSPARTS<%= prefix %>.slides = [];
+  OSSJSPARTS<%= prefix %>.class_prefix = "<%= prefix %>"
+
+  /** Initialization **/
+  OSSJSPARTS<%= prefix %>.load_slide = function() {
+    var findUl = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slide_list'));
+    findLi = findUl.children;
+    for (var i = 0; i < findLi.length; i++){
+      var img = findLi[i].getElementsByTagName('img')[0];
+      OSSJSPARTS<%= prefix %>.slides.push(img.getAttribute('data-original'));
+    }
+    if (OSSJSPARTS<%= prefix %>.current_page_index == 0) {
+      var slide_area = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slide_area'));
+      var element = document.createElement('img');
+      element.id = OSSJSPARTS<%= prefix %>.add_css_prefix("slide_image");
+      element.src = OSSJSPARTS<%= prefix %>.slides[0];
+      element.onload = function(){
+        var prev_transparent_element = document.createElement('img');
+        prev_transparent_element.src = '<%= "#{root_url}oss/images/spacer.gif" %>';
+        prev_transparent_element.style.zindex = 9999;
+        prev_transparent_element.style.width = (element.width / 2) + 'px';
+        prev_transparent_element.style.height = (element.height) + 'px';
+        prev_transparent_element.style.position = 'absolute';
+        prev_transparent_element.style.top = slide_area.style.marginTop;
+        prev_transparent_element.style.left = '15px';
+        prev_transparent_element.style.marginTop = '0px';
+        prev_transparent_element.style.marginLeft = '0px';
+        prev_transparent_element.style.cursor = 'pointer';
+        prev_transparent_element.style.border = '0px';
+        prev_transparent_element.onclick = function(){ OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index -1);};
+        slide_area.appendChild(prev_transparent_element);
+        var next_transparent_element = document.createElement('img');
+        next_transparent_element.src = '<%= "#{root_url}oss/images/spacer.gif" %>';
+        next_transparent_element.style.zindex = 9999;
+        next_transparent_element.style.width = (element.width / 2) + 'px';
+        next_transparent_element.style.height = (element.height) + 'px';
+        next_transparent_element.style.position = 'absolute';
+        prev_transparent_element.style.top = slide_area.style.marginTop;
+        next_transparent_element.style.left = (element.width / 2 + 15) + 'px';
+        next_transparent_element.style.marginTop = '0px';
+        next_transparent_element.style.marginLeft = '0px';
+        next_transparent_element.style.cursor = 'pointer';
+        next_transparent_element.style.border = '0px';
+        next_transparent_element.onclick = function(){ OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index +1);};
+        slide_area.appendChild(next_transparent_element);
+      };
+      slide_area.appendChild(element);
+
+      if (findLi.length > 1) {
+        OSSJSPARTS<%= prefix %>.preload_image[1];
+      }
+    }
+    OSSJSPARTS<%= prefix %>.show_progress();
+
+    var src = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slidebox'));
+    var progressbar = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('progress_area'));
+    var thumb = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('thumb'));
+    var progressbar_rect = progressbar.getBoundingClientRect();
+
+    // Slider
+    OSSJSPARTS<%= prefix %>.set_slider_position = function (val){
+      var w = (Math.round(progressbar_rect.right - progressbar_rect.left) * val / OSSJSPARTS<%= prefix %>.slides.length);
+      if (w >= (progressbar_rect.right - progressbar_rect.left)) {
+        w = progressbar_rect.right - progressbar_rect.left -1;
+      }
+      thumb.style.width = w + 'px';
+    };
+    OSSJSPARTS<%= prefix %>.set_slider_position(OSSJSPARTS<%= prefix %>.current_page_index + 1);
+
+    // Event Source
+    progressbar.onclick = function(evt) {
+      if(!evt){
+        evt = window.event;
+      }
+      var left = evt.clientX;
+      var len = Math.round(OSSJSPARTS<%= prefix %>.slides.length * (left - progressbar_rect.left) / (progressbar_rect.right - progressbar_rect.left));
+      thumb.style.width = (left - progressbar_rect.left) + 'px';
+      OSSJSPARTS<%= prefix %>.move_to(len);
+    };
+  };
+
+  OSSJSPARTS<%= prefix %>.show_progress = function() {
+    var progress_area = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('page_positions'));
+    if (progress_area != undefined && progress_area != null) {
+      progress_area.innerHTML = (OSSJSPARTS<%= prefix %>.current_page_index + 1) + " / " + OSSJSPARTS<%= prefix %>.slides.length;
+    }
+  };
+
+  OSSJSPARTS<%= prefix %>.move_to = function(index) {
+    if (index > OSSJSPARTS<%= prefix %>.slides.length -1 || index < 0) {
+      return;
+    }
+    OSSJSPARTS<%= prefix %>.current_page_index = index;
+    var img = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slide_image'));
+    img.setAttribute('src', OSSJSPARTS<%= prefix %>.slides[index]);
+    if (index < OSSJSPARTS<%= prefix %>.slides.length -2) {
+      OSSJSPARTS<%= prefix %>.preload_image(index+1);
+    }
+    OSSJSPARTS<%= prefix %>.show_progress();
+    OSSJSPARTS<%= prefix %>.set_slider_position(index+1);
+  };
+
+  OSSJSPARTS<%= prefix %>.preload_image = function(index) {
+    var hidden_image = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('hidden_image'));
+    if (hidden_image == undefined || hidden_image == null) {
+      var element = document.createElement('img');
+      element.id = OSSJSPARTS<%= prefix %>.add_css_prefix('hidden_image');
+      element.src = OSSJSPARTS<%= prefix %>.slides[index];
+      element.style.display = 'none';
+      document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slide_area')).parentNode.insertBefore(element, document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slide_area')).nextSibling);
+    } else {
+      hidden_image.src = OSSJSPARTS<%= prefix %>.slides[index];
+    }
+  };
+
+  if (window.addEventListener) {
+    window.addEventListener('load', OSSJSPARTS<%= prefix %>.load_slide, false);
+  } else if (window.attachEvent) {
+    window.attachEvent('onload', OSSJSPARTS<%= prefix %>.load_slide);
+  } else {
+    window.onload = OSSJSPARTS<%= prefix %>.load_slide;
+  }
+</script>

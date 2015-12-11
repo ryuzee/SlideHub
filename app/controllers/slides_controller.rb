@@ -2,7 +2,7 @@ class SlidesController < ApplicationController
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
   before_action :duplicate_key_check!, only: [:create]
   include SqsUsable
-  protect_from_forgery except: [:embedded, :embedded_v2]
+  protect_from_forgery except: [:embedded]
 
   def index
     @latest_slides = Slide.published.latest.limit(8).includes(:user)
@@ -136,14 +136,6 @@ class SlidesController < ApplicationController
   end
 
   def embedded
-    @slide = Slide.find(params[:id])
-    @slide.increment(:page_view).increment(:embedded_view).save
-    @start_position = 0 # 0? 1?
-    s = render_to_string layout: 'plain', collection: @slide
-    render text: s, layout: false, content_type: 'application/javascript'
-  end
-
-  def embedded_v2
     @slide = Slide.find(params[:id])
     @slide.increment(:page_view).increment(:embedded_view).save
     @start_position = 0 # 0? 1?

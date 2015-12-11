@@ -9,7 +9,7 @@
     <% if params[:vertical] != "1" %>
       <%# = render 'slides/slide_player', slide: @slide, start_position: @start_position %>
       <div style="padding-top:20px;">
-      <script type="application/javascript" src="<%= "#{root_url}slides/#{@slide.id}/embedded_v2" %>"></script>
+      <script type="application/javascript" src="<%= "#{root_url}slides/#{@slide.id}/embedded" %>"></script>
       </div>
     <% else %>
       <%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
