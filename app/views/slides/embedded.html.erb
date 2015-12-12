@@ -158,6 +158,7 @@ div#<%= prefix %>page_positions{
       var element = document.createElement('img');
       element.id = OSSJSPARTS<%= prefix %>.add_css_prefix("slide_image");
       element.src = OSSJSPARTS<%= prefix %>.slides[0];
+
       element.onload = function(){
         var prev_transparent_element = document.createElement('img');
         prev_transparent_element.src = '<%= "#{root_url}oss/images/spacer.gif" %>';

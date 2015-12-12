@@ -9,6 +9,18 @@
     <% if params[:vertical] != "1" %>
       <div style="padding-top:20px;">
       <script type="application/javascript" src="<%= "#{root_url}slides/#{@slide.id}/embedded?prefix=#{prefix}" %>"></script>
+      <script type="application/javascript">
+        window.onkeydown = function(evt) {
+          if (evt.keyCode == 74) {
+            // j
+            OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index+1);
+          }
+          if (evt.keyCode == 75) {
+            // k
+            OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index-1);
+          }
+        }
+      </script>
       </div>
     <% else %>
       <div style="padding-top:20px;">
