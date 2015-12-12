@@ -29,7 +29,7 @@ div.<%= prefix %>right {
 }
 
 .<%= prefix %>slidebox {
-  max-width: 768px;
+/**  max-width: 768px; **/
 }
 
 #<%= prefix %>slide_area, #<%= prefix %>command_area {
@@ -99,6 +99,98 @@ div#<%= prefix %>page_positions{
   text-align: center;
   color: #ccc;
 }
+
+:-webkit-full-screen {
+  position: fixed;
+  width: 100%;
+  height:100%;
+  top: 0;
+  background: none;
+}
+
+/**
+:-moz-full-screen {
+  position: fixed;
+  width: 100%;
+  height:100%;
+  top: 0;
+  background: none;
+}
+**/
+
+:-ms-fullscreen {
+  position: fixed;
+  width: 100%;
+  height:100%;
+  top: 0;
+  background: none;
+}
+
+:fullscreen {
+  position: fixed;
+  width: 100%;
+  height:100%;
+  top: 0;
+  background: none;
+}
+
+/******* Image *******/
+:-webkit-full-screen #<%= prefix %>slide_area img {
+  width: 100%;
+  object-fit: contain;
+}
+:-moz-full-screen #<%= prefix %>slide_area img {
+  width: 100%;
+  object-fit: contain;
+}
+:-ms-fullscreen #<%= prefix %>slide_area img {
+  width: 100%;
+  object-fit: contain;
+}
+:fullscreen #<%= prefix %>slide_area img {
+  width: 100%;
+  object-fit: contain;
+}
+
+/******* Progress Area ******/
+:-webkit-full-screen #<%= prefix %>progress_area {
+  bottom: 40px;
+  position: absolute;
+  background-color: #222;
+}
+:-moz-full-screen #<%= prefix %>progress_area {
+  bottom: 40px;
+  position: absolute;
+  background-color: #222;
+}
+:-ms-fullscreen #<%= prefix %>progress_area {
+  bottom: 40px;
+  position: absolute;
+  background-color: #222;
+}
+:fullscreen #<%= prefix %>progress_area {
+  bottom: 40px;
+  position: absolute;
+  background-color: #222;
+}
+
+/******* Bottom Area ******/
+:-webkit-full-screen #<%= prefix %>command_area {
+  bottom: 0px;
+  position: absolute;
+}
+:-moz-full-screen #<%= prefix %>command_area {
+  bottom: 0px;
+  position: absolute;
+}
+:-ms-fullscreen #<%= prefix %>command_area {
+  bottom: 0px;
+  position: absolute;
+}
+:fullscreen #<%= prefix %>command_area {
+  bottom: 0px;
+  position: absolute;
+}
 </style>
 
 <div>
@@ -122,6 +214,11 @@ div#<%= prefix %>page_positions{
     </div>
     <div id="<%= prefix %>command_area">
       <div id="<%= prefix %>command_inner">
+        <a href="#" id="<%= prefix %>full_screen_icon"><i id="slide_control_fullscreen" class="fa fa-television"></i></a>
+        <a href="<%= "#{root_url}slides/#{@slide.id}" %>"><i id="slide_control_home_link" class="fa fa-link"></i></a>
+        <% if @slide.downloadable %>
+          <a href="<%= "#{root_url}slides/#{@slide.id}/download" %>"><i id="slide_control_download_link" class="fa fa-download"></i></a>
+        <% end %>
         <ul>
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(0);">&nbsp;<i class="fa fa-fast-backward"></i>&nbsp;</a></li>
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index-1);">&nbsp<i class="fa fa-step-backward"></i>&nbsp;</a></li>
@@ -144,6 +241,7 @@ div#<%= prefix %>page_positions{
   OSSJSPARTS<%= prefix %>.current_page_index = 0;
   OSSJSPARTS<%= prefix %>.slides = [];
   OSSJSPARTS<%= prefix %>.class_prefix = "<%= prefix %>"
+  OSSJSPARTS<%= prefix %>.aspect = 0.75;
 
   /** Initialization **/
   OSSJSPARTS<%= prefix %>.load_slide = function() {
@@ -160,6 +258,8 @@ div#<%= prefix %>page_positions{
       element.src = OSSJSPARTS<%= prefix %>.slides[0];
 
       element.onload = function(){
+        OSSJSPARTS<%= prefix %>.aspect = element.height / element.width;
+
         var prev_transparent_element = document.createElement('img');
         prev_transparent_element.src = '<%= "#{root_url}oss/images/spacer.gif" %>';
         prev_transparent_element.style.zindex = 9999;
@@ -257,6 +357,77 @@ div#<%= prefix %>page_positions{
       hidden_image.src = OSSJSPARTS<%= prefix %>.slides[index];
     }
   };
+
+  var requestFullScreen = function(target) {
+    if (target.webkitRequestFullscreen) {
+      target.webkitRequestFullscreen(); // Chrome15+, Safari5.1+, Opera15+
+    } else if (target.mozRequestFullScreen) {
+      target.mozRequestFullScreen();    // FF10+
+    } else if (target.msRequestFullscreen) {
+      target.msRequestFullscreen();     // IE11+
+    } else if (target.requestFullscreen) {
+      target.requestFullscreen();       //HTML5 Fullscreen API
+    }
+  };
+
+  var full_screen_icon = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('full_screen_icon'));
+  full_screen_icon.onclick = function(){
+    var elm = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slidebox'));
+    command_area_height = 50;
+    screen_w = screen.width;
+    screen_h = screen.height - command_area_height; // command area...
+    // alert(screen_w + " " + screen_h);
+    image_w = screen_h / OSSJSPARTS<%= prefix %>.aspect;
+    image_h = screen_h;
+    // alert(image_w + " " + image_h);
+    if (image_w > screen_w) {
+      image_w = screen_w;
+      image_h = screen_w * OSSJSPARTS<%= prefix %>.aspect;
+    }
+    // alert(image_w + " " + image_h);
+    // % is required...
+    width_percent = Math.round(image_w / screen_w * 100);
+    height_percent = Math.round(image_h / screen_h * 100);
+    // alert(width_percent + '% ' + height_percent + '%');
+    margin_left = Math.round((screen_w - image_w) / 2);
+    // alert(margin_left);
+
+    var css = "";
+    css += ':-webkit-full-screen #<%= prefix %>slide_area {'
+    css += 'width:' + width_percent + '% !important; height:' + height_percent + '% !important;';
+    css += 'float: left;';
+    css += 'margin-left:' + margin_left + 'px;';
+    css += '}';
+
+    css += ':-moz-full-screen #<%= prefix %>slide_area {'
+    css += 'width:' + width_percent + '% !important; height:' + height_percent + '% !important;';
+    css += 'float: left;';
+    css += 'margin-left:' + margin_left + 'px;';
+    css += '}';
+
+    css += ':-ms-fullscreen #<%= prefix %>slide_area {'
+    css += 'width:' + width_percent + '% !important; height:' + height_percent + '% !important;';
+    css += 'float: left;';
+    css += 'margin-left:' + margin_left + 'px;';
+    css += '}';
+
+    css += ':fullscreen #<%= prefix %>slide_area {'
+    css += 'width:' + width_percent + '% !important; height:' + height_percent + '% !important;';
+    css += 'float: left;';
+    css += 'margin-left:' + margin_left + 'px;';
+    css += '}';
+    // alert(css);
+    var style = document.createElement('style');
+    style.appendChild(document.createTextNode(css));
+    document.getElementsByTagName('head')[0].appendChild(style);
+    requestFullScreen(elm);
+  };
+
+  document.addEventListener("webkitfullscreenchange", <%= prefix %>handleFSevent, false);
+  document.addEventListener("mozfullscreenchange", <%= prefix %>handleFSevent, false);
+  document.addEventListener("MSFullscreenChange", <%= prefix %>handleFSevent, false);
+  document.addEventListener("fullscreenchange", <%= prefix %>handleFSevent, false);
+  function <%= prefix %>handleFSevent() {}
 
   if (window.addEventListener) {
     window.addEventListener('load', OSSJSPARTS<%= prefix %>.load_slide, false);

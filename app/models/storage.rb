@@ -17,7 +17,7 @@ class Storage
         credentials: Aws::Credentials.new(self.aws_access_id, self.aws_secret_key),
       },)
     end
-    @client = Aws::S3::Client.new(region: region)
+    @client = Aws::S3::Client.new(region: self.region)
   end
 
   def upload_files(bucket, files, prefix)
