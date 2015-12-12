@@ -156,22 +156,26 @@ div#<%= prefix %>page_positions{
 :-webkit-full-screen #<%= prefix %>progress_area {
   bottom: 40px;
   position: absolute;
-  background-color: #222;
+  background-color: #555;
+  width: 100%;
 }
 :-moz-full-screen #<%= prefix %>progress_area {
   bottom: 40px;
   position: absolute;
-  background-color: #222;
+  background-color: #555;
+  width: 100%;
 }
 :-ms-fullscreen #<%= prefix %>progress_area {
   bottom: 40px;
   position: absolute;
-  background-color: #222;
+  background-color: #555;
+  width: 100%;
 }
 :fullscreen #<%= prefix %>progress_area {
   bottom: 40px;
   position: absolute;
-  background-color: #222;
+  background-color: #555;
+  width: 100%;
 }
 
 /******* Bottom Area ******/
@@ -242,6 +246,10 @@ div#<%= prefix %>page_positions{
   OSSJSPARTS<%= prefix %>.slides = [];
   OSSJSPARTS<%= prefix %>.class_prefix = "<%= prefix %>"
   OSSJSPARTS<%= prefix %>.aspect = 0.75;
+  OSSJSPARTS<%= prefix %>.progressbar = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('progress_area'));
+  OSSJSPARTS<%= prefix %>.thumb = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('thumb'));
+  OSSJSPARTS<%= prefix %>.progressbar_rect = OSSJSPARTS<%= prefix %>.progressbar.getBoundingClientRect();
+  OSSJSPARTS<%= prefix %>.full_screen_icon = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('full_screen_icon'));
 
   /** Initialization **/
   OSSJSPARTS<%= prefix %>.load_slide = function() {
@@ -256,38 +264,21 @@ div#<%= prefix %>page_positions{
       var element = document.createElement('img');
       element.id = OSSJSPARTS<%= prefix %>.add_css_prefix("slide_image");
       element.src = OSSJSPARTS<%= prefix %>.slides[0];
-
+      element.style.cursor = 'pointer';
       element.onload = function(){
         OSSJSPARTS<%= prefix %>.aspect = element.height / element.width;
-
-        var prev_transparent_element = document.createElement('img');
-        prev_transparent_element.src = '<%= "#{root_url}oss/images/spacer.gif" %>';
-        prev_transparent_element.style.zindex = 9999;
-        prev_transparent_element.style.width = (element.width / 2) + 'px';
-        prev_transparent_element.style.height = (element.height) + 'px';
-        prev_transparent_element.style.position = 'absolute';
-        prev_transparent_element.style.top = slide_area.style.marginTop;
-        prev_transparent_element.style.left = '15px';
-        prev_transparent_element.style.marginTop = '0px';
-        prev_transparent_element.style.marginLeft = '0px';
-        prev_transparent_element.style.cursor = 'pointer';
-        prev_transparent_element.style.border = '0px';
-        prev_transparent_element.onclick = function(){ OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index -1);};
-        slide_area.appendChild(prev_transparent_element);
-        var next_transparent_element = document.createElement('img');
-        next_transparent_element.src = '<%= "#{root_url}oss/images/spacer.gif" %>';
-        next_transparent_element.style.zindex = 9999;
-        next_transparent_element.style.width = (element.width / 2) + 'px';
-        next_transparent_element.style.height = (element.height) + 'px';
-        next_transparent_element.style.position = 'absolute';
-        prev_transparent_element.style.top = slide_area.style.marginTop;
-        next_transparent_element.style.left = (element.width / 2 + 15) + 'px';
-        next_transparent_element.style.marginTop = '0px';
-        next_transparent_element.style.marginLeft = '0px';
-        next_transparent_element.style.cursor = 'pointer';
-        next_transparent_element.style.border = '0px';
-        next_transparent_element.onclick = function(){ OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index +1);};
-        slide_area.appendChild(next_transparent_element);
+      };
+      element.onclick = function(evt) {
+        if(!evt){
+          evt = window.event;
+        }
+        var click_pos = evt.clientX;
+        var rect = element.getBoundingClientRect();
+        if (click_pos < rect.left + (element.width / 2)) {
+          OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index -1);
+        } else {
+          OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index +1);
+        }
       };
       slide_area.appendChild(element);
 
@@ -296,34 +287,48 @@ div#<%= prefix %>page_positions{
       }
     }
     OSSJSPARTS<%= prefix %>.show_progress();
-
-    var src = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slidebox'));
-    var progressbar = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('progress_area'));
-    var thumb = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('thumb'));
-    var progressbar_rect = progressbar.getBoundingClientRect();
-
     // Slider
-    OSSJSPARTS<%= prefix %>.set_slider_position = function (val){
-      var w = (Math.round(progressbar_rect.right - progressbar_rect.left) * val / OSSJSPARTS<%= prefix %>.slides.length);
-      if (w >= (progressbar_rect.right - progressbar_rect.left)) {
-        w = progressbar_rect.right - progressbar_rect.left -1;
-      }
-      thumb.style.width = w + 'px';
-    };
     OSSJSPARTS<%= prefix %>.set_slider_position(OSSJSPARTS<%= prefix %>.current_page_index + 1);
-
-    // Event Source
-    progressbar.onclick = function(evt) {
-      if(!evt){
-        evt = window.event;
-      }
-      var left = evt.clientX;
-      var len = Math.round(OSSJSPARTS<%= prefix %>.slides.length * (left - progressbar_rect.left) / (progressbar_rect.right - progressbar_rect.left));
-      thumb.style.width = (left - progressbar_rect.left) + 'px';
-      OSSJSPARTS<%= prefix %>.move_to(len);
-    };
   };
 
+  /************************************
+   * Event Source
+   ************************************/
+  OSSJSPARTS<%= prefix %>.progressbar.onclick = function(evt) {
+    if(!evt){
+      evt = window.event;
+    }
+    var left = evt.clientX;
+
+    if (OSSJSPARTS<%= prefix %>.is_fullscreen()) {
+      var len = Math.round(OSSJSPARTS<%= prefix %>.slides.length * left / screen.width);
+      OSSJSPARTS<%= prefix %>.thumb.style.width = left + 'px';
+    } else {
+      var len = Math.round(OSSJSPARTS<%= prefix %>.slides.length * (left - OSSJSPARTS<%= prefix %>.progressbar_rect.left) / (OSSJSPARTS<%= prefix %>.progressbar_rect.right - OSSJSPARTS<%= prefix %>.progressbar_rect.left));
+      OSSJSPARTS<%= prefix %>.thumb.style.width = (left - OSSJSPARTS<%= prefix %>.progressbar_rect.left) + 'px';
+    }
+    OSSJSPARTS<%= prefix %>.move_to(len -1);
+  };
+
+  /************************************
+   * Display progressbar from page number
+   ************************************/
+  OSSJSPARTS<%= prefix %>.set_slider_position = function (val){
+    var w = 0;
+    if (OSSJSPARTS<%= prefix %>.is_fullscreen()) {
+      w = Math.round(screen.width * val / OSSJSPARTS<%= prefix %>.slides.length);
+    } else {
+      w = (Math.round(OSSJSPARTS<%= prefix %>.progressbar_rect.right - OSSJSPARTS<%= prefix %>.progressbar_rect.left) * val / OSSJSPARTS<%= prefix %>.slides.length);
+      if (w >= (OSSJSPARTS<%= prefix %>.progressbar_rect.right - OSSJSPARTS<%= prefix %>.progressbar_rect.left)) {
+        w = OSSJSPARTS<%= prefix %>.progressbar_rect.right - OSSJSPARTS<%= prefix %>.progressbar_rect.left -1;
+      }
+    }
+    OSSJSPARTS<%= prefix %>.thumb.style.width = w + 'px';
+  };
+
+  /************************************
+   * Show cureent page number and total page
+   ************************************/
   OSSJSPARTS<%= prefix %>.show_progress = function() {
     var progress_area = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('page_positions'));
     if (progress_area != undefined && progress_area != null) {
@@ -331,6 +336,9 @@ div#<%= prefix %>page_positions{
     }
   };
 
+  /************************************
+   * Move to specific pages
+   ************************************/
   OSSJSPARTS<%= prefix %>.move_to = function(index) {
     if (index > OSSJSPARTS<%= prefix %>.slides.length -1 || index < 0) {
       return;
@@ -345,6 +353,9 @@ div#<%= prefix %>page_positions{
     OSSJSPARTS<%= prefix %>.set_slider_position(index+1);
   };
 
+  /************************************
+   * Preload Images for Slides
+   ************************************/
   OSSJSPARTS<%= prefix %>.preload_image = function(index) {
     var hidden_image = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('hidden_image'));
     if (hidden_image == undefined || hidden_image == null) {
@@ -358,39 +369,26 @@ div#<%= prefix %>page_positions{
     }
   };
 
-  var requestFullScreen = function(target) {
-    if (target.webkitRequestFullscreen) {
-      target.webkitRequestFullscreen(); // Chrome15+, Safari5.1+, Opera15+
-    } else if (target.mozRequestFullScreen) {
-      target.mozRequestFullScreen();    // FF10+
-    } else if (target.msRequestFullscreen) {
-      target.msRequestFullscreen();     // IE11+
-    } else if (target.requestFullscreen) {
-      target.requestFullscreen();       //HTML5 Fullscreen API
-    }
-  };
-
-  var full_screen_icon = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('full_screen_icon'));
-  full_screen_icon.onclick = function(){
+  /************************************
+   * Entering into FullScreen Mode
+   ************************************/
+  OSSJSPARTS<%= prefix %>.full_screen_icon.onclick = function(){
     var elm = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slidebox'));
     command_area_height = 50;
     screen_w = screen.width;
     screen_h = screen.height - command_area_height; // command area...
-    // alert(screen_w + " " + screen_h);
     image_w = screen_h / OSSJSPARTS<%= prefix %>.aspect;
     image_h = screen_h;
-    // alert(image_w + " " + image_h);
     if (image_w > screen_w) {
       image_w = screen_w;
       image_h = screen_w * OSSJSPARTS<%= prefix %>.aspect;
     }
-    // alert(image_w + " " + image_h);
+
     // % is required...
-    width_percent = Math.round(image_w / screen_w * 100);
-    height_percent = Math.round(image_h / screen_h * 100);
-    // alert(width_percent + '% ' + height_percent + '%');
+    width_percent = (image_w / screen_w * 100);
+    height_percent = (image_h / screen_h * 100);
+
     margin_left = Math.round((screen_w - image_w) / 2);
-    // alert(margin_left);
 
     var css = "";
     css += ':-webkit-full-screen #<%= prefix %>slide_area {'
@@ -416,18 +414,56 @@ div#<%= prefix %>page_positions{
     css += 'float: left;';
     css += 'margin-left:' + margin_left + 'px;';
     css += '}';
-    // alert(css);
+
     var style = document.createElement('style');
     style.appendChild(document.createTextNode(css));
     document.getElementsByTagName('head')[0].appendChild(style);
-    requestFullScreen(elm);
+    OSSJSPARTS<%= prefix %>.requestFullScreen(elm);
   };
 
-  document.addEventListener("webkitfullscreenchange", <%= prefix %>handleFSevent, false);
-  document.addEventListener("mozfullscreenchange", <%= prefix %>handleFSevent, false);
-  document.addEventListener("MSFullscreenChange", <%= prefix %>handleFSevent, false);
-  document.addEventListener("fullscreenchange", <%= prefix %>handleFSevent, false);
-  function <%= prefix %>handleFSevent() {}
+  /************************************
+   * Handling FullScreen Event
+   ************************************/
+  OSSJSPARTS<%= prefix %>.handleFSevent = function() {
+    OSSJSPARTS<%= prefix %>.set_slider_position(OSSJSPARTS<%= prefix %>.current_page_index + 1);
+  };
+
+  /************************************
+   * Entering into Full Screen
+   ************************************/
+  OSSJSPARTS<%= prefix %>.requestFullScreen = function(target) {
+    if (target.webkitRequestFullscreen) {
+      target.webkitRequestFullscreen(); // Chrome15+, Safari5.1+, Opera15+
+    } else if (target.mozRequestFullScreen) {
+      target.mozRequestFullScreen();    // FF10+
+    } else if (target.msRequestFullscreen) {
+      target.msRequestFullscreen();     // IE11+
+    } else if (target.requestFullscreen) {
+      target.requestFullscreen();       //HTML5 Fullscreen API
+    }
+  };
+
+  /************************************
+   * Current Screen Status
+   ************************************/
+  OSSJSPARTS<%= prefix %>.is_fullscreen = function(){
+    if ((document.webkitFullscreenElement && document.webkitFullscreenElement !== null)
+     || (document.mozFullScreenElement && document.mozFullScreenElement !== null)
+     || (document.msFullscreenElement && document.msFullscreenElement !== null)
+     || (document.fullScreenElement && document.fullScreenElement !== null)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  /************************************
+   * Set EventListener
+   ************************************/
+  document.addEventListener("webkitfullscreenchange", OSSJSPARTS<%= prefix %>.handleFSevent, false);
+  document.addEventListener("mozfullscreenchange", OSSJSPARTS<%= prefix %>.handleFSevent, false);
+  document.addEventListener("MSFullscreenChange", OSSJSPARTS<%= prefix %>.handleFSevent, false);
+  document.addEventListener("fullscreenchange", OSSJSPARTS<%= prefix %>.handleFSevent, false);
 
   if (window.addEventListener) {
     window.addEventListener('load', OSSJSPARTS<%= prefix %>.load_slide, false);
