@@ -75,6 +75,7 @@ div#<%= prefix %>command_inner span {
 }
 
 div#<%= prefix %>command_inner a {
+  font-size: 16px;
   color: #ccc !important;
   text-decoration: none;
 }
@@ -220,10 +221,10 @@ div#<%= prefix %>page_positions{
     </div>
     <div id="<%= prefix %>command_area">
       <div id="<%= prefix %>command_inner">
-        <a style="float:left;" href="#" id="<%= prefix %>full_screen_icon"><i id="slide_control_fullscreen" class="fa fa-television"></i>&nbsp;</a>
-        <a style="float:left" href="<%= "#{root_url}slides/#{@slide.id}" %>"><i id="slide_control_home_link" class="fa fa-link"></i>&nbsp;</a>
+        <a style="float:left;margin-right:4px;" href="#" id="<%= prefix %>full_screen_icon"><i id="slide_control_fullscreen" class="fa fa-television"></i>&nbsp;</a>
+        <a style="float:left;margin-right:4px;" href="<%= "#{root_url}slides/#{@slide.id}" %>"><i id="slide_control_home_link" class="fa fa-link"></i>&nbsp;</a>
         <% if @slide.downloadable %>
-          <a style="float:left" href="<%= "#{root_url}slides/#{@slide.id}/download" %>"><i id="slide_control_download_link" class="fa fa-download"></i>&nbsp;</a>
+          <a style="float:left;margin-right:4px;" href="<%= "#{root_url}slides/#{@slide.id}/download" %>"><i id="slide_control_download_link" class="fa fa-download"></i>&nbsp;</a>
         <% end %>
         <ul>
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(0);">&nbsp;<i class="fa fa-fast-backward"></i>&nbsp;</a></li>
