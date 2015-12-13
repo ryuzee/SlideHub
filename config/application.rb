@@ -78,7 +78,7 @@ module Myapp
 
     def resource_endpoint
       bucket_name = ENV['OSS_IMAGE_BUCKET_NAME']
-      unless ENV['OSS_CDN_BASE_URL'].empty?
+      if ENV.has_key?('OSS_CDN_BASE_URL') and !ENV['OSS_CDN_BASE_URL'].empty?
         url = "#{ENV['OSS_CDN_BASE_URL']}"
       else
         if (ENV['OSS_USE_S3_STATIC_HOSTING'] == '1')
