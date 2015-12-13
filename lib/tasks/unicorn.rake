@@ -3,9 +3,15 @@ namespace :unicorn do
   # Tasks
   ##
   desc 'Start unicorn for development env.'
-  task :start do
+  task :start_dev do
     config = Rails.root.join('config', 'unicorn.rb')
     sh "bundle exec unicorn_rails -c #{config} -E development -D -l 3000"
+  end
+
+  desc 'Start unicorn for production env.'
+  task :start do
+    config = Rails.root.join('config', 'unicorn.rb')
+    sh "bundle exec unicorn_rails -c #{config} -E production -D -l 3000"
   end
 
   desc 'Stop unicorn'
