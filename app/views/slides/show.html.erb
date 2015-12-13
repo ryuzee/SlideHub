@@ -21,6 +21,29 @@
           }
         }
       </script>
+      <script type="text/javascript">
+        $1113(document).ready(function(){
+          var timer = setInterval( updateDiv, 10 * 1000);
+          function updateDiv() {
+            var pages = <%= @slide.num_of_pages %>;
+            if (pages > 0) {
+              return;
+            }
+            $1113.ajax({
+              type: 'GET',
+              async: false,
+              url: "/slides/<%= @slide.id %>/update_view",
+              cache: false,
+              success: function(result) {
+                if (result + 0 > 0) {
+                  location.reload();
+                }
+              },
+              error: function(xhr, ajaxOptions, thrownError) {}
+            });
+          }
+        });
+      </script>
       </div>
     <% else %>
       <div style="padding-top:20px;">

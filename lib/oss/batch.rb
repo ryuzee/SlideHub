@@ -4,10 +4,10 @@ include SqsUsable
 class Batch
   def self.execute
     Oss::BatchLogger.info('Start convert process')
-    resp = receive_message(1)
-    if !resp.instance_of?(Array) || resp.count == 0
+    resp = receive_message(5)
+    if !resp || resp.messages.count == 0
       Oss::BatchLogger.info('No SQS message found')
-      #return true
+      return true
     end
     resp.messages.each do |msg|
       obj = JSON.parse(msg.body)
