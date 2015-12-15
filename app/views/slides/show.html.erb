@@ -132,7 +132,7 @@
       <li class="list-group-item"><i class="glyphicon glyphicon-th"></i>&nbsp;&nbsp;Category<span class="pull-right"><a href="/slides/category/<%= @slide.category_id %>"><%= @slide.category.name %></a></span></li>
       <li class="list-group-item"><i class="fa fa-eye"></i>&nbsp;&nbsp;Total View<span class="pull-right"><%= @slide.total_view %></span></li>
       <li class="list-group-item"><i class="fa fa-desktop"></i>&nbsp;&nbsp;Embedded View<span class="pull-right"><%= @slide.embedded_view %></span></li>
-      <% if @slide.downloadable == 1 %>
+      <% if @slide.downloadable %>
         <li class="list-group-item"><i class="fa fa-circle-down"></i>&nbsp;&nbsp;Downloads<span><%= @slide.download_count %></span></li>
       <% end %>
 
