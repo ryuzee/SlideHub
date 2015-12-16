@@ -22,14 +22,14 @@
         }
       </script>
       <script type="text/javascript">
-        $1113(document).ready(function(){
+        $(document).ready(function(){
           var timer = setInterval( updateDiv, 10 * 1000);
           function updateDiv() {
             var pages = <%= @slide.num_of_pages %>;
             if (pages > 0) {
               return;
             }
-            $1113.ajax({
+            $.ajax({
               type: 'GET',
               async: false,
               url: "/slides/<%= @slide.id %>/update_view",
@@ -176,16 +176,16 @@
 </div>
 
 <script type="text/javascript">
-  $1113(document).ready(function(){
-    $1113("#show_embedded").click(function(){
-      var x = $1113("<div></div>").dialog({autoOpen:false});
+  $(document).ready(function(){
+    $("#show_embedded").click(function(){
+      var x = $("<div></div>").dialog({autoOpen:false});
 x.html("<p><%= "<script src=\"#{root_url}slides/#{@slide.id}/embedded\"></script>" %></p>");
 x.dialog("option", {
   title: "<%= t :embedded_code %>",
     width:600,
     height:200,
     buttons: {
-      "OK": function() { $1113(this).dialog("close"); }
+      "OK": function() { $(this).dialog("close"); }
     }
 });
 x.dialog("open");
@@ -196,19 +196,19 @@ x.dialog("open");
 </div><!-- end of row -->
 
 <script type="text/javascript">
-  $1113(document).ready(function(){
+  $(document).ready(function(){
     // fix sidebar position
-    $1113("#rightside").stick_in_parent();
+    $("#rightside").stick_in_parent();
   });
 </script>
 
 <script type="text/javascript">
-  $1113(document).ready(function(){
+  $(document).ready(function(){
     if (Cookies.get("SlideTab")) {
-      $1113('a[data-toggle="tab"]').parent().removeClass('active');
-      $1113('a[href=#' + Cookies.get("SlideTab") +']').click();
+      $('a[data-toggle="tab"]').parent().removeClass('active');
+      $('a[href=#' + Cookies.get("SlideTab") +']').click();
     }
-    $1113('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       var tabName = e.target.href;
       var items = tabName.split("#");
       Cookies.set("SlideTab",items[1], { expires: 365 });

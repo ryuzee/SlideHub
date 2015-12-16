@@ -1,11 +1,11 @@
 <script type="text/javascript">
-$1113(document).ready(function() {
+$(document).ready(function() {
   <% if command == 'add' %>
-    $1113('#file').on("change", function(event) {
+    $('#file').on("change", function(event) {
         var file = this.files[0];
   <% else %>
-    $1113("#upload-form").submit(function(event) {
-        var file = $1113("#file")[0].files[0];
+    $("#upload-form").submit(function(event) {
+        var file = $("#file")[0].files[0];
   <% end %>
         if(file != null) {
             console.log(file.name); // ファイル名をログに出力する
@@ -23,16 +23,16 @@ $1113(document).ready(function() {
         var formData = new FormData();
         var url = "<%= Myapp::Application.config.oss_upload_endpoint %>";
 
-        var form = $1113('#upload-form');
-        $1113(form.serializeArray()).each(function(i, v) {
+        var form = $('#upload-form');
+        $(form.serializeArray()).each(function(i, v) {
             if(v.name != "file") {
                 formData.append(v.name, v.value);
             }
         });
-        formData.append("file", $1113("#file").prop("files")[0]);
+        formData.append("file", $("#file").prop("files")[0]);
 
         // You need to set CORS options in target S3 bucket
-        $1113.ajax({
+        $.ajax({
             url: url,
             type: 'POST',
             dataType: 'xml',
@@ -40,14 +40,14 @@ $1113(document).ready(function() {
             async: true,
             crossDomain: true,
             xhr: function() {
-                xhr = $1113.ajaxSettings.xhr();
+                xhr = $.ajaxSettings.xhr();
                 xhr.upload.addEventListener("progress", function(evt) {
                     if (evt.lengthComputable) {
                         var percentComplete = evt.loaded / evt.total;
                         var p = Math.round(percentComplete * 100);
-                        $1113(".progress-bar").html(p + "%");
-                        $1113(".progress-bar").attr("aria-valuenow", p);
-                        $1113(".progress-bar").attr("style", "width: " + p + "%");
+                        $(".progress-bar").html(p + "%");
+                        $(".progress-bar").attr("aria-valuenow", p);
+                        $(".progress-bar").attr("style", "width: " + p + "%");
                     }
                 }, false);
                 return xhr;
@@ -67,12 +67,12 @@ $1113(document).ready(function() {
             contentType: false,
             processData: false
         }).done(function( data, textStatus, jqXHR ) {
-            var key   = $1113(data).find("Key").text();
-            $1113("#SlideKey").val(key);
+            var key   = $(data).find("Key").text();
+            $("#SlideKey").val(key);
             <% if command != 'add' %>
-            $1113("#SlideConvertStatus").val(0);
+            $("#SlideConvertStatus").val(0);
             <% end %>
-            $1113("#save_button").removeAttr("disabled");
+            $("#save_button").removeAttr("disabled");
         }) .fail(function( jqXHR, textStatus, errorThrown ) {
             // ...
         });
