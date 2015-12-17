@@ -76,6 +76,7 @@ ja:
         total_view: "合計ページビュー"  #g
         user: :activerecord.models.user  #g
         user_id: "ユーザーID"
+        num_of_pages: "ページ数"
 
       tag:
         name: "タグ"  #g
@@ -98,3 +99,4 @@ ja:
         reset_password_sent_at: "パスワードリセット送信日時"  #g
         reset_password_token: "パスワードリセット用トークン"  #g
         slides: "スライド"  #g
+        slides_count: "スライド数"

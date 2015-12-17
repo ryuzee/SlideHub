@@ -73,6 +73,7 @@ en:
         tags: "Tags"  #g
         total_view: "Total View"  #g
         user: :activerecord.models.user  #g
+        num_of_pages: "Pages"
 
       tag:
         name: "Name"  #g
@@ -94,3 +95,4 @@ en:
         reset_password_sent_at: "Reset password sent at"  #g
         reset_password_token: "Reset password token"  #g
         slides: "Slides"  #g
+        slides_count: "Slides"
