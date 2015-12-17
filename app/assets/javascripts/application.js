@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require jquery-ui
 //= require jquery.lazyload
 //= require jquery.equalheights.min
 //= require jquery.sticky-kit.min

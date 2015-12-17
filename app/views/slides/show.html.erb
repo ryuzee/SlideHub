@@ -144,7 +144,7 @@
       <% if @slide.downloadable %>
         <li class="list-group-item"><i class="fa fa-download"></i>&nbsp;&nbsp;<%= link_to t(:download_slide), "/slides/#{@slide.id}/download" %></li>
       <% end %>
-      <li class="list-group-item"><i class="fa fa-code"></i>&nbsp;&nbsp;<%= link_to t(:show_embedded_code), "#", :id => "show_embedded" %></li>
+      <li class="list-group-item"><i class="fa fa-code"></i>&nbsp;&nbsp;<%= link_to t(:show_embedded_code), "#", :id => "show_embedded", data: {"toggle":"modal", "target":"embedded_dialog"} %></li>
       <% if user_signed_in? and current_user.id == @slide.user_id %>
         <li class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<%= link_to t(:edit_slide), "/slides/#{@slide.id}/edit" %></li>
         <li class="list-group-item"><i class="fa fa-trash"></i>&nbsp;&nbsp;<%= link_to t(:delete_slide), "/slides/#{@slide.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?"} %></li>
@@ -178,17 +178,7 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $("#show_embedded").click(function(){
-      var x = $("<div></div>").dialog({autoOpen:false});
-x.html("<p><%= "<script src=\"#{root_url}slides/#{@slide.id}/embedded\"></script>" %></p>");
-x.dialog("option", {
-  title: "<%= t :embedded_code %>",
-    width:600,
-    height:200,
-    buttons: {
-      "OK": function() { $(this).dialog("close"); }
-    }
-});
-x.dialog("open");
+      $('.embedded_dialog').modal('show');
     });
   });
 </script>
@@ -215,3 +205,17 @@ x.dialog("open");
     });
   });
 </script>
+
+<div class="modal fade embedded_dialog" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">Embedded Code</div>
+      <div class="modal-body">
+        <%= "<script src=\"#{root_url}slides/#{@slide.id}/embedded\"></script>" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
