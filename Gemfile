@@ -42,6 +42,9 @@ gem 'less-rails'
 gem 'twitter-bootstrap-rails', '= 3.2.0'
 gem 'execjs'
 
+# jquery-ui
+gem 'jquery-ui-rails'
+
 # Paginate
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
