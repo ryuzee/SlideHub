@@ -132,6 +132,20 @@ $(function(){
     <%= error_span(@slide[:embedded_view]) %>
   </div>
   <div class="control-group">
+    <%= f.label :download_count, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :download_count, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:download_count]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :num_of_pages, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :num_of_pages, :class => 'form-control' %>
+    </div>
+    <%= error_span(@slide[:num_of_pages]) %>
+  </div>
+  <div class="control-group">
     <%= f.label t('activerecord.models.tag'), :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :tag_list, :value => @slide.tag_list.join(','), :class => 'form-control' %>
