@@ -11,6 +11,7 @@
               <th class="col-md-1"><%= sort_link(@q, :created_at) %></th>
               <th class="col-md-1"><%= sort_link(@q, :modified_at) %></th>
               <th class="col-md-1"><%= sort_link(@q, :convert_status) %></th>
+              <th class="col-md-1"><%= sort_link(@q, :total_view) %></th>
               <th class="col-md-1"><%= sort_link(@q, :page_view) %></th>
               <th class="col-md-1"><%= sort_link(@q, :embedded_view) %></th>
               <th class="col-md-1"><%= sort_link(@q, :download_count) %></th>
@@ -27,6 +28,7 @@
                 <td><%= slide.created_at %></td>
                 <td><%= slide.modified_at %></td>
                 <td><%= slide.convert_status %></td>
+                <td><%= slide.total_view %></td>
                 <td><%= slide.page_view %></td>
                 <td><%= slide.embedded_view %></td>
                 <td><%= slide.download_count %></td>
