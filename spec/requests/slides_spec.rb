@@ -38,4 +38,19 @@ describe 'Slides' do
       expect(response.status).to eq(200)
     end
   end
+
+  # rss
+  describe 'GET /slides/popular.rss' do
+    it 'works!' do
+      get '/slides/popular.rss'
+      expect(response.status).to eq(200)
+    end
+  end
+
+  describe 'GET /slides/latest.rss' do
+    it 'works!' do
+      get '/slides/latest.rss'
+      expect(response.status).to eq(200)
+    end
+  end
 end
