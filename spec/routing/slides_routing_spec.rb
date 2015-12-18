@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe SlidesController do
   describe 'routing' do
     it 'routes to #index' do

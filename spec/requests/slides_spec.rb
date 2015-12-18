@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe 'Slides' do
   describe 'GET /slides' do
     it 'works!' do

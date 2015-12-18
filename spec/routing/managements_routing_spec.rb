@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe ManagementsController do
   describe 'routing' do
     it 'routes to #dashboard' do

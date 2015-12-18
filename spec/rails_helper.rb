@@ -62,4 +62,18 @@ RSpec.configure do |config|
   require 'support/controller_macros'
   config.include Devise::TestHelpers, :type => :controller
   config.include ControllerMacros, :type => :controller
+
+  #DatabaseCleaner
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end

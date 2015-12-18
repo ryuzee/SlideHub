@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe CommentsController do
   describe 'routing' do
     it 'routes to #create' do
