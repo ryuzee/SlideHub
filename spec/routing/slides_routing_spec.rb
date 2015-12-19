@@ -78,5 +78,18 @@ describe SlidesController do
     it 'routes to #popular.rss' do
       expect(get('/slides/popular.rss')).to route_to('slides#popular', "format"=>"rss")
     end
+
+    ## specify page number when displaying a slide
+    it 'routes to #show/:id/:page' do
+      expect(get('/slides/1/2')).to route_to('slides#show', id: '1', page: '2')
+    end
+
+    it 'routes to #embedded/:id/:page' do
+      expect(get('/slides/1/embedded/2')).to route_to('slides#embedded', id: '1', page: '2')
+    end
+
+    it 'routes to #slides/embedded/:id/:page' do
+      expect(get('/slides/embedded/1/2')).to route_to('slides#embedded', id: '1', page: '2')
+    end
   end
 end

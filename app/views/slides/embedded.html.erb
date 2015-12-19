@@ -251,7 +251,7 @@ div#<%= prefix %>page_positions{
     return OSSJSPARTS<%= prefix %>.class_prefix.concat(class_var);
   };
   OSSJSPARTS<%= prefix %>.name = "OpenSlideshare Javascript Player";
-  OSSJSPARTS<%= prefix %>.current_page_index = 0;
+  OSSJSPARTS<%= prefix %>.current_page_index = <%= @start_position -1 %>;
   OSSJSPARTS<%= prefix %>.slides = [];
   OSSJSPARTS<%= prefix %>.class_prefix = "<%= prefix %>"
   OSSJSPARTS<%= prefix %>.aspect = 0.75;
@@ -268,7 +268,7 @@ div#<%= prefix %>page_positions{
       var img = findLi[i].getElementsByTagName('img')[0];
       OSSJSPARTS<%= prefix %>.slides.push(img.getAttribute('data-original'));
     }
-    if (OSSJSPARTS<%= prefix %>.current_page_index == 0) {
+    if (document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix("slide_image")) == null) {
       var slide_area = document.getElementById(OSSJSPARTS<%= prefix %>.add_css_prefix('slide_area'));
       var element = document.createElement('img');
       element.id = OSSJSPARTS<%= prefix %>.add_css_prefix("slide_image");
@@ -290,6 +290,14 @@ div#<%= prefix %>page_positions{
         }
       };
       slide_area.appendChild(element);
+
+      if (OSSJSPARTS<%= prefix %>.current_page_index >= findLi.length) {
+        OSSJSPARTS<%= prefix %>.current_page_index = 0;
+      }
+
+      if (OSSJSPARTS<%= prefix %>.current_page_index != 0) {
+          OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index);
+      }
 
       if (findLi.length > 1) {
         OSSJSPARTS<%= prefix %>.preload_image[1];
