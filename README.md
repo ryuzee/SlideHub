@@ -3,6 +3,7 @@
 This is an open source slidesharing application.
 
 The previous version of OpenSlideshare was made with CakePHP. And this version is a successor of the previous version and is made with Ruby on Rails 4.
+![Screenshot](capture1.png)
 
 ## Warning
 
