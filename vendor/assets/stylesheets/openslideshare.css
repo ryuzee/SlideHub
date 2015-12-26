@@ -268,7 +268,7 @@ _::-webkit-full-page-media, _:future, :root .bx-wrapper .bx-viewport {
   -o-transform: scale(1.2) rotate(-7deg);
   transform: scale(1.2) rotate(-7deg);*/
   -webkit-transform: scale(1.2);
-  -moz-transform: scale(1.2));
+  -moz-transform: scale(1.2);
   -ms-transform: scale(1.2) ;
   -o-transform: scale(1.2);
   transform: scale(1.2);
