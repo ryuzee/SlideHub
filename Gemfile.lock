@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/ryuzee/packr
+  revision: f7c6f4d450339de410465fef8cc2d1cba7c8fae1
+  specs:
+    packr (3.2.1)
+      oyster (>= 0.9.5)
+
+GIT
   remote: https://github.com/thoughtbot/paperclip.git
   revision: 850a199da1f827571d3a21b075be45fe7d853e8f
   specs:
@@ -244,8 +251,6 @@ GEM
     ntlm-http (0.1.1)
     orm_adapter (0.5.0)
     oyster (0.9.5)
-    packr (3.2.1)
-      oyster (>= 0.9.5)
     parser (2.2.3.0)
       ast (>= 1.1, < 3.0)
     pdf-reader (1.3.3)
@@ -468,7 +473,7 @@ DEPENDENCIES
   momentjs-rails (>= 2.9.0)
   mysql2
   non-stupid-digest-assets
-  packr
+  packr!
   paperclip!
   pdf-reader
   php-serialization
