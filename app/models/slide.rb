@@ -22,6 +22,7 @@ require 'securerandom'
 #  download_count :integer          default(0), not null
 #  embedded_view  :integer          default(0), not null
 #  num_of_pages   :integer          default(0)
+#  comments_count :integer          default(0), not null
 #
 
 class Slide < ActiveRecord::Base

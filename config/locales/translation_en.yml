@@ -74,6 +74,7 @@ en:
         total_view: "Total View"  #g
         user: :activerecord.models.user  #g
         num_of_pages: "Pages"
+        comments_count: "Comments"
 
       tag:
         name: "Name"  #g
