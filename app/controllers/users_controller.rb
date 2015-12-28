@@ -24,6 +24,10 @@ class UsersController < ApplicationController
     @tags = Slide.published.
             owner(params[:id]).
             tag_counts_on(:tags).order('count DESC')
+    respond_to do |format|
+      format.html
+      format.rss
+    end
   end
 
   def statistics
