@@ -23,6 +23,14 @@ describe 'Users' do
     end
   end
 
+  describe 'GET /users/view/1 (Backward Compatibility)' do
+    it 'works!' do
+      create(:user_admin)
+      get '/users/view/1'
+      expect(response.status).to eq(200)
+    end
+  end
+
   describe 'GET /users/new' do
     it 'does not exist!' do
       expect { get '/users/new' }.to raise_error(AbstractController::ActionNotFound)
