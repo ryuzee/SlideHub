@@ -62,7 +62,7 @@ class SlidesController < ApplicationController
       storage.delete_generated_files(@slide.key)
       @slide.destroy
     end
-    redirect_to '/users/index'
+    redirect_to slides_path
   end
 
   def create
@@ -73,7 +73,7 @@ class SlidesController < ApplicationController
     if @slide.save
       slide = Slide.where('slides.key = ?', key).first
       send_message({ id: slide.id, key: key }.to_json)
-      redirect_to "/slides/#{slide.id}"
+      redirect_to slide_path(slide.id)
     else
       render :new
     end
@@ -82,7 +82,7 @@ class SlidesController < ApplicationController
   def edit
     @slide = Slide.find(params[:id])
     if current_user.id != @slide.user_id
-      redirect_to "/slides/#{@slide.id}"
+      redirect_to slide_path(@slide.id)
     end
   end
 
@@ -90,7 +90,7 @@ class SlidesController < ApplicationController
     slide_params = params.require(:slide).permit(:name, :description, :key, :downloadable, :category_id, :tag_list, :convert_status)
     @slide = Slide.find(params[:id])
     if current_user.id != @slide.user_id
-      redirect_to "/slides/#{@slide.id}"
+      redirect_to slide_path(@slide.id)
     end
     slide_convert_status = params[:slide][:convert_status].to_i
 
@@ -99,7 +99,7 @@ class SlidesController < ApplicationController
       if slide_convert_status == 0
         send_message({ id: @slide.id, key: @slide.key }.to_json)
       end
-      redirect_to "/slides/#{@slide.id}"
+      redirect_to slide_path(@slide.id)
     else
       render :edit
     end
@@ -161,7 +161,7 @@ class SlidesController < ApplicationController
     def duplicate_key_check!
       key = params[:slide][:key]
       if Slide.where('slides.key = ?', key).count > 0
-        redirect_to '/slides'
+        redirect_to slides_path
       end
     end
 

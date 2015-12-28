@@ -17,11 +17,11 @@ if @slide.tags.count > 0
    end
 %>
 <% set_meta_tags keywords: keywords %>
-<% set_meta_tags author: "#{root_url}users/#{@slide.user_id}" %>
+<% set_meta_tags author: user_url(@slide.user_id) %>
 <% set_meta_tags og: {
   title:    @slide.name,
   type:     'article',
-  url:      "#{root_url}slides/#{@slide.id}",
+  url:      slide_url(@slide.id),
   image:    u
 }
 %>
@@ -124,7 +124,7 @@ if @slide.tags.count > 0
                 <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
               </div>
               <div class="media-body">
-                <div class="h6" style="margin-top:0px"><a href="/users/<%= c.user.id %>"><%= strip_tags c.user.display_name %></a></div>
+                <div class="h6" style="margin-top:0px"><a href="<%= user_path(c.user.id) %>"><%= strip_tags c.user.display_name %></a></div>
                 <div class="h6"><%= strip_tags c.comment %></div>
                 <div class="h6"><%= c.created_at %>
                 <% if (user_signed_in? and current_user.id == c.user_id) %>
@@ -173,8 +173,8 @@ if @slide.tags.count > 0
       <% end %>
       <li class="list-group-item"><i class="fa fa-code"></i>&nbsp;&nbsp;<%= link_to t(:show_embedded_code), "#", :id => "show_embedded", data: {"toggle":"modal", "target":"embedded_dialog"} %></li>
       <% if user_signed_in? and current_user.id == @slide.user_id %>
-        <li class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<%= link_to t(:edit_slide), "/slides/#{@slide.id}/edit" %></li>
-        <li class="list-group-item"><i class="fa fa-trash"></i>&nbsp;&nbsp;<%= link_to t(:delete_slide), "/slides/#{@slide.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?"} %></li>
+        <li class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<%= link_to t(:edit_slide), edit_slide_path(@slide.id) %></li>
+        <li class="list-group-item"><i class="fa fa-trash"></i>&nbsp;&nbsp;<%= link_to t(:delete_slide), slide_path(@slide.id), :method => :delete, data: { confirm: "Are you sure you want to delete?"} %></li>
       <% end %>
       <% if @slide.tags.count > 0 %>
         <li class="list-group-item clearfix"><span class="pull-right"><% @slide.tags.each do |t| %>
@@ -192,9 +192,9 @@ if @slide.tags.count > 0
     <ul class="thumbnail_with_text">
     <% @other_slides.each do |s| %>
     <li>
-      <a href="/slides/<%= s.id %>"><img src="<%= s.thumbnail_url %>"></a>
+      <a href="<%= slide_path(s.id) %>"><img src="<%= s.thumbnail_url %>"></a>
       <h3 class="h5"><%= strip_tags s.name.truncate(24) %></h3>
-      <p class="h6"><%= s.created_at %> by <a href="/users/<%= s.user_id %>"><%= strip_tags s.user.display_name %></a></p>
+      <p class="h6"><%= s.created_at %> by <a href="<%= user_path(s.user_id) %>"><%= strip_tags s.user.display_name %></a></p>
     </li>
     <% end %>
     </ul>

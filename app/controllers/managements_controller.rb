@@ -42,7 +42,7 @@ class ManagementsController < ApplicationController
   end
 
   def slide_update
-    params.permit! # @TODO やっちゃいけない
+    params.permit! # It's OK because of admin
     @slide = Slide.find(params[:slide][:id])
     @slide.assign_attributes(params[:slide])
     if @slide.update_attributes(params[:slide])

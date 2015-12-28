@@ -15,7 +15,6 @@
 
     <%= stylesheet_link_tag "application", :media => "all" %>
 
-
     <!-- For third-generation iPad with high-resolution Retina display: -->
     <!-- Size should be 144 x 144 pixels -->
     <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
@@ -51,7 +50,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/slides"><i class="fa fa-home"></i>&nbsp;RailsSlideshare</a>
+        <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;RailsSlideshare</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
 
           <ul class="nav navbar-nav navbar-left">
@@ -74,7 +73,7 @@
             <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="avatar20" aria-hidden="true"><%= image_tag(current_user.avatar.url(:thumb)) %></span>&nbsp;<%= current_user.email %><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="/slides/new"><i class="fa fa-pencil"></i>&nbsp;<%= t 'Upload' %>!!</a></li>
+              <li><a href="<%= new_slide_path %>"><i class="fa fa-pencil"></i>&nbsp;<%= t 'Upload' %>!!</a></li>
               <li><a href="/users/index"><i class="fa fa-list-alt"></i>&nbsp;<%= t :my_slides %></a></li>
               <li><a href="/users/statistics"><i class="fa fa-signal"></i>&nbsp;<%= t :my_statistics %></a></li>
               <li><a href="<%= edit_user_registration_path %>"><i class="fa fa-user"></i>&nbsp;<%= t :my_account %></a></li>
