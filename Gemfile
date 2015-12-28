@@ -70,6 +70,7 @@ gem 'ransack'
 
 # Manage Title and meta tags
 gem 'meta-tags'
+gem 'sitemap_generator'
 
 # AWS!!
 gem 'aws-sdk', '>= 2.0.0'

@@ -368,6 +368,8 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     shellany (0.0.1)
+    sitemap_generator (5.1.0)
+      builder
     slop (3.6.0)
     spring (1.5.0)
     sprockets (3.5.1)
@@ -490,6 +492,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   selenium-webdriver
+  sitemap_generator
   spring
   sqlite3
   therubyracer
