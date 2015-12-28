@@ -1,4 +1,31 @@
 <% content_for :title, @slide.name %>
+<%
+  page_list = @slide.page_list
+  if page_list.instance_of?(Array) && page_list.count > 0
+    u = "#{Myapp::Application.config.oss_resource_endpoint}/#{page_list[0]}"
+  else
+    u = "#{root_url}oss/images/converting.jpg"
+  end
+%>
+
+<% set_meta_tags description: strip_tags(@slide.description).truncate(100) %>
+<% keywords =  [@slide.name]
+if @slide.tags.count > 0
+     @slide.tags.each do |t|
+       keywords.push t.to_s
+     end
+   end
+%>
+<% set_meta_tags keywords: keywords %>
+<% set_meta_tags author: "#{root_url}users/#{@slide.user_id}" %>
+<% set_meta_tags og: {
+  title:    @slide.name,
+  type:     'article',
+  url:      "#{root_url}slides/#{@slide.id}",
+  image:    u
+}
+%>
+
 <% prefix = js_prefix %>
 
 <%- model_class = Slide -%>
