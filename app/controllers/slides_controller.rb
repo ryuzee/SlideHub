@@ -87,15 +87,15 @@ class SlidesController < ApplicationController
   end
 
   def update
-    params.permit! # @TODO やっちゃいけない
+    slide_params = params.require(:slide).permit(:name, :description, :key, :downloadable, :category_id, :tag_list, :convert_status)
     @slide = Slide.find(params[:id])
     if current_user.id != @slide.user_id
       redirect_to "/slides/#{@slide.id}"
     end
     slide_convert_status = params[:slide][:convert_status].to_i
 
-    @slide.assign_attributes(params[:slide])
-    if @slide.update_attributes(params[:slide])
+    @slide.assign_attributes(slide_params)
+    if @slide.update_attributes(slide_params)
       if slide_convert_status == 0
         send_message({ id: @slide.id, key: @slide.key }.to_json)
       end
