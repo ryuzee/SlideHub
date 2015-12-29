@@ -67,7 +67,7 @@ cd /tmp/
  * The script will install all required packages including Ruby environment, nginx, several tools and so on.
  * The script will also create the database on your server. However, if you want to use a database running on other server, you need to create a database by your own.
 
-## Environment Valiables
+## Environment Variables
 
 You also need to set several environmental variables as follows.
 The easiest way is to add these lines to /etc/environment and restart your server.
