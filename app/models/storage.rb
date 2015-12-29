@@ -1,23 +1,13 @@
 class Storage
-  include ActiveSupport::Configurable
-
-  config_accessor :bucket_name
-  config_accessor :image_bucket_name
-  config_accessor :use_s3_static_hosting
-  config_accessor :region
-  config_accessor :cdn_base_url
-  config_accessor :sqs_url
-  config_accessor :aws_access_id
-  config_accessor :aws_secret_key
 
   def initialize
-    if defined? self.aws_access_id && defined? self.aws_secret_key && !self.aws_access_id.empty? && !self.aws_secret_key.empty?
+    if defined? StorageConfig.config.aws_access_id && defined? StorageConfig.config.aws_secret_key && !StorageConfig.config.aws_access_id.empty? && !StorageConfig.config.aws_secret_key.empty?
       Aws.config.update({
-        region: self.region,
-        credentials: Aws::Credentials.new(self.aws_access_id, self.aws_secret_key),
+        region: StorageConfig.config.region,
+        credentials: Aws::Credentials.new(StorageConfig.config.aws_access_id, StorageConfig.config.aws_secret_key),
       },)
     end
-    @client = Aws::S3::Client.new(region: self.region)
+    @client = Aws::S3::Client.new(region: StorageConfig.config.region)
   end
 
   def upload_files(bucket, files, prefix)
@@ -56,8 +46,8 @@ class Storage
     if key.empty?
       return false
     end
-    files = self.get_file_list(self.bucket_name, key)
-    self.delete_files(self.bucket_name, files)
+    files = self.get_file_list(StorageConfig.config.bucket_name, key)
+    self.delete_files(StorageConfig.config.bucket_name, files)
     true
   end
 
@@ -65,13 +55,13 @@ class Storage
     if key.empty?
       return false
     end
-    files = self.get_file_list(self.image_bucket_name, key)
-    self.delete_files(self.image_bucket_name, files)
+    files = self.get_file_list(StorageConfig.config.image_bucket_name, key)
+    self.delete_files(StorageConfig.config.image_bucket_name, files)
     true
   end
 
   def get_slide_download_url(key)
-    self.get_download_url(self.bucket_name, key)
+    self.get_download_url(StorageConfig.config.bucket_name, key)
   end
 
   def delete_files(bucket, files)
