@@ -85,11 +85,20 @@ OSS_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
 OSS_SMTP_SERVER=[Your SMTP server]
 OSS_SMTP_PORT=[587]
 OSS_SMTP_USERNAME=[Your email address]
-OSS_SMTP_PASSWORD=[]
+OSS_SMTP_PASSWORD=[Your SMTP Password]
 OSS_SMTP_AUTH_METHOD=plain
-OSS_SECRET_KEY_BASE=[hoge]
+OSS_SECRET_KEY_BASE=[Your Secret Key Base]
 OSS_PRODUCTION_HOST=[hoge.example.com]
 OSS_ROOT_URL=[http://your_root_url]
+OSS_DB_USERNAME_DEV=[DB Username for Dev]
+OSS_DB_PASSWORD_DEV=[DB Password for Dev]
+OSS_DB_URL_DEV=[DB URL for Dev]
+OSS_DB_USERNAME_TEST=[DB Username for Test]
+OSS_DB_PASSWORD_TEST=[DB Password for Test]
+OSS_DB_URL_TEST=[DB URL for Test]
+OSS_DB_USERNAME=[DB Username for Prod]
+OSS_DB_PASSWORD=[DB Password for Prod]
+OSS_DB_URL=[DB URL for Prod]
 ```
 
 ## Run the app

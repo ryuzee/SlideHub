@@ -1,5 +1,5 @@
 # MySQL.  Versions 4.1 and 5.0 are recommended.
-# 
+#
 # Install the MYSQL driver
 #   gem install mysql2
 #
@@ -14,9 +14,9 @@ development:
   reconnect: false
   database: openslideshare
   pool: 5
-  username: root
-  password: passw0rd
-  host: localhost
+  username: <%= ENV['OSS_DB_USERNAME_DEV'] %>
+  password: <%= ENV['OSS_DB_PASSWORD_DEV'] %>
+  host: <%= ENV['OSS_DB_URL_DEV'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -27,9 +27,9 @@ test:
   reconnect: false
   database: test_openslideshare
   pool: 5
-  username: root
-  password: passw0rd
-  host: localhost
+  username: <%= ENV['OSS_DB_USERNAME_TEST'] %>
+  password: <%= ENV['OSS_DB_PASSWORD_TEST'] %>
+  host: <%= ENV['OSS_DB_URL_TEST'] %>
 
 production:
   adapter: mysql2
@@ -37,6 +37,6 @@ production:
   reconnect: false
   database: openslideshare
   pool: 5
-  username: root
-  password: passw0rd
-  host: localhost
+  username: <%= ENV['OSS_DB_USERNAME'] %>
+  password: <%= ENV['OSS_DB_PASSWORD'] %>
+  host: <%= ENV['OSS_DB_URL'] %>
