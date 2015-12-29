@@ -25,10 +25,9 @@ The previous version of OpenSlideshare was made with CakePHP. And this version i
 
 This application depends on following technologies.
 
-- Amazon S3
-- Amazon SQS
-- Ubuntu 12 or higher with OpenOffice, xpdf, unoconv and so on
-
+* Amazon S3
+* Amazon SQS
+* Ubuntu 12 or higher with OpenOffice, xpdf, unoconv and so on
 * [Note] Application can be placed at any servers. (Amazon EC2 is NOT required.)
 
 ## Preparing Infrastructure
@@ -53,8 +52,7 @@ This application depends on following technologies.
 ```
 
 * Create SQS queue (cf. open-slideshare-convert) and note the url.
-* Installing required packages
- * Clone application on your server and copy files to /tmp/
+* Clone application on your server and copy files to /tmp/
 
 ```
 git clone https://github.com/ryuzee/open-slideshare-v2
@@ -62,7 +60,7 @@ cp open-slideshare-v2/script/*.sh /tmp/
 cd /tmp/
 ```
 
- * Edit develop.sh or staging.sh and then set Linux user name and other valiables.
+ * Edit develop.sh or staging.sh and then set Linux user name and other variables.
  * Then run the script you've just edited.
  * The script will install all required packages including Ruby environment, nginx, several tools and so on.
  * The script will also create the database on your server. However, if you want to use a database running on other server, you need to create a database by your own.
@@ -70,7 +68,7 @@ cd /tmp/
 ## Environment Variables
 
 You also need to set several environmental variables as follows.
-The easiest way is to add these lines to /etc/environment and restart your server.
+The easiest way is to add these lines to `/etc/environment` and restart your server.
 The other option is to create `.env` file at application root directory. I recommend you to select the first option.
 
 ```
