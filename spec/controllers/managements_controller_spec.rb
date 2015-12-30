@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ManagementsController, :type => :controller do
+RSpec.describe ManagementsController, type: :controller do
   describe 'Managements' do
     let(:user_admin) { create(:user_admin) }
     before do

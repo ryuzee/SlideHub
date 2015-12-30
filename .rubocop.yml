@@ -6,6 +6,7 @@ AllCops:
   Exclude:
     - "vendor/**/*" # rubocop config/default.yml
     - "db/schema.rb"
+    - "Vagrantfile"
   DisplayCopNames: true
 
 ##################### Style ##################################

@@ -1,5 +1,4 @@
 class Storage
-
   def initialize
     if defined? StorageConfig.config.aws_access_id && defined? StorageConfig.config.aws_secret_key && !StorageConfig.config.aws_access_id.empty? && !StorageConfig.config.aws_secret_key.empty?
       Aws.config.update({
@@ -16,8 +15,8 @@ class Storage
         bucket: bucket,
         key: "#{prefix}/#{File.basename(f)}",
         body: File.read(f),
-          acl: 'public-read',
-          storage_class: 'REDUCED_REDUNDANCY',
+        acl: 'public-read',
+        storage_class: 'REDUCED_REDUNDANCY',
       ) if File.exist?(f)
     end
   end
@@ -37,9 +36,9 @@ class Storage
 
   def save_file(bucket, key, destination)
     @client.get_object(
-        response_target: destination,
-        bucket: bucket,
-        key: key)
+      response_target: destination,
+      bucket: bucket,
+      key: key)
   end
 
   def delete_slide(key)

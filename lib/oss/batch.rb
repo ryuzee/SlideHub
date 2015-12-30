@@ -87,5 +87,4 @@ class Batch
       JSON.dump(save_list, io)
     end
   end
-
 end
