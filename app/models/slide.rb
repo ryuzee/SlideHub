@@ -67,12 +67,12 @@ class Slide < ActiveRecord::Base
 
   def page_list
     url = self.page_list_url
-    return get_json(url)
+    get_json(url)
   end
 
   def transcript
     begin
-      response =  Net::HTTP.get_response(URI.parse(self.transcript_url))
+      response = Net::HTTP.get_response(URI.parse(self.transcript_url))
       case response
       when Net::HTTPSuccess
         response = response.body.dup.force_encoding('utf-8')
@@ -91,7 +91,7 @@ class Slide < ActiveRecord::Base
     result = false
     if transcript.instance_of?(Array)
       transcript.each do |tran|
-        if not tran.empty?
+        unless tran.empty?
           result = true
           break
         end

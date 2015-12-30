@@ -51,5 +51,4 @@ FactoryGirl.define do
     name 'Category1'
     initialize_with { Category.find_or_create_by(name: name) }
   end
-
 end

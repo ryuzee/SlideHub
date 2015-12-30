@@ -53,18 +53,18 @@ module Myapp
     if ENV.has_key?('OSS_AWS_ACCESS_ID') && !ENV['OSS_AWS_ACCESS_ID'].empty? &&
        ENV.has_key?('OSS_AWS_SECRET_KEY') && !ENV['OSS_AWS_SECRET_KEY'].empty?
       cred = {
-        bucket: ENV['OSS_IMAGE_BUCKET_NAME'],
+        bucket: ENV['OSS_IMAGE_BUCKET_NAME']
       }
     else
       cred = {
         bucket: ENV['OSS_IMAGE_BUCKET_NAME'],
         access_key_id: ENV['OSS_AWS_ACCESS_ID'],
-        secret_access_key: ENV['OSS_AWS_SECRET_KEY']
+        secret_access_key: ENV['OSS_AWS_SECRET_KEY'],
       }
     end
 
-    if (ENV['OSS_REGION'] == 'us-east-1')
-      s3_host_name = "s3.amazonaws.com"
+    if ENV['OSS_REGION'] == 'us-east-1'
+      s3_host_name = 's3.amazonaws.com'
     else
       s3_host_name = "s3-#{ENV['OSS_REGION']}.amazonaws.com"
     end
@@ -78,13 +78,13 @@ module Myapp
 
     def resource_endpoint
       bucket_name = ENV['OSS_IMAGE_BUCKET_NAME']
-      if ENV.has_key?('OSS_CDN_BASE_URL') and !ENV['OSS_CDN_BASE_URL'].empty?
+      if ENV.has_key?('OSS_CDN_BASE_URL') && !ENV['OSS_CDN_BASE_URL'].empty?
         url = "#{ENV['OSS_CDN_BASE_URL']}"
       else
-        if (ENV['OSS_USE_S3_STATIC_HOSTING'] == '1')
+        if ENV['OSS_USE_S3_STATIC_HOSTING'] == '1'
           url = "http://#{bucket_name}"
         else
-          if (ENV['OSS_REGION'] == 'us-east-1')
+          if ENV['OSS_REGION'] == 'us-east-1'
             url = "https://#{bucket_name}.s3.amazonaws.com"
           else
             url = "https://#{bucket_name}.s3-#{ENV['OSS_REGION']}.amazonaws.com"
@@ -96,7 +96,7 @@ module Myapp
 
     def upload_endpoint
       bucket_name = ENV['OSS_BUCKET_NAME']
-      if (ENV['OSS_REGION'] == 'us-east-1')
+      if ENV['OSS_REGION'] == 'us-east-1'
         url = "https://#{bucket_name}.s3.amazonaws.com"
       else
         url = "https://#{bucket_name}.s3-#{ENV['OSS_REGION']}.amazonaws.com"

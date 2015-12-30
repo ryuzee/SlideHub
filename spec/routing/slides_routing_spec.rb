@@ -72,11 +72,11 @@ describe SlidesController do
     end
 
     it 'routes to #latest.rss' do
-      expect(get('/slides/latest.rss')).to route_to('slides#latest', "format"=>"rss")
+      expect(get('/slides/latest.rss')).to route_to('slides#latest', 'format' => 'rss')
     end
 
     it 'routes to #popular.rss' do
-      expect(get('/slides/popular.rss')).to route_to('slides#popular', "format"=>"rss")
+      expect(get('/slides/popular.rss')).to route_to('slides#popular', 'format' => 'rss')
     end
 
     ## specify page number when displaying a slide

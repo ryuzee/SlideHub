@@ -2,7 +2,7 @@ module SlideHelper
   def create_policy
     base_time = Time.zone.now.in_time_zone('UTC')
 
-    if (!ENV['OSS_AWS_ACCESS_ID'].empty? && !ENV['OSS_AWS_SECRET_KEY'].empty?)
+    if !ENV['OSS_AWS_ACCESS_ID'].empty? && !ENV['OSS_AWS_SECRET_KEY'].empty?
       access_id = ENV['OSS_AWS_ACCESS_ID']
       secret_key = ENV['OSS_AWS_SECRET_KEY']
       security_token = ''

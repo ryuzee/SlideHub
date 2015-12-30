@@ -105,7 +105,7 @@ gem 'packr', git: 'https://github.com/ryuzee/packr'
 gem 'non-stupid-digest-assets'
 
 # see https://github.com/thoughtbot/paperclip/issues/2021
-gem 'paperclip', :git => 'https://github.com/thoughtbot/paperclip.git'
+gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

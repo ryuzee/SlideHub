@@ -13,7 +13,7 @@ if User.count.zero?
     password_confirmation: 'passw0rd',
     display_name: 'admin',
     biography: 'Administrator',
-    admin: true
+    admin: true,
   )
 end
 

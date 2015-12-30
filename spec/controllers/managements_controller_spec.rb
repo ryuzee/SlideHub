@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ManagementsController, :type => :controller do
-
   describe 'Managements' do
-
     let(:user_admin) { create(:user_admin) }
     before do
       login_admin user_admin
@@ -44,5 +42,4 @@ RSpec.describe ManagementsController, :type => :controller do
       end
     end
   end
-
 end

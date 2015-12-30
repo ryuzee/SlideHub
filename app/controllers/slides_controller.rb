@@ -138,7 +138,7 @@ class SlidesController < ApplicationController
   def embedded
     @slide = Slide.find(params[:id])
     # increment only when the player is embedded in other site...
-    if !(params.has_key?(:inside) && params[:inside] == '1')
+    unless params.has_key?(:inside) && params[:inside] == '1'
       @slide.increment(:embedded_view).increment(:total_view).save
     end
     @start_position = get_slide_position
