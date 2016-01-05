@@ -15,7 +15,7 @@
 class Comment < ActiveRecord::Base
   include ActsAsCommentable::Comment
 
-  belongs_to :commentable, :polymorphic => true, :counter_cache => :comments_count
+  belongs_to :commentable, polymorphic: true, counter_cache: :comments_count
   belongs_to :user
   validates :comment, presence: true
   validates :comment, length: { maximum: 2048 }
