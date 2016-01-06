@@ -113,7 +113,28 @@ In the development environment, you can run the app as follows.
 rake start_dev
 ```
 
-## Register batch procedure to cron
+## Docker Support
+
+After you build your own Docker image, you can run the app on the Docker as follows.
+Before run the app on the Docker, you need to create your own database on the other host to accumulate various data permanently.
+
+```
+docker run -d \
+  --env OSS_REGION=ap-northeast-1 \
+  --env OSS_SQS_URL=https://sqs.ap-northeast-1.amazonaws.com/1234567890/your-sqs-job-name \
+  --env OSS_BUCKET_NAME=your-bucket-name \
+  --env OSS_IMAGE_BUCKET_NAME=your-image-bucket.example.com \
+  --env OSS_USE_S3_STATIC_HOSTING=1 \
+  --env OSS_AWS_SECRET_KEY=suSh19iTaiO0toroUMa1TamarAnG1Nza \
+  --env OSS_AWS_ACCESS_ID=AKINATSUHAHIKARIMONO \
+  --env OSS_SECRET_KEY_BASE=z3y1x4w1v5u9t26535abcdefghijklmnopqrstu12345 \
+  --env OSS_DB_USERNAME=your-database-user \
+  --env OSS_DB_PASSWORD=your-database-password \
+  --env OSS_DB_URL=your-database-host \
+-P --name oss yourname/imagename
+```
+
+## Register batch procedure to cron (If you do not use Docker)
 
 * Handling uploaded slides (Mandatory)
 
