@@ -9,6 +9,8 @@ machine:
   environment:
     CIRCLE_ENV: test
     OSS_DB_URL_TEST: 127.0.0.1
+    OSS_REGION: ap-northeast-1
+    OSS_SECRET_KEY_BASE: dummy
 
 database:
   override:
