@@ -108,7 +108,7 @@ gem 'non-stupid-digest-assets'
 gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git'
 
 # see http://blog.zeit.io/use-a-fake-db-adapter-to-play-nice-with-rails-assets-precompilation/
-gem "activerecord-nulldb-adapter"
+gem 'activerecord-nulldb-adapter'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
