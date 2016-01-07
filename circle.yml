@@ -8,8 +8,6 @@ machine:
 
   environment:
     CIRCLE_ENV: test
-    OSS_DB_USERNAME_TEST: mysql
-    OSS_DB_PASSWORD_TEST: ''
     OSS_DB_URL_TEST: 127.0.0.1
 
 database:
