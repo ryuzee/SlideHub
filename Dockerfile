@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER ryuzee
 
-RUN apt-get update && apt-get -y install language-pack-ja wget curl zip unzip git sqlite3 libsqlite3-dev build-essential libssl-dev libreadline-dev libmagickcore-dev libmagic-dev libmagickwand-dev graphviz nginx language-pack-ja ntp libmysqlclient-dev && update-locale LANGUAGE=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 LANG=ja_JP.UTF-8 && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+RUN apt-get update && apt-get -y install wget curl zip unzip git sqlite3 libsqlite3-dev build-essential libssl-dev libreadline-dev libmagickcore-dev libmagic-dev libmagickwand-dev graphviz nginx language-pack-ja ntp libmysqlclient-dev && update-locale LANGUAGE=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 LANG=ja_JP.UTF-8 && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
 RUN git clone https://github.com/sstephenson/rbenv.git /root/.rbenv
 RUN echo "export PATH=/root/.rbenv/shims:/root/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /root/.bashrc
@@ -31,7 +31,7 @@ COPY . /opt/application/current
 RUN chmod 755 /opt/application/current/script/oss_docker_batchjob.sh
 COPY script/oss_docker_supervisor.conf /etc/supervisor.conf
 
-RUN bash -l -c 'DB_ADAPTER=nulldb RAILS_ENV=production bundle exec rake assets:precompile'
+RUN bash -l -c 'OSS_SECRET_KEY_BASE=dummy DB_ADAPTER=nulldb RAILS_ENV=production bundle exec rake assets:precompile'
 
 EXPOSE 3000
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.conf"]
