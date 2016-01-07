@@ -147,6 +147,7 @@ GEM
     devise-i18n (0.12.1)
     devise-i18n-views (0.3.7)
     diff-lcs (1.2.5)
+    docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.0.2)
@@ -370,6 +371,11 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     shellany (0.0.1)
+    simplecov (0.11.1)
+      docile (~> 1.1.0)
+      json (~> 1.8)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     sitemap_generator (5.1.0)
       builder
     slop (3.6.0)
@@ -495,6 +501,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   selenium-webdriver
+  simplecov
   sitemap_generator
   spring
   sqlite3

@@ -24,3 +24,4 @@ erd.pdf
 /config/deploy/production.rb
 .sass-cache
 sitemap.xml.gz
+/coverage
