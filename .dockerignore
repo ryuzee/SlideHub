@@ -1,0 +1,16 @@
+.git
+.vagrant
+.bundle
+.env*
+.gitignore
+.vim*
+.DS_Store
+.codeclimate.yml
+.irbrc
+.rspec
+.rubocop.yml
+.sass-cache
+Vagrantfile
+erd.pdf
+log/*.log
+vendor/bundle
