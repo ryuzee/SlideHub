@@ -28,11 +28,11 @@ class SlidesController < ApplicationController
   end
 
   def category
-    @slides = Slide.published.latest.category(params[:id]).includes(:user).
+    @slides = Slide.published.latest.category(params[:category_id]).includes(:user).
               paginate(page: params[:page], per_page: 20)
 
     Category.select('name')
-    @category = Category.find(params[:id])
+    @category = Category.find(params[:category_id])
   end
 
   def show
