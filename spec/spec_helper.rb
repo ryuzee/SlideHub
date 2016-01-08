@@ -1,4 +1,5 @@
 require 'simplecov'
+require 'codeclimate-test-reporter'
 
 # save to CircleCI's artifacts directory if we're on CircleCI
 if ENV['CIRCLE_ARTIFACTS']
@@ -7,8 +8,13 @@ if ENV['CIRCLE_ARTIFACTS']
 end
 
 SimpleCov.start do
-    add_filter "/vendor/"
-    add_filter "/spec/"
+  add_filter "/vendor/"
+  add_filter "/spec/"
+
+  formatter SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+    CodeClimate::TestReporter::Formatter
+  ]
 end
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration

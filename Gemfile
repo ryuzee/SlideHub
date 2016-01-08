@@ -118,6 +118,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'simplecov'
   gem 'rspec_junit_formatter'
+  gem 'codeclimate-test-reporter'
 end
 
 group :development do

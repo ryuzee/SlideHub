@@ -120,6 +120,8 @@ GEM
       activesupport (>= 3.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
+    codeclimate-test-reporter (0.4.8)
+      simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -462,6 +464,7 @@ DEPENDENCIES
   capistrano-rbenv
   capistrano3-unicorn
   capybara
+  codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
   counter_culture
   database_cleaner
