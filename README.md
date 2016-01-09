@@ -113,9 +113,17 @@ In the development environment, you can run the app as follows.
 rake start_dev
 ```
 
-## Docker Support
+### Public Docker Image
 
-After you build your own Docker image, you can run the app on the Docker as follows.
+You can use public Docker Image.
+
+```
+docker pull ryuzee/open-slideshare-v2:latest
+```
+
+## Run application on Docker
+
+After you build your own Docker image or pull public image pointed above, you can run the app on the Docker as follows.
 Before run the app on the Docker, you need to create your own database on the other host to accumulate various data permanently.
 
 ```
@@ -131,15 +139,7 @@ docker run -d \
   --env OSS_DB_USERNAME=your-database-user \
   --env OSS_DB_PASSWORD=your-database-password \
   --env OSS_DB_URL=your-database-host \
--P --name oss yourname/imagename
-```
-
-### Public Docker Image
-
-You can use public Docker Image.
-
-```
-docker pull ryuzee/open-slideshare-v2:latest
+-P --name oss ryuzee/openslideshare-v2
 ```
 
 ## Register batch procedure to cron (If you do not use Docker)
