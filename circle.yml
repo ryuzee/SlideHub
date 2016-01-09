@@ -1,4 +1,7 @@
 machine:
+  services:
+    - docker
+
   timezone:
     Asia/Tokyo
 
