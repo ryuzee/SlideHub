@@ -16,3 +16,11 @@ database:
   override:
     - bundle exec rake db:create db:migrate
 
+deployment:
+  hub:
+    branch: production
+    commands:
+      - docker build -t ryuzee/openslideshare-v2 .
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - docker push ryuzee/openslideshare-v2
+
