@@ -134,6 +134,14 @@ docker run -d \
 -P --name oss yourname/imagename
 ```
 
+### Public Docker Image
+
+You can use public Docker Image.
+
+```
+docker pull ryuzee/open-slideshare-v2:latest
+```
+
 ## Register batch procedure to cron (If you do not use Docker)
 
 * Handling uploaded slides (Mandatory)
