@@ -23,8 +23,9 @@ deployment:
   hub:
     branch: production
     commands:
-      - docker pull ryuzee/openslideshare-v2
-      - docker build -t ryuzee/openslideshare-v2 .
+      - docker build -t ryuzee/openslideshare-v2:$CIRCLE_BUILD_NUM .
+      - docker tag $(docker images -q | head -1) ryuzee/openslideshare-v2:latest
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - docker push ryuzee/openslideshare-v2
+      - docker push ryuzee/openslideshare-v2:$CIRCLE_BUILD_NUM
+      - docker push ryuzee/openslideshare-v2:latest
 
