@@ -29,8 +29,8 @@
 
 FactoryGirl.define do
   factory :user_admin, class: User do
-    id 1
-    email 'admin02@example.com'
+    id 999
+    email 'admin999@example.com'
     display_name 'Takashi'
     biography 'Bio'
     password 'password'

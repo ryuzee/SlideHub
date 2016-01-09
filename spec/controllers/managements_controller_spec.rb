@@ -21,6 +21,14 @@ RSpec.describe ManagementsController, type: :controller do
       end
     end
 
+    describe 'GET /managements/slide_edit/1' do
+      it 'works!' do
+        create(:slide)
+        get 'slide_edit', id: '1'
+        expect(response.status).to eq(200)
+      end
+    end
+
     describe 'GET /managements/user_list' do
       it 'works!' do
         get 'user_list'
@@ -39,6 +47,15 @@ RSpec.describe ManagementsController, type: :controller do
       it 'works!' do
         get 'custom_contents_setting'
         expect(response.status).to eq(200)
+      end
+    end
+  end
+
+  describe 'Managements_without_Login' do
+    describe 'GET /managements/dashboard' do
+      it 'redirect to login' do
+        get 'dashboard'
+        expect(response.status).to eq(302)
       end
     end
   end

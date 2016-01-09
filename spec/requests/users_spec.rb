@@ -17,7 +17,7 @@ describe 'Users' do
 
   describe 'GET /users/1' do
     it 'works!' do
-      create(:user_admin)
+      create(:slide)
       get '/users/1'
       expect(response.status).to eq(200)
     end
@@ -25,7 +25,7 @@ describe 'Users' do
 
   describe 'GET /users/view/1 (Backward Compatibility)' do
     it 'works!' do
-      create(:user_admin)
+      create(:slide)
       get '/users/view/1'
       expect(response.status).to eq(200)
     end
