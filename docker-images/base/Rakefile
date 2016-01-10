@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+task :default => :build
+
+task :build do
+  cmd = 'docker build -t ryuzee/openslideshare-v2-base .'
+  sh cmd
+end
+
+task :push do
+  cmd = 'docker push ryuzee/openslideshare-v2-base:latest'
+  sh cmd
+end
+
