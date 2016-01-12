@@ -25,6 +25,19 @@ Vagrant.configure(2) do |config|
       file.close
       config.vm.provision 'file', source: file.path, destination: '/tmp/environment'
     end
+  else
+    puts 'You need to place .env to specify environmental variables'
+    exit
+  end
+
+  unless Vagrant.has_plugin?('dotenv')
+    puts 'You need to install dotenv plugin by running "vagrant plugin install dotenv"'
+    exit
+  end
+
+  unless Vagrant.has_plugin?('vagrant-reload')
+    puts 'You need to install vagrant-reload plugin by running "vagrant plugin install vagrant-reload"'
+    exit
   end
 
   config.vm.provision "fix-no-tty", type: "shell" do |s|
