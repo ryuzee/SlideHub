@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
-    <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: "RailsSlideshare", reverse: true %>
+    <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: CustomSetting['site.name'], reverse: true %>
     <%= display_meta_tags %>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" type="text/css" href="/mc/css/bootstrap.min.css">
@@ -34,9 +34,9 @@
         <!-- Logo -->
         <a href="/managements/dashboard" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>O</b>SM</span>
+          <span class="logo-mini"><b>M</b>C</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>OpenSlideshare</b>MC</span>
+          <span class="logo-lg"><b><%= raw CustomSetting['site.name'] %></b>MC</span>
         </a>
 
         <!-- Header Navbar -->

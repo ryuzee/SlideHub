@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: "RailsSlideshare", reverse: true %>
+    <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: CustomSetting['site.name'], reverse: true %>
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
 
@@ -50,7 +50,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;RailsSlideshare</a>
+        <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;<%= CustomSetting['site.name'] %></a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
 
           <ul class="nav navbar-nav navbar-left">
