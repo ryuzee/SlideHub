@@ -39,9 +39,7 @@ class ApplicationController < ActionController::Base
     def configure_permitted_parameters
       actions = [:sign_up, :account_update]
       actions.each do |a|
-        devise_parameter_sanitizer.for(a) << :display_name
-        devise_parameter_sanitizer.for(a) << :biography
-        devise_parameter_sanitizer.for(a) << :avatar
+        devise_parameter_sanitizer.for(a) << :display_name << :biography << :avatar
       end
     end
 end
