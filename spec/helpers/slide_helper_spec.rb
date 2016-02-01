@@ -1,16 +1,16 @@
-require "spec_helper"
-require "digest/md5"
+require 'spec_helper'
+require 'digest/md5'
 
 describe SlideHelper do
-  describe "get_signing_key" do
-    it "returns true" do
+  describe 'get_signing_key' do
+    it 'returns true' do
       expected = 'a8a38db0c44e3f2b269d6468dbbb4c55'
       expect(Digest::MD5.hexdigest(helper.get_signing_key('20150101', 'ap-northeast-1', 's3', 'abcde'))).to eq(expected.to_s)
     end
   end
 
-  describe "populate_policy" do
-    it "returns array" do
+  describe 'populate_policy' do
+    it 'returns array' do
       base_time = Time.utc(2016, 1, 1, 23, 59, 59, 0)
       access_id = 'AKIHOGEHOGE'
       secret_key = 'Secret'
