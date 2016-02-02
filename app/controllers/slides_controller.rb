@@ -38,7 +38,7 @@ class SlidesController < ApplicationController
   def show
     @slide = Slide.find(params[:id])
     @slide.increment(:page_view).increment(:total_view).save
-    @start_position = get_slide_position
+    @start_position = slide_position
     if user_signed_in?
       @comment = @slide.comments.new
     end
@@ -141,7 +141,7 @@ class SlidesController < ApplicationController
     unless params.has_key?(:inside) && params[:inside] == '1'
       @slide.increment(:embedded_view).increment(:total_view).save
     end
-    @start_position = get_slide_position
+    @start_position = slide_position
     s = render_to_string layout: 'plain', collection: @slide
     render text: s, layout: false, content_type: 'application/javascript'
   end
@@ -165,7 +165,7 @@ class SlidesController < ApplicationController
       end
     end
 
-    def get_slide_position
+    def slide_position
       if params.has_key?(:page)
         position = params[:page].to_i
         if position <= 0
