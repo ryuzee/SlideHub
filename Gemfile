@@ -159,6 +159,9 @@ group :development do
   # Display nice error screen
   gem 'better_errors'
   gem 'binding_of_caller'
+
+  # Finding code smell
+  gem 'reek'
 end
 
 group :test do
