@@ -56,15 +56,15 @@ class Slide < ActiveRecord::Base
   end
 
   def thumbnail_url
-    "#{Myapp::Application.config.oss_resource_endpoint}/#{key}/thumbnail.jpg"
+    "#{AWSConfig.resource_endpoint}/#{key}/thumbnail.jpg"
   end
 
   def transcript_url
-    "#{Myapp::Application.config.oss_resource_endpoint}/#{key}/transcript.txt"
+    "#{AWSConfig.resource_endpoint}/#{key}/transcript.txt"
   end
 
   def page_list_url
-    "#{Myapp::Application.config.oss_resource_endpoint}/#{key}/list.json"
+    "#{AWSConfig.resource_endpoint}/#{key}/list.json"
   end
 
   def page_list

@@ -210,7 +210,7 @@ div#<%= prefix %>page_positions{
   <ul style="display:none" id="<%= prefix %>slide_list">
   <% if page_count > 0 %>
     <% page_list.each do |f| %>
-      <% u = "#{Myapp::Application.config.oss_resource_endpoint}/#{f}" %>
+      <% u = "#{AWSConfig.resource_endpoint}/#{f}" %>
       <li><img class="lazy" src="<%= root_url %>oss/images/spacer.png" data-original="<%= u %>" /></li>
     <% end %>
   <% elsif @slide.convert_status < 0 %>
