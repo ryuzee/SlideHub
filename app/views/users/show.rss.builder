@@ -10,7 +10,7 @@ xml.rss("version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/") do
         xml.pubDate slide.created_at.to_s(:rfc822)
         xml.guid "#{root_url}slides/#{slide.id}"
         xml.link "#{root_url}slides/#{slide.id}"
-        xml.author strip_tags(slide.user.display_name)
+        xml.author strip_tags(slide.user_display_name)
       end
     end
   end
