@@ -17,7 +17,7 @@ describe SlideHelper do
       security_token = ''
       region = 'ap-northeast-1'
       bucket_name = 'sushi'
-      value =  helper.populate_policy(base_time, access_id, secret_key, security_token, region, bucket_name)
+      value = helper.populate_policy(base_time, access_id, secret_key, security_token, region, bucket_name)
       expect(value['signature']).to eq('d3737356a01471adab35e87d768d8d23af17d3e30b0d66b08c9037447271fb93')
       expect(value['date_ymd']).to eq('20160101')
       expect(value['date_gm']).to eq('20160101T235959Z')
