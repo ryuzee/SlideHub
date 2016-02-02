@@ -141,7 +141,7 @@ if @slide.tags.count > 0
         <% if user_signed_in? %>
           <br />
           <div class="comments form">
-            <%= render :partial => 'comments/form' %>
+            <%= render :partial => 'comments/form', :locals => { :comment => @comment } %>
           </div>
         <% end %>
       </div>
