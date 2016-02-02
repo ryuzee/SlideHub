@@ -28,10 +28,10 @@ require 'securerandom'
 class Slide < ActiveRecord::Base
   include WebResource
   belongs_to :user
-  delegate :display_name, :to => :user, :prefix => true
+  delegate :display_name, to: :user, prefix: true
   counter_culture :user
   belongs_to :category
-  delegate :name, :to => :category, :prefix => true
+  delegate :name, to: :category, prefix: true
   has_many :comments, as: :commentable, dependent: :delete_all
   acts_as_commentable :private
   acts_as_taggable
