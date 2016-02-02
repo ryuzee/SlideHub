@@ -1,12 +1,20 @@
 class Storage
   def initialize
-    if defined? StorageConfig.config.aws_access_id && defined? StorageConfig.config.aws_secret_key && !StorageConfig.config.aws_access_id.empty? && !StorageConfig.config.aws_secret_key.empty?
+    if self.configured?
       Aws.config.update({
         region: StorageConfig.config.region,
         credentials: Aws::Credentials.new(StorageConfig.config.aws_access_id, StorageConfig.config.aws_secret_key),
       },)
     end
     @client = Aws::S3::Client.new(region: StorageConfig.config.region)
+  end
+
+  def configured?
+    return false unless defined? StorageConfig.config.aws_access_id
+    return false unless defined? StorageConfig.config.aws_secret_key
+    return false if StorageConfig.config.aws_access_id.empty?
+    return false if StorageConfig.config.aws_secret_key.empty?
+    return true
   end
 
   def upload_files(bucket, files, prefix)
