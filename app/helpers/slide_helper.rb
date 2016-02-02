@@ -2,9 +2,9 @@ module SlideHelper
   def create_policy
     base_time = Time.zone.now.in_time_zone('UTC')
 
-    if !ENV['OSS_AWS_ACCESS_ID'].empty? && !ENV['OSS_AWS_SECRET_KEY'].empty?
-      access_id = ENV['OSS_AWS_ACCESS_ID']
-      secret_key = ENV['OSS_AWS_SECRET_KEY']
+    if !AWSConfig.config.aws_access_id.blank? && !AWSConfig.config.aws_secret_key.blank?
+      access_id = AWSConfig.config.aws_access_id
+      secret_key = AWSConfig.config.aws_secret_key
       security_token = ''
     else
       ec2 = Aws::EC2::Client.new
@@ -13,8 +13,8 @@ module SlideHelper
       secret_key = credential.secret_access_key
       security_token = credential.session_token
     end
-    region = ENV['OSS_REGION']
-    bucket_name = ENV['OSS_BUCKET_NAME']
+    region = AWSConfig.config.region
+    bucket_name = AWSConfig.config.bucket_name
 
     self.populate_policy(base_time, access_id, secret_key, security_token, region, bucket_name)
   end

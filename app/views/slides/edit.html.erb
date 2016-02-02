@@ -33,7 +33,7 @@
     <input class="fval" type="hidden" name="success_action_status" value="<%= policy['success_action_status'] %>" />
     <input class="fval" type="hidden" id="content_type" name="Content-Type" value="application/octetstream" class="form-control"/>
     <input class="fval" type="hidden" name="x-amz-meta-uuid" value="14365123651274" />
-    <input class="fval" type="hidden" name="X-Amz-Credential" value="<%= "#{policy['access_id']}/#{policy['date_ymd']}/#{ENV['OSS_REGION']}/s3/aws4_request" %>" class="form-control"/>
+    <input class="fval" type="hidden" name="X-Amz-Credential" value="<%= "#{policy['access_id']}/#{policy['date_ymd']}/#{AWSConfig.config.region}/s3/aws4_request" %>" class="form-control"/>
     <input class="fval" type="hidden" name="X-Amz-Algorithm" value="AWS4-HMAC-SHA256" class="form-control" />
     <input class="fval" type="hidden" name="X-Amz-Date" value="<%= policy['date_gm'] %>" class="form-control" />
     <input class="fval" type="hidden" name="Policy" value='<%= policy['base64_policy'] %>' />
