@@ -24,12 +24,12 @@ class AWSConfig
       url = @config.cdn_base_url
     else
       if @config.use_s3_static_hosting == '1'
-        url = "http://#{@config.bucket_name}"
+        url = "http://#{@config.image_bucket_name}"
       else
         if @config.region == 'us-east-1'
-          url = "https://#{@config.bucket_name}.s3.amazonaws.com"
+          url = "https://#{@config.image_bucket_name}.s3.amazonaws.com"
         else
-          url = "https://#{@config.bucket_name}.s3-#{@config.region}.amazonaws.com"
+          url = "https://#{@config.image_bucket_name}.s3-#{@config.region}.amazonaws.com"
         end
       end
     end
