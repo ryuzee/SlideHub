@@ -13,15 +13,15 @@ $(function(){
 });
 </script>
 
-<%= form_for @slide, html: { method: "post", :class => "form-horizontal slide" }, :url => {:controller => :managements, :action => :slide_update} do |f| %>
-    <% if @slide.errors.any? %>
+<%= form_for slide, html: { method: "post", :class => "form-horizontal slide" }, :url => {:controller => :managements, :action => :slide_update} do |f| %>
+    <% if slide.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
-        <h3 class="panel-title"><%= pluralize(@slide.errors.count, "error") %> prohibited this slide from being saved:</h3>
+        <h3 class="panel-title"><%= pluralize(slide.errors.count, "error") %> prohibited this slide from being saved:</h3>
       </div>
       <div class="panel-body">
         <ul>
-        <% @slide.errors.full_messages.each do |msg| %>
+        <% slide.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
         </ul>
@@ -33,9 +33,9 @@ $(function(){
   <div class="control-group">
     <%= f.label :id, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field "_id", :value => @slide[:id], :disabled => "disabled", :class => 'form-control' %>
+      <%= f.text_field "_id", :value => slide[:id], :disabled => "disabled", :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:user_id]) %>
+    <%= error_span(slide[:user_id]) %>
   </div>
 
   <div class="control-group">
@@ -43,35 +43,35 @@ $(function(){
     <div class="controls">
       <%= f.text_field :user_id, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:user_id]) %>
+    <%= error_span(slide[:user_id]) %>
   </div>
   <div class="control-group">
     <%= f.label :name, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :name, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:name]) %>
+    <%= error_span(slide[:name]) %>
   </div>
   <div class="control-group">
     <%= f.label :description, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :description, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:description]) %>
+    <%= error_span(slide[:description]) %>
   </div>
   <div class="control-group">
     <%= f.label :downloadable, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :downloadable, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:downloadable]) %>
+    <%= error_span(slide[:downloadable]) %>
   </div>
   <div class="control-group">
     <%= f.label t('activerecord.models.category'), :class => 'control-label' %>
     <div class="controls">
       <%= f.collection_select :category_id, Category.all, :id, :name %>
     </div>
-    <%= error_span(@slide[:category_id]) %>
+    <%= error_span(slide[:category_id]) %>
   </div>
   <div class="control-group" style="position: relative">
     <%= f.label :created_at, :class => 'control-label' %>
@@ -79,7 +79,7 @@ $(function(){
       <%= f.text_field :created_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
       <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
     </div>
-    <%= error_span(@slide[:created_at]) %>
+    <%= error_span(slide[:created_at]) %>
   </div>
   <div class="control-group" style="position: relative">
     <%= f.label :modified_at, :class => 'control-label' %>
@@ -87,70 +87,70 @@ $(function(){
       <%= f.text_field :modified_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
       <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
     </div>
-    <%= error_span(@slide[:modified_at]) %>
+    <%= error_span(slide[:modified_at]) %>
   </div>
   <div class="control-group">
     <%= f.label :key, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :key, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:key]) %>
+    <%= error_span(slide[:key]) %>
   </div>
   <div class="control-group">
     <%= f.label :extension, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :extension, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:extension]) %>
+    <%= error_span(slide[:extension]) %>
   </div>
   <div class="control-group">
     <%= f.label :convert_status, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :convert_status, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:convert_status]) %>
+    <%= error_span(slide[:convert_status]) %>
   </div>
   <div class="control-group">
     <%= f.label :total_view, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :total_view, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:total_view]) %>
+    <%= error_span(slide[:total_view]) %>
   </div>
   <div class="control-group">
     <%= f.label :page_view, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :page_view, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:page_view]) %>
+    <%= error_span(slide[:page_view]) %>
   </div>
   <div class="control-group">
     <%= f.label :embedded_view, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :embedded_view, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:embedded_view]) %>
+    <%= error_span(slide[:embedded_view]) %>
   </div>
   <div class="control-group">
     <%= f.label :download_count, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :download_count, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:download_count]) %>
+    <%= error_span(slide[:download_count]) %>
   </div>
   <div class="control-group">
     <%= f.label :num_of_pages, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :num_of_pages, :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:num_of_pages]) %>
+    <%= error_span(slide[:num_of_pages]) %>
   </div>
   <div class="control-group">
     <%= f.label t('activerecord.models.tag'), :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :tag_list, :value => @slide.tag_list.join(','), :class => 'form-control' %>
+      <%= f.text_field :tag_list, :value => slide.tag_list.join(','), :class => 'form-control' %>
     </div>
-    <%= error_span(@slide[:tag_list]) %>
+    <%= error_span(slide[:tag_list]) %>
   </div>
   <br clear="all" />
 
