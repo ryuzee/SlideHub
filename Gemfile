@@ -162,6 +162,9 @@ group :development do
 
   # Finding code smell
   gem 'reek'
+
+  # Rails Best Practice
+  gem 'rails_best_practices'
 end
 
 group :test do
