@@ -12,9 +12,9 @@ class Storage
   def configured?
     return false unless defined? StorageConfig.config.aws_access_id
     return false unless defined? StorageConfig.config.aws_secret_key
-    return false if StorageConfig.config.aws_access_id.empty?
-    return false if StorageConfig.config.aws_secret_key.empty?
-    return true
+    return false if StorageConfig.config.aws_access_id.blank?
+    return false if StorageConfig.config.aws_secret_key.blank?
+    true
   end
 
   def upload_files(bucket, files, prefix)
