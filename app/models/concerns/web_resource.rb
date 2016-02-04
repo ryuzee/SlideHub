@@ -6,6 +6,26 @@ module WebResource
   extend ActiveSupport::Concern
 
   def get_json(location, limit = 10)
+    result = get_contents(location, limit)
+    if result
+      JSON.parse(result)
+    else
+      false
+    end
+  end
+
+  def get_php_serialized_data(location, limit = 10)
+    result = get_contents(location, limit)
+    if result
+      response = result.dup.force_encoding('utf-8')
+      require 'php_serialization/unserializer'
+      return PhpSerialization::Unserializer.new.run(response)
+    else
+      return []
+    end
+  end
+
+  def get_contents(location, limit = 10)
     raise ArgumentError, 'too many HTTP redirects' if limit == 0
     uri = URI.parse(location)
     begin
@@ -16,12 +36,11 @@ module WebResource
       end
       case response
       when Net::HTTPSuccess
-        json = response.body
-        JSON.parse(json)
+        response.body
       when Net::HTTPRedirection
         location = response['location']
         warn "redirected to #{location}"
-        get_json(location, limit - 1)
+        get_contents(location, limit - 1)
       else
         puts [uri.to_s, response.value].join(' : ')
         false
