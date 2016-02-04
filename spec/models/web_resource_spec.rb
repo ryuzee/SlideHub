@@ -1,7 +1,8 @@
 require 'rails_helper'
 require 'webmock'
 include WebMock::API
-WebMock.disable_net_connect!(:allow => [/codeclimate.com/, /amazonaws.com/])
+WebMock.allow_net_connect!
+#WebMock.disable_net_connect!(:allow => [/codeclimate.com/, /amazonaws.com/])
 
 describe 'WebResource' do
   # assign concern to a model
