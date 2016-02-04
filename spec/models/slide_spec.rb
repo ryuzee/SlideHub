@@ -43,10 +43,10 @@ describe 'Slide' do
       FactoryGirl.create(:slide)
       url = Slide.find(1).page_list_url
       stub_request(:any, url).to_return(
-        :body => {"test" => "ok"}.to_json,
-        :status => 200
+        body: { 'test' => 'ok' }.to_json,
+        status: 200,
       )
-      expect(Slide.find(1).page_list).to eq({"test" => "ok"})
+      expect(Slide.find(1).page_list).to eq({ 'test' => 'ok' })
     end
   end
 end
