@@ -73,20 +73,7 @@ class Slide < ActiveRecord::Base
   end
 
   def transcript
-    begin
-      response = Net::HTTP.get_response(URI.parse(self.transcript_url))
-      case response
-      when Net::HTTPSuccess
-        response = response.body.dup.force_encoding('utf-8')
-        require 'php_serialization/unserializer'
-        return PhpSerialization::Unserializer.new.run(response)
-      else
-        puts response.value
-        return []
-      end
-    rescue => e
-      puts [e.class, e].join(' : ')
-    end
+    get_php_serialized_data(self.transcript_url)
   end
 
   def transcript_exist?(transcript)
