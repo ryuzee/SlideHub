@@ -154,6 +154,8 @@ GEM
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
       after_commit_action (~> 1.0.0)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     descendants_tracker (0.0.4)
@@ -202,6 +204,7 @@ GEM
     guard-rubocop (1.2.0)
       guard (~> 2.0)
       rubocop (~> 0.20)
+    hashdiff (0.2.3)
     hashery (2.1.1)
     hirb (0.7.3)
     hirb-unicode (0.0.5)
@@ -402,6 +405,7 @@ GEM
     ruby-progressbar (1.7.5)
     ruby-rc4 (0.1.5)
     rubyzip (1.1.7)
+    safe_yaml (1.0.4)
     sass (3.4.19)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -490,6 +494,10 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    webmock (1.22.6)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
     webrobots (0.1.1)
     websocket (1.2.2)
     will_paginate (3.0.7)
@@ -577,6 +585,7 @@ DEPENDENCIES
   unicorn
   view_source_map
   web-console (~> 2.0)
+  webmock
   will_paginate
   will_paginate-bootstrap
 
