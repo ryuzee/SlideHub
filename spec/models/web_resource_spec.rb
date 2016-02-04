@@ -1,16 +1,9 @@
 require 'rails_helper'
-require 'webmock'
-include WebMock::API
-WebMock.allow_net_connect!
-#WebMock.disable_net_connect!(:allow => [/codeclimate.com/, /amazonaws.com/])
 
 describe 'WebResource' do
   # assign concern to a model
   let(:test_class) { Struct.new(:dummy) { include WebResource } }
   let(:dummy) { test_class.new }
-
-  before do
-  end
 
   describe 'get_json' do
     it 'succeed to retrieve json' do
@@ -41,3 +34,5 @@ describe 'WebResource' do
     end
   end
 end
+
+
