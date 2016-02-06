@@ -28,6 +28,15 @@
 #
 
 FactoryGirl.define do
+  factory :general_user, class: User do
+    id 998
+    email 'general998@example.com'
+    display_name 'Yoshi'
+    biography 'Bio'
+    password 'password'
+    admin false
+  end
+
   factory :user_admin, class: User do
     id 999
     email 'admin999@example.com'
