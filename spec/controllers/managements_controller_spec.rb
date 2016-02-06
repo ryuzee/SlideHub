@@ -4,7 +4,7 @@ RSpec.describe ManagementsController, type: :controller do
   describe 'Managements' do
     let(:user_admin) { create(:user_admin) }
     before do
-      login_admin user_admin
+      login_by_admin_user user_admin
     end
 
     describe 'GET /managements/dashboard' do

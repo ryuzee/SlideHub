@@ -1,7 +1,7 @@
 require 'pp'
 
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:index]
+  before_action :authenticate_user!, only: [:index, :statistics]
 
   def index
     @user = User.find(current_user.id)
