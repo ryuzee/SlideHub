@@ -119,7 +119,6 @@ group :development, :test do
   gem 'simplecov'
   gem 'rspec_junit_formatter'
   gem 'codeclimate-test-reporter'
-  gem 'webmock'
 end
 
 group :development do
@@ -174,6 +173,7 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
+  gem 'webmock'
 end
 
 group :deployment do
