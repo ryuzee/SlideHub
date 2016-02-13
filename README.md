@@ -1,8 +1,8 @@
-# OpenSlideshare v2 [![Circle CI](https://circleci.com/gh/ryuzee/open-slideshare-v2.svg?style=svg)](https://circleci.com/gh/ryuzee/open-slideshare-v2)  [![Code Climate](https://codeclimate.com/github/ryuzee/open-slideshare-v2/badges/gpa.svg)](https://codeclimate.com/github/ryuzee/open-slideshare-v2)
+# SlideHub [![Circle CI](https://circleci.com/gh/ryuzee/open-slideshare-v2.svg?style=svg)](https://circleci.com/gh/ryuzee/open-slideshare-v2)  [![Code Climate](https://codeclimate.com/github/ryuzee/open-slideshare-v2/badges/gpa.svg)](https://codeclimate.com/github/ryuzee/open-slideshare-v2)
 
 This is an open source slidesharing application.
 
-The previous version of OpenSlideshare was made with CakePHP. And this version is a successor of the previous version and is made with Ruby on Rails 4.
+The previous version of SlideHub was made with CakePHP. And this version is a successor of the previous version and is made with Ruby on Rails 4.
 ![Screenshot](capture1.png)
 
 ## Features
@@ -32,7 +32,7 @@ This application depends on following technologies.
 
 ## Preparing Infrastructure
 
-* Create two Amazon S3 buckets (cf. open-slideshare-slides, open-slideshare-images)
+* Create two Amazon S3 buckets (cf. slidehub-slides, slidehub-images)
 * Set CORS policy for bucket that will store the slide decks as follows
 
 ```
@@ -51,12 +51,12 @@ This application depends on following technologies.
 </CORSConfiguration>
 ```
 
-* Create SQS queue (cf. open-slideshare-convert) and note the url.
+* Create SQS queue (cf. slidehub-convert) and note the url.
 * Clone application on your server and copy files to /tmp/
 
 ```
-git clone https://github.com/ryuzee/open-slideshare-v2
-cp open-slideshare-v2/script/*.sh /tmp/
+git clone https://github.com/ryuzee/SlideHub
+cp SlideHub/script/*.sh /tmp/
 cd /tmp/
 ```
 
@@ -139,7 +139,7 @@ docker run -d \
   --env OSS_DB_USERNAME=your-database-user \
   --env OSS_DB_PASSWORD=your-database-password \
   --env OSS_DB_URL=your-database-host \
--P --name oss ryuzee/openslideshare-v2
+-P --name oss ryuzee/slidehub
 ```
 
 ## Register batch procedure to cron (If you do not use Docker)
