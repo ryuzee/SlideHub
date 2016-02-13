@@ -1,4 +1,4 @@
-# SlideHub [![Circle CI](https://circleci.com/gh/ryuzee/open-slideshare-v2.svg?style=svg)](https://circleci.com/gh/ryuzee/open-slideshare-v2)  [![Code Climate](https://codeclimate.com/github/ryuzee/open-slideshare-v2/badges/gpa.svg)](https://codeclimate.com/github/ryuzee/open-slideshare-v2)
+# SlideHub [![Circle CI](https://circleci.com/gh/ryuzee/SlideHub.svg?style=svg)](https://circleci.com/gh/ryuzee/SlideHub)  [![Code Climate](https://codeclimate.com/github/ryuzee/open-slideshare-v2/badges/gpa.svg)](https://codeclimate.com/github/ryuzee/open-slideshare-v2)
 
 This is an open source slidesharing application.
 
