@@ -42,6 +42,15 @@ describe 'WebResource' do
       )
       expect(dummy.get_php_serialized_data('http://www.example.com/transcript.txt', 1)).to eq({ 'test' => 'ok' })
     end
+
+    it 'return empty data if resource was corrupted' do
+      stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
+        body: 'abcdefg',
+        status: 200,
+      )
+      expect(dummy.get_php_serialized_data('http://www.example.com/transcript.txt', 1)).to eq([])
+    end
+
     it 'return empty data' do
       stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
         status: 404,
