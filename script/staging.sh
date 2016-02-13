@@ -31,10 +31,10 @@ upstream unicorn {
 
 server {
   listen 80 default_server;
-  server_name openslideshare;
+  server_name slidehub;
 
-  access_log /var/log/nginx/openslideshare_access.log;
-  error_log /var/log/nginx/openslideshare_error.log;
+  access_log /var/log/nginx/slidehub_access.log;
+  error_log /var/log/nginx/slidehub_error.log;
 
   root /opt/application;
 

@@ -79,7 +79,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision :reload
 
   config.vm.provision 'shell', inline: <<-SHELL3
-    docker pull ryuzee/openslideshare-v2:latest
+    docker pull ryuzee/slidehub:latest
     docker run -d \
   --env OSS_REGION=$OSS_REGION \
   --env OSS_SQS_URL=$OSS_SQS_URL \
@@ -92,7 +92,7 @@ Vagrant.configure(2) do |config|
   --env OSS_DB_USERNAME=$OSS_DB_USERNAME \
   --env OSS_DB_PASSWORD=$OSS_DB_PASSWORD \
   --env OSS_DB_URL=192.168.44.8 \
-  -p 3001:3000 --name oss1 ryuzee/openslideshare-v2:latest
+  -p 3001:3000 --name oss1 ryuzee/slidehub:latest
   docker exec -i oss1 bash -l -c 'RAILS_ENV=production bundle exec rake db:migrate'
   SHELL3
 

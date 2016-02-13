@@ -21,7 +21,7 @@ $(document).ready(function() {
         event.preventDefault();
 
         var formData = new FormData();
-        var url = "<%= Myapp::Application.config.oss_upload_endpoint %>";
+        var url = "<%= AWSConfig.upload_endpoint %>";
 
         var form = $('#upload-form');
         $(form.serializeArray()).each(function(i, v) {
