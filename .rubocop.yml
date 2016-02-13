@@ -169,7 +169,7 @@ Style/SingleLineBlockParams:
 # * model の association
 # * controller の callback
 # 辺りの桁揃えで引っかかるので全体的にチェックしない
-Style/SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Enabled: false
 
 # 複数行の場合はケツカンマを入れる
