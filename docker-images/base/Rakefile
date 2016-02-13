@@ -2,12 +2,12 @@
 task :default => :build
 
 task :build do
-  cmd = 'docker build -t ryuzee/openslideshare-v2-base .'
+  cmd = 'docker build -t ryuzee/slidehub-base .'
   sh cmd
 end
 
 task :push do
-  cmd = 'docker push ryuzee/openslideshare-v2-base:latest'
+  cmd = 'docker push ryuzee/slidehub-base:latest'
   sh cmd
 end
 

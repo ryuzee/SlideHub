@@ -118,7 +118,7 @@ rake start_dev
 You can use public Docker Image.
 
 ```
-docker pull ryuzee/open-slideshare-v2:latest
+docker pull ryuzee/slidehub:latest
 ```
 
 ## Run application on Docker

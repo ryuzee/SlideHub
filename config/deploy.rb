@@ -1,7 +1,7 @@
 lock '3.2.1'
 
-set :application, 'open-slideshare-v2'
-set :repo_url, 'git@github.com:ryuzee/open-slideshare-v2.git'
+set :application, 'SlideHub'
+set :repo_url, 'git@github.com:ryuzee/SlideHub.git'
 set :deploy_to, '/opt/application'
 set :keep_releases, 5
 

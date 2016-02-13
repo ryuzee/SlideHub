@@ -1,4 +1,4 @@
-FROM ryuzee/openslideshare-v2-base
+FROM ryuzee/slidehub-base
 MAINTAINER ryuzee
 
 RUN mkdir -p /opt/application/current/
