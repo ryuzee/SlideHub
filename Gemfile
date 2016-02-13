@@ -133,7 +133,7 @@ group :development do
   gem 'annotate'
 
   # Static Analysis
-  gem 'rubocop'
+  gem 'rubocop', '~> 0.35.1'
 
   gem 'guard'
   gem 'guard-rubocop'
