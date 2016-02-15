@@ -1,5 +1,5 @@
 # target_version:
-#   rubocop v0.35.1
+#   rubocop v0.37.2
 
 # 自動生成されるものはチェック対象から除外する
 AllCops:
@@ -143,17 +143,11 @@ Style/SignalException:
 
 # `||` も align に使うことがあるので追加する
 Style/SpaceAroundOperators:
-  MultiSpaceAllowedForOperators:
-    - "="
-    - "=>"
-    - "||"
+  AllowForAlignment: true
 
-# * 式展開したい場合に書き換えるのが面倒
-# * 文章ではダブルクォートよりもシングルクォートの方が頻出する
-# ことから EnforcedStyle: double_quotes 推奨
-# @NOTE: デフォルトの値に変更した
+# * 式展開したい場合だけダブルクォートにする
+# * それ以外ではシングルクォートを強制
 Style/StringLiterals:
-  # EnforcedStyle: double_quotes
   EnforcedStyle: single_quotes
 
 # auto-correct 時に Style/StringLiterals とカニバって無限ループになる (v0.28.0)
@@ -169,11 +163,14 @@ Style/SingleLineBlockParams:
 # * model の association
 # * controller の callback
 # 辺りの桁揃えで引っかかるので全体的にチェックしない
-Style/SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Enabled: false
 
 # 複数行の場合はケツカンマを入れる
-Style/TrailingComma:
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
 ##################### Lint ##################################

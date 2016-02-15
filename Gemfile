@@ -132,7 +132,7 @@ group :development do
   gem 'annotate'
 
   # Static Analysis
-  gem 'rubocop', '~> 0.35.1'
+  gem 'rubocop', '~> 0.37.2'
 
   gem 'guard'
   gem 'guard-rubocop'
@@ -144,7 +144,7 @@ group :development do
 
   # Visualize Rails Console
   gem 'hirb'
-  gem 'hirb-unicode'
+  # gem 'hirb-unicode'
 
   # Generate ER
   gem 'rails-erd'
