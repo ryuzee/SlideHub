@@ -14,7 +14,7 @@ module SqsUsable
   end
 
   def receive_message(max_number = 10)
-    sqs.receive_message(queue_url: AWSConfig.config.sqs_url, visibility_timeout: 30, max_number_of_messages: max_number)
+    sqs.receive_message(queue_url: AWSConfig.config.sqs_url, visibility_timeout: 600, max_number_of_messages: max_number)
   end
 
   def delete_message(message_object)
