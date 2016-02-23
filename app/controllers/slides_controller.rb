@@ -124,11 +124,11 @@ class SlidesController < ApplicationController
     begin
       @slide = Slide.find(params[:id])
       resp = @slide.page_list
-      if resp
-        count = resp.count
-      else
-        count = 0
-      end
+      count = if resp
+                resp.count
+              else
+                0
+              end
     rescue ActiveRecord::RecordNotFound => e
       count = 0
     end
