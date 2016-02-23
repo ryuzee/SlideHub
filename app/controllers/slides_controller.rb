@@ -90,7 +90,7 @@ class SlidesController < ApplicationController
     slide_params = params.require(:slide).permit(:name, :description, :key, :downloadable, :category_id, :tag_list, :convert_status)
     @slide = Slide.find(params[:id])
     if current_user.id != @slide.user_id
-      redirect_to slide_path(@slide.id)
+      return redirect_to slide_path(@slide.id)
     end
     slide_convert_status = params[:slide][:convert_status].to_i
 

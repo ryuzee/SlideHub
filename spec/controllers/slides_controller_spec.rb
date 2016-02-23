@@ -101,9 +101,7 @@ RSpec.describe SlidesController, type: :controller do
       expect(response.status).to eq(200)
       expect(response).to render_template :edit
     end
-  end
 
-  describe 'GET #edit' do
     it 'redirect to show' do
       create(:slide)
       general_user = create(:general_user)
@@ -112,6 +110,74 @@ RSpec.describe SlidesController, type: :controller do
       get :edit, id: slide_id
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{slide_id}"
+    end
+  end
+
+  describe 'POST #update' do
+    it 'failed to update record because the user is not the owner' do
+      data = create(:slide)
+      general_user = create(:general_user)
+      login_by_user general_user
+      post :update, { id: data.id, slide: data.attributes }
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to "/slides/#{data.id}"
+    end
+
+    it 'failed to update the record because of validation error and then render edit' do
+      data = create(:slide)
+      data.convert_status = 100
+      data.name = nil
+      login_by_user first_user
+      post :update, { id: data.id, slide: data.attributes }
+      expect(response.status).to eq(200)
+      expect(response).to render_template :edit
+    end
+
+    it 'succeeds to update the record without running conversion' do
+      data = create(:slide)
+      data.convert_status = 100
+      data.name = 'Engawa'
+      login_by_user first_user
+      post :update, { id: data.id, slide: data.attributes }
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to "/slides/#{data.id}"
+      saved_record = Slide.find(data.id)
+      expect(saved_record.name).to eq(data.name)
+    end
+
+    it 'succeeds to update the record with running conversion' do
+      allow_any_instance_of(SlidesController).to receive(:send_message).and_return(true)
+      data = create(:slide)
+      data.convert_status = 0 # Not converted yet...
+      data.name = 'Engawa'
+      login_by_user first_user
+      post :update, { id: data.id, slide: data.attributes }
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to "/slides/#{data.id}"
+      saved_record = Slide.find(data.id)
+      expect(saved_record.name).to eq(data.name)
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    it 'failed to delete the slide because the user is not the owner' do
+      data = create(:slide)
+      general_user = create(:general_user)
+      login_by_user general_user
+      delete :destroy, { id: data.id }
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to "/slides/index"
+    end
+
+    it 'succeeds to update the record with running conversion' do
+      allow_any_instance_of(Storage).to receive(:delete_slide).and_return(true)
+      allow_any_instance_of(Storage).to receive(:delete_generated_files).and_return(true)
+      data = create(:slide)
+      login_by_user first_user
+      delete :destroy, { id: data.id }
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to "/slides/index"
+      expect(Slide.exists?(data.id)).to eq(false)
     end
   end
 end
