@@ -48,7 +48,7 @@ class ManagementsController < ApplicationController
     if @slide.update_attributes(params[:slide])
       redirect_to "/managements/slide_edit/#{@slide.id}"
     else
-      render :edit
+      render :slide_edit
     end
   end
 
