@@ -76,7 +76,7 @@ RSpec.describe SlidesController, type: :controller do
       data = build(:slide)
       login_by_user first_user
       post :create, slide: data.attributes
-      id = Slide.where(:key => data.key).first.id
+      id = Slide.where(key: data.key).first.id
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{id}"
     end
