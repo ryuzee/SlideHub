@@ -70,7 +70,7 @@ RSpec.describe ManagementsController, type: :controller do
 
     describe 'POST /managements/site_update' do
       it 'works!' do
-        data = [{"var"=>"site.Neta1", "value"=>"Toro"}, {"var"=>"site.Neta2", "value"=>"Unit"}]
+        data = [{ 'var' => 'site.Neta1', 'value' => 'Toro' }, { 'var' => 'site.Neta2', 'value' => 'Unit' }]
         post :site_update, settings: data
         expect(response.status).to eq(302)
         expect(response).to redirect_to '/managements/site_setting'
@@ -88,7 +88,7 @@ RSpec.describe ManagementsController, type: :controller do
 
     describe 'POST /managements/custom_contents_update' do
       it 'works!' do
-        data = [{"var"=>"custom_content.Neta1", "value"=>"Toro"}, {"var"=>"custom_content.Neta2", "value"=>"Unit"}]
+        data = [{ 'var' => 'custom_content.Neta1', 'value' => 'Toro' }, { 'var' => 'custom_content.Neta2', 'value' => 'Unit' }]
         post :custom_contents_update, settings: data
         expect(response.status).to eq(302)
         expect(response).to redirect_to '/managements/custom_contents_setting'
