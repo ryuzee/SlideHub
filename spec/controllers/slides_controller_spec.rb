@@ -180,4 +180,23 @@ RSpec.describe SlidesController, type: :controller do
       expect(Slide.exists?(data.id)).to eq(false)
     end
   end
+
+  describe 'GET #update_view' do
+    it 'succeeds to retrieve json' do
+      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
+      slide = create(:slide)
+      get :update_view, id: slide.id
+      expect(response.status).to eq(200)
+      json = JSON.parse(response.body)
+      expect(json['page_count']).to eq(1)
+    end
+
+    it 'returns 0' do
+      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
+      get :update_view, id: 65535
+      expect(response.status).to eq(200)
+      json = JSON.parse(response.body)
+      expect(json['page_count']).to eq(0)
+    end
+  end
 end
