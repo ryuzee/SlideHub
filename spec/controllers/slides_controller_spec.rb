@@ -76,7 +76,7 @@ RSpec.describe SlidesController, type: :controller do
       data = build(:slide)
       login_by_user first_user
       post :create, slide: data.attributes
-      id = Slide.where(:key => data.key).first.id
+      id = Slide.where(key: data.key).first.id
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{id}"
     end
@@ -178,6 +178,25 @@ RSpec.describe SlidesController, type: :controller do
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/index"
       expect(Slide.exists?(data.id)).to eq(false)
+    end
+  end
+
+  describe 'GET #update_view' do
+    it 'succeeds to retrieve json' do
+      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
+      slide = create(:slide)
+      get :update_view, id: slide.id
+      expect(response.status).to eq(200)
+      json = JSON.parse(response.body)
+      expect(json['page_count']).to eq(1)
+    end
+
+    it 'returns 0' do
+      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
+      get :update_view, id: 65535
+      expect(response.status).to eq(200)
+      json = JSON.parse(response.body)
+      expect(json['page_count']).to eq(0)
     end
   end
 end

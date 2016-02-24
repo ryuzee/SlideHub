@@ -132,7 +132,7 @@ class SlidesController < ApplicationController
     rescue ActiveRecord::RecordNotFound => e
       count = 0
     end
-    render json: count
+    render json: { page_count: count }
   end
 
   def embedded
