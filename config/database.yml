@@ -12,7 +12,7 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: openslideshare
+  database: <%= ENV['OSS_DB_NAME_DEV']  ||= 'openslideshare' %>
   pool: 5
   username: <%= ENV['OSS_DB_USERNAME_DEV'] %>
   password: <%= ENV['OSS_DB_PASSWORD_DEV'] %>
@@ -25,7 +25,7 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: test_openslideshare
+  database: <%= ENV['OSS_DB_NAME_TEST']  ||= 'test_openslideshare' %>
   pool: 5
   username: <%= ENV['OSS_DB_USERNAME_TEST'] %>
   password: <%= ENV['OSS_DB_PASSWORD_TEST'] %>
@@ -35,7 +35,7 @@ production:
   adapter: <%= ENV['DB_ADAPTER'] ||= 'mysql2' %>
   encoding: utf8
   reconnect: false
-  database: openslideshare
+  database: <%= ENV['OSS_DB_NAME']  ||= 'openslideshare' %>
   pool: 5
   username: <%= ENV['OSS_DB_USERNAME'] %>
   password: <%= ENV['OSS_DB_PASSWORD'] %>
