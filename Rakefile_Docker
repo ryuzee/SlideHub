@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+task :default => :build
+
+task :build_base do
+  cmd = 'cd docker-images/base && docker build -t ryuzee/slidehub-base .'
+  sh cmd
+end
+
+task :push_base do
+  cmd = 'cd docker-images/base && docker push ryuzee/slidehub-base:latest'
+  sh cmd
+end
+
+task :build do
+  cmd = 'docker build -t ryuzee/slidehub .'
+  sh cmd
+end
+
+task :push do
+  cmd = 'docker push ryuzee/slidehub:latest'
+  sh cmd
+end
