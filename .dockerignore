@@ -17,3 +17,4 @@ vendor/bundle
 *.md
 *.pdf
 circle.yml
+config/deploy/*
