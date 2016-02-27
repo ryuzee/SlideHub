@@ -9,7 +9,7 @@ set :rbenv_type, :user # :system or :user
 set :rbenv_ruby, '2.2.3'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w(rake gem bundle ruby rails)
-set :rbenv_roles, :all # default value
+set :rbenv_roles, :web # default value
 
 set :linked_dirs, %w(log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle)
 # set :unicorn_pid, "#{shared_path}/tmp/pids/unicorn.pid"
@@ -43,4 +43,80 @@ namespace :deploy do
       end
     end
   end
+end
+
+namespace :container do
+  desc 'Hello, world!'
+  task :hello do
+    on roles(:container) do
+      execute "echo Hello, world!"
+    end
+  end
+
+  desc 'deploy'
+  task :deploy do
+    on roles(:container) do
+      execute "sudo docker pull ryuzee/slidehub:latest"
+      prefix = DateTime.now.strftime('%Y%m%d%H%M%s')
+      cmd =<<"EOS"
+        docker run -d \
+        --env OSS_REGION=#{fetch(:oss_region)} \
+        --env OSS_SQS_URL=#{fetch(:oss_sqs_url)} \
+        --env OSS_BUCKET_NAME=#{fetch(:oss_bucket_name)} \
+        --env OSS_IMAGE_BUCKET_NAME=#{fetch(:oss_image_bucket_name)} \
+        --env OSS_USE_S3_STATIC_HOSTING=#{fetch(:oss_use_s3_static_hosting)} \
+        --env OSS_AWS_SECRET_KEY=#{fetch(:oss_aws_secret_key)} \
+        --env OSS_AWS_ACCESS_ID=#{fetch(:oss_aws_access_id)} \
+        --env OSS_SECRET_KEY_BASE=#{fetch(:oss_secret_key_base)} \
+        --env OSS_DB_NAME=#{fetch(:oss_db_name)} \
+        --env OSS_DB_USERNAME=#{fetch(:oss_db_username)} \
+        --env OSS_DB_PASSWORD=#{fetch(:oss_db_password)} \
+        --env OSS_DB_URL=#{fetch(:oss_db_url)} \
+        -P --name slidehub#{prefix} ryuzee/slidehub
+EOS
+      container_id = capture("sudo #{cmd}")
+      port = capture("sudo docker port #{container_id} 3000").to_s.split(':')[1]
+      puts port
+      # confirm running
+      cmd = "curl -LI http://127.0.0.1:#{port} -o /dev/null -w '%{http_code}\\n' -s"
+      cnt = 0
+      while true do
+        execute "echo 'sleep 20 sec...'"
+        sleep 20
+        cnt += 1
+        if cnt == 10
+          error = Exception.new("An error that should abort and rollback deployment")
+          raise error
+        end
+        begin
+          container_status = capture(cmd).to_i
+          if container_status == 200
+            break
+          end
+        rescue Exception => e
+          puts e.inspect
+        end
+      end
+      data = {:port => port}
+      template "nginx_default.erb", "/tmp/default", data, true
+      execute "sudo mv /tmp/default /etc/nginx/sites-available/default && sudo service nginx reload"
+
+      containers = capture('sudo docker ps -q').to_s.split("\n")
+      containers.shift
+      containers.shift
+      puts containers.inspect
+      containers.each do |c|
+        execute "sudo docker rm -f #{c}"
+      end
+    end
+  end
+end
+
+def template(from, to, data, as_root = false)
+  template_path = File.dirname(__FILE__) + "/deploy/templates/#{from}"
+  template = ERB.new(File.new(template_path).read).result(binding)
+  upload! StringIO.new(template), to
+
+  execute :sudo, :chmod, "644 #{to}"
+  execute :sudo, :chown, "root:root #{to}" if as_root == true
 end
