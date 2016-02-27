@@ -49,16 +49,16 @@ namespace :container do
   desc 'Hello, world!'
   task :hello do
     on roles(:container) do
-      execute "echo Hello, world!"
+      execute 'echo Hello, world!'
     end
   end
 
   desc 'deploy'
   task :deploy do
     on roles(:container) do
-      execute "sudo docker pull ryuzee/slidehub:latest"
+      execute 'sudo docker pull ryuzee/slidehub:latest'
       prefix = DateTime.now.strftime('%Y%m%d%H%M%s')
-      cmd =<<"EOS"
+      cmd = <<"EOS"
         docker run -d \
         --env OSS_REGION=#{fetch(:oss_region)} \
         --env OSS_SQS_URL=#{fetch(:oss_sqs_url)} \
@@ -80,12 +80,12 @@ EOS
       # confirm running
       cmd = "curl -LI http://127.0.0.1:#{port} -o /dev/null -w '%{http_code}\\n' -s"
       cnt = 0
-      while true do
+      loop do
         execute "echo 'sleep 20 sec...'"
         sleep 20
         cnt += 1
         if cnt == 10
-          error = Exception.new("An error that should abort and rollback deployment")
+          error = Exception.new('An error that should abort and rollback deployment')
           raise error
         end
         begin
@@ -97,9 +97,9 @@ EOS
           puts e.inspect
         end
       end
-      data = {:port => port}
-      template "nginx_default.erb", "/tmp/default", data, true
-      execute "sudo mv /tmp/default /etc/nginx/sites-available/default && sudo service nginx reload"
+      data = { port: port }
+      template 'nginx_default.erb', '/tmp/default', data, true
+      execute 'sudo mv /tmp/default /etc/nginx/sites-available/default && sudo service nginx reload'
 
       containers = capture('sudo docker ps -q').to_s.split("\n")
       containers.shift
