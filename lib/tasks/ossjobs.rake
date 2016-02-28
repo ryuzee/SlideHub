@@ -16,11 +16,11 @@ namespace :ossjob do
     @slides = Slide.published
     @slides.each do |s|
       page_list = s.page_list
-      if page_list.instance_of?(Array)
-        count = page_list.count
-      else
-        count = 0
-      end
+      count = if page_list.instance_of?(Array)
+                page_list.count
+              else
+                0
+              end
       puts "id=#{s.id} key=#{s.key}"
       s.num_of_pages = count
       s.save

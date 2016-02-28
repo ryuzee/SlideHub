@@ -39,34 +39,34 @@ class AWSConfig
     unless @config.cdn_base_url.blank?
       url = @config.cdn_base_url
     else
-      if @config.use_s3_static_hosting == '1'
-        url = "http://#{@config.image_bucket_name}"
-      else
-        if @config.region == 'us-east-1'
-          url = "https://#{@config.image_bucket_name}.s3.amazonaws.com"
-        else
-          url = "https://#{@config.image_bucket_name}.s3-#{@config.region}.amazonaws.com"
-        end
-      end
+      url = if @config.use_s3_static_hosting == '1'
+              "http://#{@config.image_bucket_name}"
+            else
+              url = if @config.region == 'us-east-1'
+                      "https://#{@config.image_bucket_name}.s3.amazonaws.com"
+                    else
+                      "https://#{@config.image_bucket_name}.s3-#{@config.region}.amazonaws.com"
+                    end
+            end
     end
     url
   end
 
   def self.upload_endpoint
-    if @config.region == 'us-east-1'
-      url = "https://#{@config.bucket_name}.s3.amazonaws.com"
-    else
-      url = "https://#{@config.bucket_name}.s3-#{@config.region}.amazonaws.com"
-    end
+    url = if @config.region == 'us-east-1'
+            "https://#{@config.bucket_name}.s3.amazonaws.com"
+          else
+            "https://#{@config.bucket_name}.s3-#{@config.region}.amazonaws.com"
+          end
     url
   end
 
   def self.s3_host_name
-    if @config.region == 'us-east-1'
-      s3_host_name = 's3.amazonaws.com'
-    else
-      s3_host_name = "s3-#{@config.region}.amazonaws.com"
-    end
+    s3_host_name = if @config.region == 'us-east-1'
+                     's3.amazonaws.com'
+                   else
+                     "s3-#{@config.region}.amazonaws.com"
+                   end
     s3_host_name
   end
 

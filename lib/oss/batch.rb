@@ -10,7 +10,7 @@ class Batch
       return true
     end
 
-    if CloudConfig::service_name == 'aws'
+    if CloudConfig.service_name == 'aws'
       resp.messages.each do |msg|
         obj = JSON.parse(msg.body)
         Oss::BatchLogger.info("Start converting slide. id=#{obj['id']} key=#{obj['key']}")
@@ -41,7 +41,7 @@ class Batch
     require 'tmpdir'
     Dir.mktmpdir do |dir|
       Oss::BatchLogger.info("Current directory is #{dir}")
-      file = "#{SecureRandom.hex}"
+      file = SecureRandom.hex.to_s
       CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, key, "#{dir}/#{file}")
       ft = Oss::ConvertUtil.new.get_slide_file_type("#{dir}/#{file}")
       Oss::BatchLogger.info("File Type is #{ft}")

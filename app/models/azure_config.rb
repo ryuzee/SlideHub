@@ -30,11 +30,11 @@ class AzureConfig
   end
 
   def self.resource_endpoint
-    unless @config.cdn_base_url.blank?
-      url = @config.cdn_base_url
-    else
-      url = "https://#{@config.azure_storage_account_name}.blob.core.windows.net/#{@config.image_bucket_name}"
-    end
+    url = unless @config.cdn_base_url.blank?
+            @config.cdn_base_url
+          else
+            "https://#{@config.azure_storage_account_name}.blob.core.windows.net/#{@config.image_bucket_name}"
+          end
     url
   end
 
@@ -51,7 +51,7 @@ class AzureConfig
 
   def self.receive_message(max_number = 10)
     queues = Azure.queues
-    res = queues.list_messages(@config.queue_name, 600, {:number_of_messages => max_number})
+    res = queues.list_messages(@config.queue_name, 600, { number_of_messages: max_number })
     res
   end
 
@@ -79,14 +79,14 @@ class AzureConfig
   def self.upload_files(container, files, prefix)
     files.each do |f|
       if File.exist?(f)
-        content = File.open(f, 'rb') { |file| file.read }
+        content = File.open(f, 'rb', &:read)
         @blob_client.create_block_blob(container, "#{prefix}/#{File.basename(f)}", content)
       end
     end
   end
 
   def self.get_file_list(container, prefix)
-    resp = @blob_client.list_blobs(container, { :prefix => prefix, :max_results => 1000 })
+    resp = @blob_client.list_blobs(container, { prefix: prefix, max_results: 1000 })
     files = []
     resp.each do |blob|
       files.push({ key: blob.name })
@@ -96,7 +96,7 @@ class AzureConfig
 
   def self.save_file(container, key, destination)
     blob, content = @blob_client.get_blob(container, key)
-    File.open(destination, "wb") {|f| f.write(content)}
+    File.open(destination, 'wb') { |f| f.write(content) }
   end
 
   def self.delete_slide(key)
@@ -142,10 +142,10 @@ class AzureConfig
     uri = bs.generate_uri Addressable::URI.escape("#{@config.bucket_name}/#{blob_name}"), {}
 
     signer = Azure::Contrib::Auth::SharedAccessSignature.new(uri, {
-      resource:    "b",
+      resource:    'b',
       permissions: permissions,
       start:       start_time.utc.iso8601,
-      expiry:      expiration_time.utc.iso8601
+      expiry:      expiration_time.utc.iso8601,
     }, Azure.config.storage_account_name)
 
     url = signer.sign
