@@ -169,7 +169,7 @@ RSpec.describe SlidesController, type: :controller do
       login_by_user general_user
       delete :destroy, { id: data.id }
       expect(response.status).to eq(302)
-      expect(response).to redirect_to "/slides/index"
+      expect(response).to redirect_to '/slides/index'
     end
 
     it 'succeeds to update the record with running conversion' do
@@ -181,7 +181,7 @@ RSpec.describe SlidesController, type: :controller do
       login_by_user first_user
       delete :destroy, { id: data.id }
       expect(response.status).to eq(302)
-      expect(response).to redirect_to "/slides/index"
+      expect(response).to redirect_to '/slides/index'
       expect(Slide.exists?(data.id)).to eq(false)
     end
   end
