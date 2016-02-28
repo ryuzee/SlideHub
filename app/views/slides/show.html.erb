@@ -2,7 +2,7 @@
 <%
   page_list = @slide.page_list
   if page_list.instance_of?(Array) && page_list.count > 0
-    u = "#{AWSConfig.resource_endpoint}/#{page_list[0]}"
+    u = "#{CloudConfig::SERVICE.resource_endpoint}/#{page_list[0]}"
   else
     u = "#{root_url}oss/images/converting.jpg"
   end
