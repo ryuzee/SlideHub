@@ -13,10 +13,26 @@ class AWSConfig
 
   def self.configure(&block)
     yield config
+
+    if self.configured?
+      Aws.config.update({
+        region: @config.region,
+        credentials: Aws::Credentials.new(@config.aws_access_id, @config.aws_secret_key),
+      },)
+    end
+    @client = Aws::S3::Client.new(region: @config.region)
   end
 
   def self.config
     @config ||= Config.new
+  end
+
+  def self.configured?
+    return false unless defined? @config.aws_access_id
+    return false unless defined? @config.aws_secret_key
+    return false if @config.aws_access_id.blank?
+    return false if @config.aws_secret_key.blank?
+    true
   end
 
   def self.resource_endpoint
@@ -68,7 +84,16 @@ class AWSConfig
   end
 
   def self.receive_message(max_number = 10)
-    self.sqs.receive_message(queue_url: @config.sqs_url, visibility_timeout: 600, max_number_of_messages: max_number)
+    resp = self.sqs.receive_message(queue_url: @config.sqs_url, visibility_timeout: 600, max_number_of_messages: max_number)
+    resp
+  end
+
+  def self.message_exist?(resp)
+    if !resp || resp.messages.count == 0
+      false
+    else
+      true
+    end
   end
 
   def self.delete_message(message_object)
@@ -84,6 +109,77 @@ class AWSConfig
   end
 
   ## S3
+  #
+  def self.upload_files(bucket, files, prefix)
+    files.each do |f|
+      @client.put_object(
+        bucket: bucket,
+        key: "#{prefix}/#{File.basename(f)}",
+        body: File.read(f),
+        acl: 'public-read',
+        storage_class: 'REDUCED_REDUNDANCY',
+      ) if File.exist?(f)
+    end
+  end
+
+  def self.get_file_list(bucket, prefix)
+    resp = @client.list_objects({
+      bucket: bucket,
+      max_keys: 1000,
+      prefix: prefix,
+    },)
+    files = []
+    resp.contents.each do |f|
+      files.push({ key: f.key })
+    end
+    files
+  end
+
+  def self.save_file(bucket, key, destination)
+    @client.get_object(
+      response_target: destination,
+      bucket: bucket,
+      key: key)
+  end
+
+  def self.delete_slide(key)
+    if key.empty?
+      return false
+    end
+    files = self.get_file_list(@config.bucket_name, key)
+    self.delete_files(@config.bucket_name, files)
+    true
+  end
+
+  def self.delete_generated_files(key)
+    if key.empty?
+      return false
+    end
+    files = self.get_file_list(@config.image_bucket_name, key)
+    self.delete_files(@config.image_bucket_name, files)
+    true
+  end
+
+  def self.get_slide_download_url(key)
+    self.get_download_url(@config.bucket_name, key)
+  end
+
+  def self.delete_files(bucket, files)
+    @client.delete_objects({
+      bucket: bucket,
+      delete: {
+        objects: files,
+        quiet: true,
+      },
+    },) unless files.empty?
+  end
+
+  def self.get_download_url(bucket, key)
+    signer = Aws::S3::Presigner.new(client: @client)
+    url = signer.presigned_url(:get_object, bucket: bucket, key: key)
+    url
+  end
+
   def self.create_policy
     base_time = Time.zone.now.in_time_zone('UTC')
 

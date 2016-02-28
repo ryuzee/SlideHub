@@ -57,9 +57,8 @@ class SlidesController < ApplicationController
   def destroy
     @slide = Slide.find(params[:id])
     if @slide.user_id == current_user.id
-      storage = Storage.new
-      storage.delete_slide(@slide.key)
-      storage.delete_generated_files(@slide.key)
+      CloudConfig::SERVICE.delete_slide(@slide.key)
+      CloudConfig::SERVICE.delete_generated_files(@slide.key)
       @slide.destroy
     end
     redirect_to slides_path
@@ -149,8 +148,7 @@ class SlidesController < ApplicationController
 
   def download
     @slide = Slide.find(params[:id])
-    storage = Storage.new
-    url = storage.get_slide_download_url(@slide.key)
+    url = CloudConfig::SERVICE.get_slide_download_url(@slide.key)
     # @TODO: handle response code
     require 'open-uri'
     data = open(url).read
