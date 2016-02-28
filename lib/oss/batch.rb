@@ -4,7 +4,7 @@ include SqsUsable
 class Batch
   def self.execute
     Oss::BatchLogger.info('Start convert process')
-    resp = receive_message(5)
+    resp = CloudConfig::SERVICE.receive_message(5)
     if !resp || resp.messages.count == 0
       Oss::BatchLogger.info('No SQS message found')
       return true
@@ -15,7 +15,7 @@ class Batch
       result = self.convert_slide(obj['key'])
       if result
         Oss::BatchLogger.info("Delete message from SQS. id=#{obj['id']} key=#{obj['key']}")
-        delete_message(msg)
+        CloudConfig::SERVICE.delete_message(msg)
       else
         Oss::BatchLogger.error("Slide conversion failed. id=#{obj['id']} key=#{obj['key']}")
       end

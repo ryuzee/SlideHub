@@ -5,7 +5,7 @@ module CloudConfig
     SERVICE = AWSConfig
   end
 
-  def service_name
+  def self.service_name
     if ENV.has_key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
       'azure'
     else

@@ -1,16 +1,17 @@
-<% content_for :title, t(:edit_slide) %>
+<% content_for :title, t("Upload Slide") %>
 
-<%= render :partial => 'upload_js', :locals => { :command => 'edit' } %>
+<%= render :partial => 'slides/aws/upload_js', :locals => { :command => 'add' } %>
 
 <div class="row">
-    <div class="col-md-8">
-    <h3><%= t(:edit_slide) %></h3>
-
+  <div class="col-md-8 bottom_padding_20">
+    <h3><%= t('Upload Slide') %></h3>
     <div class="panel panel-default">
     <div class="panel-body">
-
-    <form id="upload-form" class="form-horizontal" method="post" enctype="multipart/form-data" action="javascript:void(0); return false;">
-
+    <form id="upload-form" class="form-horizontal" method="post" enctype="multipart/form-data">
+    <% require 'securerandom'
+       require "digest/md5"
+       rand_name = Digest::MD5.hexdigest(SecureRandom.hex + Time.now.strftime("%Y%m%d%H%M%S"))
+    %>
     <div class="form-group">
       <label class="control-label col-sm-2"><%= t('File') %></label>
       <div class="col-sm-10">
@@ -26,9 +27,8 @@
         </div>
       </div>
     </div>
-
     <% policy = CloudConfig::SERVICE.create_policy %>
-    <input class="fval" type="hidden" id="key"  name="key" value='<%= @slide.key %>' class="form-control"/>
+    <input class="fval" type="hidden" id="key"  name="key" value='<%= rand_name %>' class="form-control"/>
     <input class="fval" type="hidden" name="acl" value="<%= policy['acl'] %>" />
     <input class="fval" type="hidden" name="success_action_status" value="<%= policy['success_action_status'] %>" />
     <input class="fval" type="hidden" id="content_type" name="Content-Type" value="application/octetstream" class="form-control"/>
@@ -43,15 +43,10 @@
     <% end %>
     <input class="fval" type="hidden" id="x-amz-meta-tag" name="x-amz-meta-tag" value="SlideHub" class="form-control"/>
 
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <input type="submit" id="re-upload" class="btn btn-primary" value="<%= t :re_upload_slide %>" />
-      </div>
-    </div>
-
 </form>
 
-<%= form_for @slide, :html => { :class => "form-horizontal slide" } do |f| %>
+
+<%= form_for @slide, :url => {:action => 'create'}, :html => { :class => "form-horizontal slide" } do |f| %>
 
     <% if @slide.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
@@ -82,7 +77,6 @@
     </div>
     <%= error_span(@slide[:description]) %>
   </div>
-
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <div class="checkbox">
@@ -101,30 +95,28 @@
     </div>
     <%= error_span(@slide[:category_id]) %>
   </div>
-
-  <%= f.hidden_field :id, :value => @slide.id %>
-  <%= f.hidden_field :convert_status, :id => 'SlideConvertStatus', :value => @slide.convert_status %>
-  <%= f.hidden_field :key, :id => 'SlideKey', :value => @slide.key %>
+  <%= f.hidden_field :key, :id => 'SlideKey' %>
   <div class="form-group">
     <%= f.label t('activerecord.models.tag'), :class => 'control-label col-sm-2' %>
     <div class="col-sm-10">
-      <%= f.text_field :tag_list, :value => @slide.tag_list.join(','), :class => 'form-control' %>
+      <%= f.text_field :tag_list, :class => 'form-control' %>
     </div>
     <%= error_span(@slide[:tag_list]) %>
   </div>
-  <%= f.submit nil, :id => 'save_button', :class => 'btn btn-primary' %>
+
+  <br />
+  <%= f.submit nil, :id => 'save_button', :disabled => 'disabled', :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
             slides_path, :class => 'btn btn-default' %>
 
 <% end %>
 
-    </div>
-    </div>
-    </div>
+  </div>
+  </div>
+  </div>
 
-    <div class="col-md-4">
+  <div class="col-md-4">
     <%= render 'users/right_side_bar', user: current_user %>
-    </div>
+  </div>
 
 </div>
-

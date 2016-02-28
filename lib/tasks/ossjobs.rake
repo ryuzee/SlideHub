@@ -1,6 +1,4 @@
 require 'rails'
-require "#{Rails.root}/app/controllers/concerns/sqs_usable"
-include SqsUsable
 
 namespace :ossjob do
   task :db_compatibility_check => :environment do

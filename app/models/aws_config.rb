@@ -54,6 +54,36 @@ class AWSConfig
     s3_host_name
   end
 
+  ## SQS
+  def self.sqs
+    @sqs ||= Aws::SQS::Client.new(region: @config.region)
+  end
+
+  def self.send_message(message)
+    resp = self.sqs.send_message({
+      queue_url: @config.sqs_url,
+      message_body: message,
+    },)
+    resp
+  end
+
+  def self.receive_message(max_number = 10)
+    self.sqs.receive_message(queue_url: @config.sqs_url, visibility_timeout: 600, max_number_of_messages: max_number)
+  end
+
+  def self.delete_message(message_object)
+    resp = self.sqs.delete_message({
+      queue_url: @config.sqs_url,
+      receipt_handle: message_object.receipt_handle,
+    },)
+    resp
+  end
+
+  def self.batch_delete(entries)
+    self.sqs.delete_message_batch(queue_url: @config.sqs_url, entries: entries)
+  end
+
+  ## S3
   def self.create_policy
     base_time = Time.zone.now.in_time_zone('UTC')
 
