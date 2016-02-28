@@ -129,11 +129,12 @@ class AzureConfig
 
   def self.get_download_url(container, key)
     url = self.generate_sas_url(key)
+    puts url
     url
   end
 
   def self.generate_sas_url(blob_name)
-    permissions = 'w'
+    permissions = 'rw'
 
     start_time = Time.now - 10
     expiration_time = Time.now + 1800

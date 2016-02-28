@@ -84,6 +84,7 @@ class Batch
 
       slide = Slide.where('slides.key = ?', key).first
       slide.convert_status = 100
+      slide.extension = ".#{ft}"
       slide.num_of_pages = slide_image_list.count
       slide.save
       true
