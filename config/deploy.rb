@@ -67,11 +67,25 @@ namespace :container do
         --env OSS_USE_S3_STATIC_HOSTING=#{fetch(:oss_use_s3_static_hosting)} \
         --env OSS_AWS_SECRET_KEY=#{fetch(:oss_aws_secret_key)} \
         --env OSS_AWS_ACCESS_ID=#{fetch(:oss_aws_access_id)} \
+        --env OSS_USE_AZURE=#{fetch(:oss_use_azure)} \
+        --env OSS_AZURE_CONTAINER_NAME=#{fetch(:oss_azure_container_name)} \
+        --env OSS_AZURE_IMAGE_CONTAINER_NAME=#{fetch(:oss_azure_image_container_name)} \
+        --env OSS_AZURE_CDN_BASE_URL=#{fetch(:oss_azure_cdn_base_url)} \
+        --env OSS_AZURE_QUEUE_NAME=#{fetch(:oss_azure_queue_name)} \
+        --env OSS_AZURE_STORAGE_ACCESS_KEY=#{fetch(:oss_azure_storage_access_key)} \
+        --env OSS_AZURE_STORAGE_ACCOUNT_NAME=#{fetch(:oss_azure_storage_account_name)} \
         --env OSS_SECRET_KEY_BASE=#{fetch(:oss_secret_key_base)} \
         --env OSS_DB_NAME=#{fetch(:oss_db_name)} \
         --env OSS_DB_USERNAME=#{fetch(:oss_db_username)} \
         --env OSS_DB_PASSWORD=#{fetch(:oss_db_password)} \
         --env OSS_DB_URL=#{fetch(:oss_db_url)} \
+        --env OSS_SMTP_SERVER=#{fetch(:oss_smtp_server)} \
+        --env OSS_SMTP_PORT=#{fetch(:oss_smtp_port)} \
+        --env OSS_SMTP_USERNAME=#{fetch(:oss_smtp_username)} \
+        --env OSS_SMTP_PASSWORD=#{fetch(:oss_smtp_password)} \
+        --env OSS_SMTP_AUTH_METHOD=#{fetch(:oss_smtp_auth_method)} \
+        --env OSS_PRODUCTION_HOST=#{fetch(:oss_production_host)} \
+        --env OSS_ROOT_URL=#{fetch(:oss_root_url)} \
         -P --name slidehub#{prefix} ryuzee/slidehub
 EOS
       container_id = capture("sudo #{cmd}")

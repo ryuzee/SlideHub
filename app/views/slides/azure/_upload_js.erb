@@ -1,0 +1,165 @@
+<script type="text/javascript">
+function segmentation(arrayBuffer, segmentSize)
+{
+    var segments = [];
+    var fi = 0;
+    while(fi * segmentSize < arrayBuffer.byteLength){
+        segments.push(arrayBuffer.slice(fi * segmentSize, (fi + 1) * segmentSize));
+        ++fi;
+    }
+    return segments;
+}
+
+function block_id(block_prefix, index) {
+  return block_prefix + ("0000000" + index).substr(-7,7);
+}
+
+function base64encode(str) {
+  return window.btoa(str);
+}
+
+$(document).ready(function() {
+  var send_block_list = function(sas_base_url, block_prefix, block_num) {
+    var defer = $.Deferred();
+    var put_to = sas_base_url + '&comp=blocklist';
+    var body = '<?xml version="1.0" encoding="utf-8"?><BlockList>';
+    for (var i = 0; i < block_num; i++) {
+      body += '<Latest>' + base64encode(block_id(block_prefix, i)) + '</Latest>';
+    }
+    body += '</BlockList>';
+    $.ajax({
+      type:   'PUT',
+      url:    put_to,
+      headers: {
+        'x-ms-version': '2015-04-05',
+        'x-ms-blob-content-type': 'application/octet-stream'
+      },
+      data:   body,
+      async: true,
+      cache: false,
+      contentType: false,
+      processData: false
+    }).done(function(data, textStatus, jqXHR) {
+      defer.notify().resolve(data);
+    }).fail(function( jqXHR, textStatus, errorThrown) {
+      var msg = 'ブロックリストの送信に失敗しました...';
+      console.log(msg);
+      defer.reject(msg)
+    });
+    return defer.promise();
+  };
+
+  var send_block = function(sas_base_url, block_prefix, block_index, block) {
+    var defer = $.Deferred();
+    var url = sas_base_url + '&comp=block&blockid=' + base64encode(block_id(block_prefix, block_index));
+    $.ajax({
+      url: url,
+      type: 'PUT',
+      contentType: 'application/octet-stream',
+      data: block,
+      async: true,
+      crossDomain: true,
+      cache: false,
+      contentType: false,
+      processData: false
+    }).done(function(data, textStatus, jqXHR) {
+      var msg = 'Azureへのデータ送信に成功しました...';
+      console.log(msg);
+      defer.notify().resolve(data);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      var msg = 'Azureへのデータ送信に失敗しました...';
+      console.log(msg);
+      defer.reject(msg)
+    });
+    return defer.promise();
+  };
+
+<% if command == 'add' %>
+  $('#file').on("change", function(event) {
+    var file = this.files[0];
+  <% else %>
+  $("#upload-form").submit(function(event) {
+    var file = $("#file")[0].files[0];
+  <% end %>
+    if(file != null) {
+      console.log("アップロードファイル名は" + file.name + "です...");
+    } else {
+      return;
+    }
+    var buf = file.name.split('.');
+    var ext = (buf[buf.length-1]).toLowerCase();
+    if(ext != "ppt" && ext != "pptx" && ext != "pdf") {
+      alert("No acceptable extension...");
+      return;
+    }
+    event.preventDefault();
+
+    var block_prefix = 'BlockId';
+    var reader = new FileReader();
+
+    reader.onload = (function(file) {
+      return function(evt) {
+        buffer = reader.result;
+        var segments = segmentation(buffer, 4 * 1024 * 1024);
+
+        var url = "<%= raw CloudConfig::SERVICE.generate_sas_url(rand_name) %>";
+
+        var functions = [];
+        $.each(segments,function(i, val) {
+          functions.push(send_block(url, block_prefix, i, val));
+        });
+
+        // See http://stackoverflow.com/questions/26066198/jquery-when-progress-for-array-of-deferred-and-or-promise
+        $.whenWithProgress = function(arrayOfPromises) {
+          var cntr = 0, defer = $.Deferred();
+          for (var i = 0; i < arrayOfPromises.length; i++) {
+            arrayOfPromises[i].done(function() {
+              defer.notify(++cntr, arrayOfPromises.length);
+            });
+          }
+          jQuery.when.apply(jQuery, arrayOfPromises).done(function() {
+            defer.resolveWith(null, arguments);
+          });
+          return defer.promise();
+        };
+
+        $.whenWithProgress(functions)
+        .progress(function(cnt, total) {
+          var p = Math.round(cnt * 100 / total);
+          $(".progress-bar").html(p + "%");
+          $(".progress-bar").attr("aria-valuenow", p);
+          $(".progress-bar").attr("style", "width: " + p + "%");
+        })
+        .fail(function(msg) {
+          $(".progress-bar").html(msg);
+        })
+        .done(function() {
+          console.log('全てのブロックのアップロード完了...');
+          $.when(send_block_list(url, block_prefix, segments.length))
+          .fail(function(msg) {
+            $(".progress-bar").html(msg);
+          })
+          .done(function(){
+            console.log('ブロックリストの登録完了...');
+            $(".progress-bar").html('100%');
+            var key   = '<%= rand_name %>';
+            $("#SlideKey").val(key);
+            <% if command != 'add' %>
+            $("#SlideConvertStatus").val(0);
+            <% end %>
+            $("#save_button").removeAttr("disabled");
+          });
+        });
+      };
+    })(file);
+
+    reader.onloadstart = function(e) {
+      $("#progress").html('0%');
+    };
+    reader.readAsArrayBuffer(file);
+  });
+});
+
+</script>
+
+

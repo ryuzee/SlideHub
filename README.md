@@ -1,6 +1,6 @@
 # SlideHub [![Circle CI](https://circleci.com/gh/ryuzee/SlideHub.svg?style=svg)](https://circleci.com/gh/ryuzee/SlideHub)  [![Code Climate](https://codeclimate.com/github/ryuzee/SlideHub/badges/gpa.svg)](https://codeclimate.com/github/ryuzee/SlideHub)  [![Test Coverage](https://codeclimate.com/github/ryuzee/SlideHub/badges/coverage.svg)](https://codeclimate.com/github/ryuzee/SlideHub/coverage)
 
-This is an open source slidesharing application.
+This is an open source slidesharing application with AWS or Azure.
 
 The previous version of SlideHub was made with CakePHP. And this version is a successor of the previous version and is made with Ruby on Rails 4.
 ![Screenshot](capture1.png)
@@ -25,12 +25,15 @@ The previous version of SlideHub was made with CakePHP. And this version is a su
 
 This application depends on following technologies.
 
-* Amazon S3
-* Amazon SQS
 * Ubuntu 12 or higher with OpenOffice, xpdf, unoconv and so on
 * [Note] Application can be placed at any servers. (Amazon EC2 is NOT required.)
+* AWS or Azure
+ * AWS: Amazon S3 / Amazon SQS
+ * Azure: Blob Storage / Blob Queue
 
 ## Preparing Infrastructure
+
+### AWS
 
 * Create two Amazon S3 buckets (cf. slidehub-slides, slidehub-images)
 * Set CORS policy for bucket that will store the slide decks as follows
@@ -52,6 +55,43 @@ This application depends on following technologies.
 ```
 
 * Create SQS queue (cf. slidehub-convert) and note the url.
+
+### Azure
+
+* Create two Azure Blob containers (cf. slidehub-slides, slidehub-images)
+* Set CORS policy for the container that will store the slide decks as follows
+
+```
+require 'azure'
+
+Azure.config.storage_account_name = 'YOUR_AZURE_STORAGE_ACCOUNT_NAME'
+Azure.config.storage_access_key = 'YOUR_AZURE_STORAGE_ACCESS_KEY'
+
+blob_service = Azure::Blob::BlobService.new
+props = Azure::Service::StorageServiceProperties.new
+
+props.logging = nil
+props.hour_metrics = nil
+props.minute_metrics = nil
+
+# Create a rule
+rule = Azure::Service::CorsRule.new
+rule.allowed_headers = ["*"]
+rule.allowed_methods = ["PUT", "GET", "HEAD", "POST", "OPTIONS"]
+rule.allowed_origins = ["*"]
+rule.exposed_headers = ["*"]
+rule.max_age_in_seconds = 1800
+
+props.cors.cors_rules = [rule]
+blob_service.set_service_properties(props)
+
+puts blob_service.get_service_properties.inspect
+```
+
+* Create Azure Blob Queue (cf. slidehub-convert) and note the name.
+
+### General procedure
+
 * Clone application on your server and copy files to /tmp/
 
 ```
@@ -71,6 +111,20 @@ You also need to set several environmental variables as follows.
 The easiest way is to add these lines to `/etc/environment` and restart your server.
 The other option is to create `.env` file at application root directory. I recommend you to select the first option.
 
+### Cloud Settings (Azure)
+
+```
+OSS_USE_AZURE=[0|1] # If you want to use Azure, set 1
+OSS_AZURE_CONTAINER_NAME=[Original file container name]
+OSS_AZURE_IMAGE_CONTAINER_NAME=[Image container name]
+OSS_AZURE_CDN_BASE_URL=[Set value if you are using CDN]
+OSS_AZURE_QUEUE_NAME=[BLOB queue name]
+OSS_AZURE_STORAGE_ACCESS_KEY=[Azure Storage Access Key]
+OSS_AZURE_STORAGE_ACCOUNT_NAME=[Azure Storage Accout Name]
+```
+
+### Cloud Settings (AWS)
+
 ```
 OSS_BUCKET_NAME=[Original file bucket name]
 OSS_IMAGE_BUCKET_NAME=[Image bucket name]
@@ -80,6 +134,11 @@ OSS_CDN_BASE_URL=[Set value if you are using CDN]
 OSS_SQS_URL=[SQS URL]
 OSS_AWS_ACCESS_ID=[Your AWS Access Key if you run app out of AWS]
 OSS_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
+```
+
+### General Settings
+
+```
 OSS_SMTP_SERVER=[Your SMTP server]
 OSS_SMTP_PORT=[587]
 OSS_SMTP_USERNAME=[Your email address]
@@ -128,6 +187,8 @@ docker pull ryuzee/slidehub:latest
 
 After you build your own Docker image or pull public image pointed above, you can run the app on the Docker as follows.
 Before run the app on the Docker, you need to create your own database on the other host to accumulate various data permanently.
+
+This sample shows how to run app on AWS with Docker.
 
 ```
 docker run -d \

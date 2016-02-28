@@ -1,7 +1,6 @@
 class SlidesController < ApplicationController
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
   before_action :duplicate_key_check!, only: [:create]
-  include SqsUsable
   protect_from_forgery except: [:embedded]
 
   def index
@@ -52,14 +51,14 @@ class SlidesController < ApplicationController
 
   def new
     @slide = Slide.new
+    render "slides/#{CloudConfig::service_name}/new"
   end
 
   def destroy
     @slide = Slide.find(params[:id])
     if @slide.user_id == current_user.id
-      storage = Storage.new
-      storage.delete_slide(@slide.key)
-      storage.delete_generated_files(@slide.key)
+      CloudConfig::SERVICE.delete_slide(@slide.key)
+      CloudConfig::SERVICE.delete_generated_files(@slide.key)
       @slide.destroy
     end
     redirect_to slides_path
@@ -72,18 +71,19 @@ class SlidesController < ApplicationController
     @slide.user_id = current_user.id
     if @slide.save
       slide = Slide.where('slides.key = ?', key).first
-      send_message({ id: slide.id, key: key }.to_json)
+      CloudConfig::SERVICE.send_message({ id: slide.id, key: key }.to_json)
       redirect_to slide_path(slide.id)
     else
-      render :new
+      render "slides/#{CloudConfig::service_name}/new"
     end
   end
 
   def edit
     @slide = Slide.find(params[:id])
     if current_user.id != @slide.user_id
-      redirect_to slide_path(@slide.id)
+      return redirect_to slide_path(@slide.id)
     end
+    render "slides/#{CloudConfig::service_name}/edit"
   end
 
   def update
@@ -97,11 +97,11 @@ class SlidesController < ApplicationController
     @slide.assign_attributes(slide_params)
     if @slide.update_attributes(slide_params)
       if slide_convert_status == 0
-        send_message({ id: @slide.id, key: @slide.key }.to_json)
+        CloudConfig::SERVICE.send_message({ id: @slide.id, key: @slide.key }.to_json)
       end
       redirect_to slide_path(@slide.id)
     else
-      render :edit
+      render "slides/#{CloudConfig::service_name}/edit"
     end
   end
 
@@ -148,8 +148,7 @@ class SlidesController < ApplicationController
 
   def download
     @slide = Slide.find(params[:id])
-    storage = Storage.new
-    url = storage.get_slide_download_url(@slide.key)
+    url = CloudConfig::SERVICE.get_slide_download_url(@slide.key)
     # @TODO: handle response code
     require 'open-uri'
     data = open(url).read
