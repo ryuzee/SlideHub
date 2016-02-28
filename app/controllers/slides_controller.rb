@@ -74,14 +74,14 @@ class SlidesController < ApplicationController
       CloudConfig::SERVICE.send_message({ id: slide.id, key: key }.to_json)
       redirect_to slide_path(slide.id)
     else
-      render :new
+      render "slides/#{CloudConfig::service_name}/new"
     end
   end
 
   def edit
     @slide = Slide.find(params[:id])
     if current_user.id != @slide.user_id
-      redirect_to slide_path(@slide.id)
+      return redirect_to slide_path(@slide.id)
     end
     render "slides/#{CloudConfig::service_name}/edit"
   end
@@ -101,7 +101,7 @@ class SlidesController < ApplicationController
       end
       redirect_to slide_path(@slide.id)
     else
-      render :edit
+      render "slides/#{CloudConfig::service_name}/edit"
     end
   end
 

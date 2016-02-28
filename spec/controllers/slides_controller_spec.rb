@@ -72,7 +72,8 @@ RSpec.describe SlidesController, type: :controller do
 
   describe 'POST #create' do
     it 'succeed to create record' do
-      allow_any_instance_of(SlidesController).to receive(:send_message).and_return(true)
+      # allow_any_instance_of(AWSConfig).to receive(:send_message).and_return(true)
+      allow(AWSConfig).to receive(:send_message).and_return(true)
       data = build(:slide)
       login_by_user first_user
       post :create, slide: data.attributes
@@ -82,13 +83,14 @@ RSpec.describe SlidesController, type: :controller do
     end
 
     it 'faled to create record because of validation' do
-      allow_any_instance_of(SlidesController).to receive(:send_message).and_return(true)
+      # allow_any_instance_of(AWSConfig).to receive(:send_message).and_return(true)
+      allow(AWSConfig).to receive(:send_message).and_return(true)
       data = build(:slide)
       data.category_id = nil # cause validation error
       login_by_user first_user
       post :create, slide: data.attributes
       expect(response.status).to eq(200)
-      expect(response).to render_template :new
+      expect(response).to render_template 'slides/aws/new'
     end
   end
 
@@ -99,7 +101,7 @@ RSpec.describe SlidesController, type: :controller do
       slide_id = Slide.where("user_id = #{first_user.id}").first.id
       get :edit, id: slide_id
       expect(response.status).to eq(200)
-      expect(response).to render_template :edit
+      expect(response).to render_template 'slides/aws/edit'
     end
 
     it 'redirect to show' do
@@ -130,7 +132,7 @@ RSpec.describe SlidesController, type: :controller do
       login_by_user first_user
       post :update, { id: data.id, slide: data.attributes }
       expect(response.status).to eq(200)
-      expect(response).to render_template :edit
+      expect(response).to render_template 'slides/aws/edit'
     end
 
     it 'succeeds to update the record without running conversion' do
@@ -146,7 +148,8 @@ RSpec.describe SlidesController, type: :controller do
     end
 
     it 'succeeds to update the record with running conversion' do
-      allow_any_instance_of(SlidesController).to receive(:send_message).and_return(true)
+      # allow_any_instance_of(SlidesController).to receive(:send_message).and_return(true)
+      allow(AWSConfig).to receive(:send_message).and_return(true)
       data = create(:slide)
       data.convert_status = 0 # Not converted yet...
       data.name = 'Engawa'
@@ -170,8 +173,10 @@ RSpec.describe SlidesController, type: :controller do
     end
 
     it 'succeeds to update the record with running conversion' do
-      allow_any_instance_of(Storage).to receive(:delete_slide).and_return(true)
-      allow_any_instance_of(Storage).to receive(:delete_generated_files).and_return(true)
+      # allow_any_instance_of(AWSConfig).to receive(:delete_slide).and_return(true)
+      # allow_any_instance_of(AWSConfig).to receive(:delete_generated_files).and_return(true)
+      allow(AWSConfig).to receive(:delete_slide).and_return(true)
+      allow(AWSConfig).to receive(:delete_generated_files).and_return(true)
       data = create(:slide)
       login_by_user first_user
       delete :destroy, { id: data.id }
