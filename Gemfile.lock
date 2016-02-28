@@ -316,6 +316,10 @@ GEM
     ntlm-http (0.1.1)
     orm_adapter (0.5.0)
     oyster (0.9.5)
+    paperclip-azure (0.2.14)
+      addressable
+      azure
+      hashie
     parser (2.3.0.6)
       ast (~> 2.2)
     pdf-reader (1.3.3)
@@ -582,6 +586,7 @@ DEPENDENCIES
   non-stupid-digest-assets
   packr!
   paperclip!
+  paperclip-azure
   pdf-reader
   php-serialization
   rack-dev-mark

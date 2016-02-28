@@ -111,6 +111,7 @@ gem 'non-stupid-digest-assets'
 
 # see https://github.com/thoughtbot/paperclip/issues/2021
 gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git'
+gem 'paperclip-azure'
 
 # see http://blog.zeit.io/use-a-fake-db-adapter-to-play-nice-with-rails-assets-precompilation/
 gem 'activerecord-nulldb-adapter'
