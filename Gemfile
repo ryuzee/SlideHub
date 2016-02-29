@@ -77,6 +77,11 @@ gem 'aws-sdk', '>= 2.0.0'
 gem 'aws-sdk-core'
 gem 'aws-sdk-resources'
 
+# Azure
+gem 'azure', '~> 0.7.1'
+# gem 'azure-contrib', git: 'https://github.com/dmichael/azure-contrib.git'
+gem 'azure-contrib', git: 'https://github.com/ryuzee/azure-contrib.git'
+
 # Find file type
 gem 'ruby-filemagic'
 
@@ -106,6 +111,7 @@ gem 'non-stupid-digest-assets'
 
 # see https://github.com/thoughtbot/paperclip/issues/2021
 gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git'
+gem 'paperclip-azure'
 
 # see http://blog.zeit.io/use-a-fake-db-adapter-to-play-nice-with-rails-assets-precompilation/
 gem 'activerecord-nulldb-adapter'

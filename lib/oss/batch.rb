@@ -1,23 +1,38 @@
-require "#{Rails.root}/app/controllers/concerns/sqs_usable"
-include SqsUsable
+# require "#{Rails.root}/app/controllers/concerns/sqs_usable"
+# include SqsUsable
 
 class Batch
   def self.execute
     Oss::BatchLogger.info('Start convert process')
-    resp = receive_message(5)
-    if !resp || resp.messages.count == 0
+    resp = CloudConfig::SERVICE.receive_message(5)
+    unless CloudConfig::SERVICE.message_exist?(resp)
       Oss::BatchLogger.info('No SQS message found')
       return true
     end
-    resp.messages.each do |msg|
-      obj = JSON.parse(msg.body)
-      Oss::BatchLogger.info("Start converting slide. id=#{obj['id']} key=#{obj['key']}")
-      result = self.convert_slide(obj['key'])
-      if result
-        Oss::BatchLogger.info("Delete message from SQS. id=#{obj['id']} key=#{obj['key']}")
-        delete_message(msg)
-      else
-        Oss::BatchLogger.error("Slide conversion failed. id=#{obj['id']} key=#{obj['key']}")
+
+    if CloudConfig::service_name == 'aws'
+      resp.messages.each do |msg|
+        obj = JSON.parse(msg.body)
+        Oss::BatchLogger.info("Start converting slide. id=#{obj['id']} key=#{obj['key']}")
+        result = self.convert_slide(obj['key'])
+        if result
+          Oss::BatchLogger.info("Delete message from SQS. id=#{obj['id']} key=#{obj['key']}")
+          CloudConfig::SERVICE.delete_message(msg)
+        else
+          Oss::BatchLogger.error("Slide conversion failed. id=#{obj['id']} key=#{obj['key']}")
+        end
+      end
+    else
+      resp.each do |msg|
+        obj = JSON.parse(msg.message_text)
+        Oss::BatchLogger.info("Start converting slide. id=#{obj['id']} key=#{obj['key']}")
+        result = self.convert_slide(obj['key'])
+        if result
+          Oss::BatchLogger.info("Delete message from SQS. id=#{obj['id']} key=#{obj['key']}")
+          CloudConfig::SERVICE.delete_message(msg)
+        else
+          Oss::BatchLogger.error("Slide conversion failed. id=#{obj['id']} key=#{obj['key']}")
+        end
       end
     end
   end
@@ -27,9 +42,7 @@ class Batch
     Dir.mktmpdir do |dir|
       Oss::BatchLogger.info("Current directory is #{dir}")
       file = "#{SecureRandom.hex}"
-      # @TODO:needs to be method and retry
-      storage = Storage.new
-      storage.save_file(ENV['OSS_BUCKET_NAME'], key, "#{dir}/#{file}")
+      CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, key, "#{dir}/#{file}")
       ft = Oss::ConvertUtil.new.get_slide_file_type("#{dir}/#{file}")
       Oss::BatchLogger.info("File Type is #{ft}")
       case ft
@@ -67,11 +80,11 @@ class Batch
       final_list.push(transcript) if transcript
 
       Oss::BatchLogger.info(final_list.inspect)
-      storage = Storage.new
-      storage.upload_files(ENV['OSS_IMAGE_BUCKET_NAME'], final_list, key)
+      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, final_list, key)
 
       slide = Slide.where('slides.key = ?', key).first
       slide.convert_status = 100
+      slide.extension = ".#{ft}"
       slide.num_of_pages = slide_image_list.count
       slide.save
       true

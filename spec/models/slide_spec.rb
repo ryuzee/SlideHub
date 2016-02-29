@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Slide' do
   before do
-    AWSConfig.configure do |config|
+    AWSEngine.configure do |config|
       config.region = 'ap-northeast-1'
       config.aws_access_id = 'aws_access_id'
       config.aws_secret_key = 'aws_secret_key'
