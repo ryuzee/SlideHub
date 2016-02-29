@@ -22,7 +22,7 @@ vendor
 .DS_Store
 erd.pdf
 /config/deploy/production.rb
-/config/deploy/container.rb
+/config/deploy/container*.rb
 .sass-cache
 sitemap.xml.gz
 /coverage

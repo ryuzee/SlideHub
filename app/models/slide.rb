@@ -56,15 +56,15 @@ class Slide < ActiveRecord::Base
   end
 
   def thumbnail_url
-    "#{AWSConfig.resource_endpoint}/#{key}/thumbnail.jpg"
+    "#{CloudConfig::SERVICE.resource_endpoint}/#{key}/thumbnail.jpg"
   end
 
   def transcript_url
-    "#{AWSConfig.resource_endpoint}/#{key}/transcript.txt"
+    "#{CloudConfig::SERVICE.resource_endpoint}/#{key}/transcript.txt"
   end
 
   def page_list_url
-    "#{AWSConfig.resource_endpoint}/#{key}/list.json"
+    "#{CloudConfig::SERVICE.resource_endpoint}/#{key}/list.json"
   end
 
   def page_list
