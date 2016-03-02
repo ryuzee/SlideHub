@@ -8,11 +8,11 @@ module Oss
       h = 240
 
       thumb = Magick::Image.from_blob(File.read(src)).shift
-      if thumb.columns < w || thumb.rows < h
-        thumb_out = cover_white(thumb, w, h)
-      else
-        thumb_out = shrink_to_fill(thumb, w, h)
-      end
+      thumb_out = if thumb.columns < w || thumb.rows < h
+                    cover_white(thumb, w, h)
+                  else
+                    shrink_to_fill(thumb, w, h)
+                  end
       thumb_out.write(dest)
     end
 

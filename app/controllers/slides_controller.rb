@@ -51,7 +51,7 @@ class SlidesController < ApplicationController
 
   def new
     @slide = Slide.new
-    render "slides/#{CloudConfig::service_name}/new"
+    render "slides/#{CloudConfig.service_name}/new"
   end
 
   def destroy
@@ -74,7 +74,7 @@ class SlidesController < ApplicationController
       CloudConfig::SERVICE.send_message({ id: slide.id, key: key }.to_json)
       redirect_to slide_path(slide.id)
     else
-      render "slides/#{CloudConfig::service_name}/new"
+      render "slides/#{CloudConfig.service_name}/new"
     end
   end
 
@@ -83,7 +83,7 @@ class SlidesController < ApplicationController
     if current_user.id != @slide.user_id
       return redirect_to slide_path(@slide.id)
     end
-    render "slides/#{CloudConfig::service_name}/edit"
+    render "slides/#{CloudConfig.service_name}/edit"
   end
 
   def update
@@ -101,7 +101,7 @@ class SlidesController < ApplicationController
       end
       redirect_to slide_path(@slide.id)
     else
-      render "slides/#{CloudConfig::service_name}/edit"
+      render "slides/#{CloudConfig.service_name}/edit"
     end
   end
 
@@ -124,11 +124,11 @@ class SlidesController < ApplicationController
     begin
       @slide = Slide.find(params[:id])
       resp = @slide.page_list
-      if resp
-        count = resp.count
-      else
-        count = 0
-      end
+      count = if resp
+                resp.count
+              else
+                0
+              end
     rescue ActiveRecord::RecordNotFound => e
       count = 0
     end

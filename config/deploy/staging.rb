@@ -10,5 +10,5 @@ server '192.168.33.200', user: 'vagrant', roles: %w(web app db), password: 'vagr
 # }
 
 set :ssh_options, {
-  config: false
+  config: false,
 }

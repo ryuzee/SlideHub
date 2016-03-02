@@ -95,5 +95,4 @@ Vagrant.configure(2) do |config|
   -p 3001:3000 --name oss1 ryuzee/slidehub:latest
   docker exec -i oss1 bash -l -c 'RAILS_ENV=production bundle exec rake db:migrate'
   SHELL3
-
 end
