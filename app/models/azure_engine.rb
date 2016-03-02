@@ -29,12 +29,9 @@ class AzureEngine
   end
 
   def self.resource_endpoint
-    unless @config.cdn_base_url.blank?
-      url = "#{@config.cdn_base_url}/#{@config.image_bucket_name}"
-    else
-      url = "https://#{@config.azure_storage_account_name}.blob.core.windows.net/#{@config.image_bucket_name}"
-    end
-    url
+    return "#{@config.cdn_base_url}/#{@config.image_bucket_name}" unless @config.cdn_base_url.blank?
+
+    "https://#{@config.azure_storage_account_name}.blob.core.windows.net/#{@config.image_bucket_name}"
   end
 
   def self.upload_endpoint
@@ -50,7 +47,7 @@ class AzureEngine
 
   def self.receive_message(max_number = 10)
     queues = Azure.queues
-    res = queues.list_messages(@config.queue_name, 600, {:number_of_messages => max_number})
+    res = queues.list_messages(@config.queue_name, 600, { number_of_messages: max_number })
     res
   end
 
@@ -79,7 +76,7 @@ class AzureEngine
     bs = Azure::Blob::BlobService.new
     files.each do |f|
       if File.exist?(f)
-        content = File.open(f, 'rb') { |file| file.read }
+        content = File.open(f, 'rb', &:read)
         bs.create_block_blob(container, "#{prefix}/#{File.basename(f)}", content)
       end
     end
@@ -87,7 +84,7 @@ class AzureEngine
 
   def self.get_file_list(container, prefix)
     bs = Azure::Blob::BlobService.new
-    resp = bs.list_blobs(container, { :prefix => prefix, :max_results => 1000 })
+    resp = bs.list_blobs(container, { prefix: prefix, max_results: 1000 })
     files = []
     resp.each do |blob|
       files.push({ key: blob.name })
@@ -97,8 +94,8 @@ class AzureEngine
 
   def self.save_file(container, key, destination)
     bs = Azure::Blob::BlobService.new
-    blob, content = bs.get_blob(container, key)
-    File.open(destination, "wb") {|f| f.write(content)}
+    _blob, content = bs.get_blob(container, key)
+    File.open(destination, 'wb') { |f| f.write(content) }
   end
 
   def self.delete_slide(key)
@@ -144,10 +141,10 @@ class AzureEngine
     uri = bs.generate_uri Addressable::URI.escape("#{@config.bucket_name}/#{blob_name}"), {}
 
     signer = Azure::Contrib::Auth::SharedAccessSignature.new(uri, {
-      resource:    "b",
+      resource:    'b',
       permissions: permissions,
       start:       start_time.utc.iso8601,
-      expiry:      expiration_time.utc.iso8601
+      expiry:      expiration_time.utc.iso8601,
     }, Azure.config.storage_account_name)
 
     url = signer.sign

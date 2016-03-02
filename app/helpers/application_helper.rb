@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   def js_prefix
     require 'securerandom'
     require 'digest/md5'

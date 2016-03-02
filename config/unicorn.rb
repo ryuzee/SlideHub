@@ -9,7 +9,7 @@ listen '/tmp/unicorn.sock'
 pid '/tmp/unicorn.pid'
 # pid "#{rails_root}/tmp/unicorn.pid"
 
-before_fork do |server, worker|
+before_fork do |_server, _worker|
   ENV['BUNDLE_GEMFILE'] = File.expand_path('Gemfile', ENV['RAILS_ROOT'])
 
   Signal.trap 'TERM' do
@@ -21,7 +21,7 @@ before_fork do |server, worker|
     ActiveRecord::Base.connection.disconnect!
 end
 
-after_fork do |server, worker|
+after_fork do |_server, _worker|
   Signal.trap 'TERM' do
     puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
   end

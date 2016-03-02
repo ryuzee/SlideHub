@@ -20,7 +20,7 @@ module Oss
           stdout_logger.formatter = Logger::Formatter.new
           stdout_logger.datetime_format = '%Y-%m-%d %H:%M:%S'
           multiple_loggers =
-          ActiveSupport::Logger.broadcast(stdout_logger)
+            ActiveSupport::Logger.broadcast(stdout_logger)
           logger.extend(multiple_loggers)
 
           logger

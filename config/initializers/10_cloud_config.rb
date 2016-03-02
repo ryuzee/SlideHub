@@ -21,11 +21,11 @@ else
 end
 
 module CloudConfig
-  if ENV.has_key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
-    SERVICE = AzureEngine
-  else
-    SERVICE = AWSEngine
-  end
+  SERVICE = if ENV.has_key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
+              AzureEngine
+            else
+              AWSEngine
+            end
 
   def self.service_name
     if ENV.has_key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
