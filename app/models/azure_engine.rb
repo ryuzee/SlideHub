@@ -30,7 +30,7 @@ class AzureEngine
 
   def self.resource_endpoint
     unless @config.cdn_base_url.blank?
-      url = @config.cdn_base_url
+      url = "#{@config.cdn_base_url}/#{@config.image_bucket_name}"
     else
       url = "https://#{@config.azure_storage_account_name}.blob.core.windows.net/#{@config.image_bucket_name}"
     end
