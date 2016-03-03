@@ -12,16 +12,12 @@
 #  role             :string(255)      default("comments")
 #
 
-require 'rails_helper'
-
-describe CommentsController do
-  describe 'routing' do
-    it 'routes to #create' do
-      expect(post('/comments')).to route_to('comments#create')
-    end
-
-    it 'routes to #destroy' do
-      expect(delete('/comments/1')).to route_to('comments#destroy', id: '1')
-    end
+FactoryGirl.define do
+  factory :comment_for_slide, class: Comment do
+    id 1
+    user_id 1
+    commentable_id 1
+    comment 'Sushi'
+    commentable_type 'Slide'
   end
 end
