@@ -221,5 +221,50 @@ RSpec.describe SlidesController, type: :controller do
       json = JSON.parse(response.body)
       expect(json['page_count']).to eq(0)
     end
+
+    it 'returns 0 because of a failure of retrieving json' do
+      allow_any_instance_of(Slide).to receive(:page_list).and_return(false)
+      slide = create(:slide)
+      get :update_view, id: slide.id
+      expect(response.status).to eq(200)
+      json = JSON.parse(response.body)
+      expect(json['page_count']).to eq(0)
+    end
+  end
+
+  describe 'GET #embedded' do
+    it 'succeeds to return encrypted JavaScript' do
+      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
+      slide = create(:slide)
+      get :embedded, id: slide.id
+      expect(response.status).to eq(200)
+      updated_data = Slide.find(slide.id)
+      expect(updated_data.embedded_view).to eq(slide.embedded_view + 1)
+      expect(updated_data.total_view).to eq(slide.total_view + 1)
+    end
+
+    it 'succeeds to return encrypted JavaScript for inside' do
+      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
+      slide = create(:slide)
+      get :embedded, id: slide.id, inside: 1
+      expect(response.status).to eq(200)
+      updated_data = Slide.find(slide.id)
+      expect(updated_data.embedded_view).to eq(slide.embedded_view)
+      expect(updated_data.total_view).to eq(slide.total_view)
+    end
+  end
+
+  describe 'GET #download' do
+    it 'success to download file' do
+      allow(AWSEngine).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
+      stub_request(:any, 'http://www.example.com/1.pdf').to_return(
+        body: 'test',
+        status: 200,
+      )
+      slide = create(:slide)
+      get :download, id: slide.id
+      expect(response.status).to eq(200)
+      expect(response.headers['Content-Disposition']).to eq("attachment; filename=\"#{slide.key}#{slide.extension}\"")
+    end
   end
 end
