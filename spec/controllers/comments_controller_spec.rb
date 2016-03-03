@@ -45,7 +45,7 @@ RSpec.describe CommentsController, type: :controller do
         comment_data[:comment] = 'Test'
         post :create, comment: comment_data
         expect(response.status).to eq(302)
-        expect(response).to redirect_to "/users/sign_in"
+        expect(response).to redirect_to '/users/sign_in'
         slide = Slide.find(data.id)
         expect(slide.comments.count).to be == 0
       end
@@ -68,7 +68,7 @@ RSpec.describe CommentsController, type: :controller do
         c = create(:comment_for_slide)
         get :destroy, { id: c.id }
         expect(response.status).to eq(302)
-        expect(response).to redirect_to "/users/sign_in"
+        expect(response).to redirect_to '/users/sign_in'
         slide = Slide.find(data.id)
         expect(slide.comments.count).to be == 1
       end
