@@ -1,0 +1,69 @@
+#!/bin/bash
+
+. /etc/environment
+
+PREFIX=`date +%Y%m%d%H%M%s`
+
+CONTAINER_ID=`/usr/bin/docker run -d \
+        --env OSS_REGION=$OSS_REGION \
+        --env OSS_SQS_URL=$OSS_SQS_URL \
+        --env OSS_BUCKET_NAME=$OSS_BUCKET_NAME \
+        --env OSS_IMAGE_BUCKET_NAME=$OSS_IMAGE_BUCKET_NAME \
+        --env OSS_USE_S3_STATIC_HOSTING=$OSS_USE_S3_STATIC_HOSTING \
+        --env OSS_AWS_SECRET_KEY=$OSS_AWS_SECRET_KEY \
+        --env OSS_AWS_ACCESS_ID=$OSS_AWS_ACCESS_ID \
+        --env OSS_USE_AZURE=$OSS_USE_AZURE \
+        --env OSS_AZURE_CONTAINER_NAME=$OSS_AZURE_CONTAINER_NAME \
+        --env OSS_AZURE_IMAGE_CONTAINER_NAME=$OSS_AZURE_IMAGE_CONTAINER_NAME \
+        --env OSS_AZURE_CDN_BASE_URL=$OSS_AZURE_CDN_BASE_URL \
+        --env OSS_AZURE_QUEUE_NAME=$OSS_AZURE_QUEUE_NAME \
+        --env OSS_AZURE_STORAGE_ACCESS_KEY=$OSS_AZURE_STORAGE_ACCESS_KEY \
+        --env OSS_AZURE_STORAGE_ACCOUNT_NAME=$OSS_AZURE_STORAGE_ACCOUNT_NAME \
+        --env OSS_SECRET_KEY_BASE=$OSS_SECRET_KEY_BASE \
+        --env OSS_DB_NAME=$OSS_DB_NAME \
+        --env OSS_DB_USERNAME=$OSS_DB_USERNAME \
+        --env OSS_DB_PASSWORD=$OSS_DB_PASSWORD \
+        --env OSS_DB_URL=$OSS_DB_URL \
+        --env OSS_SMTP_SERVER=$OSS_SMTP_SERVER \
+        --env OSS_SMTP_PORT=$OSS_SMTP_PORT \
+        --env OSS_SMTP_USERNAME=$OSS_SMTP_USERNAME \
+        --env OSS_SMTP_PASSWORD=$OSS_SMTP_PASSWORD \
+        --env OSS_SMTP_AUTH_METHOD=$OSS_SMTP_AUTH_METHOD \
+        --env OSS_PRODUCTION_HOST=$OSS_PRODUCTION_HOST \
+        --env OSS_ROOT_URL=$OSS_ROOT_URL \
+-P --name slidehub$PREFIX ryuzee/slidehub:latest`
+
+echo "----------------------------"
+echo $CONTAINER_ID
+echo "----------------------------"
+
+PORT_STR=`docker port $CONTAINER_ID 3000`
+IFS=':'
+set -- $PORT_STR
+PORT=$2
+echo $PORT
+echo "----------------------------"
+
+CNT=0
+while :
+do
+  echo 'Confirming the container is listening...'
+  CNT=`expr $CNT + 1`
+  if [ $CNT -gt 20 ]
+  then
+    echo 'Failed to launch container...'
+    exit 1
+  fi
+  STATUS_CODE=`curl -LI http://127.0.0.1:${PORT} -o /dev/null -w '%{http_code}\\n' -s`
+  echo $STATUS_CODE
+  if [ $STATUS_CODE == 200 ]
+  then
+    break
+  fi
+  sleep 20
+done
+
+sed -i -e "s/proxy_pass http:\/\/127\.0\.0\.1:[0-9]*;/proxy_pass http:\/\/127.0.0.1:${PORT};/g" /etc/nginx/sites-enabled/default
+service nginx reload
+
+exit 0
