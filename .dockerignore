@@ -17,6 +17,7 @@ tmp/cache/*
 tmp/pids/*
 tmp/sessions/*
 tmp/sockets/*
+tmp/scripts/*
 vendor/bundle
 *.md
 *.pdf
