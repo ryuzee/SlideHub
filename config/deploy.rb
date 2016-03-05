@@ -53,10 +53,85 @@ namespace :container do
     end
   end
 
+  def run_app (docker_cmd)
+    execute 'sudo docker pull ryuzee/slidehub:latest'
+    container_id = capture("sudo #{docker_cmd}")
+    port = capture("sudo docker port #{container_id} 3000").to_s.split(':')[1]
+    puts port
+    # confirm running
+    cmd = "curl -LI http://127.0.0.1:#{port} -o /dev/null -w '%{http_code}\\n' -s"
+    cnt = 0
+    loop do
+      execute "echo 'sleep 20 sec...'"
+      sleep 20
+      cnt += 1
+      if cnt == 10
+        error = Exception.new('An error that should abort and rollback deployment')
+        raise error
+      end
+      begin
+        container_status = capture(cmd).to_i
+        if container_status == 200
+          break
+        end
+      rescue Exception => e
+        puts e.inspect
+      end
+    end
+    data = { port: port }
+    template 'nginx_default.erb', '/tmp/default', data, true
+    execute 'sudo mv /tmp/default /etc/nginx/sites-available/default && sudo service nginx reload'
+
+    containers = capture('sudo docker ps -q').to_s.split("\n")
+    containers.shift
+    containers.shift
+    puts containers.inspect
+    containers.each do |c|
+      execute "sudo docker rm -f #{c}"
+    end
+  end
+
   desc 'deploy'
   task :deploy do
     on roles(:container) do
-      execute 'sudo docker pull ryuzee/slidehub:latest'
+      prefix = DateTime.now.strftime('%Y%m%d%H%M%s')
+      cmd = <<"EOS"
+      /usr/bin/docker run -d \
+        --env OSS_REGION=$OSS_REGION \
+        --env OSS_SQS_URL=$OSS_SQS_URL \
+        --env OSS_BUCKET_NAME=$OSS_BUCKET_NAME \
+        --env OSS_IMAGE_BUCKET_NAME=$OSS_IMAGE_BUCKET_NAME \
+        --env OSS_USE_S3_STATIC_HOSTING=$OSS_USE_S3_STATIC_HOSTING \
+        --env OSS_AWS_SECRET_KEY=$OSS_AWS_SECRET_KEY \
+        --env OSS_AWS_ACCESS_ID=$OSS_AWS_ACCESS_ID \
+        --env OSS_USE_AZURE=$OSS_USE_AZURE \
+        --env OSS_AZURE_CONTAINER_NAME=$OSS_AZURE_CONTAINER_NAME \
+        --env OSS_AZURE_IMAGE_CONTAINER_NAME=$OSS_AZURE_IMAGE_CONTAINER_NAME \
+        --env OSS_AZURE_CDN_BASE_URL=$OSS_AZURE_CDN_BASE_URL \
+        --env OSS_AZURE_QUEUE_NAME=$OSS_AZURE_QUEUE_NAME \
+        --env OSS_AZURE_STORAGE_ACCESS_KEY=$OSS_AZURE_STORAGE_ACCESS_KEY \
+        --env OSS_AZURE_STORAGE_ACCOUNT_NAME=$OSS_AZURE_STORAGE_ACCOUNT_NAME \
+        --env OSS_SECRET_KEY_BASE=$OSS_SECRET_KEY_BASE \
+        --env OSS_DB_NAME=$OSS_DB_NAME \
+        --env OSS_DB_USERNAME=$OSS_DB_USERNAME \
+        --env OSS_DB_PASSWORD=$OSS_DB_PASSWORD \
+        --env OSS_DB_URL=$OSS_DB_URL \
+        --env OSS_SMTP_SERVER=$OSS_SMTP_SERVER \
+        --env OSS_SMTP_PORT=$OSS_SMTP_PORT \
+        --env OSS_SMTP_USERNAME=$OSS_SMTP_USERNAME \
+        --env OSS_SMTP_PASSWORD=$OSS_SMTP_PASSWORD \
+        --env OSS_SMTP_AUTH_METHOD=$OSS_SMTP_AUTH_METHOD \
+        --env OSS_PRODUCTION_HOST=$OSS_PRODUCTION_HOST \
+        --env OSS_ROOT_URL=$OSS_ROOT_URL \
+-P --name slidehub#{prefix} ryuzee/slidehub:latest
+EOS
+      run_app(cmd)
+    end
+  end
+
+  desc 'deploy_from_local'
+  task :deploy_from_local do
+    on roles(:container) do
       prefix = DateTime.now.strftime('%Y%m%d%H%M%s')
       cmd = <<"EOS"
         docker run -d \
@@ -88,40 +163,7 @@ namespace :container do
         --env OSS_ROOT_URL=#{fetch(:oss_root_url)} \
         -P --name slidehub#{prefix} ryuzee/slidehub
 EOS
-      container_id = capture("sudo #{cmd}")
-      port = capture("sudo docker port #{container_id} 3000").to_s.split(':')[1]
-      puts port
-      # confirm running
-      cmd = "curl -LI http://127.0.0.1:#{port} -o /dev/null -w '%{http_code}\\n' -s"
-      cnt = 0
-      loop do
-        execute "echo 'sleep 20 sec...'"
-        sleep 20
-        cnt += 1
-        if cnt == 10
-          error = Exception.new('An error that should abort and rollback deployment')
-          raise error
-        end
-        begin
-          container_status = capture(cmd).to_i
-          if container_status == 200
-            break
-          end
-        rescue Exception => e
-          puts e.inspect
-        end
-      end
-      data = { port: port }
-      template 'nginx_default.erb', '/tmp/default', data, true
-      execute 'sudo mv /tmp/default /etc/nginx/sites-available/default && sudo service nginx reload'
-
-      containers = capture('sudo docker ps -q').to_s.split("\n")
-      containers.shift
-      containers.shift
-      puts containers.inspect
-      containers.each do |c|
-        execute "sudo docker rm -f #{c}"
-      end
+      run_app(cmd)
     end
   end
 end
