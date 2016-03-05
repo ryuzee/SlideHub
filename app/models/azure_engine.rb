@@ -61,6 +61,7 @@ class AzureEngine
 
   def self.delete_message(message_object)
     queues = Azure.queues
+    queues.create_queue(@config.queue_name)
     resp = queues.delete_message(@config.queue_name, message_object.id, message_object.pop_receipt)
     resp
   end
