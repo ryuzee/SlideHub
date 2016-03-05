@@ -46,15 +46,27 @@ namespace :deploy do
 end
 
 namespace :container do
-  desc 'Hello, world!'
-  task :hello do
+  desc 'setup'
+  task :setup do
     on roles(:container) do
-      execute 'echo Hello, world!'
+      template 'docker_run.conf.erb', '/tmp/docker_run.conf', {}, true
+      execute 'sudo mv /tmp/docker_run.conf /etc/init/docker_run.conf'
+      template 'run_app.sh.erb', '/tmp/run_app.sh', {}, true
+      execute 'sudo mv /tmp/run_app.sh /usr/local/bin/run_app.sh'
     end
   end
 
   desc 'deploy'
   task :deploy do
+    on roles(:container) do
+      execute 'sudo docker pull ryuzee/slidehub:latest'
+      execute 'sudo bash /usr/local/bin/run_app.sh'
+      clean_container
+    end
+  end
+
+  desc 'deploy_from_local'
+  task :deploy_from_local do
     on roles(:container) do
       execute 'sudo docker pull ryuzee/slidehub:latest'
       prefix = DateTime.now.strftime('%Y%m%d%H%M%s')
@@ -88,41 +100,49 @@ namespace :container do
         --env OSS_ROOT_URL=#{fetch(:oss_root_url)} \
         -P --name slidehub#{prefix} ryuzee/slidehub
 EOS
-      container_id = capture("sudo #{cmd}")
-      port = capture("sudo docker port #{container_id} 3000").to_s.split(':')[1]
-      puts port
-      # confirm running
-      cmd = "curl -LI http://127.0.0.1:#{port} -o /dev/null -w '%{http_code}\\n' -s"
-      cnt = 0
-      loop do
-        execute "echo 'sleep 20 sec...'"
-        sleep 20
-        cnt += 1
-        if cnt == 10
-          error = Exception.new('An error that should abort and rollback deployment')
-          raise error
-        end
-        begin
-          container_status = capture(cmd).to_i
-          if container_status == 200
-            break
-          end
-        rescue Exception => e
-          puts e.inspect
-        end
-      end
-      data = { port: port }
-      template 'nginx_default.erb', '/tmp/default', data, true
-      execute 'sudo mv /tmp/default /etc/nginx/sites-available/default && sudo service nginx reload'
-
-      containers = capture('sudo docker ps -q').to_s.split("\n")
-      containers.shift
-      containers.shift
-      puts containers.inspect
-      containers.each do |c|
-        execute "sudo docker rm -f #{c}"
-      end
+      run_app(cmd)
+      clean_container
     end
+  end
+end
+
+def run_app (docker_cmd)
+  execute 'sudo docker pull ryuzee/slidehub:latest'
+  container_id = capture("sudo #{docker_cmd}")
+  port = capture("sudo docker port #{container_id} 3000").to_s.split(':')[1]
+  puts port
+  # confirm running
+  cmd = "curl -LI http://127.0.0.1:#{port} -o /dev/null -w '%{http_code}\\n' -s"
+  cnt = 0
+  loop do
+    execute "echo 'sleep 20 sec...'"
+    sleep 20
+    cnt += 1
+    if cnt == 10
+      error = Exception.new('An error that should abort and rollback deployment')
+      raise error
+    end
+    begin
+      container_status = capture(cmd).to_i
+      if container_status == 200
+        break
+      end
+    rescue Exception => e
+      puts e.inspect
+    end
+  end
+  data = { port: port }
+  template 'nginx_default.erb', '/tmp/default', data, true
+  execute 'sudo mv /tmp/default /etc/nginx/sites-available/default && sudo service nginx reload'
+end
+
+def clean_container
+  containers = capture('sudo docker ps -q').to_s.split("\n")
+  containers.shift
+  containers.shift
+  puts containers.inspect
+  containers.each do |c|
+    execute "sudo docker rm -f #{c}"
   end
 end
 

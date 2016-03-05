@@ -1,0 +1,7 @@
+description "SlideHub container"
+author "Ryuzee"
+start on filesystem and started docker
+stop on runlevel [!2345]
+script
+  for c in `docker ps -aq`; do docker rm -f $c; done && bash /usr/local/bin/run_app.sh
+end script
