@@ -1,6 +1,9 @@
 require 'rails_helper'
 require 'spec_helper'
 require 'digest/md5'
+require 'tempfile'
+require 'securerandom'
+require 'tmpdir'
 
 describe 'AzureEngine' do
   before do
@@ -77,6 +80,74 @@ describe 'AzureEngine' do
       expect(AzureEngine.message_exist?([Azure::Entity::Queue::DummyMessage.new])).to eq(true)
       expect(AzureEngine.delete_message(Azure::Entity::Queue::DummyMessage.new)).to eq(nil)
       expect(AzureEngine.batch_delete([Azure::Entity::Queue::DummyMessage.new]).class.name).to eq("Array")
+    end
+  end
+
+  describe 'Blob Storage' do
+    it 'passes all tests' do
+      module Azure
+        module Blob
+          class DummyBlobObject
+            def name
+              'dummy'
+            end
+          end
+          class DummyBlobService
+            def create_block_blob(container, key, content)
+              nil
+            end
+            def list_blobs(container, options = {})
+              result = []
+              result.push(Azure::Blob::DummyBlobObject.new)
+              result
+            end
+            def get_blob(container, key)
+              return nil, 'hoge'
+            end
+            def delete_blob(container, key)
+              nil
+            end
+            def generate_uri(uri, options = {})
+              'http://www.example.com'
+            end
+          end
+        end
+        module Contrib
+          module Auth
+            class DummySharedAccessSignature
+              def sign
+                'https://signed.example.com'
+              end
+            end
+          end
+        end
+      end
+
+      allow(Azure::Blob::BlobService).to receive(:new).and_return(Azure::Blob::DummyBlobService.new)
+      files = []
+      Tempfile.create("foo") do |f|
+        files.push(f.path)
+        puts files.inspect
+        expect(AzureEngine.upload_files('container', files, 'test').class.name).to eq('Array')
+      end
+
+      expect(AzureEngine.get_file_list('container', 'prefix').class.name).to eq('Array')
+
+      Dir.mktmpdir do |dir|
+        destination = "#{dir}/#{SecureRandom.hex}"
+        AzureEngine.save_file('container', 'key', destination)
+        expect(File.exist?(destination)).to eq(true)
+      end
+
+      expect(AzureEngine.delete_slide('')).to eq(false)
+      expect(AzureEngine.delete_slide('hoge')).to eq(true)
+      expect(AzureEngine.delete_generated_files('')).to eq(false)
+      expect(AzureEngine.delete_generated_files('hoge')).to eq(true)
+
+      allow(Azure::Contrib::Auth::SharedAccessSignature).to receive(:new).and_return(Azure::Contrib::Auth::DummySharedAccessSignature.new)
+      expect(AzureEngine.generate_sas_url('myblob')).to eq('https://signed.example.com')
+
+      expect(AzureEngine.get_slide_download_url('myblob')).to eq('https://signed.example.com')
     end
   end
 end
