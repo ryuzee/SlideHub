@@ -2,6 +2,81 @@ require 'rails_helper'
 require 'spec_helper'
 require 'digest/md5'
 
+module Aws
+  module SQS
+    class DummyClient
+      def send_message(params = {}, options = {})
+        nil
+      end
+      def receive_message(params = {})
+        []
+      end
+      def delete_message(params = {})
+        Seahorse::Client::Response.new
+      end
+      def delete_message_batch(params = {})
+        Aws::SQS::Types::DeleteMessageBatchResult.new
+      end
+    end
+
+    module Types
+      class DummyReceiveMessageResult
+        def initialize
+          @msg = []
+          @msg.push(DummyMessage.new)
+        end
+        def messages
+          @msg
+        end
+      end
+
+      class DummyMessage
+        attr_accessor :receipt_handle
+      end
+    end
+  end
+
+  module S3
+    class DummyClient
+      def put_object(params = {})
+
+      end
+      def get_object(params = {})
+        filename = params[:response_target]
+        File.open(filename, 'wb') { |f| f.write('hoge') }
+      end
+      def delete_objects(params = {})
+
+      end
+      def list_objects(params = {})
+        Types::DummyListObjectOutput.new
+      end
+    end
+
+    class DummyPresigner
+      def presigned_url(param1, params = {})
+        'https://signed.example.com'
+      end
+    end
+
+    module Types
+      class DummyListObjectOutput
+        def initialize
+          @contents = []
+          obj = Aws::S3::Types::Object.new
+          obj.key = 'hoge'
+          @contents.push(obj)
+        end
+
+        def contents
+          @contents
+        end
+      end
+    end
+  end
+end
+
+
 describe 'AWSEngine' do
   before do
     AWSEngine.configure do |config|
@@ -97,4 +172,71 @@ describe 'AWSEngine' do
       expect(value['base64_policy']).to eq(p)
     end
   end
+
+  describe 'SQS' do
+    before do
+      allow(Aws::SQS::Client).to receive(:new).and_return(Aws::SQS::DummyClient.new)
+    end
+
+    it 'succeeds to send message' do
+      expect(AWSEngine.send_message('hoge')).to eq(nil)
+    end
+
+    it 'succeeds to receive message' do
+      expect(AWSEngine.receive_message(10)).to eq([])
+    end
+
+    it 'succeeds to return correct status of the existence of a message' do
+      expect(AWSEngine.message_exist?(nil)).to eq(false)
+      expect(AWSEngine.message_exist?(Aws::SQS::Types::DummyReceiveMessageResult.new)).to eq(true)
+    end
+
+    it 'succeeds to delete message' do
+      expect(AWSEngine.delete_message(Aws::SQS::Types::DummyMessage.new).class.name).to eq("Seahorse::Client::Response")
+    end
+
+    it 'succeeds to delete messages all at once' do
+      expect(AWSEngine.batch_delete([Aws::SQS::Types::DummyMessage.new]).class.name).to eq("Aws::SQS::Types::DeleteMessageBatchResult")
+    end
+  end
+
+  describe 'S3' do
+    before do
+      allow(Aws::S3::Client).to receive(:new).and_return(Aws::S3::DummyClient.new)
+      allow(Aws::S3::Presigner).to receive(:new).and_return(Aws::S3::DummyPresigner.new)
+    end
+
+    it 'succeeds to upload files' do
+      files = []
+      Tempfile.create("foo") do |f|
+        files.push(f.path)
+        puts files.inspect
+        expect(AWSEngine.upload_files('container', files, 'test').class.name).to eq('Array')
+      end
+    end
+
+    it 'succeeds to get file list' do
+      expect(AWSEngine.get_file_list('container', 'prefix').class.name).to eq('Array')
+    end
+
+    it 'succeeds to save file' do
+      Dir.mktmpdir do |dir|
+        destination = "#{dir}/#{SecureRandom.hex}"
+        AWSEngine.save_file('container', 'key', destination)
+        expect(File.exist?(destination)).to eq(true)
+      end
+    end
+
+    it 'succeeds to delete files and sildes' do
+      expect(AWSEngine.delete_slide('')).to eq(false)
+      expect(AWSEngine.delete_slide('hoge')).to eq(true)
+      expect(AWSEngine.delete_generated_files('')).to eq(false)
+      expect(AWSEngine.delete_generated_files('hoge')).to eq(true)
+    end
+
+    it 'succeeds to get slide download url' do
+      expect(AWSEngine.get_slide_download_url('myblob')).to eq('https://signed.example.com')
+    end
+  end
+
 end
