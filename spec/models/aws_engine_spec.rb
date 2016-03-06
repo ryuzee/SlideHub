@@ -8,12 +8,15 @@ module Aws
       def send_message(params = {}, options = {})
         nil
       end
+
       def receive_message(params = {})
         []
       end
+
       def delete_message(params = {})
         Seahorse::Client::Response.new
       end
+
       def delete_message_batch(params = {})
         Aws::SQS::Types::DeleteMessageBatchResult.new
       end
@@ -25,6 +28,7 @@ module Aws
           @msg = []
           @msg.push(DummyMessage.new)
         end
+
         def messages
           @msg
         end
@@ -39,15 +43,16 @@ module Aws
   module S3
     class DummyClient
       def put_object(params = {})
-
       end
+
       def get_object(params = {})
         filename = params[:response_target]
         File.open(filename, 'wb') { |f| f.write('hoge') }
       end
-      def delete_objects(params = {})
 
+      def delete_objects(params = {})
       end
+
       def list_objects(params = {})
         Types::DummyListObjectOutput.new
       end
@@ -68,14 +73,11 @@ module Aws
           @contents.push(obj)
         end
 
-        def contents
-          @contents
-        end
+        attr_reader :contents
       end
     end
   end
 end
-
 
 describe 'AWSEngine' do
   before do
@@ -192,11 +194,11 @@ describe 'AWSEngine' do
     end
 
     it 'succeeds to delete message' do
-      expect(AWSEngine.delete_message(Aws::SQS::Types::DummyMessage.new).class.name).to eq("Seahorse::Client::Response")
+      expect(AWSEngine.delete_message(Aws::SQS::Types::DummyMessage.new).class.name).to eq('Seahorse::Client::Response')
     end
 
     it 'succeeds to delete messages all at once' do
-      expect(AWSEngine.batch_delete([Aws::SQS::Types::DummyMessage.new]).class.name).to eq("Aws::SQS::Types::DeleteMessageBatchResult")
+      expect(AWSEngine.batch_delete([Aws::SQS::Types::DummyMessage.new]).class.name).to eq('Aws::SQS::Types::DeleteMessageBatchResult')
     end
   end
 
@@ -208,7 +210,7 @@ describe 'AWSEngine' do
 
     it 'succeeds to upload files' do
       files = []
-      Tempfile.create("foo") do |f|
+      Tempfile.create('foo') do |f|
         files.push(f.path)
         puts files.inspect
         expect(AWSEngine.upload_files('container', files, 'test').class.name).to eq('Array')
@@ -238,5 +240,4 @@ describe 'AWSEngine' do
       expect(AWSEngine.get_slide_download_url('myblob')).to eq('https://signed.example.com')
     end
   end
-
 end
