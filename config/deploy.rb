@@ -19,7 +19,7 @@ set :unicorn_config_path, "#{release_path}/config/unicorn.rb"
 set :bundle_jobs, 4
 
 # For Container Default Value
-set :image_version, ENV['VERSION'] || "latest"
+set :image_version, ENV['VERSION'] || 'latest'
 
 SSHKit.config.command_map[:rake] = 'bundle exec rake'
 
@@ -107,7 +107,7 @@ EOS
   end
 end
 
-def run_app (docker_cmd)
+def run_app(docker_cmd)
   execute 'sudo docker pull ryuzee/slidehub:latest'
   container_id = capture("sudo #{docker_cmd}")
   port = capture("sudo docker port #{container_id} 3000").to_s.split(':')[1]
