@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 require "#{File.dirname(__FILE__)}/lib/oss/version"
+require 'open3'
 
 task :default => :build
 
@@ -14,10 +15,17 @@ task :push_base do
 end
 
 task :build do
-  cmd = 'docker build -t ryuzee/slidehub:latest .'
-  sh cmd
-  cmd = "docker build -t ryuzee/slidehub:#{SlideHub::VERSION} ."
-  sh cmd
+  cmd = "docker build -q -t ryuzee/slidehub:latest . 2>/dev/null | awk '/Successfully built/{print $NF}'"
+  o, e, _s = Open3.capture3(cmd)
+  if o.chomp! == '' || e != ''
+    raise 'Failed to build Docker image...'
+  end
+
+  cmd = "docker tag -f #{o} ryuzee/slidehub:#{SlideHub::VERSION}"
+  o, e, _s = Open3.capture3(cmd)
+  if o.chomp! == '' || e != ''
+    raise 'Failed to add version tag to Docker image...'
+  end
 end
 
 task :push do
