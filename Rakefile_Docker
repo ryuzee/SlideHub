@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+require "#{File.dirname(__FILE__)}/lib/oss/version"
+
 task :default => :build
 
 task :build_base do
@@ -12,11 +14,15 @@ task :push_base do
 end
 
 task :build do
-  cmd = 'docker build -t ryuzee/slidehub .'
+  cmd = 'docker build -t ryuzee/slidehub:latest .'
+  sh cmd
+  cmd = "docker build -t ryuzee/slidehub:#{SlideHub::VERSION} ."
   sh cmd
 end
 
 task :push do
   cmd = 'docker push ryuzee/slidehub:latest'
+  sh cmd
+  cmd = "docker push ryuzee/slidehub:#{SlideHub::VERSION}"
   sh cmd
 end

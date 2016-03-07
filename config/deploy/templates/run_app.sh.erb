@@ -2,6 +2,18 @@
 
 . /etc/environment
 
+TAG='latest'
+if [ -z $1 ]; then
+  /usr/bin/docker pull ryuzee/slidehub:$TAG
+else
+  TAG=$1
+  /usr/bin/docker pull ryuzee/slidehub:$TAG
+  if [ $? -ne 0 ]; then
+    TAG='latest'
+    /usr/bin/docker pull ryuzee/slidehub:$TAG
+  fi
+fi
+
 PREFIX=`date +%Y%m%d%H%M%s`
 
 CONTAINER_ID=`/usr/bin/docker run -d \
@@ -31,18 +43,15 @@ CONTAINER_ID=`/usr/bin/docker run -d \
         --env OSS_SMTP_AUTH_METHOD=$OSS_SMTP_AUTH_METHOD \
         --env OSS_PRODUCTION_HOST=$OSS_PRODUCTION_HOST \
         --env OSS_ROOT_URL=$OSS_ROOT_URL \
--P --name slidehub$PREFIX ryuzee/slidehub:latest`
+-P --name slidehub$PREFIX ryuzee/slidehub:$TAG`
 
-echo "----------------------------"
-echo $CONTAINER_ID
-echo "----------------------------"
+echo "Container ID is $CONTAINER_ID"
 
 PORT_STR=`docker port $CONTAINER_ID 3000`
 IFS=':'
 set -- $PORT_STR
 PORT=$2
-echo $PORT
-echo "----------------------------"
+echo "Listening port is $PORT"
 
 CNT=0
 while :
@@ -65,5 +74,16 @@ done
 
 sed -i -e "s/proxy_pass http:\/\/127\.0\.0\.1:[0-9]*;/proxy_pass http:\/\/127.0.0.1:${PORT};/g" /etc/nginx/sites-enabled/default
 service nginx reload
+
+IFS=$'\n'
+CONTAINERS=(`docker ps -qa`)
+n=0
+for line in "${CONTAINERS[@]}"; do
+  n=`expr $n + 1`
+  if test $n -gt 2 ; then
+    echo "Deleting old container $line..."
+    docker rm -f "$line"
+  fi
+done
 
 exit 0
