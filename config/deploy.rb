@@ -69,7 +69,7 @@ namespace :container do
   desc 'deploy_from_local'
   task :deploy_from_local do
     on roles(:container) do
-      execute 'sudo docker pull ryuzee/slidehub:latest'
+      execute "sudo docker pull ryuzee/slidehub:#{fetch(:image_version)}"
       prefix = DateTime.now.strftime('%Y%m%d%H%M%s')
       cmd = <<"EOS"
         docker run -d \
@@ -99,7 +99,7 @@ namespace :container do
         --env OSS_SMTP_AUTH_METHOD=#{fetch(:oss_smtp_auth_method)} \
         --env OSS_PRODUCTION_HOST=#{fetch(:oss_production_host)} \
         --env OSS_ROOT_URL=#{fetch(:oss_root_url)} \
-        -P --name slidehub#{prefix} ryuzee/slidehub
+        -P --name slidehub#{prefix} ryuzee/slidehub:#{fetch(:image_version)}
 EOS
       run_app(cmd)
       clean_container
@@ -138,7 +138,7 @@ def run_app (docker_cmd)
 end
 
 def clean_container
-  containers = capture('sudo docker ps -q').to_s.split("\n")
+  containers = capture('sudo docker ps -qa --filter "name=slidehub[0-9]{22,}"').to_s.split("\n")
   containers.shift
   containers.shift
   puts containers.inspect
