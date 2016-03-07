@@ -18,6 +18,9 @@ set :unicorn_config_path, "#{release_path}/config/unicorn.rb"
 
 set :bundle_jobs, 4
 
+# For Container Default Value
+set :image_version, ENV['VERSION'] || "latest"
+
 SSHKit.config.command_map[:rake] = 'bundle exec rake'
 
 # set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
@@ -59,9 +62,7 @@ namespace :container do
   desc 'deploy'
   task :deploy do
     on roles(:container) do
-      execute 'sudo docker pull ryuzee/slidehub:latest'
-      execute 'sudo bash /usr/local/bin/run_app.sh'
-      clean_container
+      execute "sudo bash /usr/local/bin/run_app.sh #{fetch(:image_version)}"
     end
   end
 
