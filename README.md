@@ -141,9 +141,10 @@ OSS_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
 ```
 OSS_SMTP_SERVER=[Your SMTP server]
 OSS_SMTP_PORT=[587]
-OSS_SMTP_USERNAME=[Your email address]
-OSS_SMTP_PASSWORD=[Your SMTP Password]
+OSS_SMTP_USERNAME=[Your SMTP account]
+OSS_SMTP_PASSWORD=[Your SMTP password]
 OSS_SMTP_AUTH_METHOD=plain
+OSS_FROM_EMAIL=[Email address that will be used sender]
 OSS_SECRET_KEY_BASE=[Your Secret Key Base]
 OSS_PRODUCTION_HOST=[hoge.example.com]
 OSS_ROOT_URL=[http://your_root_url]
