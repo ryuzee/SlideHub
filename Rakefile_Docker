@@ -21,7 +21,7 @@ task :build do
     raise 'Failed to build Docker image...'
   end
 
-  cmd = "docker tag -f #{o} ryuzee/slidehub:#{SlideHub::VERSION}"
+  cmd = "docker tag ryuzee/slidehub:latest ryuzee/slidehub:#{SlideHub::VERSION}"
   o, e, _s = Open3.capture3(cmd)
   if o.chomp! == '' || e != ''
     raise 'Failed to add version tag to Docker image...'
