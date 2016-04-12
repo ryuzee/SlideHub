@@ -171,6 +171,7 @@ class SlidesController < ApplicationController
 
   def download
     @slide = Slide.find(params[:id])
+    @slide.increment(:download_count).save
     url = CloudConfig::SERVICE.get_slide_download_url(@slide.key)
     # @TODO: handle response code
     require 'open-uri'
