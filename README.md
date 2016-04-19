@@ -1,6 +1,6 @@
 # SlideHub [![Circle CI](https://circleci.com/gh/ryuzee/SlideHub.svg?style=svg)](https://circleci.com/gh/ryuzee/SlideHub)  [![Code Climate](https://codeclimate.com/github/ryuzee/SlideHub/badges/gpa.svg)](https://codeclimate.com/github/ryuzee/SlideHub)  [![Test Coverage](https://codeclimate.com/github/ryuzee/SlideHub/badges/coverage.svg)](https://codeclimate.com/github/ryuzee/SlideHub/coverage)
 
-This is an open source slidesharing application with AWS or Azure.
+This is an open source slidesharing application with Azure / AWS.
 
 The previous version of SlideHub was made with CakePHP. And this version is a successor of the previous version and is made with Ruby on Rails 4.
 ![Screenshot](capture1.png)
@@ -11,7 +11,7 @@ The previous version of SlideHub was made with CakePHP. And this version is a su
 - Listing slides by category, user and so on
 - Showing slide without Flash Player
 - Showing slide vertically
-- Storing all slides in Amazon S3. Thus terribly scalabale
+- Storing all slides in Azure Blob Storage or Amazon S3. Thus terribly scalabale
 - Searching slides
 - i18n
 - Responsive design
@@ -26,7 +26,7 @@ The previous version of SlideHub was made with CakePHP. And this version is a su
 This application depends on following technologies.
 
 * Ubuntu 12 or higher with OpenOffice, xpdf, unoconv and so on
-* [Note] Application can be placed at any servers. (Amazon EC2 is NOT required.)
+* [Note] Application can be placed at any servers. (Azure Virtual Machine or Amazon EC2 is NOT required.)
 * AWS or Azure
  * AWS: Amazon S3 / Amazon SQS
  * Azure: Blob Storage / Blob Queue
