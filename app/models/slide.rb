@@ -68,8 +68,13 @@ class Slide < ActiveRecord::Base
   end
 
   def page_list
-    url = self.page_list_url
-    get_json(url)
+    len = num_of_pages.abs.to_s.length
+    result = []
+    for i in 1..num_of_pages
+      n = i.to_s.rjust(len, '0')
+      result.push("#{key}/slide-#{n}.jpg")
+    end
+    result
   end
 
   def transcript

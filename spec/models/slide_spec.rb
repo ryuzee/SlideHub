@@ -64,12 +64,8 @@ describe 'Slide' do
   describe 'page_list' do
     it 'returns page list as json' do
       FactoryGirl.create(:slide)
-      url = Slide.find(1).page_list_url
-      stub_request(:any, url).to_return(
-        body: { 'test' => 'ok' }.to_json,
-        status: 200,
-      )
-      expect(Slide.find(1).page_list).to eq({ 'test' => 'ok' })
+      key = Slide.find(1).key
+      expect(Slide.find(1).page_list).to eq(["#{key}/slide-1.jpg"])
     end
   end
 end
