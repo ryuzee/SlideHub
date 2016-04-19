@@ -1,17 +1,18 @@
 <%
-require 'packr'
 def conv(str)
   str.gsub!(/(\r\n|\r|\n)/,"")
   str.gsub!(/\\/,"\\\\")
   str.gsub!(/"/,"\\\\\"")
   str.gsub!(/\s+/," ")
-  #str.gsub!(/<\//,"<\\/")
-  "document.write(\"#{str}\\n\");"
+  str.strip!
+  return "" if str == ""
+  "w(\"#{str}\");"
 end
-script = ""
+script = "function w(s){document.write(s+'\n');}"
 str = raw yield
 str.each_line do |s|
   script = script.concat(conv(s)) + "\n"
 end
 %>
-<%= raw Packr.pack(script, :shrink_vars => false, :base62 => @is_base62) %>
+<% require 'uglifier' %>
+<%= raw Uglifier.compile(script) %>

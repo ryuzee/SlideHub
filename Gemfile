@@ -104,8 +104,6 @@ gem 'unicorn'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 
-gem 'packr', git: 'https://github.com/ryuzee/packr'
-
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
 

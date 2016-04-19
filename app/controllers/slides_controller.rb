@@ -165,11 +165,6 @@ class SlidesController < ApplicationController
       @slide.increment(:embedded_view).increment(:total_view).save
     end
     @start_position = slide_position
-    if params.has_key?(:inside) && params[:inside] == '1'
-      @is_base62 = false
-    else
-      @is_base62 = true
-    end
     s = render_to_string layout: 'plain', collection: @slide
     render text: s, layout: false, content_type: 'application/javascript'
   end
