@@ -73,5 +73,6 @@ Rails.application.configure do
   config.consider_all_requests_local = true
   BetterErrors::Middleware.allow_ip! '10.0.2.2'
 
-
+  config.logger = Logger.new(config.paths['log'].first)
+  config.logger.formatter = ::Logger::Formatter.new
 end
