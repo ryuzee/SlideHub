@@ -15,7 +15,7 @@
           </div>
           <div class="slidecard-content">
             <div class="slidecard-basic-info">
-            <div class="slidecard-title"><%= strip_tags(slide.name).truncate(40) %></div>
+              <div class="slidecard-title"><span class="no_decoration"><a href="<%= slide_path(slide.id) %>"><%= strip_tags(slide.name).truncate(40) %></a></span></div>
             <div class="slidecard-description"><%= strip_tags(slide.description).truncate(80) %></div>
             </div>
             <div class="slidecard-information">
