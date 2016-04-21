@@ -194,7 +194,7 @@ if @slide.tags.count > 0
     <% @other_slides.each do |s| %>
     <li>
       <a href="<%= slide_path(s.id) %>"><img src="<%= s.thumbnail_url %>"></a>
-      <h3 class="h5"><%= strip_tags s.name.truncate(24) %></h3>
+      <h3 class="h5"><span class="no_decoration"><a href="<%= slide_path(s.id) %>"><%= strip_tags s.name.truncate(24) %></a></span></h3>
       <p class="h6"><%= s.created_at %> by <a href="<%= user_path(s.user_id) %>"><%= strip_tags s.user.display_name %></a></p>
     </li>
     <% end %>

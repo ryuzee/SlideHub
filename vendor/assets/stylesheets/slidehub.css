@@ -104,6 +104,14 @@ body.slidehub_body {
   color: #cd4939;
 }
 
+.slidehub_body span.no_decoration a,
+.slidehub_body span.no_decoration a:hover,
+.slidehub_body span.no_decoration a:visited,
+.slidehub_body span.no_decoration a:active {
+  text-decoration: none;
+  color: #333 !important;
+}
+
 .slidehub_body ul.share-buttons{
   list-style: none;
   padding: 0;
