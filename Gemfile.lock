@@ -9,6 +9,13 @@ GIT
       hashie
 
 GIT
+  remote: https://github.com/ryuzee/packr
+  revision: f7c6f4d450339de410465fef8cc2d1cba7c8fae1
+  specs:
+    packr (3.2.1)
+      oyster (>= 0.9.5)
+
+GIT
   remote: https://github.com/thoughtbot/paperclip.git
   revision: 37589f9b0c869c8df5be1ee4d83e14fb353a7dff
   specs:
@@ -308,6 +315,7 @@ GEM
       shellany (~> 0.0)
     ntlm-http (0.1.1)
     orm_adapter (0.5.0)
+    oyster (0.9.5)
     paperclip-azure (0.2.14)
       addressable
       azure
@@ -576,6 +584,7 @@ DEPENDENCIES
   momentjs-rails (>= 2.9.0)
   mysql2
   non-stupid-digest-assets
+  packr!
   paperclip!
   paperclip-azure
   pdf-reader
