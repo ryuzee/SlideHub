@@ -173,7 +173,7 @@ sudo -H -u ubuntu -s bash -c ‘source /etc/environment ; export PATH="$HOME/.rb
 In the development environment, you can run the app as follows.
 
 ```
-rake start_dev
+rake slidehub:dev
 ```
 
 ### Public Docker Image

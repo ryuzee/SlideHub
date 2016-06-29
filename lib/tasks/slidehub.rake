@@ -29,4 +29,14 @@ namespace :slidehub do
       s.save
     end
   end
+
+  desc 'Start development server.'
+  task :dev do
+    system('bundle exec rails server -b 0.0.0.0 -e development')
+  end
+
+  desc 'Start development console.'
+  task :dev_console do
+    system('bundle exec rails console -e development')
+  end
 end
