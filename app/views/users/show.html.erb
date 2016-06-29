@@ -2,8 +2,7 @@
 
 <% content_for :title, t(:slides_by_user, user: @user.display_name) %>
 <div class="row">
-    <div class="col-md-9">
-
+  <div class="col-md-9">
     <h3><%= t :slides_by_user, user: @user.display_name %></h3>
     <%= render 'slides/thumbnail_template', column_class: 'col-md-4 col-sm-8', slides: @slides %>
     <div>
@@ -14,19 +13,20 @@
         $(window).load(function () {
             $('.col-md-4').equalHeights();
         });
-        </script>
-    </div>
+    </script>
+  </div>
 
-    <div class="col-md-3">
+  <div class="col-md-3">
     <%= render 'users/right_side_bar', user: @user %>
+    <br clear="all" />
 
-        <div class="panel panel-default">
-            <div class="panel-heading"><%= t :popular_tags %></div>
-            <div class="panel-body">
-            <% tag_cloud(@tags, %w(tag1 tag2 tag3 tag4)) do |tag, css_class| %>
-              <%= link_to tag.name, "/slides/search?q%5Btag_search%5D=#{tag.name}", :class => css_class %>
-            <% end %>
-            </div>
-        </div>
+    <div class="panel panel-default">
+      <div class="panel-heading"><%= t :popular_tags %></div>
+      <div class="panel-body">
+        <% tag_cloud(@tags, %w(tag1 tag2 tag3 tag4)) do |tag, css_class| %>
+          <%= link_to tag.name, "/slides/search?q%5Btag_search%5D=#{tag.name}", :class => css_class %>
+        <% end %>
+      </div>
     </div>
+  </div>
 </div>
