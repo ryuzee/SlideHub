@@ -21,7 +21,7 @@ module Myapp
     config.i18n.default_locale = :en
 
     config.autoload_paths += %W(#{config.root}/lib)
-    config.autoload_paths += %W(#{config.root}/lib/oss)
+    config.autoload_paths += %W(#{config.root}/lib/slide_hub)
 
     config.assets.paths << "#{Rails}/vendor/assets/fonts"
     config.assets.digest = true

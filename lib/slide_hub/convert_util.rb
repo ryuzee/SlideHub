@@ -1,4 +1,4 @@
-module Oss
+module SlideHub
   class ConvertUtil
     def rename_to_pdf(dir, file)
       cmd = "cd #{dir} && mv #{file} #{file}.pdf"
@@ -30,7 +30,7 @@ module Oss
     end
 
     def jpg_to_thumbnail(list)
-      i = Oss::Image.new
+      i = SlideHub::Image.new
       thumbnail_list = []
 
       save_to = "#{File.dirname(list[0])}/thumbnail.jpg"
