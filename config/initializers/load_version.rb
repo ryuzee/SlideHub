@@ -1,1 +1,1 @@
-require "#{Rails.root}/lib/oss/version"
+require "#{Rails.root}/lib/slide_hub/version"

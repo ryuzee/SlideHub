@@ -1,4 +1,4 @@
-module Oss
+module SlideHub
   module BatchLogger
     class << self
       delegate(

@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'rmagick'
 
-module Oss
+module SlideHub
   class Image
     def thumbnail(src, dest)
       w = 320

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-require "#{File.dirname(__FILE__)}/lib/oss/version"
+require "#{File.dirname(__FILE__)}/lib/slide_hub/version"
 require 'open3'
 
 task :default => :build
@@ -34,3 +34,5 @@ task :push do
   cmd = "docker push ryuzee/slidehub:#{SlideHub::VERSION}"
   sh cmd
 end
+
+# vim: filetype=ruby
