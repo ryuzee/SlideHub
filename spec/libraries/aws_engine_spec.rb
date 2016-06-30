@@ -8,12 +8,15 @@ module Aws
       def send_message(params = {}, options = {})
         nil
       end
+
       def receive_message(params = {})
         []
       end
+
       def delete_message(params = {})
         Seahorse::Client::Response.new
       end
+
       def delete_message_batch(params = {})
         Aws::SQS::Types::DeleteMessageBatchResult.new
       end
@@ -25,6 +28,7 @@ module Aws
           @msg = []
           @msg.push(DummyMessage.new)
         end
+
         def messages
           @msg
         end
@@ -39,15 +43,16 @@ module Aws
   module S3
     class DummyClient
       def put_object(params = {})
-
       end
+
       def get_object(params = {})
         filename = params[:response_target]
         File.open(filename, 'wb') { |f| f.write('hoge') }
       end
-      def delete_objects(params = {})
 
+      def delete_objects(params = {})
       end
+
       def list_objects(params = {})
         Types::DummyListObjectOutput.new
       end
@@ -68,14 +73,11 @@ module Aws
           @contents.push(obj)
         end
 
-        def contents
-          @contents
-        end
+        attr_reader :contents
       end
     end
   end
 end
-
 
 describe 'SlideHub::Cloud::Engine::AWS' do
   before do
@@ -183,18 +185,18 @@ describe 'SlideHub::Cloud::Engine::AWS' do
     end
 
     it 'succeeds to receive message' do
-      expect(SlideHub::Cloud::Engine::AWS.receive_message(10).class.name).to eq("SlideHub::Cloud::Queue::Response")
+      expect(SlideHub::Cloud::Engine::AWS.receive_message(10).class.name).to eq('SlideHub::Cloud::Queue::Response')
     end
 
     it 'succeeds to delete message' do
-      msg = SlideHub::Cloud::Queue::Message.new(1, "text", "handle")
-      expect(SlideHub::Cloud::Engine::AWS.delete_message(msg).class.name).to eq("Seahorse::Client::Response")
+      msg = SlideHub::Cloud::Queue::Message.new(1, 'text', 'handle')
+      expect(SlideHub::Cloud::Engine::AWS.delete_message(msg).class.name).to eq('Seahorse::Client::Response')
     end
 
     it 'succeeds to delete messages all at once' do
       msg = []
-      msg.push (SlideHub::Cloud::Queue::Message.new(1, "text", "handle"))
-      expect(SlideHub::Cloud::Engine::AWS.batch_delete(msg).class.name).to eq("Seahorse::Client::Response")
+      msg.push SlideHub::Cloud::Queue::Message.new(1, 'text', 'handle')
+      expect(SlideHub::Cloud::Engine::AWS.batch_delete(msg).class.name).to eq('Seahorse::Client::Response')
     end
   end
 
@@ -206,7 +208,7 @@ describe 'SlideHub::Cloud::Engine::AWS' do
 
     it 'succeeds to upload files' do
       files = []
-      Tempfile.create("foo") do |f|
+      Tempfile.create('foo') do |f|
         files.push(f.path)
         puts files.inspect
         expect(SlideHub::Cloud::Engine::AWS.upload_files('container', files, 'test').class.name).to eq('Array')
@@ -236,5 +238,4 @@ describe 'SlideHub::Cloud::Engine::AWS' do
       expect(SlideHub::Cloud::Engine::AWS.get_slide_download_url('myblob')).to eq('https://signed.example.com')
     end
   end
-
 end
