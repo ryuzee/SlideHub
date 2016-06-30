@@ -1,5 +1,5 @@
 if ENV.has_key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
-  SlideHub::Cloud::AzureEngine.configure do |config|
+  SlideHub::Cloud::Engine::Azure.configure do |config|
     config.bucket_name = ENV['OSS_AZURE_CONTAINER_NAME']
     config.image_bucket_name = ENV['OSS_AZURE_IMAGE_CONTAINER_NAME']
     config.cdn_base_url = ENV['OSS_AZURE_CDN_BASE_URL']
@@ -8,7 +8,7 @@ if ENV.has_key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
     config.azure_storage_account_name = ENV['OSS_AZURE_STORAGE_ACCOUNT_NAME']
   end
 else
-  SlideHub::Cloud::AWSEngine.configure do |config|
+  SlideHub::Cloud::Engine::AWS.configure do |config|
     config.region = ENV['OSS_REGION']
     config.aws_access_id = ENV['OSS_AWS_ACCESS_ID']
     config.aws_secret_key = ENV['OSS_AWS_SECRET_KEY']
@@ -22,9 +22,9 @@ end
 
 module CloudConfig
   SERVICE = if ENV.has_key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
-              SlideHub::Cloud::AzureEngine
+              SlideHub::Cloud::Engine::Azure
             else
-              SlideHub::Cloud::AWSEngine
+              SlideHub::Cloud::Engine::AWS
             end
 
   def self.service_name

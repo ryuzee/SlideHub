@@ -73,9 +73,9 @@ module Azure
   end
 end
 
-describe 'AzureEngine' do
+describe 'SlideHub::Cloud::Engine::Azure' do
   before do
-    SlideHub::Cloud::AzureEngine.configure do |config|
+    SlideHub::Cloud::Engine::Azure.configure do |config|
       config.bucket_name = 'my-bucket'
       config.image_bucket_name = 'my-image-bucket'
       config.cdn_base_url = ''
@@ -87,25 +87,25 @@ describe 'AzureEngine' do
 
   describe 'resource_endpoint' do
     it 'return URL that includes image bucket name' do
-      expect(SlideHub::Cloud::AzureEngine.resource_endpoint).to eq('https://azure_storage_account_name.blob.core.windows.net/my-image-bucket')
+      expect(SlideHub::Cloud::Engine::Azure.resource_endpoint).to eq('https://azure_storage_account_name.blob.core.windows.net/my-image-bucket')
     end
     it 'return CDN URL' do
-      SlideHub::Cloud::AzureEngine.configure do |config|
+      SlideHub::Cloud::Engine::Azure.configure do |config|
         config.cdn_base_url = 'https://sushi.example.com'
       end
-      expect(SlideHub::Cloud::AzureEngine.resource_endpoint).to eq('https://sushi.example.com/my-image-bucket')
+      expect(SlideHub::Cloud::Engine::Azure.resource_endpoint).to eq('https://sushi.example.com/my-image-bucket')
     end
   end
 
   describe 'upload_endpoint' do
     it 'return URL that includes bucket name' do
-      expect(SlideHub::Cloud::AzureEngine.upload_endpoint).to eq('https://azure_storage_account_name.blob.core.windows.net/my-bucket')
+      expect(SlideHub::Cloud::Engine::Azure.upload_endpoint).to eq('https://azure_storage_account_name.blob.core.windows.net/my-bucket')
     end
   end
 
   describe 'queue_endpoint' do
     it 'return URL that specifies queue endpoint' do
-      expect(SlideHub::Cloud::AzureEngine.queue_endpoint).to eq('https://azure_storage_account_name.queue.core.windows.net/')
+      expect(SlideHub::Cloud::Engine::Azure.queue_endpoint).to eq('https://azure_storage_account_name.queue.core.windows.net/')
     end
   end
 
@@ -115,24 +115,22 @@ describe 'AzureEngine' do
     end
 
     it 'succeeds to send message' do
-      expect(SlideHub::Cloud::AzureEngine.send_message('hoge')).to eq(nil)
+      expect(SlideHub::Cloud::Engine::Azure.send_message('hoge')).to eq(nil)
     end
 
     it 'succeeds to receive message' do
-      expect(SlideHub::Cloud::AzureEngine.receive_message(10)).to eq([])
-    end
-
-    it 'succeeds to return correct status of the existence of a message' do
-      expect(SlideHub::Cloud::AzureEngine.message_exist?([])).to eq(false)
-      expect(SlideHub::Cloud::AzureEngine.message_exist?([Azure::Entity::Queue::DummyMessage.new])).to eq(true)
+      expect(SlideHub::Cloud::Engine::Azure.receive_message(10).class.name).to eq("SlideHub::Cloud::Queue::Response")
     end
 
     it 'succeeds to delete message' do
-      expect(SlideHub::Cloud::AzureEngine.delete_message(Azure::Entity::Queue::DummyMessage.new)).to eq(nil)
+      msg = SlideHub::Cloud::Queue::Message.new(1, "text", "handle")
+      expect(SlideHub::Cloud::Engine::Azure.delete_message(msg).class.name).to eq("NilClass")
     end
 
     it 'succeeds to delete messages all at once' do
-      expect(SlideHub::Cloud::AzureEngine.batch_delete([Azure::Entity::Queue::DummyMessage.new]).class.name).to eq("Array")
+      msg = []
+      msg.push (SlideHub::Cloud::Queue::Message.new(1, "text", "handle"))
+      expect(SlideHub::Cloud::Engine::Azure.batch_delete(msg).class.name).to eq("NilClass")
     end
   end
 
@@ -147,35 +145,35 @@ describe 'AzureEngine' do
       Tempfile.create("foo") do |f|
         files.push(f.path)
         puts files.inspect
-        expect(SlideHub::Cloud::AzureEngine.upload_files('container', files, 'test').class.name).to eq('Array')
+        expect(SlideHub::Cloud::Engine::Azure.upload_files('container', files, 'test').class.name).to eq('Array')
       end
     end
 
     it 'succeeds to get file list' do
-      expect(SlideHub::Cloud::AzureEngine.get_file_list('container', 'prefix').class.name).to eq('Array')
+      expect(SlideHub::Cloud::Engine::Azure.get_file_list('container', 'prefix').class.name).to eq('Array')
     end
 
     it 'succeeds to save file' do
       Dir.mktmpdir do |dir|
         destination = "#{dir}/#{SecureRandom.hex}"
-        SlideHub::Cloud::AzureEngine.save_file('container', 'key', destination)
+        SlideHub::Cloud::Engine::Azure.save_file('container', 'key', destination)
         expect(File.exist?(destination)).to eq(true)
       end
     end
 
     it 'succeeds to delete files and sildes' do
-      expect(SlideHub::Cloud::AzureEngine.delete_slide('')).to eq(false)
-      expect(SlideHub::Cloud::AzureEngine.delete_slide('hoge')).to eq(true)
-      expect(SlideHub::Cloud::AzureEngine.delete_generated_files('')).to eq(false)
-      expect(SlideHub::Cloud::AzureEngine.delete_generated_files('hoge')).to eq(true)
+      expect(SlideHub::Cloud::Engine::Azure.delete_slide('')).to eq(false)
+      expect(SlideHub::Cloud::Engine::Azure.delete_slide('hoge')).to eq(true)
+      expect(SlideHub::Cloud::Engine::Azure.delete_generated_files('')).to eq(false)
+      expect(SlideHub::Cloud::Engine::Azure.delete_generated_files('hoge')).to eq(true)
     end
 
     it 'succeeds to generate SAS url' do
-      expect(SlideHub::Cloud::AzureEngine.generate_sas_url('myblob')).to eq('https://signed.example.com')
+      expect(SlideHub::Cloud::Engine::Azure.generate_sas_url('myblob')).to eq('https://signed.example.com')
     end
 
     it 'succeeds to get slide download url' do
-      expect(SlideHub::Cloud::AzureEngine.get_slide_download_url('myblob')).to eq('https://signed.example.com')
+      expect(SlideHub::Cloud::Engine::Azure.get_slide_download_url('myblob')).to eq('https://signed.example.com')
     end
   end
 end
