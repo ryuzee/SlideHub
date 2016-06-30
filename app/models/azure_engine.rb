@@ -48,6 +48,9 @@ class AzureEngine
   def self.receive_message(max_number = 10)
     queues = Azure.queues
     res = queues.list_messages(@config.queue_name, 600, { number_of_messages: max_number })
+    # see http://www.rubydoc.info/github/Azure/azure-sdk-for-ruby/Azure%2FQueue%2FQueueService%3Alist_messages
+    # it returns a list of Azure::Entity::Queue::Message instances
+    # http://www.rubydoc.info/github/Azure/azure-sdk-for-ruby/Azure/Queue/Message
     res
   end
 
