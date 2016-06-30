@@ -14,7 +14,7 @@ module SlideHub
       end
 
       class Response
-        attr :messages
+        attr_reader :messages
         def initialize
           @messages = []
         end

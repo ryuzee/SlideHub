@@ -11,12 +11,15 @@ module Azure
       def create_message(queue_name, message)
         nil
       end
+
       def list_messages(queue_name, timeout, options = {})
         []
       end
+
       def create_queue(queue_name)
         nil
       end
+
       def delete_message(queue_name, message_object_id, message_object_pop_receipt)
         nil
       end
@@ -28,6 +31,7 @@ module Azure
         def id
           1
         end
+
         def pop_receipt
           ''
         end
@@ -45,17 +49,21 @@ module Azure
       def create_block_blob(container, key, content)
         nil
       end
+
       def list_blobs(container, options = {})
         result = []
         result.push(Azure::Blob::DummyBlobObject.new)
         result
       end
+
       def get_blob(container, key)
         return nil, 'hoge'
       end
+
       def delete_blob(container, key)
         nil
       end
+
       def generate_uri(uri, options = {})
         'http://www.example.com'
       end
@@ -119,18 +127,18 @@ describe 'SlideHub::Cloud::Engine::Azure' do
     end
 
     it 'succeeds to receive message' do
-      expect(SlideHub::Cloud::Engine::Azure.receive_message(10).class.name).to eq("SlideHub::Cloud::Queue::Response")
+      expect(SlideHub::Cloud::Engine::Azure.receive_message(10).class.name).to eq('SlideHub::Cloud::Queue::Response')
     end
 
     it 'succeeds to delete message' do
-      msg = SlideHub::Cloud::Queue::Message.new(1, "text", "handle")
-      expect(SlideHub::Cloud::Engine::Azure.delete_message(msg).class.name).to eq("NilClass")
+      msg = SlideHub::Cloud::Queue::Message.new(1, 'text', 'handle')
+      expect(SlideHub::Cloud::Engine::Azure.delete_message(msg).class.name).to eq('NilClass')
     end
 
     it 'succeeds to delete messages all at once' do
       msg = []
-      msg.push (SlideHub::Cloud::Queue::Message.new(1, "text", "handle"))
-      expect(SlideHub::Cloud::Engine::Azure.batch_delete(msg).class.name).to eq("NilClass")
+      msg.push SlideHub::Cloud::Queue::Message.new(1, 'text', 'handle')
+      expect(SlideHub::Cloud::Engine::Azure.batch_delete(msg).class.name).to eq('NilClass')
     end
   end
 
@@ -142,7 +150,7 @@ describe 'SlideHub::Cloud::Engine::Azure' do
 
     it 'succeeds to upload files' do
       files = []
-      Tempfile.create("foo") do |f|
+      Tempfile.create('foo') do |f|
         files.push(f.path)
         puts files.inspect
         expect(SlideHub::Cloud::Engine::Azure.upload_files('container', files, 'test').class.name).to eq('Array')

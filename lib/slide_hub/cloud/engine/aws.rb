@@ -85,7 +85,7 @@ module SlideHub
           response = self.sqs.receive_message(queue_url: @config.sqs_url, visibility_timeout: 600, max_number_of_messages: max_number)
           # see http://docs.aws.amazon.com/sdkforruby/api/Aws/SQS/Client.html#receive_message-instance_method
           result = SlideHub::Cloud::Queue::Response.new
-          unless (!response || !response.respond_to?(:messages) || response.messages.count == 0)
+          unless !response || !response.respond_to?(:messages) || response.messages.count == 0
             response.messages.each do |msg|
               result.add_message(msg.message_id, msg.body, msg.receipt_handle)
             end
@@ -118,8 +118,8 @@ module SlideHub
               bucket: bucket,
               key: "#{prefix}/#{File.basename(f)}",
               body: File.read(f),
-                acl: 'public-read',
-                storage_class: 'REDUCED_REDUNDANCY',
+              acl: 'public-read',
+              storage_class: 'REDUCED_REDUNDANCY',
             ) if File.exist?(f)
           end
         end
@@ -224,7 +224,7 @@ module SlideHub
               { 'x-amz-meta-uuid' => '14365123651274' },
               ['starts-with', '$x-amz-meta-tag', ''],
               { 'x-amz-credential' => "#{access_id}/#{date_ymd}/#{region}/s3/aws4_request" },
-            { 'x-amz-algorithm' => 'AWS4-HMAC-SHA256' },
+              { 'x-amz-algorithm' => 'AWS4-HMAC-SHA256' },
               { 'x-amz-date' => date_gm },
             ],
           }
