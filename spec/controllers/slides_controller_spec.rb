@@ -95,7 +95,7 @@ RSpec.describe SlidesController, type: :controller do
 
   describe 'POST #create' do
     it 'succeed to create record' do
-      allow(AWSEngine).to receive(:send_message).and_return(true)
+      allow(SlideHub::Cloud::AWSEngine).to receive(:send_message).and_return(true)
       data = build(:slide)
       login_by_user first_user
       post :create, slide: data.attributes
@@ -105,7 +105,7 @@ RSpec.describe SlidesController, type: :controller do
     end
 
     it 'faled to create record because of validation' do
-      allow(AWSEngine).to receive(:send_message).and_return(true)
+      allow(SlideHub::Cloud::AWSEngine).to receive(:send_message).and_return(true)
       data = build(:slide)
       data.category_id = nil # cause validation error
       login_by_user first_user
@@ -169,7 +169,7 @@ RSpec.describe SlidesController, type: :controller do
     end
 
     it 'succeeds to update the record with running conversion' do
-      allow(AWSEngine).to receive(:send_message).and_return(true)
+      allow(SlideHub::Cloud::AWSEngine).to receive(:send_message).and_return(true)
       data = create(:slide)
       data.convert_status = 0 # Not converted yet...
       data.name = 'Engawa'
@@ -193,8 +193,8 @@ RSpec.describe SlidesController, type: :controller do
     end
 
     it 'succeeds to update the record with running conversion' do
-      allow(AWSEngine).to receive(:delete_slide).and_return(true)
-      allow(AWSEngine).to receive(:delete_generated_files).and_return(true)
+      allow(SlideHub::Cloud::AWSEngine).to receive(:delete_slide).and_return(true)
+      allow(SlideHub::Cloud::AWSEngine).to receive(:delete_generated_files).and_return(true)
       data = create(:slide)
       login_by_user first_user
       delete :destroy, { id: data.id }
@@ -256,7 +256,7 @@ RSpec.describe SlidesController, type: :controller do
 
   describe 'GET #download' do
     it 'success to download file' do
-      allow(AWSEngine).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
+      allow(SlideHub::Cloud::AWSEngine).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
       stub_request(:any, 'http://www.example.com/1.pdf').to_return(
         body: 'test',
         status: 200,
