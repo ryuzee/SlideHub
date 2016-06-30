@@ -8,12 +8,15 @@ module Aws
       def send_message(params = {}, options = {})
         nil
       end
+
       def receive_message(params = {})
         []
       end
+
       def delete_message(params = {})
         Seahorse::Client::Response.new
       end
+
       def delete_message_batch(params = {})
         Aws::SQS::Types::DeleteMessageBatchResult.new
       end
@@ -25,6 +28,7 @@ module Aws
           @msg = []
           @msg.push(DummyMessage.new)
         end
+
         def messages
           @msg
         end
@@ -39,15 +43,16 @@ module Aws
   module S3
     class DummyClient
       def put_object(params = {})
-
       end
+
       def get_object(params = {})
         filename = params[:response_target]
         File.open(filename, 'wb') { |f| f.write('hoge') }
       end
-      def delete_objects(params = {})
 
+      def delete_objects(params = {})
       end
+
       def list_objects(params = {})
         Types::DummyListObjectOutput.new
       end
@@ -68,18 +73,15 @@ module Aws
           @contents.push(obj)
         end
 
-        def contents
-          @contents
-        end
+        attr_reader :contents
       end
     end
   end
 end
 
-
-describe 'AWSEngine' do
+describe 'SlideHub::Cloud::Engine::AWS' do
   before do
-    AWSEngine.configure do |config|
+    SlideHub::Cloud::Engine::AWS.configure do |config|
       config.region = 'ap-northeast-1'
       config.aws_access_id = 'aws_access_id'
       config.aws_secret_key = 'aws_secret_key'
@@ -93,57 +95,57 @@ describe 'AWSEngine' do
 
   describe 'resource_endpoint' do
     it 'return URL that includes image bucket name and region in Tokyo region' do
-      expect(AWSEngine.resource_endpoint).to eq('https://my-image-bucket.s3-ap-northeast-1.amazonaws.com')
+      expect(SlideHub::Cloud::Engine::AWS.resource_endpoint).to eq('https://my-image-bucket.s3-ap-northeast-1.amazonaws.com')
     end
     it 'return URL that includes image bucket name in us-east-1' do
-      AWSEngine.configure do |config|
+      SlideHub::Cloud::Engine::AWS.configure do |config|
         config.region = 'us-east-1'
       end
-      expect(AWSEngine.resource_endpoint).to eq('https://my-image-bucket.s3.amazonaws.com')
+      expect(SlideHub::Cloud::Engine::AWS.resource_endpoint).to eq('https://my-image-bucket.s3.amazonaws.com')
     end
     it 'return CDN URL' do
-      AWSEngine.configure do |config|
+      SlideHub::Cloud::Engine::AWS.configure do |config|
         config.cdn_base_url = 'https://sushi.example.com'
       end
-      expect(AWSEngine.resource_endpoint).to eq('https://sushi.example.com')
+      expect(SlideHub::Cloud::Engine::AWS.resource_endpoint).to eq('https://sushi.example.com')
     end
     it 'return S3 bucket name when enabling static hosting (In this case, SSL can not be used.)' do
-      AWSEngine.configure do |config|
+      SlideHub::Cloud::Engine::AWS.configure do |config|
         config.image_bucket_name = 'toro.example.com'
         config.use_s3_static_hosting = '1'
       end
-      expect(AWSEngine.resource_endpoint).to eq('http://toro.example.com')
+      expect(SlideHub::Cloud::Engine::AWS.resource_endpoint).to eq('http://toro.example.com')
     end
   end
 
   describe 'upload_endpoint' do
     it 'return URL that includes bucket name and region in Tokyo region' do
-      expect(AWSEngine.upload_endpoint).to eq('https://my-bucket.s3-ap-northeast-1.amazonaws.com')
+      expect(SlideHub::Cloud::Engine::AWS.upload_endpoint).to eq('https://my-bucket.s3-ap-northeast-1.amazonaws.com')
     end
     it 'return URL that includes bucket name in us-east-1' do
-      AWSEngine.configure do |config|
+      SlideHub::Cloud::Engine::AWS.configure do |config|
         config.region = 'us-east-1'
       end
-      expect(AWSEngine.upload_endpoint).to eq('https://my-bucket.s3.amazonaws.com')
+      expect(SlideHub::Cloud::Engine::AWS.upload_endpoint).to eq('https://my-bucket.s3.amazonaws.com')
     end
   end
 
   describe 's3_host_name' do
     it 'return hostname that includes region in Tokyo region' do
-      expect(AWSEngine.s3_host_name).to eq('s3-ap-northeast-1.amazonaws.com')
+      expect(SlideHub::Cloud::Engine::AWS.s3_host_name).to eq('s3-ap-northeast-1.amazonaws.com')
     end
     it 'return hostname that does not include region in us-east-1' do
-      AWSEngine.configure do |config|
+      SlideHub::Cloud::Engine::AWS.configure do |config|
         config.region = 'us-east-1'
       end
-      expect(AWSEngine.s3_host_name).to eq('s3.amazonaws.com')
+      expect(SlideHub::Cloud::Engine::AWS.s3_host_name).to eq('s3.amazonaws.com')
     end
   end
 
   describe 'get_signing_key' do
     it 'returns true' do
       expected = 'a8a38db0c44e3f2b269d6468dbbb4c55'
-      expect(Digest::MD5.hexdigest(AWSEngine.get_signing_key('20150101', 'ap-northeast-1', 's3', 'abcde'))).to eq(expected.to_s)
+      expect(Digest::MD5.hexdigest(SlideHub::Cloud::Engine::AWS.get_signing_key('20150101', 'ap-northeast-1', 's3', 'abcde'))).to eq(expected.to_s)
     end
   end
 
@@ -155,7 +157,7 @@ describe 'AWSEngine' do
       security_token = ''
       region = 'ap-northeast-1'
       bucket_name = 'sushi'
-      value = AWSEngine.populate_policy(base_time, access_id, secret_key, security_token, region, bucket_name)
+      value = SlideHub::Cloud::Engine::AWS.populate_policy(base_time, access_id, secret_key, security_token, region, bucket_name)
       expect(value['signature']).to eq('d3737356a01471adab35e87d768d8d23af17d3e30b0d66b08c9037447271fb93')
       expect(value['date_ymd']).to eq('20160101')
       expect(value['date_gm']).to eq('20160101T235959Z')
@@ -179,24 +181,22 @@ describe 'AWSEngine' do
     end
 
     it 'succeeds to send message' do
-      expect(AWSEngine.send_message('hoge')).to eq(nil)
+      expect(SlideHub::Cloud::Engine::AWS.send_message('hoge')).to eq(nil)
     end
 
     it 'succeeds to receive message' do
-      expect(AWSEngine.receive_message(10)).to eq([])
-    end
-
-    it 'succeeds to return correct status of the existence of a message' do
-      expect(AWSEngine.message_exist?(nil)).to eq(false)
-      expect(AWSEngine.message_exist?(Aws::SQS::Types::DummyReceiveMessageResult.new)).to eq(true)
+      expect(SlideHub::Cloud::Engine::AWS.receive_message(10).class.name).to eq('SlideHub::Cloud::Queue::Response')
     end
 
     it 'succeeds to delete message' do
-      expect(AWSEngine.delete_message(Aws::SQS::Types::DummyMessage.new).class.name).to eq("Seahorse::Client::Response")
+      msg = SlideHub::Cloud::Queue::Message.new(1, 'text', 'handle')
+      expect(SlideHub::Cloud::Engine::AWS.delete_message(msg).class.name).to eq('Seahorse::Client::Response')
     end
 
     it 'succeeds to delete messages all at once' do
-      expect(AWSEngine.batch_delete([Aws::SQS::Types::DummyMessage.new]).class.name).to eq("Aws::SQS::Types::DeleteMessageBatchResult")
+      msg = []
+      msg.push SlideHub::Cloud::Queue::Message.new(1, 'text', 'handle')
+      expect(SlideHub::Cloud::Engine::AWS.batch_delete(msg).class.name).to eq('Seahorse::Client::Response')
     end
   end
 
@@ -208,35 +208,34 @@ describe 'AWSEngine' do
 
     it 'succeeds to upload files' do
       files = []
-      Tempfile.create("foo") do |f|
+      Tempfile.create('foo') do |f|
         files.push(f.path)
         puts files.inspect
-        expect(AWSEngine.upload_files('container', files, 'test').class.name).to eq('Array')
+        expect(SlideHub::Cloud::Engine::AWS.upload_files('container', files, 'test').class.name).to eq('Array')
       end
     end
 
     it 'succeeds to get file list' do
-      expect(AWSEngine.get_file_list('container', 'prefix').class.name).to eq('Array')
+      expect(SlideHub::Cloud::Engine::AWS.get_file_list('container', 'prefix').class.name).to eq('Array')
     end
 
     it 'succeeds to save file' do
       Dir.mktmpdir do |dir|
         destination = "#{dir}/#{SecureRandom.hex}"
-        AWSEngine.save_file('container', 'key', destination)
+        SlideHub::Cloud::Engine::AWS.save_file('container', 'key', destination)
         expect(File.exist?(destination)).to eq(true)
       end
     end
 
     it 'succeeds to delete files and sildes' do
-      expect(AWSEngine.delete_slide('')).to eq(false)
-      expect(AWSEngine.delete_slide('hoge')).to eq(true)
-      expect(AWSEngine.delete_generated_files('')).to eq(false)
-      expect(AWSEngine.delete_generated_files('hoge')).to eq(true)
+      expect(SlideHub::Cloud::Engine::AWS.delete_slide('')).to eq(false)
+      expect(SlideHub::Cloud::Engine::AWS.delete_slide('hoge')).to eq(true)
+      expect(SlideHub::Cloud::Engine::AWS.delete_generated_files('')).to eq(false)
+      expect(SlideHub::Cloud::Engine::AWS.delete_generated_files('hoge')).to eq(true)
     end
 
     it 'succeeds to get slide download url' do
-      expect(AWSEngine.get_slide_download_url('myblob')).to eq('https://signed.example.com')
+      expect(SlideHub::Cloud::Engine::AWS.get_slide_download_url('myblob')).to eq('https://signed.example.com')
     end
   end
-
 end

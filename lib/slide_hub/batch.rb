@@ -2,34 +2,20 @@ class Batch
   def self.execute
     SlideHub::BatchLogger.info('Start convert process')
     resp = CloudConfig::SERVICE.receive_message(5)
-    unless CloudConfig::SERVICE.message_exist?(resp)
-      SlideHub::BatchLogger.info('No SQS message found')
+    unless resp.exist?
+      SlideHub::BatchLogger.info('No Queue message found')
       return true
     end
 
-    if CloudConfig.service_name == 'aws'
-      resp.messages.each do |msg|
-        obj = JSON.parse(msg.body)
-        SlideHub::BatchLogger.info("Start converting slide. id=#{obj['id']} key=#{obj['key']}")
-        result = self.convert_slide(obj['key'])
-        if result
-          SlideHub::BatchLogger.info("Delete message from SQS. id=#{obj['id']} key=#{obj['key']}")
-          CloudConfig::SERVICE.delete_message(msg)
-        else
-          SlideHub::BatchLogger.error("Slide conversion failed. id=#{obj['id']} key=#{obj['key']}")
-        end
-      end
-    else
-      resp.each do |msg|
-        obj = JSON.parse(msg.message_text)
-        SlideHub::BatchLogger.info("Start converting slide. id=#{obj['id']} key=#{obj['key']}")
-        result = self.convert_slide(obj['key'])
-        if result
-          SlideHub::BatchLogger.info("Delete message from SQS. id=#{obj['id']} key=#{obj['key']}")
-          CloudConfig::SERVICE.delete_message(msg)
-        else
-          SlideHub::BatchLogger.error("Slide conversion failed. id=#{obj['id']} key=#{obj['key']}")
-        end
+    resp.messages.each do |msg|
+      obj = JSON.parse(msg.body)
+      SlideHub::BatchLogger.info("Start converting slide. id=#{obj['id']} key=#{obj['key']}")
+      result = self.convert_slide(obj['key'])
+      if result
+        SlideHub::BatchLogger.info("Delete message from Queue. id=#{obj['id']} key=#{obj['key']}")
+        CloudConfig::SERVICE.delete_message(msg)
+      else
+        SlideHub::BatchLogger.error("Slide conversion failed. id=#{obj['id']} key=#{obj['key']}")
       end
     end
   end
