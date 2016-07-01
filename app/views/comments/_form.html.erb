@@ -19,8 +19,8 @@
     <% #= f.label :comment, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :comment, :class => 'form-control' %>
+      <%= f.error_span(:comment) %>
     </div>
-    <%= error_span(comment[:comment]) %>
   </div>
   <%= f.hidden_field :commentable_id, :value => comment.commentable_id %>
   <%= f.hidden_field :commentable_type, :value => comment.commentable_type %>

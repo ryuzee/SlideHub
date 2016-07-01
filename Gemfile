@@ -40,11 +40,7 @@ gem 'mysql2'
 # Apply bootstrap
 gem 'less-rails'
 
-# This gem has caused a problem between 3.2.0 and 3.2.2.
-# See more detail at
-# https://github.com/seyhunak/twitter-bootstrap-rails/pull/795
-# https://github.com/dhacks/team-f/issues/1
-gem 'twitter-bootstrap-rails', '= 3.2.0'
+gem 'twitter-bootstrap-rails', '~> 3.2.2'
 gem 'execjs'
 
 # Paginate
