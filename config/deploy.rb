@@ -1,4 +1,4 @@
-lock '3.2.1'
+lock '3.5.0'
 
 set :application, 'SlideHub'
 set :repo_url, 'git@github.com:ryuzee/SlideHub.git'
