@@ -21,7 +21,7 @@ module SlideHub
             Aws.config.update({
               region: @config.region,
               credentials: Aws::Credentials.new(@config.aws_access_id, @config.aws_secret_key),
-            },)
+            })
           end
         end
 
@@ -77,7 +77,7 @@ module SlideHub
           resp = self.sqs.send_message({
             queue_url: @config.sqs_url,
             message_body: message,
-          },)
+          })
           resp
         end
 
@@ -97,7 +97,7 @@ module SlideHub
           resp = self.sqs.delete_message({
             queue_url: @config.sqs_url,
             receipt_handle: message_object.handle,
-          },)
+          })
           resp
         end
 
@@ -129,7 +129,7 @@ module SlideHub
             bucket: bucket,
             max_keys: 1000,
             prefix: prefix,
-          },)
+          })
           files = []
           resp.contents.each do |f|
             files.push({ key: f.key })
@@ -141,7 +141,8 @@ module SlideHub
           Aws::S3::Client.new(region: @config.region).get_object(
             response_target: destination,
             bucket: bucket,
-            key: key)
+            key: key,
+          )
         end
 
         def self.delete_slide(key)
@@ -173,7 +174,7 @@ module SlideHub
               objects: files,
               quiet: true,
             },
-          },) unless files.empty?
+          }) unless files.empty?
         end
 
         def self.get_download_url(bucket, key)

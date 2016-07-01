@@ -1,4 +1,4 @@
-if ENV.has_key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
+if ENV.key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
   SlideHub::Cloud::Engine::Azure.configure do |config|
     config.bucket_name = ENV['OSS_AZURE_CONTAINER_NAME']
     config.image_bucket_name = ENV['OSS_AZURE_IMAGE_CONTAINER_NAME']
@@ -21,14 +21,14 @@ else
 end
 
 module CloudConfig
-  SERVICE = if ENV.has_key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
+  SERVICE = if ENV.key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
               SlideHub::Cloud::Engine::Azure
             else
               SlideHub::Cloud::Engine::AWS
             end
 
   def self.service_name
-    if ENV.has_key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
+    if ENV.key?('OSS_USE_AZURE') && ENV['OSS_USE_AZURE'].to_i == 1
       'azure'
     else
       'aws'

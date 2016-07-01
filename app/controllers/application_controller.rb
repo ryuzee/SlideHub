@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     end
 
     def locale_from_accept_language
-      if request.env.has_key?('HTTP_ACCEPT_LANGUAGE')
+      if request.env.key?('HTTP_ACCEPT_LANGUAGE')
         request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
       else
         I18n.default_locale
@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
     def signup_enabled!
       return unless request.get?
       if request.path == '/users/sign_up' && CustomSetting['site.signup_enabled'] != '1'
-        raise ActionController::RoutingError.new('Not Found')
+        raise ActionController::RoutingError, 'Not Found'
       end
     end
 
