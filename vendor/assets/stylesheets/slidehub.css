@@ -493,3 +493,15 @@ _::-webkit-full-page-media, _:future, :root .bx-wrapper .bx-viewport {
 .tag2 { font-size: 1.2em; }
 .tag3 { font-size: 1.4em; }
 .tag4 { font-size: 1.6em; }
+
+.slidehub_body #error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
+
+.slidehub_body .field_with_errors .form-control {
+  border: 1px solid red;
+}
