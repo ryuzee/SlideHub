@@ -15,7 +15,7 @@
 FactoryGirl.define do
   factory :comment_for_slide, class: Comment do
     id 1
-    user_id 1
+    user_id 998
     commentable_id 1
     comment 'Sushi'
     commentable_type 'Slide'

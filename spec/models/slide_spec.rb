@@ -62,10 +62,22 @@ describe 'Slide' do
   end
 
   describe 'page_list' do
-    it 'returns page list as json' do
+    it 'returns page list (1 page)' do
       FactoryGirl.create(:slide)
       key = Slide.find(1).key
       expect(Slide.find(1).page_list).to eq(["#{key}/slide-1.jpg"])
+    end
+
+    it 'returns page list (10 page)' do
+      FactoryGirl.create(:slide)
+      slide = Slide.where('slides.id = ?', 1).first
+      key = slide.key
+      slide.num_of_pages = 10
+      slide.save
+      expected = ["#{key}/slide-01.jpg", "#{key}/slide-02.jpg", "#{key}/slide-03.jpg",
+                  "#{key}/slide-04.jpg", "#{key}/slide-05.jpg", "#{key}/slide-06.jpg",
+                  "#{key}/slide-07.jpg", "#{key}/slide-08.jpg", "#{key}/slide-09.jpg", "#{key}/slide-10.jpg"]
+      expect(Slide.find(1).page_list).to eq(expected)
     end
   end
 end

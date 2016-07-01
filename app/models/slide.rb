@@ -70,7 +70,7 @@ class Slide < ActiveRecord::Base
   def page_list
     len = num_of_pages.abs.to_s.length
     result = []
-    for i in 1..num_of_pages
+    (1..num_of_pages).each do |i|
       n = i.to_s.rjust(len, '0')
       result.push("#{key}/slide-#{n}.jpg")
     end
