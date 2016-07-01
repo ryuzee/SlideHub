@@ -128,8 +128,10 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  # web-console 3.x did NOT work well with better errors...
-  gem 'web-console', '~> 2.3.0'
+  #
+  # web-console 3.2 did NOT work well with better errors...
+  # see https://github.com/rails/web-console/issues/204
+  gem 'web-console', '~> 3.1.1'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
