@@ -78,7 +78,7 @@ gem 'aws-sdk-core'
 gem 'aws-sdk-resources'
 
 # Azure
-gem 'azure', '~> 0.7.1'
+gem 'azure', '~> 0.7.5'
 # gem 'azure-contrib', git: 'https://github.com/dmichael/azure-contrib.git'
 gem 'azure-contrib', git: 'https://github.com/ryuzee/azure-contrib.git'
 
