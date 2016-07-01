@@ -74,7 +74,7 @@ GEM
       activerecord (>= 3.2, < 6.0)
       rake (~> 10.4)
     arel (6.0.3)
-    ast (2.2.0)
+    ast (2.3.0)
     aws-sdk (2.2.16)
       aws-sdk-resources (= 2.2.16)
     aws-sdk-core (2.2.16)
@@ -323,7 +323,7 @@ GEM
       addressable
       azure
       hashie
-    parser (2.3.0.6)
+    parser (2.3.1.2)
       ast (~> 2.2)
     pdf-reader (1.3.3)
       Ascii85 (~> 1.0.0)
@@ -431,15 +431,15 @@ GEM
     rspec_junit_formatter (0.2.3)
       builder (< 4)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (0.37.2)
-      parser (>= 2.3.0.4, < 3.0)
+    rubocop (0.41.1)
+      parser (>= 2.3.1.1, < 3.0)
       powerpack (~> 0.1)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (~> 0.3)
+      unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-filemagic (0.7.1)
     ruby-graphviz (1.2.2)
-    ruby-progressbar (1.7.5)
+    ruby-progressbar (1.8.1)
     ruby-rc4 (0.1.5)
     rubyzip (1.1.7)
     safe_yaml (1.0.4)
@@ -505,7 +505,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
-    unicode-display_width (0.3.1)
+    unicode-display_width (1.1.0)
     unicorn (5.0.1)
       kgio (~> 2.6)
       rack
@@ -603,7 +603,7 @@ DEPENDENCIES
   rmagick
   rspec-rails
   rspec_junit_formatter
-  rubocop (~> 0.37.2)
+  rubocop (~> 0.41.1)
   ruby-filemagic
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
