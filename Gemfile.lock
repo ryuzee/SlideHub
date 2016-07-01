@@ -443,9 +443,9 @@ GEM
     ruby-rc4 (0.1.5)
     rubyzip (1.1.7)
     safe_yaml (1.0.4)
-    sass (3.4.21)
-    sass-rails (5.0.4)
-      railties (>= 4.0.0, < 5.0)
+    sass (3.4.22)
+    sass-rails (5.0.5)
+      railties (>= 4.0.0, < 6)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
@@ -486,7 +486,7 @@ GEM
       ref
     thor (0.19.1)
     thread_safe (0.3.5)
-    tilt (2.0.2)
+    tilt (2.0.5)
     timers (4.1.1)
       hitimes
     ttfunk (1.4.0)
@@ -605,7 +605,7 @@ DEPENDENCIES
   rspec_junit_formatter
   rubocop (~> 0.41.1)
   ruby-filemagic
-  sass-rails (~> 5.0)
+  sass-rails (~> 5.0.5)
   sdoc (~> 0.4.0)
   selenium-webdriver
   simplecov
