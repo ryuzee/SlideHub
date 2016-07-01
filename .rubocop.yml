@@ -1,5 +1,5 @@
 # target_version:
-#   rubocop v0.37.2
+#   rubocop v0.41.1
 
 # 自動生成されるものはチェック対象から除外する
 AllCops:
@@ -49,9 +49,9 @@ Style/CollectionMethods:
     inject: "inject"
     reduce: "inject"
 
-# Hash#has_key? は許可したい
-Style/DeprecatedHashMethods:
-  Enabled: false
+# Hash#has_key? があるかどうかを調べる
+Style/PreferredHashMethods:
+  Enabled: true
 
 # ドキュメントの無い public class を許可する
 Style/Documentation:

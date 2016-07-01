@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.6'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -78,7 +78,7 @@ gem 'aws-sdk-core'
 gem 'aws-sdk-resources'
 
 # Azure
-gem 'azure', '~> 0.7.1'
+gem 'azure', '~> 0.7.5'
 # gem 'azure-contrib', git: 'https://github.com/dmichael/azure-contrib.git'
 gem 'azure-contrib', git: 'https://github.com/ryuzee/azure-contrib.git'
 
@@ -136,7 +136,7 @@ group :development do
   gem 'annotate'
 
   # Static Analysis
-  gem 'rubocop', '~> 0.37.2'
+  gem 'rubocop', '~> 0.41.1'
 
   gem 'guard'
   gem 'guard-rubocop'
@@ -181,7 +181,7 @@ group :test do
 end
 
 group :deployment do
-  gem 'capistrano', '~> 3.2.1'
+  gem 'capistrano', '~> 3.5.0'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
