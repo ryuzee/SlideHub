@@ -172,9 +172,9 @@ GEM
     coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    coffee-rails (4.1.1)
+    coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
-      railties (>= 4.0.0, < 5.1.x)
+      railties (>= 4.0.0, < 5.2.x)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -212,7 +212,7 @@ GEM
       railties (>= 4.0, < 5.1)
     equalizer (0.0.11)
     erubis (2.7.0)
-    execjs (2.6.0)
+    execjs (2.7.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.6.0)
@@ -564,7 +564,7 @@ DEPENDENCIES
   capistrano3-unicorn
   capybara
   codeclimate-test-reporter
-  coffee-rails (~> 4.1.0)
+  coffee-rails (~> 4.2.1)
   counter_culture
   database_cleaner
   devise
