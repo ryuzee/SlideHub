@@ -68,15 +68,15 @@ class UsersController < ApplicationController
 
   private
 
-  def user_slide_with_paginate(user_id, slides_per_page = 30)
-    if params[:sort_by] == 'popularity'
-      slides = Slide.published.popular
-    else
-      slides = Slide.published.latest
+    def user_slide_with_paginate(user_id, slides_per_page = 30)
+      slides = if params[:sort_by] == 'popularity'
+                 Slide.published.popular
+               else
+                 Slide.published.latest
+               end
+      slides = slides.owner(user_id).
+               includes(:user).
+               paginate(page: params[:page], per_page: slides_per_page)
+      slides
     end
-    slides = slides.owner(user_id).
-            includes(:user).
-            paginate(page: params[:page], per_page: slides_per_page)
-    slides
-  end
 end
