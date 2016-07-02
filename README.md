@@ -105,6 +105,16 @@ cd /tmp/
  * The script will install all required packages including Ruby environment, nginx, several tools and so on.
  * The script will also create the database on your server. However, if you want to use a database running on other server, you need to create a database by your own.
 
+After that, you need to initialize database by executintg following commands after changing directory to the application.
+
+[warnings] If you run the database server on the other host, the commands must be executed after setting environmental variables.
+
+```
+bin/rake db:migrate RAILS_ENV=(development|production)
+bin/rake db:seed RAILS_ENV=(development|production)
+```
+
+
 ## Environment Variables
 
 You also need to set several environmental variables as follows.
