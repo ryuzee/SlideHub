@@ -1,0 +1,174 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "2d3916e5a5ae937c79f599c12e038e20019086c2b6e6cc2a246e7f69810b4a32",
+      "message": "Possible command injection",
+      "file": "lib/slide_hub/convert_util.rb",
+      "line": 23,
+      "link": "http://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"cd #{dir} && mogrify -format jpg slide*.ppm\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SlideHub::ConvertUtil",
+        "method": "ppm_to_jpg"
+      },
+      "user_input": "dir",
+      "confidence": "Medium",
+      "note": "This command is intentional and does not use any parameters coming from outside."
+    },
+    {
+      "warning_type": "Cross Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "414421ea8c9179a59d567aa7035d3c9d4d2567ad1d0c3e3a5e744ce0ccc8a170",
+      "message": "Unescaped model attribute",
+      "file": "app/views/layouts/application.html.erb",
+      "line": 108,
+      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "CustomSetting[\"custom_content.center_bottom\"]",
+      "render_path": [{"type":"controller","class":"ApplicationController","method":"set_locale","line":18,"file":"app/controllers/application_controller.rb"}],
+      "location": {
+        "type": "template",
+        "template": "layouts/application"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": "This function is intentional. only administrator can set a content."
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "6b537d123af46d06bac95fc4ae08d752732fe6e2fa2ade44e83719f2bb50a11c",
+      "message": "Parameters should be whitelisted for mass assignment",
+      "file": "app/controllers/managements_controller.rb",
+      "line": 45,
+      "link": "http://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ManagementsController",
+        "method": "slide_update"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "note": "This function will be only used by Administrator. so mass assignment will not be a problem."
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "b08e9166f0ff45719a03ecd0f0263e9b3b0f97249b5f1f752ff2c23571b4d3af",
+      "message": "Possible command injection",
+      "file": "lib/slide_hub/convert_util.rb",
+      "line": 5,
+      "link": "http://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"cd #{dir} && mv #{file} #{file}.pdf\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SlideHub::ConvertUtil",
+        "method": "rename_to_pdf"
+      },
+      "user_input": "dir",
+      "confidence": "Medium",
+      "note": "This command is intentional and does not use any parameters coming from outside."
+    },
+    {
+      "warning_type": "Cross Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "c94c74541e0db0d60db4d604bf38c450d7f0382bd9fb62479d9dd2b6a5be4a5f",
+      "message": "Unescaped model attribute",
+      "file": "app/views/layouts/application.html.erb",
+      "line": 104,
+      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "CustomSetting[\"custom_content.center_top\"]",
+      "render_path": [{"type":"controller","class":"ApplicationController","method":"set_locale","line":18,"file":"app/controllers/application_controller.rb"}],
+      "location": {
+        "type": "template",
+        "template": "layouts/application"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": "This function is intentional. only administrator can set a content."
+    },
+    {
+      "warning_type": "Cross Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "d7ce1c438728d1d599b9ac7a73b411a29ca7c5203db67f5dc52d942bcf335b24",
+      "message": "Unescaped model attribute",
+      "file": "app/views/layouts/managements.html.erb",
+      "line": 40,
+      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "CustomSetting[\"site.name\"]",
+      "render_path": [{"type":"controller","class":"ManagementsController","method":"dashboard","line":21,"file":"app/controllers/managements_controller.rb"}],
+      "location": {
+        "type": "template",
+        "template": "layouts/managements"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": "This function is intentional. only administrator can set a content."
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "eb28c8a260c4b02f85575023ef24ad57e2fce8cc993b81e16a958a4dcc887e12",
+      "message": "Possible command injection",
+      "file": "lib/slide_hub/convert_util.rb",
+      "line": 11,
+      "link": "http://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"cd #{dir} && pdftoppm #{file} slide\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SlideHub::ConvertUtil",
+        "method": "pdf_to_ppm"
+      },
+      "user_input": "dir",
+      "confidence": "Medium",
+      "note": "This command is intentional and does not use any parameters coming from outside."
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "f7c312b4ed096841bb037474ffebe67dd37ae4604af7e8389bea9e3f8e6cb4d4",
+      "message": "Possible command injection",
+      "file": "lib/slide_hub/convert_util.rb",
+      "line": 55,
+      "link": "http://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"cd #{dir} && pdftotext #{file} -f #{(i + 1)} -l #{(i + 1)} - > #{dir}/#{(i + 1)}.txt\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SlideHub::ConvertUtil",
+        "method": "pdf_to_transcript"
+      },
+      "user_input": "dir",
+      "confidence": "Medium",
+      "note": "This command is intentional and does not use any parameters coming from outside."
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "fdb3b3d23a419a8a403b9706709a6a9b06026138f12e0a9d7ad90c39dfdd9bab",
+      "message": "Possible command injection",
+      "file": "lib/slide_hub/convert_util.rb",
+      "line": 17,
+      "link": "http://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"cd #{dir} && unoconv -f pdf -o #{file}.pdf #{file}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SlideHub::ConvertUtil",
+        "method": "ppt_to_pdf"
+      },
+      "user_input": "dir",
+      "confidence": "Medium",
+      "note": "This command is intentional and does not use any parameters coming from outside."
+    }
+  ],
+  "updated": "2016-07-02 09:16:33 +0900",
+  "brakeman_version": "3.3.2"
+}
