@@ -109,6 +109,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap3-datetimepicker-rails (4.17.37)
       momentjs-rails (>= 2.8.1)
+    brakeman (3.3.2)
     builder (3.2.2)
     bullet (5.0.0)
       activesupport (>= 3.0.0)
@@ -554,6 +555,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap3-datetimepicker-rails (~> 4.17.37)
+  brakeman
   bullet
   byebug
   capistrano (~> 3.5.0)

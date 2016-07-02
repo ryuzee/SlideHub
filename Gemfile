@@ -173,6 +173,9 @@ group :development do
 
   # Rails Best Practice
   gem 'rails_best_practices'
+
+  # Brakeman
+  gem 'brakeman', require: false
 end
 
 group :test do
