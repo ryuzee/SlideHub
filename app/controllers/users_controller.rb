@@ -34,11 +34,7 @@ class UsersController < ApplicationController
 
   def index
     @user = User.find(current_user.id)
-    @slides = Slide.
-              latest.
-              owner(current_user.id).
-              includes(:user).
-              paginate(page: params[:page], per_page: 30)
+    @slides = user_slide_with_paginate(current_user.id)
     @tags = Slide.
             owner(current_user.id).
             tag_counts_on(:tags).order('count DESC')
@@ -46,10 +42,15 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @slides = Slide.published.latest.
-              owner(params[:id]).
-              includes(:user).
-              paginate(page: params[:page], per_page: 30)
+    @slides = user_slide_with_paginate(params[:id])
+    # if params[:sort_by] == 'popularity'
+      # @slides = Slide.published.popular
+    # else
+      # @slides = Slide.published.latest
+    # end
+    # @slides = @slides.owner(params[:id]).
+            # includes(:user).
+            # paginate(page: params[:page], per_page: 30)
     @tags = Slide.published.
             owner(params[:id]).
             tag_counts_on(:tags).order('count DESC')
@@ -65,5 +66,19 @@ class UsersController < ApplicationController
     @slides = @q.result(distinct: true).
               owner(current_user.id).
               latest
+  end
+
+  private
+
+  def user_slide_with_paginate(user_id)
+    if params[:sort_by] == 'popularity'
+      slides = Slide.published.popular
+    else
+      slides = Slide.published.latest
+    end
+    slides = slides.owner(user_id).
+            includes(:user).
+            paginate(page: params[:page], per_page: 30)
+    slides
   end
 end

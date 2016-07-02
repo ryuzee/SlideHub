@@ -4,6 +4,15 @@
 <div class="row">
   <div class="col-md-9">
     <h3><%= t :slides_by_user, user: @user.display_name %></h3>
+    <div class="btn-group btn-toggle" style="margin-bottom:10px;">
+      <% if params['sort_by'] != 'popularity' %>
+        <a class="btn btn-primary active" style="color:#fff;"><%= t :order_by_uploaded_date %></a>
+        <a href="?sort_by=popularity" class="btn btn-default"><%= t :order_by_popularity %></a>
+      <% else %>
+        <a href="?sort_by=date" class="btn btn-default"><%= t :order_by_uploaded_date %></a>
+        <a class="btn btn-primary active" style="color:#fff;"><%= t :order_by_popularity %></a>
+      <% end %>
+    </div>
     <%= render 'slides/thumbnail_template', column_class: 'col-md-4 col-sm-8', slides: @slides %>
     <div>
       <%= will_paginate @slides, :renderer => BootstrapPagination::Rails %>
