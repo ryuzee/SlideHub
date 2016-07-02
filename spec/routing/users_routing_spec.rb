@@ -39,6 +39,10 @@ describe UsersController do
       expect(get('/users/1')).to route_to('users#show', id: '1')
     end
 
+    it 'routes to #embedded' do
+      expect(get('/users/1/embedded')).to route_to('users#embedded', id: '1')
+    end
+
     it 'routes to #statistics' do
       expect(get('/users/statistics')).to route_to('users#statistics')
     end

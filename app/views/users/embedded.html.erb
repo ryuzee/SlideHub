@@ -1,0 +1,170 @@
+<div class="slidehub_body">
+  <div style="max-width:1024px; margin:0 auto;">
+  <% @slides.each do |slide| %>
+    <% if slide.convert_status < 0 then %>
+      <% image_url = "#{root_url}oss/images/failed_to_convert_small.jpg" %>
+    <% elsif slide.convert_status < 100 then %>
+      <% image_url = "#{root_url}oss/images/converting_small.jpg" %>
+    <% else %>
+      <% image_url = slide.thumbnail_url %>
+    <% end %>
+
+    <div style="padding:4px;">
+      <div class="slidecard">
+        <div class="slidecard-image">
+        <a href="<%= "#{root_url}/slides/#{slide.id}" %>"><img src="<%= image_url %>" class="img-responsive" style="width:100%" /></a>
+        </div>
+        <div class="slidecard-content">
+          <div class="slidecard-basic-info">
+            <div class="slidecard-title"><span class="no_decoration"><a href="<%= "#{root_url}slides/#{slide.id}" %>"><%= strip_tags(slide.name).truncate(40) %></a></span></div>
+          <div class="slidecard-description"><%= strip_tags(slide.description).truncate(80) %></div>
+          </div>
+          <div class="slidecard-information">
+            <div class="h5" style="margin-top:2px;margin-bottom:2px;">by <a href="<%= "#{root_url}users/#{slide.user_id}" %>"><%= strip_tags slide.user_display_name %></a></div>
+            <%= slide.created_at.to_s(:default) %> | <%= slide.num_of_pages %> pages | <%= slide.total_view %> views
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>
+
+<style>
+.slidehub_body .slidecard {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, "Arial", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "游ゴシック", YuGothic, sans-serif;
+  max-width: 300px;
+}
+
+.slidehub_body .slidecard .slidecard-image{
+  overflow: hidden;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  border-bottom: 1px solid #ccc;
+}
+
+.slidehub_body .slidecard .slidecard-image img{
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.slidehub_body .slidecard .slidecard-image:hover img{
+  /*-webkit-transform: scale(1.2) rotate(-7deg);
+  -moz-transform: scale(1.2) rotate(-7deg);
+  -ms-transform: scale(1.2) rotate(-7deg);
+  -o-transform: scale(1.2) rotate(-7deg);
+  transform: scale(1.2) rotate(-7deg);*/
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2) ;
+  -o-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+.slidehub_body .slidecard .slidecard-image:hover img.img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.slidehub_body .slidecard {
+  position:relative;
+  background-color: #fff;
+  margin-top: 0px;
+  position: relative;
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 4 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.slidehub_body .slidecard .slidecard-content {
+  padding: 10px;
+}
+
+.slidehub_body .slidecard .slidecard-basic-info {
+  height: auto;
+}
+
+.slidehub_body .slidecard .slidecard-content .slidecard-title, .slidehub_body .slidecard-reveal .slidecard-title{
+  font-size: 0.9em;
+  font-weight: bold;
+  height:2.4em;
+  margin-bottom: 0.4em;
+  overflow: hidden;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.slidehub_body .slidecard .slidecard-content .slidecard-description {
+  font-size: 0.8em;
+  height: 3em;
+  overflow:hidden;
+}
+
+.slidehub_body .slidecard .slidecard-action{
+  padding: 20px;
+  border-top: 1px solid rgba(160, 160, 160, 0.2);
+}
+.slidehub_body .slidecard .slidecard-action a{
+  font-size: 15px;
+  color: #ffab40;
+  text-transform:uppercase;
+  margin-right: 20px;
+  -webkit-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  -ms-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+}
+.slidehub_body .slidecard .slidecard-action a:hover{
+  color:#ffd8a6;
+  text-decoration:none;
+}
+
+.slidehub_body .slidecard .slidecard-information{
+  padding: 2px;
+  border-top: 1px solid rgba(160, 160, 160, 0.2);
+  font-size: 0.6em;
+}
+.slidehub_body .slidecard .slidecard-reveal{
+  padding: 20px;
+  position: absolute;
+  background-color: #FFF;
+  width: 100%;
+  overflow-y: auto;
+  /*top: 0;*/
+  left:0;
+  bottom:0;
+  height: 100%;
+  z-index: 1;
+  display: none;
+}
+
+.slidehub_body .slidecard .slidecard-reveal p{
+  color: rgba(0, 0, 0, 0.71);
+  margin:20px ;
+}
+
+.slidehub_body div a,
+.slidehub_body div a:hover,
+.slidehub_body div a:visited,
+.slidehub_body div a:active {
+  text-decoration: none;
+  color: #cd4939;
+}
+
+.slidehub_body span.no_decoration a,
+.slidehub_body span.no_decoration a:hover,
+.slidehub_body span.no_decoration a:visited,
+.slidehub_body span.no_decoration a:active {
+  text-decoration: none;
+  color: #333 !important;
+}
+
+</style>

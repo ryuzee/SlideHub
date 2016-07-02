@@ -43,21 +43,19 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @slides = user_slide_with_paginate(params[:id])
-    # if params[:sort_by] == 'popularity'
-      # @slides = Slide.published.popular
-    # else
-      # @slides = Slide.published.latest
-    # end
-    # @slides = @slides.owner(params[:id]).
-            # includes(:user).
-            # paginate(page: params[:page], per_page: 30)
     @tags = Slide.published.
             owner(params[:id]).
             tag_counts_on(:tags).order('count DESC')
     respond_to do |format|
-      format.html
-      format.rss
+      format.html {}
+      format.rss {}
     end
+  end
+
+  def embedded
+    @slides = user_slide_with_paginate(params[:id], 5)
+    s = render_to_string layout: 'plain', collection: @slide
+    render text: s, layout: false, content_type: 'application/javascript'
   end
 
   def statistics
@@ -70,7 +68,7 @@ class UsersController < ApplicationController
 
   private
 
-  def user_slide_with_paginate(user_id)
+  def user_slide_with_paginate(user_id, slides_per_page = 30)
     if params[:sort_by] == 'popularity'
       slides = Slide.published.popular
     else
@@ -78,7 +76,7 @@ class UsersController < ApplicationController
     end
     slides = slides.owner(user_id).
             includes(:user).
-            paginate(page: params[:page], per_page: 30)
+            paginate(page: params[:page], per_page: slides_per_page)
     slides
   end
 end
