@@ -54,8 +54,8 @@ class UsersController < ApplicationController
 
   def embedded
     @slides = user_slide_with_paginate(params[:id], 5)
-    s = render_to_string layout: 'plain', collection: @slide
-    render text: s, layout: false, content_type: 'application/javascript'
+    uglified_js = render_to_string layout: 'plain', collection: @slide
+    render text: uglified_js, layout: false, content_type: 'application/javascript'
   end
 
   def statistics
