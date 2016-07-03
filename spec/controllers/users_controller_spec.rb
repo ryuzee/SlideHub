@@ -60,6 +60,14 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
+    describe 'GET /users/998/embedded' do
+      it 'works!' do
+        create(:general_user)
+        get 'embedded', id: '998'
+        expect(response.status).to eq(200)
+      end
+    end
+
     describe 'GET /users/index' do
       it 'redirect to login' do
         get 'index'

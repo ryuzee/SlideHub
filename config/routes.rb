@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'slides/:id/:page' => 'slides#show'
 
   get 'users/view/:id' => 'users#show'
+  get 'users/:id/embedded' => 'users#embedded'
   resources :users do
     get 'index', on: :collection
     get 'statistics', on: :collection

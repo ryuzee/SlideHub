@@ -14,9 +14,9 @@ SimpleCov.start do
   add_filter '/vendor/'
   add_filter '/spec/'
 
-  formatter SimpleCov::Formatter::MultiFormatter[
+  SimpleCov.formatters = [
     SimpleCov::Formatter::HTMLFormatter,
-    CodeClimate::TestReporter::Formatter
+    CodeClimate::TestReporter::Formatter,
   ]
 end
 
