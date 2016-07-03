@@ -12,15 +12,15 @@
     <div style="padding:4px;">
       <div class="slidecard">
         <div class="slidecard-image">
-        <a href="<%= "#{root_url}/slides/#{slide.id}" %>"><img src="<%= image_url %>" class="img-responsive" style="width:100%" /></a>
+        <a href="<%= "#{root_url}/slides/#{slide.id}" %>" target="_blank"><img src="<%= image_url %>" class="img-responsive" style="width:100%" /></a>
         </div>
         <div class="slidecard-content">
           <div class="slidecard-basic-info">
-            <div class="slidecard-title"><span class="no_decoration"><a href="<%= "#{root_url}slides/#{slide.id}" %>"><%= strip_tags(slide.name).truncate(40) %></a></span></div>
+            <div class="slidecard-title"><span class="no_decoration"><a href="<%= "#{root_url}slides/#{slide.id}" %>" target="_blank"><%= strip_tags(slide.name).truncate(40) %></a></span></div>
           <div class="slidecard-description"><%= strip_tags(slide.description).truncate(80) %></div>
           </div>
           <div class="slidecard-information">
-            <div class="h5" style="margin-top:2px;margin-bottom:2px;">by <a href="<%= "#{root_url}users/#{slide.user_id}" %>"><%= strip_tags slide.user_display_name %></a></div>
+            <div class="h5" style="margin-top:2px;margin-bottom:2px;">by <a href="<%= "#{root_url}users/#{slide.user_id}" %>" target="_blank"><%= strip_tags slide.user_display_name %></a></div>
             <%= slide.created_at.to_s(:default) %> | <%= slide.num_of_pages %> pages | <%= slide.total_view %> views
           </div>
         </div>
