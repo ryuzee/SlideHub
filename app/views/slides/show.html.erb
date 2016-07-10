@@ -17,7 +17,7 @@ if @slide.tags.count > 0
    end
 %>
 <% set_meta_tags keywords: keywords %>
-<% set_meta_tags author: user_url(@slide.user_id) %>
+<% set_meta_tags author: "#{root_url}#{@slide.user.username}" %>
 <% set_meta_tags og: {
   title:    @slide.name,
   type:     'article',
@@ -125,7 +125,7 @@ if @slide.tags.count > 0
                 <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
               </div>
               <div class="media-body">
-                <div class="h6" style="margin-top:0px"><a href="<%= user_path(c.user.id) %>"><%= strip_tags c.user.display_name %></a></div>
+                <div class="h6" style="margin-top:0px"><a href="/<%= c.user.username %>"><%= strip_tags c.user.display_name %></a></div>
                 <div class="h6"><%= strip_tags c.comment %></div>
                 <div class="h6"><%= c.created_at %>
                 <% if (user_signed_in? and current_user.id == c.user_id) %>
@@ -195,7 +195,7 @@ if @slide.tags.count > 0
     <li>
       <a href="<%= slide_path(s.id) %>"><img src="<%= s.thumbnail_url %>"></a>
       <h3 class="h5"><span class="no_decoration"><a href="<%= slide_path(s.id) %>"><%= strip_tags s.name.truncate(24) %></a></span></h3>
-      <p class="h6"><%= s.created_at %> by <a href="<%= user_path(s.user_id) %>"><%= strip_tags s.user.display_name %></a></p>
+      <p class="h6"><%= s.created_at %> by <a href="/<%= s.user.username %>"><%= strip_tags s.user.display_name %></a></p>
     </li>
     <% end %>
     </ul>

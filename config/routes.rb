@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     get 'index', on: :collection
     get 'statistics', on: :collection
   end
+
   resources :slides
   resources :comments, only: [:create, :destroy]
 
@@ -41,6 +42,10 @@ Rails.application.routes.draw do
   end
   get 'managements/slide_edit/:id' => 'managements#slide_edit'
   post 'managements/slide_update' => 'managements#slide_update'
+
+  get ':username' => 'users#show'
+  get ':username/statistics' => 'users#statistics'
+  get ':username/embedded' => 'users#embedded'
 
   # config/routes.rb
   Rails.application.routes.draw do

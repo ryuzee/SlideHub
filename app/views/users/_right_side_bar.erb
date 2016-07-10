@@ -4,7 +4,7 @@
   </div>
   <div class="profile-usertitle">
     <div class="profile-usertitle-name">
-      <%= link_to strip_tags(user.display_name), user %>
+      <%= link_to strip_tags(user.display_name), "/#{user.username}" %>
     </div>
     <div class="profile-usertitle-job">
       <%= strip_tags user.biography %>

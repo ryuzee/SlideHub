@@ -97,3 +97,5 @@ en:
         reset_password_token: "Reset password token"  #g
         slides: "Slides"  #g
         slides_count: "Slides"
+        avatar: "Avatar"
+        username: "Username"

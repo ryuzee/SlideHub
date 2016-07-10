@@ -6,19 +6,21 @@
         <thead>
             <tr>
                 <th class="col-md-1"><%= sort_link(@q, :id) %></th>
-                <th class="col-md-2"><%= sort_link(@q, :email) %></th>
+                <th class="col-md-3"><%= sort_link(@q, :email) %></th>
+                <th class="col-md-2"><%= sort_link(@q, :username) %></th>
                 <th class="col-md-2"><%= sort_link(@q, :display_name) %></th>
                 <th class="col-md-1"><%= sort_link(@q, :admin) %></th>
                 <th class="col-md-1"><%= sort_link(@q, :slides_count) %></th>
-                <th class="col-md-2"><%= sort_link(@q, :created_at) %></th>
-                <th class="col-md-2"><%= sort_link(@q, :modified_at) %></th>
+                <th class="col-md-1"><%= sort_link(@q, :created_at) %></th>
+                <th class="col-md-1"><%= sort_link(@q, :modified_at) %></th>
             </tr>
         </thead>
         <tbody>
             <% @users.each do |user| %>
             <tr>
-                <td><a href="/users/<%= user.id %>"><%= user.id %></a>&nbsp;</td>
+                <td><%= link_to user.id, "/#{user.username}" %> &nbsp;</td>
                 <td><%= user.email %></td>
+                <td><%= user.username %></td>
                 <td><%= user.display_name %></td>
                 <td><%= user.admin %></td>
                 <td><%= user.slides_count %></td>

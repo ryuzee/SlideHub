@@ -101,3 +101,5 @@ ja:
         reset_password_token: "パスワードリセット用トークン"  #g
         slides: "スライド"  #g
         slides_count: "スライド数"
+        avatar: "アバター"
+        username: "ユーザー名"
