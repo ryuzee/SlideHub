@@ -20,6 +20,10 @@
             <%= f.password_field :password_confirmation, class: "form-control" %>
           </div>
           <div class="form-group">
+            <%= f.label t "activerecord.attributes.user.username" %>
+            <%= f.text_field :username, class: "form-control" %>
+          </div>
+          <div class="form-group">
             <%= f.label t "activerecord.attributes.user.display_name" %>
             <%= f.text_field :display_name, class: "form-control" %>
           </div>

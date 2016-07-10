@@ -24,19 +24,29 @@
         <%= f.label :current_password %> <i>(<%= t('.we_need_your_current_password_to_confirm_your_changes', :default => 'we need your current password to confirm your changes') %>)</i>
         <%= f.password_field :current_password, class: "form-control" %>
       </div>
-
       <div class="form-group">
-        <%= f.label t "display_name" %>
+        <%= f.label :username %>
+        <%= f.text_field :username, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :display_name %>
         <%= f.text_field :display_name, class: "form-control" %>
       </div>
       <div class="form-group">
-        <%= f.label t "biography" %>
+        <%= f.label :biography %>
         <%= f.text_area :biography, class: "form-control", rows: 5 %>
       </div>
 
       <div class="form-group">
-        <%= f.label :avatar %><%= image_tag(current_user.avatar.url(:thumb)) %>
-        <%= f.file_field :avatar, class: 'form-control' %>
+        <%= f.label :avatar %>
+        <div class="row">
+          <div class="col-md-1">
+            <%= image_tag(current_user.avatar.url(:thumb), :class => 'img-responsive') %>
+          </div>
+          <div class="col-md-11">
+            <%= f.file_field :avatar, class: 'form-control' %>
+          </div>
+        </div>
       </div>
 
       <%= f.submit t('.update', :default => "Update"), class: "btn btn-primary" %>
