@@ -37,7 +37,9 @@ class User < ActiveRecord::Base
   validates :display_name, length: { maximum: 32 }
   validates :biography, presence: true
   validates :biography, length: { maximum: 1024 }
-  validates :username, presence: true, uniqueness: true, length: { maximum: 32 }
+  validates :username, uniqueness: true, length: { minimum: 3, maximum: 32 }
+  VALID_USERNAME_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,30}[a-zA-Z0-9]\z/
+  validates :username, format: { with: VALID_USERNAME_REGEX }, exclusion: { in: ReservedWord.list }
   has_many :slides
 
   has_attached_file :avatar, styles: { medium: '192x192>', thumb: '100x100#' }, default_url: '/avatar/:style/missing.png'
