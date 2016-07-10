@@ -1,6 +1,7 @@
 require 'simplecov'
 require 'codeclimate-test-reporter'
 require 'webmock'
+require 'shoulda/matchers'
 include WebMock::API
 WebMock.allow_net_connect!
 

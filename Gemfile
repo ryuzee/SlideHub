@@ -127,6 +127,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'rspec_junit_formatter'
   gem 'codeclimate-test-reporter'
+  gem 'shoulda-matchers', require: false
 end
 
 group :development do
