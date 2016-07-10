@@ -12,7 +12,7 @@ class AddUsernameToUser < ActiveRecord::Migration
     username = user.email
     username = username.match(/(.+?)@(.+?)/)
     username = username[1]
-    puts username
+    say "#{username} was set"
     while true do
       if User.where('username = ?', username).where('id != ?', user.id).count == 0
         execute("update users set username = '#{username}' where id = #{user.id}")

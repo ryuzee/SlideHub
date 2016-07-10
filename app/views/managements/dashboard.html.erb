@@ -87,7 +87,7 @@
               <tr>
                 <td><a href="/slides/<%= slide.id %>"><%= slide.id %></a></td>
                 <td><%= slide.name %></td>
-                <td><%= link_to slide.user_display_name, "/#{slide.user.username}" %></td>
+                <td><%= link_to slide.user_display_name, "/#{slide.user_username}" %></td>
                 <td><%= slide.created_at %></td>
               </tr>
               <% end %>
@@ -125,7 +125,7 @@
               <tr>
                 <td><a href="/slides/<%= slide.id %>"><%= slide.id %></a></td>
                 <td><%= slide.name %></td>
-                <td><%= link_to slide.user_display_name, "/#{slide.user.username}" %></td>
+                <td><%= link_to slide.user_display_name, "/#{slide.user_username}" %></td>
                 <td><%= slide.created_at %></td>
               </tr>
             <% end %>
