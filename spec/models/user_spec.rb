@@ -4,7 +4,7 @@ require 'rails_helper'
 describe 'User' do
   let(:user) { build(:general_user) }
 
-  describe "valid usernames" do
+  describe 'valid usernames' do
     valid_usernames = %w(
       ryuzee
       ryuzee-1234
@@ -14,7 +14,7 @@ describe 'User' do
     it { expect(user).to allow_value(*valid_usernames).for(:username) }
   end
 
-  describe "invalid usernames" do
+  describe 'invalid usernames' do
     invalid_usernames = [
       'ryuzee@example.com',
       'search',
