@@ -17,7 +17,7 @@ if @slide.tags.count > 0
    end
 %>
 <% set_meta_tags keywords: keywords %>
-<% set_meta_tags author: "#{root_url}#{@slide.user_username}" %>
+<% set_meta_tags author: "#{root_url}#{@slide.user.username}" %>
 <% set_meta_tags og: {
   title:    @slide.name,
   type:     'article',
