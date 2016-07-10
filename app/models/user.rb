@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
   validates :display_name, length: { maximum: 32 }
   validates :biography, presence: true
   validates :biography, length: { maximum: 1024 }
+  validates :username, uniqueness: true
   has_many :slides
 
   has_attached_file :avatar, styles: { medium: '192x192>', thumb: '100x100#' }, default_url: '/avatar/:style/missing.png'

@@ -31,6 +31,7 @@ require 'pp'
 
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: [:index, :statistics]
+  before_action :username_to_id, only: [:show, :embedded, :statistics]
 
   def index
     @user = User.find(current_user.id)
@@ -78,5 +79,12 @@ class UsersController < ApplicationController
                includes(:user).
                paginate(page: params[:page], per_page: slides_per_page)
       slides
+    end
+
+    def username_to_id
+      if params.key?(:username)
+        id = User.where('username = ?', params[:username]).first.id
+        params[:id] = id
+      end
     end
 end

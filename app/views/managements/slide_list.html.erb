@@ -24,7 +24,7 @@
             <tr>
                 <td><a href="/slides/<%= slide.id %>"><%= slide.id %></a></td>
                 <td><a href="/slides/<%= slide.id %>"><%= slide.name %></a>&nbsp;</td>
-                <td><a href="/users/<%= slide.user_id %>"><%= slide.user_id %></a>&nbsp;</td>
+                <td><%= link_to slide.user_id, "/#{slide.user_id}" %>&nbsp;</td>
                 <td><%= slide.created_at %></td>
                 <td><%= slide.modified_at %></td>
                 <td><%= slide.convert_status %></td>

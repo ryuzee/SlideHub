@@ -45,6 +45,7 @@ FactoryGirl.define do
     password 'password'
     admin true
     initialize_with { User.find_or_create_by(id: id) }
+    username 'admin02'
   end
 
   factory :first_category, class: Category do

@@ -35,6 +35,7 @@ FactoryGirl.define do
     biography 'Bio'
     password 'password'
     admin false
+    username 'general998'
   end
 
   factory :user_admin, class: User do
@@ -44,5 +45,6 @@ FactoryGirl.define do
     biography 'Bio'
     password 'password'
     admin true
+    username 'admin999'
   end
 end
