@@ -99,65 +99,77 @@ The other option is to create `.env` file at application root directory. I recom
 ### Cloud Settings (Azure)
 
 ```
-export OSS_USE_AZURE=[0|1] # If you want to use Azure, set 1
-export OSS_AZURE_CONTAINER_NAME=[Original file container name]
-export OSS_AZURE_IMAGE_CONTAINER_NAME=[Image container name]
-export OSS_AZURE_CDN_BASE_URL=[Set value if you are using CDN]
-export OSS_AZURE_QUEUE_NAME=[BLOB queue name]
-export OSS_AZURE_STORAGE_ACCESS_KEY=[Azure Storage Access Key]
-export OSS_AZURE_STORAGE_ACCOUNT_NAME=[Azure Storage Accout Name]
+OSS_USE_AZURE=[0|1] # If you want to use Azure, set 1
+OSS_AZURE_CONTAINER_NAME=[Original file container name]
+OSS_AZURE_IMAGE_CONTAINER_NAME=[Image container name]
+OSS_AZURE_CDN_BASE_URL=[Set value if you are using CDN]
+OSS_AZURE_QUEUE_NAME=[BLOB queue name]
+OSS_AZURE_STORAGE_ACCESS_KEY=[Azure Storage Access Key]
+OSS_AZURE_STORAGE_ACCOUNT_NAME=[Azure Storage Accout Name]
 ```
 
 ### Cloud Settings (AWS)
 
 ```
-export OSS_BUCKET_NAME=[Original file bucket name]
-export OSS_IMAGE_BUCKET_NAME=[Image bucket name]
-export OSS_USE_S3_STATIC_HOSTING=[1|0]
-export OSS_REGION=[ap-northeast-1]
-export OSS_CDN_BASE_URL=[Set value if you are using CDN]
-export OSS_SQS_URL=[SQS URL]
-export OSS_AWS_ACCESS_ID=[Your AWS Access Key if you run app out of AWS]
-export OSS_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
+OSS_BUCKET_NAME=[Original file bucket name]
+OSS_IMAGE_BUCKET_NAME=[Image bucket name]
+OSS_USE_S3_STATIC_HOSTING=[1|0]
+OSS_REGION=[ap-northeast-1]
+OSS_CDN_BASE_URL=[Set value if you are using CDN]
+OSS_SQS_URL=[SQS URL]
+OSS_AWS_ACCESS_ID=[Your AWS Access Key if you run app out of AWS]
+OSS_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
 ```
 
 ### General Settings
 
 ```
 # Mandatory
-export OSS_SECRET_KEY_BASE=[Your Secret Key Base]
+OSS_SECRET_KEY_BASE=[Your Secret Key Base]
 
 # Mail settings
-export OSS_SMTP_SERVER=[Your SMTP server]
-export OSS_SMTP_PORT=[587]
-export OSS_SMTP_USERNAME=[Your SMTP account]
-export OSS_SMTP_PASSWORD=[Your SMTP password]
-export OSS_SMTP_AUTH_METHOD=plain
-export OSS_FROM_EMAIL=[Email address that will be used sender]
+OSS_SMTP_SERVER=[Your SMTP server]
+OSS_SMTP_PORT=[587]
+OSS_SMTP_USERNAME=[Your SMTP account]
+OSS_SMTP_PASSWORD=[Your SMTP password]
+OSS_SMTP_AUTH_METHOD=plain
+OSS_FROM_EMAIL=[Email address that will be used sender]
 
-export OSS_PRODUCTION_HOST=[hoge.example.com]
-export OSS_ROOT_URL=[http://your_root_url]
+OSS_PRODUCTION_HOST=[hoge.example.com]
+OSS_ROOT_URL=[http://your_root_url]
 
 # For production (closely related to rails environment)
-export OSS_DB_NAME=[DB name for Prod] # Set openslideshare if using installer
-export OSS_DB_USERNAME=[DB Username for Prod] # Set root if using installer
-export OSS_DB_PASSWORD=[DB Password for Prod] # Set passw0rd if using installer
-export OSS_DB_URL=[DB URL for Prod] # Set localhost if using installer
+OSS_DB_NAME=[DB name for Prod] # Set openslideshare if using installer
+OSS_DB_USERNAME=[DB Username for Prod] # Set root if using installer
+OSS_DB_PASSWORD=[DB Password for Prod] # Set passw0rd if using installer
+OSS_DB_URL=[DB URL for Prod] # Set localhost if using installer
 
 # For development
-export OSS_DB_NAME_DEV=[DB name for Dev]
-export OSS_DB_USERNAME_DEV=[DB Username for Dev]
-export OSS_DB_PASSWORD_DEV=[DB Password for Dev]
-export OSS_DB_URL_DEV=[DB URL for Dev]
+OSS_DB_NAME_DEV=[DB name for Dev]
+OSS_DB_USERNAME_DEV=[DB Username for Dev]
+OSS_DB_PASSWORD_DEV=[DB Password for Dev]
+OSS_DB_URL_DEV=[DB URL for Dev]
 
 # For test
-export OSS_DB_NAME_TEST=[DB name for Test]
-export OSS_DB_USERNAME_TEST=[DB Username for Test]
-export OSS_DB_PASSWORD_TEST=[DB Password for Test]
-export OSS_DB_URL_TEST=[DB URL for Test]
+OSS_DB_NAME_TEST=[DB name for Test]
+OSS_DB_USERNAME_TEST=[DB Username for Test]
+OSS_DB_PASSWORD_TEST=[DB Password for Test]
+OSS_DB_URL_TEST=[DB URL for Test]
 ```
 
-** After setting variables, it's better to reboot your server. **
+After setting values, exec the command below to apply environmental variables
+
+```
+for line in $( cat /etc/environment ) ; do export $line ; done
+```
+
+then, please check the variables are correctly set.
+
+```
+env | grep OSS
+```
+
+**Also it's OK to logout and login to apply variables.**
 
 ### Place application code
 
@@ -209,11 +221,118 @@ RAILS_ENV=production bundle exec rake assets:precompile
 
 ## Run the app
 
-In the production environment, it's better to add the line below to /etc/rc.local
+### Run application manually
 
 ```
-sudo -H -u ubuntu -s bash -c 'source /etc/environment ; export PATH="$HOME/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bundle exec rake unicorn:start'
+bundle exec rake unicorn:start
 ```
+
+### Run application as a service
+
+Create new file for initctl
+
+```
+sudo vi /etc/init.d/unicorn
+```
+
+Paste the content below. And finally execute `sudo chmod 755 /etc/init.d/unicorn`
+
+```
+#!/bin/sh
+
+#chkconfig:2345 85 15
+#description:unicorn shell
+
+NAME="Unicorn"
+ENV=production
+USER=ubuntu
+
+ROOT_DIR="/opt/application/current"
+
+PID="/tmp/unicorn.pid"
+CONF="${ROOT_DIR}/config/unicorn.rb"
+OPTIONS=""
+
+start()
+{
+  if [ -e $PID ]; then
+    echo "$NAME already started"
+    exit 1
+  fi
+  echo "start $NAME"
+  cd $ROOT_DIR
+  su - ${USER} -c "cd ${ROOT_DIR} && bundle exec unicorn_rails -c ${ROOT_DIR}/config/unicorn.rb -E production -D -l 3000"
+}
+
+stop()
+{
+  if [ ! -e $PID ]; then
+    echo "$NAME not started"
+    exit 1
+  fi
+  echo "stop $NAME"
+  kill -QUIT `cat ${PID}`
+}
+
+force_stop()
+{
+  if [ ! -e $PID ]; then
+    echo "$NAME not started"
+    exit 1
+  fi
+  echo "stop $NAME"
+  kill -INT `cat ${PID}`
+}
+
+reload()
+{
+  if [ ! -e $PID ]; then
+    echo "$NAME not started"
+    start
+    exit 0
+  fi
+  echo "reload $NAME"
+  kill -HUP `cat ${PID}`
+}
+
+restart()
+{
+    stop
+    sleep 3
+    start
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    ;;
+  force-stop)
+    force_stop
+    ;;
+  reload)
+    reload
+    ;;
+  restart)
+    restart
+    ;;
+  *)
+    echo "Syntax Error: release [start|stop|force-stop|reload|restart]"
+    ;;
+esac
+```
+
+Finally, do as follows.
+
+```
+sudo apt-get install -y sysv-rc-conf
+sudo sysv-rc-conf slidehub on
+sudo service slidehub start
+```
+
+
+### For Development mode
 
 In the development environment, you can run the app as follows.
 
