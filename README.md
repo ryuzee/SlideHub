@@ -90,13 +90,97 @@ puts blob_service.get_service_properties.inspect
 
 * Create Azure Blob Queue (cf. slidehub-convert) and note the name.
 
-### General procedure
+## Setting Environmental Variables
 
-* Clone application on your server and copy files to /tmp/
+You also need to set several environmental variables as follows.
+The easiest way is to add these lines to `/etc/environment` and restart your server.
+The other option is to create `.env` file at application root directory. I recommend you to select the first option.
+
+### Cloud Settings (Azure)
 
 ```
-git clone https://github.com/ryuzee/SlideHub
-cp SlideHub/script/*.sh /tmp/
+export OSS_USE_AZURE=[0|1] # If you want to use Azure, set 1
+export OSS_AZURE_CONTAINER_NAME=[Original file container name]
+export OSS_AZURE_IMAGE_CONTAINER_NAME=[Image container name]
+export OSS_AZURE_CDN_BASE_URL=[Set value if you are using CDN]
+export OSS_AZURE_QUEUE_NAME=[BLOB queue name]
+export OSS_AZURE_STORAGE_ACCESS_KEY=[Azure Storage Access Key]
+export OSS_AZURE_STORAGE_ACCOUNT_NAME=[Azure Storage Accout Name]
+```
+
+### Cloud Settings (AWS)
+
+```
+export OSS_BUCKET_NAME=[Original file bucket name]
+export OSS_IMAGE_BUCKET_NAME=[Image bucket name]
+export OSS_USE_S3_STATIC_HOSTING=[1|0]
+export OSS_REGION=[ap-northeast-1]
+export OSS_CDN_BASE_URL=[Set value if you are using CDN]
+export OSS_SQS_URL=[SQS URL]
+export OSS_AWS_ACCESS_ID=[Your AWS Access Key if you run app out of AWS]
+export OSS_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
+```
+
+### General Settings
+
+```
+# Mandatory
+export OSS_SECRET_KEY_BASE=[Your Secret Key Base]
+
+# Mail settings
+export OSS_SMTP_SERVER=[Your SMTP server]
+export OSS_SMTP_PORT=[587]
+export OSS_SMTP_USERNAME=[Your SMTP account]
+export OSS_SMTP_PASSWORD=[Your SMTP password]
+export OSS_SMTP_AUTH_METHOD=plain
+export OSS_FROM_EMAIL=[Email address that will be used sender]
+
+export OSS_PRODUCTION_HOST=[hoge.example.com]
+export OSS_ROOT_URL=[http://your_root_url]
+
+# For production (closely related to rails environment)
+export OSS_DB_NAME=[DB name for Prod] # Set openslideshare if using installer
+export OSS_DB_USERNAME=[DB Username for Prod] # Set root if using installer
+export OSS_DB_PASSWORD=[DB Password for Prod] # Set passw0rd if using installer
+export OSS_DB_URL=[DB URL for Prod] # Set localhost if using installer
+
+# For development
+export OSS_DB_NAME_DEV=[DB name for Dev]
+export OSS_DB_USERNAME_DEV=[DB Username for Dev]
+export OSS_DB_PASSWORD_DEV=[DB Password for Dev]
+export OSS_DB_URL_DEV=[DB URL for Dev]
+
+# For test
+export OSS_DB_NAME_TEST=[DB name for Test]
+export OSS_DB_USERNAME_TEST=[DB Username for Test]
+export OSS_DB_PASSWORD_TEST=[DB Password for Test]
+export OSS_DB_URL_TEST=[DB URL for Test]
+```
+
+** After setting variables, it's better to reboot your server. **
+
+### Place application code
+
+Install git
+
+```
+sudo apt-get update
+sudo apt-get install -y git
+```
+
+Then clone application
+
+```
+sudo mkdir -p /opt/application/
+sudo git clone https://github.com/ryuzee/SlideHub /opt/application/current
+```
+
+### Install Middleware and require packages
+
+* Copy installer
+
+```
+cp /opt/application/current/script/*.sh /tmp/
 cd /tmp/
 ```
 
@@ -110,66 +194,17 @@ After that, you need to initialize database by executintg following commands aft
 [warnings] If you run the database server on the other host, the commands must be executed after setting environmental variables.
 
 ```
-bin/rake db:migrate RAILS_ENV=(development|production)
-bin/rake db:seed RAILS_ENV=(development|production)
+cd /opt/application/current
+source ~/.bash_profile
+bundle
+bundle exec bin/rake db:migrate RAILS_ENV=(development|production)
+bundle exec bin/rake db:seed RAILS_ENV=(development|production)
 ```
 
-
-## Environment Variables
-
-You also need to set several environmental variables as follows.
-The easiest way is to add these lines to `/etc/environment` and restart your server.
-The other option is to create `.env` file at application root directory. I recommend you to select the first option.
-
-### Cloud Settings (Azure)
+And then, execute the command below to prepare assets
 
 ```
-OSS_USE_AZURE=[0|1] # If you want to use Azure, set 1
-OSS_AZURE_CONTAINER_NAME=[Original file container name]
-OSS_AZURE_IMAGE_CONTAINER_NAME=[Image container name]
-OSS_AZURE_CDN_BASE_URL=[Set value if you are using CDN]
-OSS_AZURE_QUEUE_NAME=[BLOB queue name]
-OSS_AZURE_STORAGE_ACCESS_KEY=[Azure Storage Access Key]
-OSS_AZURE_STORAGE_ACCOUNT_NAME=[Azure Storage Accout Name]
-```
-
-### Cloud Settings (AWS)
-
-```
-OSS_BUCKET_NAME=[Original file bucket name]
-OSS_IMAGE_BUCKET_NAME=[Image bucket name]
-OSS_USE_S3_STATIC_HOSTING=[1|0]
-OSS_REGION=[ap-northeast-1]
-OSS_CDN_BASE_URL=[Set value if you are using CDN]
-OSS_SQS_URL=[SQS URL]
-OSS_AWS_ACCESS_ID=[Your AWS Access Key if you run app out of AWS]
-OSS_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
-```
-
-### General Settings
-
-```
-OSS_SMTP_SERVER=[Your SMTP server]
-OSS_SMTP_PORT=[587]
-OSS_SMTP_USERNAME=[Your SMTP account]
-OSS_SMTP_PASSWORD=[Your SMTP password]
-OSS_SMTP_AUTH_METHOD=plain
-OSS_FROM_EMAIL=[Email address that will be used sender]
-OSS_SECRET_KEY_BASE=[Your Secret Key Base]
-OSS_PRODUCTION_HOST=[hoge.example.com]
-OSS_ROOT_URL=[http://your_root_url]
-OSS_DB_NAME_DEV=[DB name for Dev]
-OSS_DB_USERNAME_DEV=[DB Username for Dev]
-OSS_DB_PASSWORD_DEV=[DB Password for Dev]
-OSS_DB_URL_DEV=[DB URL for Dev]
-OSS_DB_NAME_TEST=[DB name for Test]
-OSS_DB_USERNAME_TEST=[DB Username for Test]
-OSS_DB_PASSWORD_TEST=[DB Password for Test]
-OSS_DB_URL_TEST=[DB URL for Test]
-OSS_DB_NAME=[DB name for Prod]
-OSS_DB_USERNAME=[DB Username for Prod]
-OSS_DB_PASSWORD=[DB Password for Prod]
-OSS_DB_URL=[DB URL for Prod]
+RAILS_ENV=production bundle exec rake assets:precompile
 ```
 
 ## Run the app
@@ -177,7 +212,7 @@ OSS_DB_URL=[DB URL for Prod]
 In the production environment, it's better to add the line below to /etc/rc.local
 
 ```
-sudo -H -u ubuntu -s bash -c ‘source /etc/environment ; export PATH="$HOME/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bin/bundle exec rake unicorn:start'
+sudo -H -u ubuntu -s bash -c 'source /etc/environment ; export PATH="$HOME/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bundle exec rake unicorn:start'
 ```
 
 In the development environment, you can run the app as follows.
