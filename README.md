@@ -327,8 +327,8 @@ Finally, do as follows.
 
 ```
 sudo apt-get install -y sysv-rc-conf
-sudo sysv-rc-conf slidehub on
-sudo service slidehub start
+sudo sysv-rc-conf unicorn on
+sudo service unicorn start
 ```
 
 
