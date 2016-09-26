@@ -386,6 +386,11 @@ docker run -d \
 0 3 * * * /bin/bash -lc 'source /etc/environment ; export PATH="$HOME/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bin/rake  sitemap:refresh RAILS_ENV=production'
 ```
 
+## Login to the app
+
+Default account is `admin@example.com` and the password is `passw0rd`.
+*You need to change this account's password after the first login.*
+
 ## Contributing
 
 1. Fork the repository on Github
