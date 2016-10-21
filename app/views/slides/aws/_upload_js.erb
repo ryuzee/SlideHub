@@ -1,83 +1,99 @@
 <script type="text/javascript">
 $(document).ready(function() {
   <% if command == 'add' %>
-    $('#file').on("change", function(event) {
-        var file = this.files[0];
+  $('#file').on("change", function(event) {
+    var file = this.files[0];
   <% else %>
-    $("#upload-form").submit(function(event) {
-        var file = $("#file")[0].files[0];
+  $("#upload-form").submit(function(event) {
+    var file = $("#file")[0].files[0];
   <% end %>
-        if(file != null) {
-            console.log(file.name); // ファイル名をログに出力する
-        } else {
-            return;
-        }
-        var buf = file.name.split('.');
-        var ext = (buf[buf.length-1]).toLowerCase();
-        if(ext != "ppt" && ext != "pptx" && ext != "pdf") {
-            alert("No acceptable extension...");
-            return;
-        }
-        event.preventDefault();
+    if(file != null) {
+      console.log(file.name); // ファイル名をログに出力する
+    } else {
+      return;
+    }
+    var buf = file.name.split('.');
+    var ext = (buf[buf.length-1]).toLowerCase();
+    if(ext != "ppt" && ext != "pptx" && ext != "pdf") {
+      alert("No acceptable extension...");
+      return;
+    }
+    event.preventDefault();
 
-        var formData = new FormData();
-        var url = "<%= CloudConfig::SERVICE.upload_endpoint %>";
+    var formData = new FormData();
+    var url = "<%= CloudConfig::SERVICE.upload_endpoint %>";
 
-        var form = $('#upload-form');
-        $(form.serializeArray()).each(function(i, v) {
-            if(v.name != "file") {
-                formData.append(v.name, v.value);
-            }
-        });
-        formData.append("file", $("#file").prop("files")[0]);
-
-        // You need to set CORS options in target S3 bucket
-        $.ajax({
-            url: url,
-            type: 'POST',
-            dataType: 'xml',
-            data: formData,
-            async: true,
-            crossDomain: true,
-            xhr: function() {
-                xhr = $.ajaxSettings.xhr();
-                xhr.upload.addEventListener("progress", function(evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        var p = Math.round(percentComplete * 100);
-                        $(".progress-bar").html(p + "%");
-                        $(".progress-bar").attr("aria-valuenow", p);
-                        $(".progress-bar").attr("style", "width: " + p + "%");
-                    }
-                }, false);
-                return xhr;
-            },
-            statusCode: {
-                201: function(){
-                    console.log("201:OK");
-                },
-                403: function(){
-                    console.log("403:Forbidden");
-                },
-                404: function(){
-                    console.log("404:NOT Found");
-                }
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        }).done(function( data, textStatus, jqXHR ) {
-            var key   = $(data).find("Key").text();
-            $("#SlideKey").val(key);
-            <% if command != 'add' %>
-            $("#SlideConvertStatus").val(0);
-            <% end %>
-        }) .fail(function( jqXHR, textStatus, errorThrown ) {
-            // ...
-        });
-        return false;
+    var form = $('#upload-form');
+    $(form.serializeArray()).each(function(i, v) {
+      if(v.name != "file") {
+        formData.append(v.name, v.value);
+      }
     });
+    formData.append("file", $("#file").prop("files")[0]);
+
+    // You need to set CORS options in target S3 bucket
+    $.ajax({
+      url: url,
+      type: 'POST',
+      dataType: 'xml',
+      data: formData,
+      async: true,
+      crossDomain: true,
+      xhr: function() {
+        xhr = $.ajaxSettings.xhr();
+        xhr.upload.addEventListener("progress", function(evt) {
+          if (evt.lengthComputable) {
+            var percentComplete = evt.loaded / evt.total;
+            var p = Math.round(percentComplete * 100);
+            $(".progress-bar").html(p + "%");
+            $(".progress-bar").attr("aria-valuenow", p);
+            $(".progress-bar").attr("style", "width: " + p + "%");
+          }
+        }, false);
+        return xhr;
+      },
+      statusCode: {
+        201: function(){
+          console.log("201:OK");
+        },
+        403: function(){
+          console.log("403:Forbidden");
+        },
+        404: function(){
+          console.log("404:NOT Found");
+        }
+      },
+      cache: false,
+      contentType: false,
+      processData: false
+    }).done(function( data, textStatus, jqXHR ) {
+      var key   = $(data).find("Key").text();
+      $("#SlideKey").val(key).change();
+      <% if command != 'add' %>
+      $("#SlideConvertStatus").val(0);
+      <% end %>
+    }) .fail(function( jqXHR, textStatus, errorThrown ) {
+      // ...
+    });
+    return false;
+  });
+
+<% if command == 'add' %>
+  $("form#new_slide :input").change(function(e){
+    if ($('#SlideKey').val() != "" && $('#slide_name').val() != "" && $('#slide_description').val() != "" && $('#slide_category_id').prop("selectedIndex") != 0) {
+      $("#save_button").removeAttr("disabled");
+    } else {
+      $('#save_button').attr("disabled", "disabled");
+    }
+  });
+<% else %>
+  $("form.slide :input").change(function(e){
+    if ($('#SlideKey').val() != "" && $('#slide_name').val() != "" && $('#slide_description').val() != "") {
+      $("#save_button").removeAttr("disabled");
+    } else {
+      $('#save_button').attr("disabled", "disabled");
+    }
+  });
+<% end %>
 });
 </script>
-
-
