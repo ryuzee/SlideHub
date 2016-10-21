@@ -29,6 +29,7 @@ class Slide < ActiveRecord::Base
   include WebResource
   belongs_to :user
   delegate :display_name, to: :user, prefix: true
+  delegate :username, to: :user, prefix: true
   counter_culture :user
   belongs_to :category
   delegate :name, to: :category, prefix: true
