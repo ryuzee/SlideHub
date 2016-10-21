@@ -49,4 +49,7 @@ ja:
   top_page: "トップページ"
   transcripts: "Transcript"
   user_list: "ユーザー一覧"
+  upload_slide: "スライドのアップロード"
   view_all_slides: "全てのスライドを見る"
+  select_a_category: "カテゴリを選択してください"
+  error_save_slide: "エラーが%{errors}個あるためスライドを保存できません。"
