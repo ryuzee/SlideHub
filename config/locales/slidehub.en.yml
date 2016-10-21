@@ -44,3 +44,6 @@ en:
   transcripts: "Transcript"
   user_list: "User List"
   view_all_slides: "View All Slides"
+  upload_slide: "Upload Slide"
+  select_a_category: "Select a category"
+  error_save_slide: "%{errors} errors prohibited this slide from being saved:"

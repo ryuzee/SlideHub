@@ -57,6 +57,7 @@ ja:
         all_comments: "すべてのコメント"  #g
         base_tags: "ベースタグ"  #g
         category: :activerecord.models.category  #g
+        category_id: :activerecord.models.category  #g
         created_at: "登録日時"  #g
         comments: "コメント"  #g
         convert_status: "変換状況"  #g

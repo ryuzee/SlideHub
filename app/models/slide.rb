@@ -42,7 +42,8 @@ class Slide < ActiveRecord::Base
   validates :description, length: { maximum: 2048 }
   validates :key, presence: true
   validates :key, uniqueness: true
-  validates :category_id, presence: true
+#  validates :category_id, presence: true
+  validates :category_id, :presence => true, :inclusion => { :in => Category.all.map(&:id) }
 
   scope :published, -> { where('convert_status = 100') }
   scope :failed, -> { where('convert_status != 100') }
