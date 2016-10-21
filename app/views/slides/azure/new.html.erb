@@ -33,7 +33,7 @@
 
 <script type="text/javascript">
 $(function() {
-  $("form.slide :input").change(function(e){
+  $("form#new_slide :input").change(function(e){
     var enabled = false;
     if ($('#SlideKey').val() != "" && $('#slide_name').val() != "" && $('#slide_description').val() != "" && $('#slide_category_id').prop("selectedIndex") != 0) {
       $("#save_button").removeAttr("disabled");
