@@ -86,6 +86,14 @@ $(document).ready(function() {
       $('#save_button').attr("disabled", "disabled");
     }
   });
+<% else %>
+  $("form.slide :input").change(function(e){
+    if ($('#SlideKey').val() != "" && $('#slide_name').val() != "" && $('#slide_description').val() != "") {
+      $("#save_button").removeAttr("disabled");
+    } else {
+      $('#save_button').attr("disabled", "disabled");
+    }
+  });
 <% end %>
 });
 </script>
