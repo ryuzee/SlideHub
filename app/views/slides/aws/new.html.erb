@@ -42,24 +42,9 @@
     <input class="fval" type="hidden" name="x-amz-security-token" value="<%= policy['security_token'] %>" />
     <% end %>
     <input class="fval" type="hidden" id="x-amz-meta-tag" name="x-amz-meta-tag" value="SlideHub" class="form-control"/>
-
 </form>
 
-<script type="text/javascript">
-$(function() {
-  $("form#new_slide :input").change(function(e){
-    var enabled = false;
-    if ($('#SlideKey').val() != "" && $('#slide_name').val() != "" && $('#slide_description').val() != "" && $('#slide_category_id').prop("selectedIndex") != 0) {
-      $("#save_button").removeAttr("disabled");
-    } else {
-      $('#save_button').attr("disabled", "disabled");
-    }
-  });
-});
-</script>
-
 <%= form_for @slide, :url => {:action => 'create'}, :html => { :class => "form-horizontal slide" } do |f| %>
-
     <% if @slide.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
