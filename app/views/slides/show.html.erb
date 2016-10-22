@@ -38,11 +38,11 @@ if @slide.tags.count > 0
       <script type="application/javascript" src="<%= "#{root_url}slides/#{@slide.id}/embedded/#{@start_position}?prefix=#{prefix}&inside=1" %>"></script>
       <script type="application/javascript">
         window.onkeydown = function(evt) {
-          if (evt.keyCode == 74) {
+          if (evt.keyCode == 74 || evt.keyCode == 39) {
             // j
             OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index+1);
           }
-          if (evt.keyCode == 75) {
+          if (evt.keyCode == 75 || evt.keyCode == 37) {
             // k
             OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index-1);
           }

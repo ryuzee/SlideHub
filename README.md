@@ -90,32 +90,7 @@ puts blob_service.get_service_properties.inspect
 
 * Create Azure Blob Queue (cf. slidehub-convert) and note the name.
 
-### General procedure
-
-* Clone application on your server and copy files to /tmp/
-
-```
-git clone https://github.com/ryuzee/SlideHub
-cp SlideHub/script/*.sh /tmp/
-cd /tmp/
-```
-
- * Edit develop.sh or staging.sh and then set Linux user name and other variables.
- * Then run the script you've just edited.
- * The script will install all required packages including Ruby environment, nginx, several tools and so on.
- * The script will also create the database on your server. However, if you want to use a database running on other server, you need to create a database by your own.
-
-After that, you need to initialize database by executintg following commands after changing directory to the application.
-
-[warnings] If you run the database server on the other host, the commands must be executed after setting environmental variables.
-
-```
-bin/rake db:migrate RAILS_ENV=(development|production)
-bin/rake db:seed RAILS_ENV=(development|production)
-```
-
-
-## Environment Variables
+## Setting Environmental Variables
 
 You also need to set several environmental variables as follows.
 The easiest way is to add these lines to `/etc/environment` and restart your server.
@@ -149,36 +124,215 @@ OSS_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
 ### General Settings
 
 ```
+# Mandatory
+OSS_SECRET_KEY_BASE=[Your Secret Key Base]
+
+# Mail settings
 OSS_SMTP_SERVER=[Your SMTP server]
 OSS_SMTP_PORT=[587]
 OSS_SMTP_USERNAME=[Your SMTP account]
 OSS_SMTP_PASSWORD=[Your SMTP password]
 OSS_SMTP_AUTH_METHOD=plain
 OSS_FROM_EMAIL=[Email address that will be used sender]
-OSS_SECRET_KEY_BASE=[Your Secret Key Base]
+
 OSS_PRODUCTION_HOST=[hoge.example.com]
 OSS_ROOT_URL=[http://your_root_url]
+
+# For production (closely related to rails environment)
+OSS_DB_NAME=[DB name for Prod] # Set openslideshare if using installer
+OSS_DB_USERNAME=[DB Username for Prod] # Set root if using installer
+OSS_DB_PASSWORD=[DB Password for Prod] # Set passw0rd if using installer
+OSS_DB_URL=[DB URL for Prod] # Set localhost if using installer
+
+# For development
 OSS_DB_NAME_DEV=[DB name for Dev]
 OSS_DB_USERNAME_DEV=[DB Username for Dev]
 OSS_DB_PASSWORD_DEV=[DB Password for Dev]
 OSS_DB_URL_DEV=[DB URL for Dev]
+
+# For test
 OSS_DB_NAME_TEST=[DB name for Test]
 OSS_DB_USERNAME_TEST=[DB Username for Test]
 OSS_DB_PASSWORD_TEST=[DB Password for Test]
 OSS_DB_URL_TEST=[DB URL for Test]
-OSS_DB_NAME=[DB name for Prod]
-OSS_DB_USERNAME=[DB Username for Prod]
-OSS_DB_PASSWORD=[DB Password for Prod]
-OSS_DB_URL=[DB URL for Prod]
+```
+
+After setting values, exec the command below to apply environmental variables
+
+```
+for line in $( cat /etc/environment ) ; do export $line ; done
+```
+
+then, please check the variables are correctly set.
+
+```
+env | grep OSS
+```
+
+**Also it's OK to logout and login to apply variables.**
+
+### Place application code
+
+Install git
+
+```
+sudo apt-get update
+sudo apt-get install -y git
+```
+
+Then clone application
+
+```
+sudo mkdir -p /opt/application/
+sudo git clone https://github.com/ryuzee/SlideHub /opt/application/current
+```
+
+### Install Middleware and require packages
+
+* Copy installer
+
+```
+cp /opt/application/current/script/*.sh /tmp/
+cd /tmp/
+```
+
+ * Edit develop.sh or staging.sh and then set Linux user name and other variables.
+ * Then run the script you've just edited.
+ * The script will install all required packages including Ruby environment, nginx, several tools and so on.
+ * The script will also create the database on your server. However, if you want to use a database running on other server, you need to create a database by your own.
+
+After that, you need to initialize database by executintg following commands after changing directory to the application.
+
+[warnings] If you run the database server on the other host, the commands must be executed after setting environmental variables.
+
+```
+cd /opt/application/current
+source ~/.bash_profile
+bundle
+bundle exec bin/rake db:migrate RAILS_ENV=(development|production)
+bundle exec bin/rake db:seed RAILS_ENV=(development|production)
+```
+
+And then, execute the command below to prepare assets
+
+```
+RAILS_ENV=production bundle exec rake assets:precompile
 ```
 
 ## Run the app
 
-In the production environment, it's better to add the line below to /etc/rc.local
+### Run application manually
 
 ```
-sudo -H -u ubuntu -s bash -c ‘source /etc/environment ; export PATH="$HOME/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bin/bundle exec rake unicorn:start'
+bundle exec rake unicorn:start
 ```
+
+### Run application as a service
+
+Create new file for initctl
+
+```
+sudo vi /etc/init.d/unicorn
+```
+
+Paste the content below. And finally execute `sudo chmod 755 /etc/init.d/unicorn`
+
+```
+#!/bin/sh
+
+#chkconfig:2345 85 15
+#description:unicorn shell
+
+NAME="Unicorn"
+ENV=production
+USER=ubuntu
+
+ROOT_DIR="/opt/application/current"
+
+PID="/tmp/unicorn.pid"
+CONF="${ROOT_DIR}/config/unicorn.rb"
+OPTIONS=""
+
+start()
+{
+  if [ -e $PID ]; then
+    echo "$NAME already started"
+    exit 1
+  fi
+  echo "start $NAME"
+  cd $ROOT_DIR
+  su - ${USER} -c "cd ${ROOT_DIR} && bundle exec unicorn_rails -c ${ROOT_DIR}/config/unicorn.rb -E production -D -l 3000"
+}
+
+stop()
+{
+  if [ ! -e $PID ]; then
+    echo "$NAME not started"
+    exit 1
+  fi
+  echo "stop $NAME"
+  kill -QUIT `cat ${PID}`
+}
+
+force_stop()
+{
+  if [ ! -e $PID ]; then
+    echo "$NAME not started"
+    exit 1
+  fi
+  echo "stop $NAME"
+  kill -INT `cat ${PID}`
+}
+
+reload()
+{
+  if [ ! -e $PID ]; then
+    echo "$NAME not started"
+    start
+    exit 0
+  fi
+  echo "reload $NAME"
+  kill -HUP `cat ${PID}`
+}
+
+restart()
+{
+    stop
+    sleep 3
+    start
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    ;;
+  force-stop)
+    force_stop
+    ;;
+  reload)
+    reload
+    ;;
+  restart)
+    restart
+    ;;
+  *)
+    echo "Syntax Error: release [start|stop|force-stop|reload|restart]"
+    ;;
+esac
+```
+
+Finally, do as follows.
+
+```
+sudo apt-get install -y sysv-rc-conf
+sudo sysv-rc-conf unicorn on
+sudo service unicorn start
+```
+
+
+### For Development mode
 
 In the development environment, you can run the app as follows.
 
@@ -231,6 +385,11 @@ docker run -d \
 ```
 0 3 * * * /bin/bash -lc 'source /etc/environment ; export PATH="$HOME/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bin/rake  sitemap:refresh RAILS_ENV=production'
 ```
+
+## Login to the app
+
+Default account is `admin@example.com` and the password is `passw0rd`.
+*You need to change this account's password after the first login.*
 
 ## Contributing
 

@@ -29,6 +29,7 @@ class Slide < ActiveRecord::Base
   include WebResource
   belongs_to :user
   delegate :display_name, to: :user, prefix: true
+  delegate :username, to: :user, prefix: true
   counter_culture :user
   belongs_to :category
   delegate :name, to: :category, prefix: true
@@ -43,6 +44,7 @@ class Slide < ActiveRecord::Base
   validates :key, presence: true
   validates :key, uniqueness: true
   validates :category_id, presence: true
+  #validates :category_id, :presence => true, :inclusion => { :in => Category.all.map(&:id) }
 
   scope :published, -> { where('convert_status = 100') }
   scope :failed, -> { where('convert_status != 100') }

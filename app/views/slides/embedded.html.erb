@@ -29,7 +29,10 @@ div.<%= prefix %>right {
 }
 
 #<%= prefix %>slide_area, #<%= prefix %>command_area {
+  margin:0px;
+  padding:0px;
   width:100%;
+  box-sizing: border-box;
 }
 
 #<%= prefix %>slide_area img {
@@ -38,6 +41,9 @@ div.<%= prefix %>right {
   border-left:1px solid #000 !important;
   border-right:1px solid #000 !important;
   border-bottom: 0px !important;
+  margin:0px !important;
+  box-sizing: border-box;
+  vertical-align: bottom !important;
 }
 
 div#<%= prefix %>progress_area {
@@ -79,13 +85,22 @@ div#<%= prefix %>command_inner ul {
   width: 200px;
   margin: 0 auto;
   padding: 0;
-  list-style-type: none;
+  list-style-type: none !important;
+  list-style-image: none !important;
 }
 
 div#<%= prefix %>command_inner ul li {
-  float: left;
+  float: left !important;
   margin-right: 5px;
   border: 0px;
+  list-style: none !important;
+  padding-left: 0px !important;
+}
+
+div#<%= prefix %>command_inner ul li:before {
+  display: none;
+  content: '';
+  margin-left:0px !important;
 }
 
 div#<%= prefix %>command_inner ul li a {
@@ -205,7 +220,7 @@ div#<%= prefix %>page_positions{
   <% end %>
   </ul>
 
-  <div class="<%= prefix %>slidebox" id="<%= prefix %>slidebox">
+  <div class="<%= prefix %>slidebox" id="<%= prefix %>slidebox" style="left:0px;margin:0px;padding:0px;">
     <div id="<%= prefix %>slide_area"></div>
     <div id="<%= prefix %>progress_area">
       <div id="<%= prefix %>thumb">&nbsp;</div>
@@ -217,10 +232,10 @@ div#<%= prefix %>page_positions{
         <% if @slide.downloadable %>
           <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="<%= "#{root_url}slides/#{@slide.id}/download" %>"><i id="slide_control_download_link" class="fa fa-download"></i>&nbsp;</a>
         <% end %>
-        <ul>
+        <ul style="list-style-image:none; list-style-type:none">
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(0);">&nbsp;<i class="fa fa-fast-backward"></i>&nbsp;</a></li>
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index-1);">&nbsp<i class="fa fa-step-backward"></i>&nbsp;</a></li>
-          <li><div id="<%= prefix %>page_positions"></div></li>
+          <li><div id="<%= prefix %>page_positions" style="padding-left:0px;"></div></li>
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index+1);">&nbsp;<i class="fa fa-step-forward"></i>&nbsp;</a></li>
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.slides.length-1);">&nbsp;<i class="fa fa-fast-forward"></i>&nbsp;</a></li>
         </ul>

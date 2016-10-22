@@ -1,13 +1,12 @@
 <script type="text/javascript">
-function segmentation(arrayBuffer, segmentSize)
-{
-    var segments = [];
-    var fi = 0;
-    while(fi * segmentSize < arrayBuffer.byteLength){
-        segments.push(arrayBuffer.slice(fi * segmentSize, (fi + 1) * segmentSize));
-        ++fi;
-    }
-    return segments;
+function segmentation(arrayBuffer, segmentSize) {
+  var segments = [];
+  var fi = 0;
+  while(fi * segmentSize < arrayBuffer.byteLength){
+    segments.push(arrayBuffer.slice(fi * segmentSize, (fi + 1) * segmentSize));
+    ++fi;
+  }
+  return segments;
 }
 
 function block_id(block_prefix, index) {
@@ -143,11 +142,10 @@ $(document).ready(function() {
             console.log('ブロックリストの登録完了...');
             $(".progress-bar").html('100%');
             var key   = '<%= rand_name %>';
-            $("#SlideKey").val(key);
+            $("#SlideKey").val(key).change();
             <% if command != 'add' %>
             $("#SlideConvertStatus").val(0);
             <% end %>
-            $("#save_button").removeAttr("disabled");
           });
         });
       };
@@ -158,8 +156,23 @@ $(document).ready(function() {
     };
     reader.readAsArrayBuffer(file);
   });
+
+<% if command == 'add' %>
+  $("form#new_slide :input").change(function(e){
+    if ($('#SlideKey').val() != "" && $('#slide_name').val() != "" && $('#slide_description').val() != "" && $('#slide_category_id').prop("selectedIndex") != 0) {
+      $("#save_button").removeAttr("disabled");
+    } else {
+      $('#save_button').attr("disabled", "disabled");
+    }
+  });
+<% else %>
+  $("form.slide :input").change(function(e){
+    if ($('#SlideKey').val() != "" && $('#slide_name').val() != "" && $('#slide_description').val() != "") {
+      $("#save_button").removeAttr("disabled");
+    } else {
+      $('#save_button').attr("disabled", "disabled");
+    }
+  });
+<% end %>
 });
-
 </script>
-
-
