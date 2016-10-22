@@ -114,7 +114,8 @@ gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git'
 gem 'paperclip-azure'
 
 # see http://blog.zeit.io/use-a-fake-db-adapter-to-play-nice-with-rails-assets-precompilation/
-gem 'activerecord-nulldb-adapter'
+# gem 'activerecord-nulldb-adapter'
+gem 'activerecord-nulldb-adapter', github: 'mnoack/nulldb', ref: 'aa36e3c'
 
 # reserved words for username
 gem 'reserved_word'
