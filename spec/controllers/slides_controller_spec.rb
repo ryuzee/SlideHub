@@ -45,7 +45,7 @@ RSpec.describe SlidesController, type: :controller do
     it 'assigns @comment if user logged in' do
       slide = create(:slide)
       login_by_user first_user
-      get :show, id: slide.id
+      get :show, params: {id: slide.id}
       expect(assigns(:comment)).to be_an_instance_of(Comment)
     end
   end
@@ -78,7 +78,7 @@ RSpec.describe SlidesController, type: :controller do
     it 'render category' do
       create(:slide)
       create(:first_category)
-      get :category, category_id: '1'
+      get :category, params: {category_id: '1'}
       expect(response.status).to eq(200)
       expect(response).to render_template :category
     end
@@ -98,7 +98,7 @@ RSpec.describe SlidesController, type: :controller do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
       data = build(:slide)
       login_by_user first_user
-      post :create, slide: data.attributes
+      post :create, params: {slide: data.attributes}
       id = Slide.where(key: data.key).first.id
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{id}"
@@ -109,7 +109,7 @@ RSpec.describe SlidesController, type: :controller do
       data = build(:slide)
       data.category_id = nil # cause validation error
       login_by_user first_user
-      post :create, slide: data.attributes
+      post :create, params: {slide: data.attributes}
       expect(response.status).to eq(200)
       expect(response).to render_template 'slides/aws/new'
     end
@@ -120,7 +120,7 @@ RSpec.describe SlidesController, type: :controller do
       create(:slide)
       login_by_user first_user
       slide_id = Slide.where("user_id = #{first_user.id}").first.id
-      get :edit, id: slide_id
+      get :edit, params: {id: slide_id}
       expect(response.status).to eq(200)
       expect(response).to render_template 'slides/aws/edit'
     end
@@ -130,7 +130,7 @@ RSpec.describe SlidesController, type: :controller do
       general_user = create(:general_user)
       login_by_user general_user
       slide_id = Slide.where("user_id = #{first_user.id}").first.id
-      get :edit, id: slide_id
+      get :edit, params: {id: slide_id}
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{slide_id}"
     end
@@ -141,7 +141,7 @@ RSpec.describe SlidesController, type: :controller do
       data = create(:slide)
       general_user = create(:general_user)
       login_by_user general_user
-      post :update, { id: data.id, slide: data.attributes }
+      post :update, params: { id: data.id, slide: data.attributes }
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{data.id}"
     end
@@ -151,7 +151,7 @@ RSpec.describe SlidesController, type: :controller do
       data.convert_status = 100
       data.name = nil
       login_by_user first_user
-      post :update, { id: data.id, slide: data.attributes }
+      post :update, params: { id: data.id, slide: data.attributes }
       expect(response.status).to eq(200)
       expect(response).to render_template 'slides/aws/edit'
     end
@@ -161,7 +161,7 @@ RSpec.describe SlidesController, type: :controller do
       data.convert_status = 100
       data.name = 'Engawa'
       login_by_user first_user
-      post :update, { id: data.id, slide: data.attributes }
+      post :update, params: { id: data.id, slide: data.attributes }
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{data.id}"
       saved_record = Slide.find(data.id)
@@ -174,7 +174,7 @@ RSpec.describe SlidesController, type: :controller do
       data.convert_status = 0 # Not converted yet...
       data.name = 'Engawa'
       login_by_user first_user
-      post :update, { id: data.id, slide: data.attributes }
+      post :update, params: { id: data.id, slide: data.attributes }
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{data.id}"
       saved_record = Slide.find(data.id)
@@ -187,7 +187,7 @@ RSpec.describe SlidesController, type: :controller do
       data = create(:slide)
       general_user = create(:general_user)
       login_by_user general_user
-      delete :destroy, { id: data.id }
+      delete :destroy, params: { id: data.id }
       expect(response.status).to eq(302)
       expect(response).to redirect_to '/slides/index'
     end
@@ -197,7 +197,7 @@ RSpec.describe SlidesController, type: :controller do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:delete_generated_files).and_return(true)
       data = create(:slide)
       login_by_user first_user
-      delete :destroy, { id: data.id }
+      delete :destroy, params: { id: data.id }
       expect(response.status).to eq(302)
       expect(response).to redirect_to '/slides/index'
       expect(Slide.exists?(data.id)).to eq(false)
@@ -208,7 +208,7 @@ RSpec.describe SlidesController, type: :controller do
     it 'succeeds to retrieve json' do
       allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
       slide = create(:slide)
-      get :update_view, id: slide.id
+      get :update_view, params: {id: slide.id}
       expect(response.status).to eq(200)
       json = JSON.parse(response.body)
       expect(json['page_count']).to eq(1)
@@ -216,7 +216,7 @@ RSpec.describe SlidesController, type: :controller do
 
     it 'returns 0' do
       allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      get :update_view, id: 65535
+      get :update_view, params: {id: 65535}
       expect(response.status).to eq(200)
       json = JSON.parse(response.body)
       expect(json['page_count']).to eq(0)
@@ -225,7 +225,7 @@ RSpec.describe SlidesController, type: :controller do
     it 'returns 0 because of a failure of retrieving json' do
       allow_any_instance_of(Slide).to receive(:page_list).and_return(false)
       slide = create(:slide)
-      get :update_view, id: slide.id
+      get :update_view, params: {id: slide.id}
       expect(response.status).to eq(200)
       json = JSON.parse(response.body)
       expect(json['page_count']).to eq(0)
@@ -236,7 +236,7 @@ RSpec.describe SlidesController, type: :controller do
     it 'succeeds to return encrypted JavaScript' do
       allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
       slide = create(:slide)
-      get :embedded, id: slide.id
+      get :embedded, params: {id: slide.id}
       expect(response.status).to eq(200)
       updated_data = Slide.find(slide.id)
       expect(updated_data.embedded_view).to eq(slide.embedded_view + 1)
@@ -246,7 +246,7 @@ RSpec.describe SlidesController, type: :controller do
     it 'succeeds to return encrypted JavaScript for inside' do
       allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
       slide = create(:slide)
-      get :embedded, id: slide.id, inside: 1
+      get :embedded, params: {id: slide.id, inside: 1}
       expect(response.status).to eq(200)
       updated_data = Slide.find(slide.id)
       expect(updated_data.embedded_view).to eq(slide.embedded_view)
@@ -262,7 +262,7 @@ RSpec.describe SlidesController, type: :controller do
         status: 200,
       )
       slide = create(:slide)
-      get :download, id: slide.id
+      get :download, params: {id: slide.id}
       expect(response.status).to eq(200)
       expect(response.headers['Content-Disposition']).to eq("attachment; filename=\"#{slide.key}#{slide.extension}\"")
     end

@@ -1,0 +1,19 @@
+defaults: &defaults
+  site:
+    display_login_link: "1"
+    only_admin_can_upload: "0"
+    signup_enabled: "1"
+    name: "SlideHub"
+  custom_content:
+    center_top: ""
+    center_bottom: ""
+    right_top: ""
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

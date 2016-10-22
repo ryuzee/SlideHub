@@ -60,7 +60,7 @@ Rails.application.configure do
     Bullet.enable  = true # bullet を有効にする
 
     # 以下はN+1問題を発見した時のユーザーへの通知方法
-    Bullet.alert   = true        # ブラウザのJavaScriptアラート
+    Bullet.alert   = false       # ブラウザのJavaScriptアラート
     Bullet.bullet_logger = true  # Rails.root/log/bullet.log
     Bullet.console = true        # ブラウザの console.log の出力先
     # Bullet.growl   = true      # Growl
@@ -71,13 +71,14 @@ Rails.application.configure do
     # Bullet.rails_logger = true # Railsのログ
     # Bullet.bugsnag      = true # 総合デバッガツールbugsnag
     # Bullet.airbrake     = true # Airbrake
-    Bullet.raise        = true   # Exceptionを発生させる
-    Bullet.add_footer   = true   # 画面の下部に表示(ajax時など非同期の場合は表示されない)
+    Bullet.raise        = false   # Exceptionを発生させる
+    Bullet.add_footer   = false   # 画面の下部に表示(ajax時など非同期の場合は表示されない)
     # include paths with any of these substrings in the stack trace,
     # even if they are not in your main app
     # Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
-    Bullet.add_whitelist type: :n_plus_one_query, class_name: 'Slide', association: :tag
-    Bullet.add_whitelist type: :n_plus_one_query, class_name: 'Slide', association: :tagging
+    Bullet.add_whitelist type: :n_plus_one_query, class_name: 'Slide', association: :tags
+    Bullet.add_whitelist type: :n_plus_one_query, class_name: 'Slide', association: :taggings
+    Bullet.add_whitelist type: :n_plus_one_query, class_name: 'Slide', association: :tag_taggings
   end
 
   config.rack_dev_mark.enable = true

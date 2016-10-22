@@ -27,7 +27,7 @@ RSpec.describe CommentsController, type: :controller do
         comment_data[:commentable_type] = 'Slide'
         comment_data[:user_id] = general_user.id
         comment_data[:comment] = 'Test'
-        post :create, comment: comment_data
+        post :create, params: {comment: comment_data}
         expect(response.status).to eq(302)
         expect(response).to redirect_to "/slides/#{data.id}"
         slide = Slide.find(data.id)
@@ -43,7 +43,7 @@ RSpec.describe CommentsController, type: :controller do
         comment_data[:commentable_type] = 'Slide'
         comment_data[:user_id] = general_user.id
         comment_data[:comment] = 'Test'
-        post :create, comment: comment_data
+        post :create, params: {comment: comment_data}
         expect(response.status).to eq(302)
         expect(response).to redirect_to '/users/sign_in'
         slide = Slide.find(data.id)
@@ -55,7 +55,7 @@ RSpec.describe CommentsController, type: :controller do
       it 'works!' do
         c = create(:comment_for_slide)
         login_by_user general_user
-        get :destroy, { id: c.id }
+        get :destroy, params: { id: c.id }
         expect(response.status).to eq(302)
         expect(response).to redirect_to "/slides/#{data.id}"
         slide = Slide.find(data.id)
@@ -66,7 +66,7 @@ RSpec.describe CommentsController, type: :controller do
     describe 'fail to delete comment by anonymous user' do
       it 'works!' do
         c = create(:comment_for_slide)
-        get :destroy, { id: c.id }
+        get :destroy, params: { id: c.id }
         expect(response.status).to eq(302)
         expect(response).to redirect_to '/users/sign_in'
         slide = Slide.find(data.id)

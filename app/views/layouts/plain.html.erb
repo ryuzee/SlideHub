@@ -8,7 +8,7 @@ def conv(str)
   return "" if str == ""
   "w(\"#{str}\");"
 end
-script = "function w(s){document.write(s+'\n');}"
+script = "function w(s){document.write(s+'\\n');}\n\n"
 str = raw yield
 str.each_line do |s|
   script = script.concat(conv(s)) + "\n"

@@ -20,7 +20,7 @@ gem 'jquery-rails', '= 4.2.1'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5.0'
+gem 'jbuilder', '~> 2.6.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -33,14 +33,14 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# readline
-gem 'rb-readline'
-
 # Use mysql
 gem 'mysql2'
 
 # Apply bootstrap
-gem 'less-rails' # , :git => 'git@github.com:metaskills/less-rails.git', :branch => 'rails5'
+gem 'less-rails'
+
+# WORKAROUND: https://github.com/metaskills/less-rails/issues/122
+gem "sprockets", '3.6.3'
 
 gem 'twitter-bootstrap-rails' #, '~> 3.2.2'
 gem 'execjs'
@@ -99,13 +99,13 @@ gem 'pdf-reader'
 gem 'counter_culture'
 
 # save settings
-gem 'rails-settings-cached', '= 0.4.4'
+gem 'rails-settings-cached', '0.6.5'
 
 # AP Server
 gem 'unicorn'
 
 # Datetime Picker for Bootstrap3
-gem 'momentjs-rails', '>= 2.9.0'
+gem 'momentjs-rails', '~> 2.15.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 
 # https://github.com/alexspeller/non-stupid-digest-assets
@@ -117,7 +117,7 @@ gem 'paperclip-azure'
 
 # see http://blog.zeit.io/use-a-fake-db-adapter-to-play-nice-with-rails-assets-precompilation/
 # gem 'activerecord-nulldb-adapter'
-gem 'activerecord-nulldb-adapter', github: 'mnoack/nulldb', ref: 'aa36e3c'
+gem 'activerecord-nulldb-adapter', git: 'https://github.com/mnoack/nulldb.git', ref: 'aa36e3c'
 
 # reserved words for username
 gem 'reserved_word'
@@ -192,7 +192,7 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
-  gem 'webmock'
+  gem 'webmock', '~> 1.22.6'
 end
 
 group :deployment do
