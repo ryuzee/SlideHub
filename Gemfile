@@ -61,7 +61,7 @@ gem 'devise-i18n-views', '0.3.7'
 gem 'php-serialization'
 
 # Add comments
-gem 'acts_as_commentable'
+gem 'acts_as_commentable', git: 'https://github.com/ryuzee/acts_as_commentable.git'
 
 # Manage Tags
 #gem 'acts-as-taggable-on'

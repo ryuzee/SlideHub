@@ -7,6 +7,12 @@ GIT
       activerecord (>= 2.0.0)
 
 GIT
+  remote: https://github.com/ryuzee/acts_as_commentable.git
+  revision: 11dc244ba5118344f3f34f2fbb5cec6ecc0d3767
+  specs:
+    acts_as_commentable (4.0.2)
+
+GIT
   remote: https://github.com/ryuzee/azure-contrib.git
   revision: 75bdb68cc992c1201bde28f63f872c000115c2af
   specs:
@@ -70,7 +76,6 @@ GEM
       tzinfo (~> 1.1)
     acts-as-taggable-on (4.0.0)
       activerecord (>= 4.0)
-    acts_as_commentable (4.0.2)
     addressable (2.4.0)
     afm (0.2.2)
     after_commit_action (1.0.1)
@@ -557,7 +562,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-nulldb-adapter!
   acts-as-taggable-on (~> 4.0)
-  acts_as_commentable
+  acts_as_commentable!
   annotate
   aws-sdk (>= 2.0.0)
   aws-sdk-core
