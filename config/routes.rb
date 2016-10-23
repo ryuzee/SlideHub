@@ -23,7 +23,6 @@ Rails.application.routes.draw do
   get 'users/:id/embedded' => 'users#embedded'
   resources :users do
     get 'index', on: :collection
-    get 'statistics', on: :collection
   end
 
   resources :slides
@@ -46,6 +45,8 @@ Rails.application.routes.draw do
   get ':username' => 'users#show'
   get ':username/statistics' => 'users#statistics'
   get ':username/embedded' => 'users#embedded'
+
+  get 'statistics/index' => 'statistics#index'
 
   # config/routes.rb
   Rails.application.routes.draw do

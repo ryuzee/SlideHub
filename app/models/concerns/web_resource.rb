@@ -30,7 +30,7 @@ module WebResource
   end
 
   def get_contents(location, limit = 10)
-    raise ArgumentError, 'too many HTTP redirects' if limit == 0
+    raise ArgumentError, 'too many HTTP redirects' if limit.zero?
     uri = URI.parse(location)
     begin
       response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|

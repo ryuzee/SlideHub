@@ -42,13 +42,6 @@ RSpec.describe UsersController, type: :controller do
         expect(response.status).to eq(200)
       end
     end
-
-    describe 'GET /users/statistics' do
-      it 'works!' do
-        get 'statistics'
-        expect(response.status).to eq(200)
-      end
-    end
   end
 
   describe 'No Login' do
@@ -69,13 +62,6 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'GET /users/index' do
-      it 'redirect to login' do
-        get 'index'
-        expect(response.status).to eq(302)
-      end
-    end
-
-    describe 'GET /users/statistics' do
       it 'redirect to login' do
         get 'index'
         expect(response.status).to eq(302)

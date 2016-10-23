@@ -53,6 +53,18 @@ class Slide < ActiveRecord::Base
   scope :category, -> (category_id) { where('category_id = ?', category_id) }
   scope :owner, -> (user_id) { where('user_id = ?', user_id) }
 
+  def self.latest_slides(limit = 10)
+    self.published.latest.
+      includes(:user).
+      limit(limit)
+  end
+
+  def self.popular_slides(limit = 10)
+    self.published.popular.
+      includes(:user).
+      limit(limit)
+  end
+
   def self.ransackable_attributes(auth_object = nil)
     (column_names + ['tag_search']) + _ransackers.keys
   end

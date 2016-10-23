@@ -27,8 +27,8 @@ class SlidesController < ApplicationController
   protect_from_forgery except: [:embedded]
 
   def index
-    @latest_slides = Slide.published.latest.limit(8).includes(:user)
-    @popular_slides = Slide.published.popular.limit(8).includes(:user)
+    @latest_slides = Slide.latest_slides(8)
+    @popular_slides = Slide.popular_slides(8)
   end
 
   def latest
@@ -119,7 +119,7 @@ class SlidesController < ApplicationController
 
     @slide.assign_attributes(slide_params)
     if @slide.update_attributes(slide_params)
-      if slide_convert_status == 0
+      if slide_convert_status.zero?
         CloudConfig::SERVICE.send_message({ id: @slide.id, key: @slide.key }.to_json)
       end
       redirect_to slide_path(@slide.id)
@@ -152,7 +152,7 @@ class SlidesController < ApplicationController
               else
                 0
               end
-    rescue ActiveRecord::RecordNotFound => e
+    rescue ActiveRecord::RecordNotFound
       count = 0
     end
     render json: { page_count: count }
