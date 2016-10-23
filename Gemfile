@@ -40,9 +40,9 @@ gem 'mysql2'
 gem 'less-rails'
 
 # WORKAROUND: https://github.com/metaskills/less-rails/issues/122
-gem "sprockets", '3.6.3'
+gem 'sprockets', '3.6.3'
 
-gem 'twitter-bootstrap-rails' #, '~> 3.2.2'
+gem 'twitter-bootstrap-rails'
 gem 'execjs'
 
 # Paginate
@@ -66,7 +66,6 @@ gem 'php-serialization'
 gem 'acts_as_commentable', git: 'https://github.com/ryuzee/acts_as_commentable.git'
 
 # Manage Tags
-#gem 'acts-as-taggable-on'
 gem 'acts-as-taggable-on', '~> 4.0'
 
 # Complicated Search

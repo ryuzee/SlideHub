@@ -55,7 +55,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET /users/998' do
       it 'works!' do
         create(:general_user)
-        get 'show', params: {id: '998'}
+        get 'show', params: { id: '998' }
         expect(response.status).to eq(200)
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET /users/998/embedded' do
       it 'works!' do
         create(:general_user)
-        get 'embedded', params: {id: '998'}
+        get 'embedded', params: { id: '998' }
         expect(response.status).to eq(200)
       end
     end
