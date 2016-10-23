@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-RUBY_VERSION=2.2.3
+RUBY_VERSION=2.3.1
 
 
 echo "====== Installing packages via apt ======"

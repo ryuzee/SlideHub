@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
@@ -25,10 +25,10 @@ module Myapp
 
     config.assets.paths << "#{Rails}/vendor/assets/fonts"
     config.assets.digest = true
-    config.serve_static_files = true
+    config.public_file_server.enabled
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    # config.active_record.raise_in_transactional_callbacks = true
 
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {

@@ -5,7 +5,7 @@ require 'open3'
 task :default => :build
 
 task :build_base do
-  cmd = 'cd docker-images/base && docker build -t ryuzee/slidehub-base .'
+  cmd = 'cd docker-images/base && docker build --no-cache=true -t ryuzee/slidehub-base .'
   sh cmd
 end
 

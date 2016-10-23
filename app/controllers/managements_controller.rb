@@ -58,7 +58,7 @@ class ManagementsController < ApplicationController
 
   def custom_contents_update
     params.require(:settings).map do |param|
-      data = param.to_hash
+      data = param.to_unsafe_h
       CustomSetting[data['var']] = data['value']
     end
     redirect_to '/managements/custom_contents_setting'
@@ -70,7 +70,7 @@ class ManagementsController < ApplicationController
 
   def site_update
     params.require(:settings).map do |param|
-      data = param.to_hash
+      data = param.to_unsafe_h
       CustomSetting[data['var']] = data['value']
     end
     redirect_to '/managements/site_setting'
