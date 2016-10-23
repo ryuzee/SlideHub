@@ -30,8 +30,8 @@
 require 'pp'
 
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :statistics]
-  before_action :username_to_id, only: [:show, :embedded, :statistics]
+  before_action :authenticate_user!, only: [:index]
+  before_action :username_to_id, only: [:show, :embedded]
 
   def index
     @user = User.find(current_user.id)
@@ -57,14 +57,6 @@ class UsersController < ApplicationController
     @slides = user_slide_with_paginate(params[:id], 5)
     uglified_js = render_to_string layout: 'plain', collection: @slide
     render text: uglified_js, layout: false, content_type: 'application/javascript'
-  end
-
-  def statistics
-    ransack_params = params[:q]
-    @q = Slide.search(ransack_params)
-    @slides = @q.result(distinct: true).
-              owner(current_user.id).
-              latest
   end
 
   private

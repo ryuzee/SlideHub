@@ -47,6 +47,8 @@ Rails.application.routes.draw do
   get ':username/statistics' => 'users#statistics'
   get ':username/embedded' => 'users#embedded'
 
+  get 'statistics/index' => 'statistics#index'
+
   # config/routes.rb
   Rails.application.routes.draw do
     root 'slides#index'
