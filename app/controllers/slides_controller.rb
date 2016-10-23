@@ -27,8 +27,8 @@ class SlidesController < ApplicationController
   protect_from_forgery except: [:embedded]
 
   def index
-    @latest_slides = Slide.published.latest.limit(8).includes(:user)
-    @popular_slides = Slide.published.popular.limit(8).includes(:user)
+    @latest_slides = Slide.latest_slides(8)
+    @popular_slides = Slide.popular_slides(8)
   end
 
   def latest
@@ -152,7 +152,7 @@ class SlidesController < ApplicationController
               else
                 0
               end
-    rescue ActiveRecord::RecordNotFound => e
+    rescue ActiveRecord::RecordNotFound
       count = 0
     end
     render json: { page_count: count }

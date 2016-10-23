@@ -14,12 +14,8 @@ class ManagementsController < ApplicationController
     @download_count = rec.download_count
     @embedded_view = rec.embedded_view
 
-    @latest_slides = Slide.published.latest.
-                     includes(:user).
-                     limit(10)
-    @popular_slides = Slide.published.popular.
-                      includes(:user).
-                      limit(10)
+    @latest_slides = Slide.latest_slides
+    @popular_slides = Slide.popular_slides
   end
 
   def user_list
