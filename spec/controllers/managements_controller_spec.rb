@@ -24,7 +24,7 @@ RSpec.describe ManagementsController, type: :controller do
     describe 'GET /managements/slide_edit/1' do
       it 'works!' do
         create(:slide)
-        get 'slide_edit', params: {id: '1'}
+        get 'slide_edit', params: { id: '1' }
         expect(response.status).to eq(200)
       end
     end
@@ -35,7 +35,7 @@ RSpec.describe ManagementsController, type: :controller do
         data = Slide.find(1)
         update_name = 'SushiKuitai'
         data[:name] = update_name
-        post :slide_update, params: {slide: data.attributes}
+        post :slide_update, params: { slide: data.attributes }
         expect(response.status).to eq(302)
         new_name = Slide.find(1).name
         expect(update_name).to eq(new_name)
@@ -48,7 +48,7 @@ RSpec.describe ManagementsController, type: :controller do
         data = Slide.find(1)
         update_name = '' # validation error
         data[:name] = update_name
-        post :slide_update, params: {slide: data.attributes}
+        post :slide_update, params: { slide: data.attributes }
         expect(response.status).to eq(200)
         expect(response).to render_template :slide_edit
       end
@@ -71,7 +71,7 @@ RSpec.describe ManagementsController, type: :controller do
     describe 'POST /managements/site_update' do
       it 'works!' do
         data = [{ 'var' => 'site.Neta1', 'value' => 'Toro' }, { 'var' => 'site.Neta2', 'value' => 'Unit' }]
-        post :site_update, params: {settings: data}
+        post :site_update, params: { settings: data }
         expect(response.status).to eq(302)
         expect(response).to redirect_to '/managements/site_setting'
         settings = CustomSetting.unscoped.where("var like 'site.Neta%'")
@@ -89,7 +89,7 @@ RSpec.describe ManagementsController, type: :controller do
     describe 'POST /managements/custom_contents_update' do
       it 'works!' do
         data = [{ 'var' => 'custom_content.Neta1', 'value' => 'Toro' }, { 'var' => 'custom_content.Neta2', 'value' => 'Unit' }]
-        post :custom_contents_update, params: {settings: data}
+        post :custom_contents_update, params: { settings: data }
         expect(response.status).to eq(302)
         expect(response).to redirect_to '/managements/custom_contents_setting'
         settings = CustomSetting.unscoped.where("var like 'custom_content.Neta%'")
