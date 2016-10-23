@@ -43,10 +43,6 @@ describe UsersController do
       expect(get('/users/1/embedded')).to route_to('users#embedded', id: '1')
     end
 
-    it 'routes to #statistics' do
-      expect(get('/users/statistics')).to route_to('users#statistics')
-    end
-
     it 'routes to #sign_up' do
       expect(get('/users/sign_up')).to route_to('devise/registrations#new')
     end
