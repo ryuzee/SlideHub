@@ -79,7 +79,7 @@
               <li><a href="<%= edit_user_registration_path %>"><i class="fa fa-user"></i>&nbsp;<%= t :my_account %></a></li>
               <!-- admin -->
               <li class="divider"></li>
-              <li><a href="/managements/dashboard?<%= Time.now.strftime('%Y%m%d%H%M%S') %>"><i class="fa fa-wrench"></i></span>&nbsp;<%= t :admin_dashboard %></a></li>
+              <li><a href="/admin/dashboards/?<%= Time.now.strftime('%Y%m%d%H%M%S') %>"><i class="fa fa-wrench"></i></span>&nbsp;<%= t :admin_dashboard %></a></li>
               <!-- // admin -->
               <li class="divider"></li>
               <li><%= link_to t(:logout), destroy_user_session_path, method: :delete %></li>

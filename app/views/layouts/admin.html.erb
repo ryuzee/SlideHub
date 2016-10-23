@@ -33,7 +33,7 @@
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="/managements/dashboard" class="logo">
+        <a href="/admin/dashboards/index" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>M</b>C</span>
           <!-- logo for regular state and mobile devices -->
@@ -89,7 +89,7 @@
         <section class="sidebar">
 
           <!-- search form (Optional) -->
-          <form action="/managements/slide_list" method="get" class="sidebar-form">
+          <form action="/admin/slides/index" method="get" class="sidebar-form">
             <div class="input-group">
               <input type="text" name="q[name_cont]" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
@@ -102,11 +102,11 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
             <li class="header">Admin Menu</li>
-            <li><a href="/managements/dashboard"><i class="fa fa-link"></i> <span><%= t :admin_dashboard %></span></a></li>
-            <li><a href="/managements/slide_list"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
-            <li><a href="/managements/user_list"><i class="fa fa-link"></i> <span><%= t(:user_list) %></span></a></li>
-            <li><a href="/managements/site_setting"><i class="fa fa-link"></i> <span><%= t(:site_settings) %></span></a></li>
-            <li><a href="/managements/custom_contents_setting"><i class="fa fa-link"></i> <span><%= t(:custom_contents_settings) %></span></a></li>
+            <li><a href="/admin/dashboards/index"><i class="fa fa-link"></i> <span><%= t :admin_dashboard %></span></a></li>
+            <li><a href="/admin/slides/"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
+            <li><a href="/admin/users/"><i class="fa fa-link"></i> <span><%= t(:user_list) %></span></a></li>
+            <li><a href="/admin/site_settings/"><i class="fa fa-link"></i> <span><%= t(:site_settings) %></span></a></li>
+            <li><a href="/admin/custom_contents/"><i class="fa fa-link"></i> <span><%= t(:custom_contents_settings) %></span></a></li>
             <li class="header">Public Site</li>
             <li><a href="/slides/"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
             <li><a href="/slides/popular"><i class="fa fa-link"></i> <span><%= t(:popular_slides) %></span></a></li>

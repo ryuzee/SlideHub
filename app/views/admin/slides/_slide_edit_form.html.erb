@@ -13,7 +13,8 @@ $(function(){
 });
 </script>
 
-<%= form_for slide, html: { method: "post", :class => "form-horizontal slide" }, :url => {:controller => :managements, :action => :slide_update} do |f| %>
+<%#= form_for slide, html: { method: "post", :class => "form-horizontal slide" }, :url => {:controller => :slides, :action => :update } do |f| %>
+  <%= form_for slide, :html => { :class => "form-horizontal slide" }, :url => "/admin/slides/#{slide.id}"  do |f| %>
     <% if slide.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
