@@ -119,7 +119,7 @@ class SlidesController < ApplicationController
 
     @slide.assign_attributes(slide_params)
     if @slide.update_attributes(slide_params)
-      if slide_convert_status == 0
+      if slide_convert_status.zero?
         CloudConfig::SERVICE.send_message({ id: @slide.id, key: @slide.key }.to_json)
       end
       redirect_to slide_path(@slide.id)
