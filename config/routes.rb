@@ -28,25 +28,31 @@ Rails.application.routes.draw do
   resources :slides
   resources :comments, only: [:create, :destroy]
 
-  resources :managements do
-    get 'dashboard', on: :collection
-    get 'user_list', on: :collection
-    get 'slide_list', on: :collection
-    get 'popular', on: :collection
-    get 'search', on: :collection
-    get 'custom_contents_setting', on: :collection
-    post 'custom_contents_update', on: :collection
-    get 'site_setting', on: :collection
-    post 'site_update', on: :collection
-  end
-  get 'managements/slide_edit/:id' => 'managements#slide_edit'
-  post 'managements/slide_update' => 'managements#slide_update'
-
   get ':username' => 'users#show'
   get ':username/statistics' => 'users#statistics'
   get ':username/embedded' => 'users#embedded'
 
   get 'statistics/index' => 'statistics#index'
+
+  namespace :admin do
+    resources :dashboards do
+      get 'index', on: :collection
+    end
+    resources :slides do
+      get 'index', on: :collection
+      get 'edit', on: :collection
+      post 'update', on: :collection
+    end
+    resources :users, :only => [:index]
+    resources :custom_contents do
+      get 'index', on: :collection
+      post 'update', on: :collection
+    end
+    resources :site_settings do
+      get 'index', on: :collection
+      post 'update', on: :collection
+    end
+  end
 
   # config/routes.rb
   Rails.application.routes.draw do
