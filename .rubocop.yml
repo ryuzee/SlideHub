@@ -173,6 +173,13 @@ Style/TrailingCommaInLiteral:
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
+# クラスやモジュールのネスト定義
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  SupportedStyles:
+    - nested
+    - compact
+
 ##################### Lint ##################################
 
 # * 同名のメソッドがある場合にローカル変数に `_` を付ける
