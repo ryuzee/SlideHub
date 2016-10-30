@@ -74,16 +74,6 @@ RSpec.describe SlidesController, type: :controller do
     end
   end
 
-  describe 'GET #category' do
-    it 'render category' do
-      create(:slide)
-      create(:first_category)
-      get :category, params: { category_id: '1' }
-      expect(response.status).to eq(200)
-      expect(response).to render_template :category
-    end
-  end
-
   describe 'GET #new' do
     it 'render new' do
       login_by_user first_user

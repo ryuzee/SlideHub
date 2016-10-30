@@ -58,7 +58,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= t 'category' %><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <% @categories.each do |cat| %>
-                <li><a href="/slides/category/<%= cat.id %>"><%= cat.name %></a></li>
+                <li><a href="/categories/<%= cat.id %>"><%= cat.name %></a></li>
                 <% end %>
               </ul>
             </li>

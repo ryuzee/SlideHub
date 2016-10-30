@@ -157,7 +157,7 @@ if @slide.tags.count > 0
   <div class="panel panel-default h6">
     <ul class="list-group">
       <li class="list-group-item"><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;Published<span class="pull-right"><%= @slide.created_at %></span></li>
-      <li class="list-group-item"><i class="fa fa-th"></i>&nbsp;&nbsp;Category<span class="pull-right"><a href="/slides/category/<%= @slide.category_id %>"><%= @slide.category_name %></a></span></li>
+      <li class="list-group-item"><i class="fa fa-th"></i>&nbsp;&nbsp;Category<span class="pull-right"><a href="/categories/<%= @slide.category_id %>"><%= @slide.category_name %></a></span></li>
       <li class="list-group-item"><i class="fa fa-eye"></i>&nbsp;&nbsp;Total View<span class="pull-right"><%= @slide.total_view %></span></li>
       <li class="list-group-item"><i class="fa fa-desktop"></i>&nbsp;&nbsp;Embedded View<span class="pull-right"><%= @slide.embedded_view %></span></li>
       <% if @slide.downloadable %>

@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   resources :slides
   resources :comments, only: [:create, :destroy]
 
+  resources :categories, only: [:show]
+
   get ':username' => 'users#show'
   get ':username/statistics' => 'users#statistics'
   get ':username/embedded' => 'users#embedded'

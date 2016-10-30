@@ -51,14 +51,6 @@ class SlidesController < ApplicationController
     end
   end
 
-  def category
-    @slides = Slide.published.latest.category(params[:category_id]).includes(:user).
-              paginate(page: params[:page], per_page: 20)
-
-    Category.select('name')
-    @category = Category.find(params[:category_id])
-  end
-
   def show
     @slide.increment(:page_view).increment(:total_view).save
     @start_position = slide_position
