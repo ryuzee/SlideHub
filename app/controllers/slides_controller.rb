@@ -22,6 +22,7 @@
 #
 
 class SlidesController < ApplicationController
+  before_action :set_slide, only: [:edit, :update, :show, :destroy, :embedded, :download]
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
   before_action :duplicate_key_check!, only: [:create]
   protect_from_forgery except: [:embedded]
@@ -58,7 +59,6 @@ class SlidesController < ApplicationController
   end
 
   def show
-    @slide = Slide.find(params[:id])
     @slide.increment(:page_view).increment(:total_view).save
     @start_position = slide_position
     if user_signed_in?
@@ -78,7 +78,6 @@ class SlidesController < ApplicationController
   end
 
   def destroy
-    @slide = Slide.find(params[:id])
     if @slide.user_id == current_user.id
       CloudConfig::SERVICE.delete_slide(@slide.key)
       CloudConfig::SERVICE.delete_generated_files(@slide.key)
@@ -102,7 +101,6 @@ class SlidesController < ApplicationController
   end
 
   def edit
-    @slide = Slide.find(params[:id])
     if current_user.id != @slide.user_id
       return redirect_to slide_path(@slide.id)
     end
@@ -111,7 +109,6 @@ class SlidesController < ApplicationController
 
   def update
     slide_params = params.require(:slide).permit(:name, :description, :key, :downloadable, :category_id, :tag_list, :convert_status)
-    @slide = Slide.find(params[:id])
     if current_user.id != @slide.user_id
       return redirect_to slide_path(@slide.id)
     end
@@ -145,7 +142,7 @@ class SlidesController < ApplicationController
   def update_view
     count = 0
     begin
-      @slide = Slide.find(params[:id])
+      set_slide
       resp = @slide.page_list
       count = if resp
                 resp.count
@@ -159,7 +156,6 @@ class SlidesController < ApplicationController
   end
 
   def embedded
-    @slide = Slide.find(params[:id])
     # increment only when the player is embedded in other site...
     unless params.key?(:inside) && params[:inside] == '1'
       @slide.increment(:embedded_view).increment(:total_view).save
@@ -170,7 +166,6 @@ class SlidesController < ApplicationController
   end
 
   def download
-    @slide = Slide.find(params[:id])
     @slide.increment(:download_count).save
     url = CloudConfig::SERVICE.get_slide_download_url(@slide.key)
     # @TODO: handle response code
@@ -180,6 +175,10 @@ class SlidesController < ApplicationController
   end
 
   private
+
+    def set_slide
+      @slide = Slide.find(params[:id])
+    end
 
     def duplicate_key_check!
       key = params[:slide][:key]
