@@ -189,7 +189,7 @@ RSpec.describe SlidesController, type: :controller do
       login_by_user general_user
       delete :destroy, params: { id: data.id }
       expect(response.status).to eq(302)
-      expect(response).to redirect_to '/slides/index'
+      expect(response).to redirect_to "/slides/#{data.id}"
     end
 
     it 'succeeds to update the record with running conversion' do
