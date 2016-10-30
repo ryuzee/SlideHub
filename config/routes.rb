@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   get 'slides/embedded/:id' => 'slides#embedded'
   get 'slides/embedded/:id/:page' => 'slides#embedded'
   get 'slides/embedded_v2/:id' => 'slides#embedded_v2'
-  get 'slides/category/:category_id' => 'slides#category'
   get 'slides/:id/update_view' => 'slides#update_view'
   get 'slides/:id/embedded' => 'slides#embedded'
   get 'slides/:id/embedded/:page' => 'slides#embedded'
