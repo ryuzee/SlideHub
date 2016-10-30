@@ -74,16 +74,6 @@ RSpec.describe SlidesController, type: :controller do
     end
   end
 
-  describe 'GET #category' do
-    it 'render category' do
-      create(:slide)
-      create(:first_category)
-      get :category, params: { category_id: '1' }
-      expect(response.status).to eq(200)
-      expect(response).to render_template :category
-    end
-  end
-
   describe 'GET #new' do
     it 'render new' do
       login_by_user first_user
@@ -189,7 +179,7 @@ RSpec.describe SlidesController, type: :controller do
       login_by_user general_user
       delete :destroy, params: { id: data.id }
       expect(response.status).to eq(302)
-      expect(response).to redirect_to '/slides/index'
+      expect(response).to redirect_to "/slides/#{data.id}"
     end
 
     it 'succeeds to update the record with running conversion' do

@@ -115,7 +115,7 @@
             <a href="#"><i class="fa fa-link"></i> <span><%= t('activerecord.models.category') %></span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <% @categories.each do |cat| %>
-                <li><a href="/slides/category/<%= cat.id %>"><%= cat.name %></a></li>
+                <li><a href="/categories/<%= cat.id %>"><%= cat.name %></a></li>
                 <% end %>
               </ul>
             </li>
