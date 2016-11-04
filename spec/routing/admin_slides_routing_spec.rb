@@ -10,6 +10,10 @@ describe Admin::SlidesController do
       expect(get('/admin/slides/1/edit')).to route_to('admin/slides#edit', id: '1')
     end
 
+    it 'routes to #download' do
+      expect(get('/admin/slides/1/download')).to route_to('admin/slides#download', id: '1')
+    end
+
     it 'routes to #update' do
       expect(put('/admin/slides/1')).to route_to('admin/slides#update', id: '1')
     end

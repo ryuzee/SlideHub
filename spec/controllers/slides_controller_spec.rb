@@ -256,5 +256,14 @@ RSpec.describe SlidesController, type: :controller do
       expect(response.status).to eq(200)
       expect(response.headers['Content-Disposition']).to eq("attachment; filename=\"#{slide.key}#{slide.extension}\"")
     end
+
+    it 'fails to download file because of permission' do
+      FactoryGirl.create(:slide)
+      slide = Slide.find(1)
+      slide.downloadable = false
+      slide.save
+      get :download, params: { id: slide.id }
+      expect(response.status).to eq(302)
+    end
   end
 end

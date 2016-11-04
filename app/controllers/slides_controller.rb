@@ -22,10 +22,12 @@
 #
 
 class SlidesController < ApplicationController
+  include SlideUtil
   before_action :set_slide, only: [:edit, :update, :show, :destroy, :embedded, :download]
   before_action :owner?, only: [:edit, :update, :destroy]
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
   before_action :duplicate_key_check!, only: [:create]
+  before_action :downloadable?, only: [:download]
   protect_from_forgery except: [:embedded]
 
   def index
@@ -152,11 +154,7 @@ class SlidesController < ApplicationController
 
   def download
     @slide.increment(:download_count).save
-    url = CloudConfig::SERVICE.get_slide_download_url(@slide.key)
-    # @TODO: handle response code
-    require 'open-uri'
-    data = open(url).read
-    send_data data, disposition: 'attachment', filename: "#{@slide.key}#{@slide.extension}"
+    download_slide
   end
 
   private
@@ -167,6 +165,10 @@ class SlidesController < ApplicationController
 
     def owner?
       redirect_to slide_path(@slide.id) if current_user.id != @slide.user_id
+    end
+
+    def downloadable?
+      redirect_to slide_path(@slide.id) if @slide.downloadable != true
     end
 
     def duplicate_key_check!

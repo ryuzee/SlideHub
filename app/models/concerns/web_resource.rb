@@ -16,17 +16,14 @@ module WebResource
 
   def get_php_serialized_data(location, limit = 10)
     result = get_contents(location, limit)
-    if result
-      begin
-        response = result.dup.force_encoding('utf-8')
-        require 'php_serialization/unserializer'
-        return PhpSerialization::Unserializer.new.run(response)
-      rescue
-        return []
-      end
-    else
+    begin
+      response = result.dup.force_encoding('utf-8')
+      require 'php_serialization/unserializer'
+      return PhpSerialization::Unserializer.new.run(response)
+    rescue
       return []
-    end
+    end if result
+    []
   end
 
   def get_contents(location, limit = 10)
@@ -43,14 +40,11 @@ module WebResource
         response.body
       when Net::HTTPRedirection
         location = response['location']
-        warn "redirected to #{location}"
         get_contents(location, limit - 1)
       else
-        puts [uri.to_s, response.value].join(' : ')
         false
       end
-    rescue => e
-      puts [uri.to_s, e.class, e].join(' : ')
+    rescue
       false
     end
   end
