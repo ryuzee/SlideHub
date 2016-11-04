@@ -175,7 +175,7 @@ Style/TrailingCommaInArguments:
 
 # クラスやモジュールのネスト定義
 Style/ClassAndModuleChildren:
-  EnforcedStyle: compact
+  EnforcedStyle: nested
   SupportedStyles:
     - nested
     - compact
