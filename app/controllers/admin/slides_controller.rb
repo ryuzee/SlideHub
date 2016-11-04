@@ -4,8 +4,8 @@ module Admin
       ransack_params = params[:q]
       @q = Slide.search(ransack_params)
       @slides = @q.result(distinct: true).
-        latest.
-        paginate(page: params[:page], per_page: 20)
+                latest.
+                paginate(page: params[:page], per_page: 20)
     end
 
     def edit

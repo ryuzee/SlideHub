@@ -6,10 +6,10 @@ module Admin
 
     private
 
-    def admin_user!
-      if !user_signed_in? || !current_user.admin
-        redirect_to new_user_session_path
+      def admin_user!
+        if !user_signed_in? || !current_user.admin
+          redirect_to new_user_session_path
+        end
       end
-    end
   end
 end
