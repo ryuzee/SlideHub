@@ -10,11 +10,9 @@ Rails.application.routes.draw do
   get 'slides/download/:id' => 'slides#download'
   get 'slides/embedded/:id' => 'slides#embedded'
   get 'slides/embedded/:id/:page' => 'slides#embedded'
-  get 'slides/embedded_v2/:id' => 'slides#embedded_v2'
   get 'slides/:id/update_view' => 'slides#update_view'
   get 'slides/:id/embedded' => 'slides#embedded'
   get 'slides/:id/embedded/:page' => 'slides#embedded'
-  get 'slides/:id/embedded_v2' => 'slides#embedded_v2'
   get 'slides/:id/download' => 'slides#download'
   get 'slides/:id/:page' => 'slides#show'
 
@@ -24,7 +22,6 @@ Rails.application.routes.draw do
     get 'index', on: :collection
   end
 
-  resources :slides
   resources :comments, only: [:create, :destroy]
 
   resources :categories, only: [:show]
@@ -44,7 +41,9 @@ Rails.application.routes.draw do
       get 'edit', on: :collection
       post 'update', on: :collection
     end
-    resources :users, :only => [:index]
+    get 'slides/:id/download' => 'slides#download'
+
+    resources :users, only: [:index]
     resources :custom_contents do
       get 'index', on: :collection
       post 'update', on: :collection

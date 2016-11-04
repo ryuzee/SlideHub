@@ -22,6 +22,7 @@
 #
 
 class SlidesController < ApplicationController
+  include SlideUtil
   before_action :set_slide, only: [:edit, :update, :show, :destroy, :embedded, :download]
   before_action :owner?, only: [:edit, :update, :destroy]
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
@@ -152,11 +153,7 @@ class SlidesController < ApplicationController
 
   def download
     @slide.increment(:download_count).save
-    url = CloudConfig::SERVICE.get_slide_download_url(@slide.key)
-    # @TODO: handle response code
-    require 'open-uri'
-    data = open(url).read
-    send_data data, disposition: 'attachment', filename: "#{@slide.key}#{@slide.extension}"
+    download_slide
   end
 
   private

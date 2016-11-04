@@ -22,6 +22,14 @@ RSpec.describe Admin::SlidesController, type: :controller do
       end
     end
 
+    describe 'GET /admin/slides/download/1' do
+      it 'works!' do
+        create(:slide)
+        get 'edit', params: { id: '1' }
+        expect(response.status).to eq(200)
+      end
+    end
+
     describe 'POST /admin/slides/update' do
       it 'works!' do
         create(:slide)
