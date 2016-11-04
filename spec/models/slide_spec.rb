@@ -45,6 +45,27 @@ describe 'Slide' do
     end
   end
 
+  describe 'transcript' do
+    it 'retrieve transcript and put it into array' do
+      allow_any_instance_of(Slide).to receive(:transcript_url).and_return('http://www.example.com/transcript.txt')
+      stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
+        body: 'a:1:{i:0;s:4:"Test";}',
+        status: 200,
+      )
+      FactoryGirl.create(:slide)
+      expect(Slide.find(1).transcript).to eq(['Test'])
+    end
+
+    it 'try to retrieve transcript, but failed' do
+      allow_any_instance_of(Slide).to receive(:transcript_url).and_return('http://www.example.com/transcript.txt')
+      stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
+        status: 404,
+      )
+      FactoryGirl.create(:slide)
+      expect(Slide.find(1).transcript).to eq([])
+    end
+  end
+
   describe 'transcript_url' do
     it 'url is valid' do
       FactoryGirl.create(:slide)
