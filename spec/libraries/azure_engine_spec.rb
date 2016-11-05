@@ -13,7 +13,8 @@ module Azure
       end
 
       def list_messages(queue_name, timeout, options = {})
-        []
+        message = Entity::Queue::DummyMessage.new
+        [message]
       end
 
       def create_queue(queue_name)
@@ -25,15 +26,18 @@ module Azure
       end
     end
   end
+
   module Entity
     module Queue
       class DummyMessage
-        def id
-          1
-        end
+        attr_accessor :id
+        attr_accessor :message_text
+        attr_accessor :pop_receipt
 
-        def pop_receipt
-          ''
+        def initialize
+          @id = 1
+          @pop_receipt = ''
+          @message_text = ''
         end
       end
     end
@@ -45,6 +49,7 @@ module Azure
         'dummy'
       end
     end
+
     class DummyBlobService
       def create_block_blob(container, key, content)
         nil
@@ -128,6 +133,7 @@ describe 'SlideHub::Cloud::Engine::Azure' do
 
     it 'succeeds to receive message' do
       expect(SlideHub::Cloud::Engine::Azure.receive_message(10).class.name).to eq('SlideHub::Cloud::Queue::Response')
+      expect(SlideHub::Cloud::Engine::Azure.receive_message(10).exist?).to eq(true)
     end
 
     it 'succeeds to delete message' do

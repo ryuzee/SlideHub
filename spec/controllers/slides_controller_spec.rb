@@ -103,6 +103,17 @@ RSpec.describe SlidesController, type: :controller do
       expect(response.status).to eq(200)
       expect(response).to render_template 'slides/aws/new'
     end
+
+    it 'failed to create record because of duplicate key' do
+      allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
+      slides = create_list(:slide, 2)
+      first_key = slides[0].key
+      login_by_user first_user
+      slides[1].key = first_key
+      post :create, params: { slide: slides[1].attributes }
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to slides_path
+    end
   end
 
   describe 'GET #edit' do
