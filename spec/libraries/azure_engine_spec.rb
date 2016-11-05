@@ -13,10 +13,8 @@ module Azure
       end
 
       def list_messages(queue_name, timeout, options = {})
-        # []
-        # msg.id, msg.message_text, msg.pop_receipt
-        q = Entity::Queue::DummyMessage.new
-        [q]
+        message = Entity::Queue::DummyMessage.new
+        [message]
       end
 
       def create_queue(queue_name)
@@ -28,6 +26,7 @@ module Azure
       end
     end
   end
+
   module Entity
     module Queue
       class DummyMessage
@@ -50,6 +49,7 @@ module Azure
         'dummy'
       end
     end
+
     class DummyBlobService
       def create_block_blob(container, key, content)
         nil
