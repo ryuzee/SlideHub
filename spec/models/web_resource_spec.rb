@@ -58,4 +58,10 @@ describe 'WebResource' do
       expect(dummy.get_php_serialized_data('http://www.example.com/transcript.txt', 1)).to eq([])
     end
   end
+
+  describe 'get_contents' do
+    it 'returns false when url is not valid' do
+      expect(dummy.get_contents('hogehoge://www.example.com/transcript.txt', 1)).to eq(false)
+    end
+  end
 end
