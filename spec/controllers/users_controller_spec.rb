@@ -53,6 +53,22 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
+    describe 'GET /users/general998' do
+      it 'works!' do
+        create(:general_user)
+        get 'show', params: { id: '998' }
+        expect(response.status).to eq(200)
+      end
+    end
+
+    describe 'GET /users/998?sort_by=popularity' do
+      it 'works!' do
+        create(:general_user)
+        get 'show', params: { id: '998', sort_by: 'popularity'}
+        expect(response.status).to eq(200)
+      end
+    end
+
     describe 'GET /users/998/embedded' do
       it 'works!' do
         create(:general_user)
