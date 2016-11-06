@@ -64,7 +64,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET /users/998?sort_by=popularity' do
       it 'works!' do
         create(:general_user)
-        get 'show', params: { id: '998', sort_by: 'popularity'}
+        get 'show', params: { id: '998', sort_by: 'popularity' }
         expect(response.status).to eq(200)
       end
     end
