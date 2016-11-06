@@ -25,4 +25,12 @@ describe 'User' do
     ]
     it { expect(user).not_to allow_value(*invalid_usernames).for(:username) }
   end
+
+  describe 'username_to_id' do
+    it 'returns user_id' do
+      general_user = FactoryGirl.create(:general_user)
+      id = User.username_to_id(general_user.username)
+      expect(id).to eq(998)
+    end
+  end
 end

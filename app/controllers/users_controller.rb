@@ -74,9 +74,6 @@ class UsersController < ApplicationController
     end
 
     def username_to_id
-      if params.key?(:username)
-        id = User.where('username = ?', params[:username]).first.id
-        params[:id] = id
-      end
+      params[:id] = User.username_to_id(params[:username]) if params.key?(:username)
     end
 end

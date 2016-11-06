@@ -24,10 +24,12 @@
 class SlidesController < ApplicationController
   include SlideUtil
   before_action :set_slide, only: [:edit, :update, :show, :destroy, :embedded, :download]
-  before_action :owner?, only: [:edit, :update, :destroy]
+  before_action :set_related_slides, only: [:show]
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
-  before_action :duplicate_key_check!, only: [:create]
+  before_action :owner?, only: [:edit, :update, :destroy]
+  before_action :duplicate_key?, only: [:create]
   before_action :downloadable?, only: [:download]
+
   protect_from_forgery except: [:embedded]
 
   def index
@@ -60,11 +62,6 @@ class SlidesController < ApplicationController
       @comment = @slide.comments.new
     end
     @posted_comments = @slide.comments.recent.limit(10).all.includes(:user)
-    @other_slides = Slide.published.latest.
-                    where('category_id = ?', @slide.category_id).
-                    where('id != ?', @slide.id).
-                    limit(10).
-                    includes(:user)
   end
 
   def new
@@ -163,6 +160,10 @@ class SlidesController < ApplicationController
       @slide = Slide.find(params[:id])
     end
 
+    def set_related_slides
+      @related_slides = Slide.related_slides(@slide.category_id, @slide.id)
+    end
+
     def owner?
       redirect_to slide_path(@slide.id) if current_user.id != @slide.user_id
     end
@@ -171,22 +172,12 @@ class SlidesController < ApplicationController
       redirect_to slide_path(@slide.id) if @slide.downloadable != true
     end
 
-    def duplicate_key_check!
-      key = params[:slide][:key]
-      if Slide.where('slides.key = ?', key).count > 0
-        redirect_to slides_path
-      end
+    def duplicate_key?
+      redirect_to slides_path if Slide.key_exist?(params[:slide][:key])
     end
 
     def slide_position
-      if params.key?(:page)
-        position = params[:page].to_i
-        if position <= 0
-          position = 1
-        end
-      else
-        position = 1
-      end
-      position
+      position = 1
+      position = params[:page].to_i if params.key?(:page) && params[:page].to_i > 0
     end
 end

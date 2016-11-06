@@ -186,12 +186,12 @@ if @slide.tags.count > 0
     </ul>
   </div>
 
-  <% if @other_slides.count > 0 %>
+  <% if @related_slides.count > 0 %>
     <!-- Default panel contents -->
     <h3 class="h4"><%= t(:related_slides) %></h3>
     <div style="border:1px solid #ccc;padding-bottom:0px;">
     <ul class="thumbnail_with_text">
-    <% @other_slides.each do |s| %>
+    <% @related_slides.each do |s| %>
     <li>
       <a href="<%= slide_path(s.id) %>"><img src="<%= s.thumbnail_url %>"></a>
       <h3 class="h5"><span class="no_decoration"><a href="<%= slide_path(s.id) %>"><%= strip_tags s.name.truncate(24) %></a></span></h3>
