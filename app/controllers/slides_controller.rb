@@ -24,10 +24,12 @@
 class SlidesController < ApplicationController
   include SlideUtil
   before_action :set_slide, only: [:edit, :update, :show, :destroy, :embedded, :download]
-  before_action :owner?, only: [:edit, :update, :destroy]
+  before_action :set_related_slides, only: [:show]
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
+  before_action :owner?, only: [:edit, :update, :destroy]
   before_action :duplicate_key?, only: [:create]
   before_action :downloadable?, only: [:download]
+
   protect_from_forgery except: [:embedded]
 
   def index
@@ -60,11 +62,6 @@ class SlidesController < ApplicationController
       @comment = @slide.comments.new
     end
     @posted_comments = @slide.comments.recent.limit(10).all.includes(:user)
-    @other_slides = Slide.published.latest.
-                    where('category_id = ?', @slide.category_id).
-                    where('id != ?', @slide.id).
-                    limit(10).
-                    includes(:user)
   end
 
   def new
@@ -161,6 +158,10 @@ class SlidesController < ApplicationController
 
     def set_slide
       @slide = Slide.find(params[:id])
+    end
+
+    def set_related_slides
+      @related_slides = Slide.related_slides(@slide.category_id, @slide.id)
     end
 
     def owner?

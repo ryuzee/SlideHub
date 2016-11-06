@@ -73,6 +73,14 @@ class Slide < ActiveRecord::Base
     Slide.where('slides.key = ?', key).count > 0
   end
 
+  def self.related_slides(category_id, slide_id, limit = 10)
+    Slide.published.latest.
+      where('category_id = ?', category_id).
+      where('id != ?', slide_id).
+      limit(limit).
+      includes(:user)
+  end
+
   def thumbnail_url
     "#{CloudConfig::SERVICE.resource_endpoint}/#{key}/thumbnail.jpg"
   end
