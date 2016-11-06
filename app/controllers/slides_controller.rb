@@ -179,5 +179,6 @@ class SlidesController < ApplicationController
     def slide_position
       position = 1
       position = params[:page].to_i if params.key?(:page) && params[:page].to_i > 0
+      position
     end
 end
