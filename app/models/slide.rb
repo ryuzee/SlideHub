@@ -69,6 +69,10 @@ class Slide < ActiveRecord::Base
     (column_names + ['tag_search']) + _ransackers.keys
   end
 
+  def self.key_exist?(key)
+    Slide.where('slides.key = ?', key).count > 0
+  end
+
   def thumbnail_url
     "#{CloudConfig::SERVICE.resource_endpoint}/#{key}/thumbnail.jpg"
   end

@@ -26,7 +26,7 @@ class SlidesController < ApplicationController
   before_action :set_slide, only: [:edit, :update, :show, :destroy, :embedded, :download]
   before_action :owner?, only: [:edit, :update, :destroy]
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
-  before_action :duplicate_key_check!, only: [:create]
+  before_action :duplicate_key?, only: [:create]
   before_action :downloadable?, only: [:download]
   protect_from_forgery except: [:embedded]
 
@@ -171,11 +171,8 @@ class SlidesController < ApplicationController
       redirect_to slide_path(@slide.id) if @slide.downloadable != true
     end
 
-    def duplicate_key_check!
-      key = params[:slide][:key]
-      if Slide.where('slides.key = ?', key).count > 0
-        redirect_to slides_path
-      end
+    def duplicate_key?
+      redirect_to slides_path if Slide.key_exist?(params[:slide][:key])
     end
 
     def slide_position
