@@ -76,7 +76,7 @@ sed -i -e "s/proxy_pass http:\/\/127\.0\.0\.1:[0-9]*;/proxy_pass http:\/\/127.0.
 service nginx reload
 
 IFS=$'\n'
-CONTAINERS=(`sudo docker ps -qa --filter "name=slidehub[0-9]{22,}"`)
+CONTAINERS=(`sudo docker ps -qa --filter "name=/slidehub"`)
 n=0
 for line in "${CONTAINERS[@]}"; do
   n=`expr $n + 1`
