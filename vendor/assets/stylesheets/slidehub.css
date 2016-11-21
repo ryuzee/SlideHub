@@ -157,6 +157,7 @@ _::-webkit-full-page-media, _:future, :root .bx-wrapper .bx-viewport {
   padding:0.8em;
   margin-top:0.8em;
   padding-bottom:0px;
+  text-align: justify;
 }
 
 .slidehub_body div.slide_detail_row {
