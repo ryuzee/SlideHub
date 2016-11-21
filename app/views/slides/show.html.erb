@@ -179,7 +179,7 @@ if @slide.tags.count > 0
       <% end %>
       <% if @slide.tags.count > 0 %>
         <li class="list-group-item clearfix"><span class="pull-right"><% @slide.tags.each do |t| %>
-            <a href="/slides/search?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;<% end %>
+            <a href="/search?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;<% end %>
         </li>
       <% end %>
       <li class="list-group-item"><%= render 'slides/share_buttons' %></li>

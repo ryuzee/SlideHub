@@ -45,13 +45,6 @@ describe 'Slides' do
     end
   end
 
-  describe 'GET /slides/search' do
-    it 'works!' do
-      get '/slides/search'
-      expect(response.status).to eq(200)
-    end
-  end
-
   describe 'GET /slides/1' do
     it 'works!' do
       create_list(:slide, 2)

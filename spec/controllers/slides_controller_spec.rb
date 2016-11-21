@@ -66,14 +66,6 @@ RSpec.describe SlidesController, type: :controller do
     end
   end
 
-  describe 'GET #search' do
-    it 'render search' do
-      get :search
-      expect(response.status).to eq(200)
-      expect(response).to render_template :search
-    end
-  end
-
   describe 'GET #new' do
     it 'render new' do
       login_by_user first_user
