@@ -26,7 +26,7 @@
       <div class="panel-heading"><%= t :popular_tags %></div>
       <div class="panel-body">
         <% tag_cloud(@tags, %w(tag1 tag2 tag3 tag4)) do |tag, css_class| %>
-          <%= link_to tag.name, "/slides/search?q%5Btag_search%5D=#{tag.name}", :class => css_class %>
+          <%= link_to tag.name, "/search?q%5Btag_search%5D=#{tag.name}", :class => css_class %>
         <% end %>
       </div>
     </div>

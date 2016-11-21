@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
+  get 'search' => 'search#index'
+
   devise_for :users
   resources :slides do
     get 'index', on: :collection
     get 'latest', on: :collection
     get 'popular', on: :collection
-    get 'search', on: :collection
   end
   get 'slides/view/:id' => 'slides#show'
   get 'slides/download/:id' => 'slides#download'

@@ -37,10 +37,6 @@ describe SlidesController do
       expect(get('/slides/popular')).to route_to('slides#popular')
     end
 
-    it 'routes to #search' do
-      expect(get('/slides/search')).to route_to('slides#search')
-    end
-
     it 'routes to #new' do
       expect(get('/slides/new')).to route_to('slides#new')
     end
