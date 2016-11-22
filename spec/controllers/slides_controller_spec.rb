@@ -181,34 +181,6 @@ RSpec.describe SlidesController, type: :controller do
     end
   end
 
-  describe 'GET #update_view' do
-    it 'succeeds to retrieve json' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      slide = create(:slide)
-      get :update_view, params: { id: slide.id }
-      expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
-      expect(json['page_count']).to eq(1)
-    end
-
-    it 'returns 0' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      get :update_view, params: { id: 65535 }
-      expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
-      expect(json['page_count']).to eq(0)
-    end
-
-    it 'returns 0 because of a failure of retrieving json' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(false)
-      slide = create(:slide)
-      get :update_view, params: { id: slide.id }
-      expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
-      expect(json['page_count']).to eq(0)
-    end
-  end
-
   describe 'GET #embedded' do
     it 'succeeds to return encrypted JavaScript' do
       allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])

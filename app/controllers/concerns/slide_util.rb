@@ -1,6 +1,10 @@
 module SlideUtil
   extend ActiveSupport::Concern
 
+  def set_slide
+    @slide = Slide.find(params[:id])
+  end
+
   def download_slide
     url = CloudConfig::SERVICE.get_slide_download_url(@slide.key)
     # @TODO: handle response code

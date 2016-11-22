@@ -59,7 +59,7 @@ if @slide.tags.count > 0
             $.ajax({
               type: 'GET',
               async: false,
-              url: "/slides/<%= @slide.id %>/update_view",
+              url: "/page_count/<%= @slide.id %>",
               cache: false,
               dataType: 'json',
               success: function(json) {

@@ -91,22 +91,6 @@ class SlidesController < ApplicationController
     end
   end
 
-  def update_view
-    count = 0
-    begin
-      set_slide
-      resp = @slide.page_list
-      count = if resp
-                resp.count
-              else
-                0
-              end
-    rescue ActiveRecord::RecordNotFound
-      count = 0
-    end
-    render json: { page_count: count }
-  end
-
   def embedded
     # increment only when the player is embedded in other site...
     unless params.key?(:inside) && params[:inside] == '1'
@@ -123,10 +107,6 @@ class SlidesController < ApplicationController
   end
 
   private
-
-    def set_slide
-      @slide = Slide.find(params[:id])
-    end
 
     def set_related_slides
       @related_slides = Slide.related_slides(@slide.category_id, @slide.id)

@@ -45,10 +45,6 @@ describe SlidesController do
       expect(get('/slides/1/download')).to route_to('slides#download', id: '1')
     end
 
-    it 'routes to #update_view' do
-      expect(get('/slides/1/update_view')).to route_to('slides#update_view', id: '1')
-    end
-
     it 'routes to #embedded' do
       expect(get('/slides/1/embedded')).to route_to('slides#embedded', id: '1')
     end

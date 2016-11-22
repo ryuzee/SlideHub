@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'slides/latest' => 'latest_slides#index' # backward compatibility
   get 'popular' => 'popular_slides#index'
   get 'slides/popular' => 'popular_slides#index' # backward compatibility
+  get 'page_count/:id' => 'slide_page_count#show'
 
   devise_for :users
   resources :slides do
@@ -13,7 +14,6 @@ Rails.application.routes.draw do
   get 'slides/download/:id' => 'slides#download'
   get 'slides/embedded/:id' => 'slides#embedded'
   get 'slides/embedded/:id/:page' => 'slides#embedded'
-  get 'slides/:id/update_view' => 'slides#update_view'
   get 'slides/:id/embedded' => 'slides#embedded'
   get 'slides/:id/embedded/:page' => 'slides#embedded'
   get 'slides/:id/download' => 'slides#download'
