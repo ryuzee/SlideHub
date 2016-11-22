@@ -37,15 +37,6 @@ class SlidesController < ApplicationController
     @popular_slides = Slide.popular_slides(8)
   end
 
-  def popular
-    @slides = Slide.published.popular.includes(:user).
-              paginate(page: params[:page], per_page: 20)
-    respond_to do |format|
-      format.html
-      format.rss
-    end
-  end
-
   def show
     @slide.increment(:page_view).increment(:total_view).save
     @start_position = slide_position

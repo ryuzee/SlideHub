@@ -2,7 +2,7 @@
 <div class="row" id="popular">
   <div class="col-md-12">
     <%- model_class = Slide -%>
-    <h3><%=t :popular_slides %>&nbsp;&nbsp;<small><a href="/slides/popular"><%= t :more_slides %></a></small></h3>
+    <h3><%=t :popular_slides %>&nbsp;&nbsp;<small><a href="/popular"><%= t :more_slides %></a></small></h3>
 
     <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @popular_slides %>
 

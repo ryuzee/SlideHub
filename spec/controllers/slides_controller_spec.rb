@@ -50,14 +50,6 @@ RSpec.describe SlidesController, type: :controller do
     end
   end
 
-  describe 'GET #popular' do
-    it 'render popular' do
-      get :popular
-      expect(response.status).to eq(200)
-      expect(response).to render_template :popular
-    end
-  end
-
   describe 'GET #new' do
     it 'render new' do
       login_by_user first_user
