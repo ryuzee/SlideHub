@@ -38,13 +38,6 @@ describe 'Slides' do
     end
   end
 
-  describe 'GET /slides/latest' do
-    it 'works!' do
-      get '/slides/latest'
-      expect(response.status).to eq(200)
-    end
-  end
-
   describe 'GET /slides/1' do
     it 'works!' do
       create_list(:slide, 2)
@@ -59,13 +52,6 @@ describe 'Slides' do
   describe 'GET /slides/popular.rss' do
     it 'works!' do
       get '/slides/popular.rss'
-      expect(response.status).to eq(200)
-    end
-  end
-
-  describe 'GET /slides/latest.rss' do
-    it 'works!' do
-      get '/slides/latest.rss'
       expect(response.status).to eq(200)
     end
   end

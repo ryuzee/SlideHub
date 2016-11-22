@@ -29,10 +29,6 @@ describe SlidesController do
       expect(get('/slides')).to route_to('slides#index')
     end
 
-    it 'routes to #latest' do
-      expect(get('/slides/latest')).to route_to('slides#latest')
-    end
-
     it 'routes to #popular' do
       expect(get('/slides/popular')).to route_to('slides#popular')
     end
@@ -88,10 +84,6 @@ describe SlidesController do
 
     it 'routes to #embedded (BC)' do
       expect(get('/slides/embedded/1')).to route_to('slides#embedded', id: '1')
-    end
-
-    it 'routes to #latest.rss' do
-      expect(get('/slides/latest.rss')).to route_to('slides#latest', 'format' => 'rss')
     end
 
     it 'routes to #popular.rss' do

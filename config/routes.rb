@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   get 'search' => 'search#index'
+  get 'latest' => 'latest_slides#index'
+  get 'slides/latest' => 'latest_slides#index' # backward compatibility
 
   devise_for :users
   resources :slides do
     get 'index', on: :collection
-    get 'latest', on: :collection
     get 'popular', on: :collection
   end
   get 'slides/view/:id' => 'slides#show'

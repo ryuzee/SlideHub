@@ -50,14 +50,6 @@ RSpec.describe SlidesController, type: :controller do
     end
   end
 
-  describe 'GET #latest' do
-    it 'render latest' do
-      get :latest
-      expect(response.status).to eq(200)
-      expect(response).to render_template :latest
-    end
-  end
-
   describe 'GET #popular' do
     it 'render popular' do
       get :popular
