@@ -12,4 +12,10 @@ module SlideUtil
     data = open(url).read
     send_data data, disposition: 'attachment', filename: "#{@slide.key}#{@slide.extension}"
   end
+
+  def slide_position
+    position = 1
+    position = params[:page].to_i if params.key?(:page) && params[:page].to_i > 0
+    position
+  end
 end

@@ -35,7 +35,7 @@ if @slide.tags.count > 0
 
     <% if params[:vertical] != "1" %>
       <div style="padding-top:20px;">
-      <script type="application/javascript" src="<%= "#{root_url}slides/#{@slide.id}/embedded/#{@start_position}?prefix=#{prefix}&inside=1" %>"></script>
+      <script type="application/javascript" src="<%= "#{root_url}player/#{@slide.id}/#{@start_position}?prefix=#{prefix}&inside=1" %>"></script>
       <script type="application/javascript">
         window.onkeydown = function(evt) {
           if (evt.keyCode == 74 || evt.keyCode == 39) {
@@ -239,7 +239,7 @@ if @slide.tags.count > 0
     <div class="modal-content">
       <div class="modal-header">Embedded Code</div>
       <div class="modal-body">
-        <%= "<script src=\"#{root_url}slides/#{@slide.id}/embedded\"></script>" %>
+        <%= "<script src=\"#{root_url}player/#{@slide.id}\"></script>" %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

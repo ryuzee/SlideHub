@@ -23,14 +23,14 @@
 
 class SlidesController < ApplicationController
   include SlideUtil
-  before_action :set_slide, only: [:edit, :update, :show, :destroy, :embedded, :download]
+  before_action :set_slide, only: [:edit, :update, :show, :destroy, :download]
   before_action :set_related_slides, only: [:show]
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
   before_action :owner?, only: [:edit, :update, :destroy]
   before_action :duplicate_key?, only: [:create]
   before_action :downloadable?, only: [:download]
 
-  protect_from_forgery except: [:embedded]
+  protect_from_forgery
 
   def index
     @latest_slides = Slide.latest_slides(8)
@@ -91,16 +91,6 @@ class SlidesController < ApplicationController
     end
   end
 
-  def embedded
-    # increment only when the player is embedded in other site...
-    unless params.key?(:inside) && params[:inside] == '1'
-      @slide.increment(:embedded_view).increment(:total_view).save
-    end
-    @start_position = slide_position
-    s = render_to_string layout: 'plain', collection: @slide
-    render text: s, layout: false, content_type: 'application/javascript'
-  end
-
   def download
     @slide.increment(:download_count).save
     download_slide
@@ -122,11 +112,5 @@ class SlidesController < ApplicationController
 
     def duplicate_key?
       redirect_to slides_path if Slide.key_exist?(params[:slide][:key])
-    end
-
-    def slide_position
-      position = 1
-      position = params[:page].to_i if params.key?(:page) && params[:page].to_i > 0
-      position
     end
 end

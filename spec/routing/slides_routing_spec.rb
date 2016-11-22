@@ -45,10 +45,6 @@ describe SlidesController do
       expect(get('/slides/1/download')).to route_to('slides#download', id: '1')
     end
 
-    it 'routes to #embedded' do
-      expect(get('/slides/1/embedded')).to route_to('slides#embedded', id: '1')
-    end
-
     it 'routes to #create' do
       expect(post('/slides')).to route_to('slides#create')
     end
@@ -74,21 +70,9 @@ describe SlidesController do
       expect(get('/slides/download/1')).to route_to('slides#download', id: '1')
     end
 
-    it 'routes to #embedded (BC)' do
-      expect(get('/slides/embedded/1')).to route_to('slides#embedded', id: '1')
-    end
-
     ## specify page number when displaying a slide
     it 'routes to #show/:id/:page' do
       expect(get('/slides/1/2')).to route_to('slides#show', id: '1', page: '2')
-    end
-
-    it 'routes to #embedded/:id/:page' do
-      expect(get('/slides/1/embedded/2')).to route_to('slides#embedded', id: '1', page: '2')
-    end
-
-    it 'routes to #slides/embedded/:id/:page' do
-      expect(get('/slides/embedded/1/2')).to route_to('slides#embedded', id: '1', page: '2')
     end
   end
 end

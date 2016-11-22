@@ -181,28 +181,6 @@ RSpec.describe SlidesController, type: :controller do
     end
   end
 
-  describe 'GET #embedded' do
-    it 'succeeds to return encrypted JavaScript' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      slide = create(:slide)
-      get :embedded, params: { id: slide.id }
-      expect(response.status).to eq(200)
-      updated_data = Slide.find(slide.id)
-      expect(updated_data.embedded_view).to eq(slide.embedded_view + 1)
-      expect(updated_data.total_view).to eq(slide.total_view + 1)
-    end
-
-    it 'succeeds to return encrypted JavaScript for inside' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      slide = create(:slide)
-      get :embedded, params: { id: slide.id, inside: 1 }
-      expect(response.status).to eq(200)
-      updated_data = Slide.find(slide.id)
-      expect(updated_data.embedded_view).to eq(slide.embedded_view)
-      expect(updated_data.total_view).to eq(slide.total_view)
-    end
-  end
-
   describe 'GET #download' do
     it 'success to download file' do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')

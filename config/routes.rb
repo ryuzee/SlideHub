@@ -6,16 +6,19 @@ Rails.application.routes.draw do
   get 'slides/popular' => 'popular_slides#index' # backward compatibility
   get 'page_count/:id' => 'slide_page_count#show'
 
+  get 'player/:id' => 'player#show'
+  get 'player/:id/:page' => 'player#show'
+  get 'slides/embedded/:id' => 'player#show'
+  get 'slides/embedded/:id/:page' => 'player#show'
+  get 'slides/:id/embedded' => 'player#show'
+  get 'slides/:id/embedded/:page' => 'player#show'
+
   devise_for :users
   resources :slides do
     get 'index', on: :collection
   end
   get 'slides/view/:id' => 'slides#show'
   get 'slides/download/:id' => 'slides#download'
-  get 'slides/embedded/:id' => 'slides#embedded'
-  get 'slides/embedded/:id/:page' => 'slides#embedded'
-  get 'slides/:id/embedded' => 'slides#embedded'
-  get 'slides/:id/embedded/:page' => 'slides#embedded'
   get 'slides/:id/download' => 'slides#download'
   get 'slides/:id/:page' => 'slides#show'
 
