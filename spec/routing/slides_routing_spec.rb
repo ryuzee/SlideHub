@@ -29,14 +29,6 @@ describe SlidesController do
       expect(get('/slides')).to route_to('slides#index')
     end
 
-    it 'routes to #latest' do
-      expect(get('/slides/latest')).to route_to('slides#latest')
-    end
-
-    it 'routes to #popular' do
-      expect(get('/slides/popular')).to route_to('slides#popular')
-    end
-
     it 'routes to #new' do
       expect(get('/slides/new')).to route_to('slides#new')
     end
@@ -47,18 +39,6 @@ describe SlidesController do
 
     it 'routes to #edit' do
       expect(get('/slides/1/edit')).to route_to('slides#edit', id: '1')
-    end
-
-    it 'routes to #download' do
-      expect(get('/slides/1/download')).to route_to('slides#download', id: '1')
-    end
-
-    it 'routes to #update_view' do
-      expect(get('/slides/1/update_view')).to route_to('slides#update_view', id: '1')
-    end
-
-    it 'routes to #embedded' do
-      expect(get('/slides/1/embedded')).to route_to('slides#embedded', id: '1')
     end
 
     it 'routes to #create' do
@@ -82,33 +62,9 @@ describe SlidesController do
       expect(get('/slides/view/1')).to route_to('slides#show', id: '1')
     end
 
-    it 'routes to #download (BC)' do
-      expect(get('/slides/download/1')).to route_to('slides#download', id: '1')
-    end
-
-    it 'routes to #embedded (BC)' do
-      expect(get('/slides/embedded/1')).to route_to('slides#embedded', id: '1')
-    end
-
-    it 'routes to #latest.rss' do
-      expect(get('/slides/latest.rss')).to route_to('slides#latest', 'format' => 'rss')
-    end
-
-    it 'routes to #popular.rss' do
-      expect(get('/slides/popular.rss')).to route_to('slides#popular', 'format' => 'rss')
-    end
-
     ## specify page number when displaying a slide
     it 'routes to #show/:id/:page' do
       expect(get('/slides/1/2')).to route_to('slides#show', id: '1', page: '2')
-    end
-
-    it 'routes to #embedded/:id/:page' do
-      expect(get('/slides/1/embedded/2')).to route_to('slides#embedded', id: '1', page: '2')
-    end
-
-    it 'routes to #slides/embedded/:id/:page' do
-      expect(get('/slides/embedded/1/2')).to route_to('slides#embedded', id: '1', page: '2')
     end
   end
 end

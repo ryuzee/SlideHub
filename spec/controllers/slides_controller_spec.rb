@@ -50,22 +50,6 @@ RSpec.describe SlidesController, type: :controller do
     end
   end
 
-  describe 'GET #latest' do
-    it 'render latest' do
-      get :latest
-      expect(response.status).to eq(200)
-      expect(response).to render_template :latest
-    end
-  end
-
-  describe 'GET #popular' do
-    it 'render popular' do
-      get :popular
-      expect(response.status).to eq(200)
-      expect(response).to render_template :popular
-    end
-  end
-
   describe 'GET #new' do
     it 'render new' do
       login_by_user first_user
@@ -194,79 +178,6 @@ RSpec.describe SlidesController, type: :controller do
       expect(response.status).to eq(302)
       expect(response).to redirect_to '/slides/index'
       expect(Slide.exists?(data.id)).to eq(false)
-    end
-  end
-
-  describe 'GET #update_view' do
-    it 'succeeds to retrieve json' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      slide = create(:slide)
-      get :update_view, params: { id: slide.id }
-      expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
-      expect(json['page_count']).to eq(1)
-    end
-
-    it 'returns 0' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      get :update_view, params: { id: 65535 }
-      expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
-      expect(json['page_count']).to eq(0)
-    end
-
-    it 'returns 0 because of a failure of retrieving json' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(false)
-      slide = create(:slide)
-      get :update_view, params: { id: slide.id }
-      expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
-      expect(json['page_count']).to eq(0)
-    end
-  end
-
-  describe 'GET #embedded' do
-    it 'succeeds to return encrypted JavaScript' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      slide = create(:slide)
-      get :embedded, params: { id: slide.id }
-      expect(response.status).to eq(200)
-      updated_data = Slide.find(slide.id)
-      expect(updated_data.embedded_view).to eq(slide.embedded_view + 1)
-      expect(updated_data.total_view).to eq(slide.total_view + 1)
-    end
-
-    it 'succeeds to return encrypted JavaScript for inside' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      slide = create(:slide)
-      get :embedded, params: { id: slide.id, inside: 1 }
-      expect(response.status).to eq(200)
-      updated_data = Slide.find(slide.id)
-      expect(updated_data.embedded_view).to eq(slide.embedded_view)
-      expect(updated_data.total_view).to eq(slide.total_view)
-    end
-  end
-
-  describe 'GET #download' do
-    it 'success to download file' do
-      allow(SlideHub::Cloud::Engine::AWS).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
-      stub_request(:any, 'http://www.example.com/1.pdf').to_return(
-        body: 'test',
-        status: 200,
-      )
-      slide = create(:slide)
-      get :download, params: { id: slide.id }
-      expect(response.status).to eq(200)
-      expect(response.headers['Content-Disposition']).to eq("attachment; filename=\"#{slide.key}#{slide.extension}\"")
-    end
-
-    it 'fails to download file because of permission' do
-      FactoryGirl.create(:slide)
-      slide = Slide.find(1)
-      slide.downloadable = false
-      slide.save
-      get :download, params: { id: slide.id }
-      expect(response.status).to eq(302)
     end
   end
 end

@@ -38,8 +38,8 @@
     <%= javascript_include_tag "application" %>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:latest_slides) %>)" href="/slides/latest.rss" />
-    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:popular_slides) %>)" href="/slides/popular.rss" />
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:latest_slides) %>)" href="/latest.rss" />
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:popular_slides) %>)" href="/popular.rss" />
   </head>
   <body class="slidehub_body">
 
@@ -64,8 +64,8 @@
             </li>
           </ul>
           <ul class="nav navbar-nav">
-            <li><%= link_to t("popular"), "/slides/popular"  %></li>
-            <li><%= link_to t("latest"), "/slides/latest"  %></li>
+            <li><%= link_to t("popular"), "/popular"  %></li>
+            <li><%= link_to t("latest"), "/latest"  %></li>
             <li><%= link_to t("search"), "/search"  %></li>
           </ul>
           <% if user_signed_in? %>

@@ -1,22 +1,28 @@
 Rails.application.routes.draw do
   get 'search' => 'search#index'
+  get 'latest' => 'latest_slides#index'
+  get 'slides/latest' => 'latest_slides#index' # backward compatibility
+  get 'popular' => 'popular_slides#index'
+  get 'slides/popular' => 'popular_slides#index' # backward compatibility
+  get 'page_count/:id' => 'slide_page_count#show'
+
+  get 'player/:id' => 'player#show'
+  get 'player/:id/:page' => 'player#show'
+  get 'slides/embedded/:id' => 'player#show'
+  get 'slides/embedded/:id/:page' => 'player#show'
+  get 'slides/:id/embedded' => 'player#show'
+  get 'slides/:id/embedded/:page' => 'player#show'
+
+  get 'download/:id' => 'slide_download#show'
+  get 'slides/:id/download' => 'slide_download#show'
+  get 'slides/download/:id' => 'slide_download#show'
 
   devise_for :users
   resources :slides do
     get 'index', on: :collection
-    get 'latest', on: :collection
-    get 'popular', on: :collection
   end
   get 'slides/view/:id' => 'slides#show'
-  get 'slides/download/:id' => 'slides#download'
-  get 'slides/embedded/:id' => 'slides#embedded'
-  get 'slides/embedded/:id/:page' => 'slides#embedded'
-  get 'slides/:id/update_view' => 'slides#update_view'
-  get 'slides/:id/embedded' => 'slides#embedded'
-  get 'slides/:id/embedded/:page' => 'slides#embedded'
-  get 'slides/:id/download' => 'slides#download'
   get 'slides/:id/:page' => 'slides#show'
-
   get 'users/view/:id' => 'users#show'
   get 'users/:id/embedded' => 'users#embedded'
   resources :users do

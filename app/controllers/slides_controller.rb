@@ -23,36 +23,17 @@
 
 class SlidesController < ApplicationController
   include SlideUtil
-  before_action :set_slide, only: [:edit, :update, :show, :destroy, :embedded, :download]
+  before_action :set_slide, only: [:edit, :update, :show, :destroy]
   before_action :set_related_slides, only: [:show]
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
   before_action :owner?, only: [:edit, :update, :destroy]
   before_action :duplicate_key?, only: [:create]
-  before_action :downloadable?, only: [:download]
 
-  protect_from_forgery except: [:embedded]
+  protect_from_forgery
 
   def index
     @latest_slides = Slide.latest_slides(8)
     @popular_slides = Slide.popular_slides(8)
-  end
-
-  def latest
-    @slides = Slide.published.latest.includes(:user).
-              paginate(page: params[:page], per_page: 20)
-    respond_to do |format|
-      format.html
-      format.rss
-    end
-  end
-
-  def popular
-    @slides = Slide.published.popular.includes(:user).
-              paginate(page: params[:page], per_page: 20)
-    respond_to do |format|
-      format.html
-      format.rss
-    end
   end
 
   def show
@@ -109,42 +90,7 @@ class SlidesController < ApplicationController
     end
   end
 
-  def update_view
-    count = 0
-    begin
-      set_slide
-      resp = @slide.page_list
-      count = if resp
-                resp.count
-              else
-                0
-              end
-    rescue ActiveRecord::RecordNotFound
-      count = 0
-    end
-    render json: { page_count: count }
-  end
-
-  def embedded
-    # increment only when the player is embedded in other site...
-    unless params.key?(:inside) && params[:inside] == '1'
-      @slide.increment(:embedded_view).increment(:total_view).save
-    end
-    @start_position = slide_position
-    s = render_to_string layout: 'plain', collection: @slide
-    render text: s, layout: false, content_type: 'application/javascript'
-  end
-
-  def download
-    @slide.increment(:download_count).save
-    download_slide
-  end
-
   private
-
-    def set_slide
-      @slide = Slide.find(params[:id])
-    end
 
     def set_related_slides
       @related_slides = Slide.related_slides(@slide.category_id, @slide.id)
@@ -154,17 +100,7 @@ class SlidesController < ApplicationController
       redirect_to slide_path(@slide.id) if current_user.id != @slide.user_id
     end
 
-    def downloadable?
-      redirect_to slide_path(@slide.id) if @slide.downloadable != true
-    end
-
     def duplicate_key?
       redirect_to slides_path if Slide.key_exist?(params[:slide][:key])
-    end
-
-    def slide_position
-      position = 1
-      position = params[:page].to_i if params.key?(:page) && params[:page].to_i > 0
-      position
     end
 end

@@ -230,7 +230,7 @@ div#<%= prefix %>page_positions{
         <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="#" id="<%= prefix %>full_screen_icon"><i id="slide_control_fullscreen" class="fa fa-television"></i>&nbsp;</a>
         <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="<%= "#{root_url}slides/#{@slide.id}" %>"><i id="slide_control_home_link" class="fa fa-link"></i>&nbsp;</a>
         <% if @slide.downloadable %>
-          <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="<%= "#{root_url}slides/#{@slide.id}/download" %>"><i id="slide_control_download_link" class="fa fa-download"></i>&nbsp;</a>
+          <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="<%= "#{root_url}download/#{@slide.id}" %>"><i id="slide_control_download_link" class="fa fa-download"></i>&nbsp;</a>
         <% end %>
         <ul style="list-style-image:none; list-style-type:none">
           <li><a href="javascript:OSSJSPARTS<%= prefix %>.move_to(0);">&nbsp;<i class="fa fa-fast-backward"></i>&nbsp;</a></li>
