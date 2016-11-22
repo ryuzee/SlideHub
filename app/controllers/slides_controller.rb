@@ -23,12 +23,11 @@
 
 class SlidesController < ApplicationController
   include SlideUtil
-  before_action :set_slide, only: [:edit, :update, :show, :destroy, :download]
+  before_action :set_slide, only: [:edit, :update, :show, :destroy]
   before_action :set_related_slides, only: [:show]
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
   before_action :owner?, only: [:edit, :update, :destroy]
   before_action :duplicate_key?, only: [:create]
-  before_action :downloadable?, only: [:download]
 
   protect_from_forgery
 
@@ -91,11 +90,6 @@ class SlidesController < ApplicationController
     end
   end
 
-  def download
-    @slide.increment(:download_count).save
-    download_slide
-  end
-
   private
 
     def set_related_slides
@@ -104,10 +98,6 @@ class SlidesController < ApplicationController
 
     def owner?
       redirect_to slide_path(@slide.id) if current_user.id != @slide.user_id
-    end
-
-    def downloadable?
-      redirect_to slide_path(@slide.id) if @slide.downloadable != true
     end
 
     def duplicate_key?

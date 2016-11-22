@@ -13,15 +13,16 @@ Rails.application.routes.draw do
   get 'slides/:id/embedded' => 'player#show'
   get 'slides/:id/embedded/:page' => 'player#show'
 
+  get 'download/:id' => 'slide_download#show'
+  get 'slides/:id/download' => 'slide_download#show'
+  get 'slides/download/:id' => 'slide_download#show'
+
   devise_for :users
   resources :slides do
     get 'index', on: :collection
   end
   get 'slides/view/:id' => 'slides#show'
-  get 'slides/download/:id' => 'slides#download'
-  get 'slides/:id/download' => 'slides#download'
   get 'slides/:id/:page' => 'slides#show'
-
   get 'users/view/:id' => 'users#show'
   get 'users/:id/embedded' => 'users#embedded'
   resources :users do

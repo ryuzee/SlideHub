@@ -180,27 +180,4 @@ RSpec.describe SlidesController, type: :controller do
       expect(Slide.exists?(data.id)).to eq(false)
     end
   end
-
-  describe 'GET #download' do
-    it 'success to download file' do
-      allow(SlideHub::Cloud::Engine::AWS).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
-      stub_request(:any, 'http://www.example.com/1.pdf').to_return(
-        body: 'test',
-        status: 200,
-      )
-      slide = create(:slide)
-      get :download, params: { id: slide.id }
-      expect(response.status).to eq(200)
-      expect(response.headers['Content-Disposition']).to eq("attachment; filename=\"#{slide.key}#{slide.extension}\"")
-    end
-
-    it 'fails to download file because of permission' do
-      FactoryGirl.create(:slide)
-      slide = Slide.find(1)
-      slide.downloadable = false
-      slide.save
-      get :download, params: { id: slide.id }
-      expect(response.status).to eq(302)
-    end
-  end
 end

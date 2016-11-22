@@ -41,10 +41,6 @@ describe SlidesController do
       expect(get('/slides/1/edit')).to route_to('slides#edit', id: '1')
     end
 
-    it 'routes to #download' do
-      expect(get('/slides/1/download')).to route_to('slides#download', id: '1')
-    end
-
     it 'routes to #create' do
       expect(post('/slides')).to route_to('slides#create')
     end
@@ -64,10 +60,6 @@ describe SlidesController do
 
     it 'routes to #show (BC)' do
       expect(get('/slides/view/1')).to route_to('slides#show', id: '1')
-    end
-
-    it 'routes to #download (BC)' do
-      expect(get('/slides/download/1')).to route_to('slides#download', id: '1')
     end
 
     ## specify page number when displaying a slide
