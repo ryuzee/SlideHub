@@ -1,60 +1,54 @@
 <%= search_form_for search_q, url: "/search", :html => { :class => "form-horizontal slide" } do |f| %>
 
-<table class="col-md-12">
-  <tr>
-    <td class="col-md-4">
-      <div class="control-group">
-      <%= f.label :name_cont, t('activerecord.attributes.slide.name') %>
-      <%= f.search_field :name_cont, :class => 'form-control' %>
-      </div>
-    </td>
-    <td class="col-md-4">
-      <div class="control-group">
-      <%= f.label :description_cont, t('activerecord.attributes.slide.description') %>
-      <%= f.search_field :description_cont, :class => 'form-control' %>
-      </div>
-    </td>
-    <td class="col-md-4">
-      <div class="control-group">
-      <%= f.label :user_display_name_cont, t(:slide_author) %>
-      <%= f.search_field :user_display_name_cont, :class => 'form-control' %>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td class="col-md-4">
-      <div class="control-group" style="position: relative">
+<div class="row">
+  <div class="col-md-4">
+    <div class="control-group">
+    <%= f.label :name_cont, t('activerecord.attributes.slide.name') %>
+    <%= f.search_field :name_cont, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="control-group">
+    <%= f.label :description_cont, t('activerecord.attributes.slide.description') %>
+    <%= f.search_field :description_cont, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="control-group">
+    <%= f.label :user_display_name_cont, t(:slide_author) %>
+    <%= f.search_field :user_display_name_cont, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="control-group" style="position: relative">
       <%= f.label :created_at_gteq ,t('published_date_from') %>
       <div class="input-group datetimepicker">
         <%= f.text_field :created_at_gteq, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
       </div>
-      </div>
-    </td>
-    <td class="col-md-4">
-      <div class="control-group" style="position: relative">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="control-group" style="position: relative">
       <%= f.label :created_at_lteq ,t('published_date_from') %>
       <div class="input-group datetimepicker">
         <%= f.text_field :created_at_lteq, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
       </div>
-      </div>
-    </td>
-    <td class="col-md-4">
-      <div class="control-group">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="control-group">
       <%= f.label :tag_search, t('activerecord.models.tag') %>
       <% v = (request.query_parameters.has_key?(:q) and request.query_parameters[:q].has_key?(:tag_search)) ? request.query_parameters[:q][:tag_search] : "" %>
       <%= f.text_field :tag_search, :value => v, :class => 'form-control' %>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="3" class="col-md-12">
+    </div>
+  </div>
+  <div class="col-md-12">
     <br clear="all" />
     <%= f.submit :class => 'btn btn-primary' %>
-    </td>
-  </tr>
-</table>
+  </div>
+</div>
 <br clear="all" />
 
 <% end %>
