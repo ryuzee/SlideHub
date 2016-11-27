@@ -377,7 +377,7 @@ docker run -d \
 * Handling uploaded slides (Mandatory)
 
 ```
-*/1 * * * * /bin/bash -lc 'export PATH="$HOME/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bin/rails runner -e production Batch.execute'
+*/1 * * * * /bin/bash -lc 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bin/rails runner -e production "require \"./lib/slide_hub/batch\"; Batch.execute"'
 ```
 
 * Generating sitemap and send it to Google and Bing (Optional)
