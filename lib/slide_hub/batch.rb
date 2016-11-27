@@ -1,3 +1,8 @@
+require 'batch_logger'
+require 'cloud/queue/response'
+require 'convert_util'
+require 'image'
+
 class Batch
   def self.execute
     SlideHub::BatchLogger.info('Start convert process')
