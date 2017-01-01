@@ -24,8 +24,8 @@ module SlideHub
       end
 
       def cover_white(image, width, height)
-        new_width = (image.columns < width) ? image.columns : width
-        new_height = (image.rows < height) ? image.rows : height
+        new_width = image.columns < width ? image.columns : width
+        new_height = image.rows < height ? image.rows : height
 
         image.resize_to_fit!(new_width, new_height)
         image_out = Magick::Image.new(width, height)
