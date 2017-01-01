@@ -28,84 +28,102 @@ class Batch
 end
 
 class BatchProcedure
+  def initialize
+    @work_dir = ''
+    @work_file = SecureRandom.hex.to_s
+    @file_type = ''
+    @slide_image_list = []
+    @upload_file_list = []
+  end
+
   def convert_slide(key)
+    @key = key
     Dir.mktmpdir do |dir|
-      SlideHub::BatchLogger.info("Current directory is #{dir}")
-      file = SecureRandom.hex.to_s
-      CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, key, "#{dir}/#{file}")
-      file_type = SlideHub::ConvertUtil.new.get_slide_file_type("#{dir}/#{file}")
-
-      convert_to_ppm(file_type, file, dir)
-      slide_image_list = convert_to_jpg(dir)
-      upload_file_list = slide_image_list.dup
-
-      generate_json_list(slide_image_list, key, "#{dir}/list.json")
-      upload_file_list.push("#{dir}/list.json")
-
-      SlideHub::BatchLogger.info('Generating thumbnails')
-      SlideHub::BatchLogger.info(slide_image_list.inspect)
-      thumbnail_list = SlideHub::ConvertUtil.new.jpg_to_thumbnail(slide_image_list)
-      thumbnail_list.each do |tm|
-        upload_file_list.push(tm)
-      end if thumbnail_list.instance_of?(Array)
-
-      transcript = SlideHub::ConvertUtil.new.pdf_to_transcript(dir, "#{file}.pdf")
-      upload_file_list.push(transcript) if transcript
-
-      SlideHub::BatchLogger.info(upload_file_list.inspect)
-      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, upload_file_list, key)
-
-      update_database(key, file_type, slide_image_list.count)
+      @work_dir = dir
+      SlideHub::BatchLogger.info("Current directory is #{@work_dir}")
+      save_file
+      convert_to_ppm
+      convert_to_jpg
+      generate_json
+      convert_to_thumbnail
+      convert_to_transcript
+      upload_files
+      update_database
       true
     end
   end
 
   private
 
-    def convert_to_ppm(file_type, file, dir)
-      SlideHub::BatchLogger.info("File Type is #{file_type}")
-      case file_type
+    def save_file
+      CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, @key, "#{@work_dir}/#{@work_file}")
+      @file_type = SlideHub::ConvertUtil.new.get_slide_file_type("#{@work_dir}/#{@work_file}")
+    end
+
+    def convert_to_ppm
+      SlideHub::BatchLogger.info("File Type is #{@file_type}")
+      case @file_type
       when 'pdf'
         SlideHub::BatchLogger.info('Rename to PDF')
-        SlideHub::ConvertUtil.new.rename_to_pdf(dir, file)
+        SlideHub::ConvertUtil.new.rename_to_pdf(@work_dir, @work_file)
         SlideHub::BatchLogger.info('Start converting from PDF to PPM')
-        SlideHub::ConvertUtil.new.pdf_to_ppm(dir, "#{file}.pdf")
+        SlideHub::ConvertUtil.new.pdf_to_ppm(@work_dir, "#{@work_file}.pdf")
         true
       when 'ppt', 'pptx'
         SlideHub::BatchLogger.info('Start converting from PPT to PDF')
-        SlideHub::ConvertUtil.new.ppt_to_pdf(dir, file)
-        SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(dir, '').inspect)
+        SlideHub::ConvertUtil.new.ppt_to_pdf(@work_dir, @work_file)
+        SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(@work_dir, '').inspect)
         SlideHub::BatchLogger.info('Start converting from PDF to PPM')
-        SlideHub::ConvertUtil.new.pdf_to_ppm(dir, "#{file}.pdf")
-        SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(dir, '').inspect)
+        SlideHub::ConvertUtil.new.pdf_to_ppm(@work_dir, "#{@work_file}.pdf")
+        SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(@work_dir, '').inspect)
         true
       else
         false
       end
     end
 
-    def convert_to_jpg(dir)
+    def convert_to_jpg
       SlideHub::BatchLogger.info('Start converting from PPM to JPG')
-      slide_image_list = SlideHub::ConvertUtil.new.ppm_to_jpg(dir)
-      SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(dir, '').inspect)
-      slide_image_list
+      @slide_image_list = SlideHub::ConvertUtil.new.ppm_to_jpg(@work_dir)
+      SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(@work_dir, '').inspect)
+      @upload_file_list = @slide_image_list.dup
     end
 
-    def generate_json_list(list, prefix, filename)
+    def convert_to_thumbnail
+      SlideHub::BatchLogger.info('Generating thumbnails')
+      SlideHub::BatchLogger.info(@slide_image_list.inspect)
+      thumbnail_list = SlideHub::ConvertUtil.new.jpg_to_thumbnail(@slide_image_list)
+      thumbnail_list.each do |tm|
+        @upload_file_list.push(tm)
+      end if thumbnail_list.instance_of?(Array)
+    end
+
+    def convert_to_transcript
+      transcript = SlideHub::ConvertUtil.new.pdf_to_transcript(@work_dir, "#{@work_file}.pdf")
+      @upload_file_list.push(transcript) if transcript
+    end
+
+    def generate_json
       save_list = []
-      list.each do |item|
-        save_list.push("#{prefix}/#{File.basename(item)}")
+      @slide_image_list.each do |item|
+        save_list.push("#{@key}/#{File.basename(item)}")
       end
-      open(filename, 'w') do |io|
+      open("#{@work_dir}/list.json", 'w') do |io|
         JSON.dump(save_list, io)
       end
+      @upload_file_list.push("#{@work_dir}/list.json")
     end
 
-    def update_database(key, file_type, num_of_pages)
-      slide = Slide.where('slides.key = ?', key).first
+    def upload_files
+      SlideHub::BatchLogger.info(@upload_file_list.inspect)
+      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, @upload_file_list, @key)
+    end
+
+    def update_database
+      slide = Slide.where('slides.key = ?', @key).first
       slide.convert_status = 100
-      slide.extension = ".#{file_type}"
-      slide.num_of_pages = num_of_pages
+      slide.extension = ".#{@file_type}"
+      slide.num_of_pages = @slide_image_list.count
       slide.save
     end
 end
