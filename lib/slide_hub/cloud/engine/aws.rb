@@ -85,7 +85,7 @@ module SlideHub
           response = self.sqs.receive_message(queue_url: @config.sqs_url, visibility_timeout: 600, max_number_of_messages: max_number)
           # see http://docs.aws.amazon.com/sdkforruby/api/Aws/SQS/Client.html#receive_message-instance_method
           result = SlideHub::Cloud::Queue::Response.new
-          unless !response || !response.respond_to?(:messages) || response.messages.count == 0
+          unless !response || !response.respond_to?(:messages) || response.messages.count.zero?
             response.messages.each do |msg|
               result.add_message(msg.message_id, msg.body, msg.receipt_handle)
             end

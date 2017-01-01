@@ -55,7 +55,7 @@ module SlideHub
           # it returns a list of Azure::Entity::Queue::Message instances
           # http://www.rubydoc.info/github/Azure/azure-sdk-for-ruby/Azure/Queue/Message
           result = SlideHub::Cloud::Queue::Response.new
-          unless !response || response.count == 0
+          unless !response || response.count.zero?
             response.each do |msg|
               result.add_message(msg.id, msg.message_text, msg.pop_receipt)
             end
