@@ -37,6 +37,7 @@ div.<%= prefix %>right {
 
 #<%= prefix %>slide_area img {
   width: 100%;
+  height:auto;
   border-top:1px solid #000 !important;
   border-left:1px solid #000 !important;
   border-right:1px solid #000 !important;
@@ -205,23 +206,30 @@ div#<%= prefix %>page_positions{
   position: absolute;
 }
 </style>
-
+<% default_image = "#{root_url}oss/images/loading.jpg" %>
 <div>
   <ul style="display:none" id="<%= prefix %>slide_list">
   <% if page_count > 0 %>
+    <% idx = 0 %>
     <% page_list.each do |f| %>
       <% u = "#{CloudConfig::SERVICE.resource_endpoint}/#{f}" %>
+      <% if idx == 0 %>
+        <% default_image = u %>
+      <% end %>
       <li><img class="lazy" src="<%= root_url %>oss/images/spacer.png" data-original="<%= u %>" /></li>
+      <% idx += 1 %>
     <% end %>
   <% elsif @slide.convert_status < 0 %>
-    <li><img class="lazy" data-original="<%= root_url %>oss/images/failed_to_convert.jpg" /></li>
+    <% default_image = "#{root_url}oss/images/failed_to_convert.jpg" %>
+    <li><img class="lazy" data-original="<%= default_image %>" /></li>
   <% else %>
-    <li><img class="lazy" data-original="<%= root_url %>oss/images/converting.jpg" /></li>
+    <% default_image = "#{root_url}oss/images/converting.jpg" %>
+    <li><img class="lazy" data-original="<%= default_image %>" /></li>
   <% end %>
   </ul>
 
   <div class="<%= prefix %>slidebox" id="<%= prefix %>slidebox" style="left:0px;margin:0px;padding:0px;">
-    <div id="<%= prefix %>slide_area"></div>
+    <div id="<%= prefix %>slide_area"><img src="<%= default_image %>" /></div>
     <div id="<%= prefix %>progress_area">
       <div id="<%= prefix %>thumb">&nbsp;</div>
     </div>
@@ -292,14 +300,15 @@ div#<%= prefix %>page_positions{
           OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index +1);
         }
       };
-      slide_area.appendChild(element);
+      slide_area.replaceChild(element, slide_area.childNodes.item(0));
+      // slide_area.appendChild(element);
 
       if (OSSJSPARTS<%= prefix %>.current_page_index >= findLi.length) {
         OSSJSPARTS<%= prefix %>.current_page_index = 0;
       }
 
       if (OSSJSPARTS<%= prefix %>.current_page_index != 0) {
-          OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index);
+        OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index);
       }
 
       if (findLi.length > 1) {

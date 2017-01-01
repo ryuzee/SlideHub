@@ -25,6 +25,7 @@
 #  avatar_content_type    :string(255)
 #  avatar_file_size       :integer
 #  avatar_updated_at      :datetime
+#  username               :string(255)      not null
 #
 
 class User < ActiveRecord::Base
