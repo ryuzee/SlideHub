@@ -2,6 +2,7 @@ require 'batch_logger'
 require 'cloud/queue/response'
 require 'convert_util'
 require 'image'
+require 'tmpdir'
 
 class Batch
   def self.execute
@@ -26,57 +27,64 @@ class Batch
   end
 
   def self.convert_slide(key)
-    require 'tmpdir'
     Dir.mktmpdir do |dir|
       SlideHub::BatchLogger.info("Current directory is #{dir}")
       file = SecureRandom.hex.to_s
       CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, key, "#{dir}/#{file}")
-      ft = SlideHub::ConvertUtil.new.get_slide_file_type("#{dir}/#{file}")
-      SlideHub::BatchLogger.info("File Type is #{ft}")
-      case ft
-      when 'pdf'
-        SlideHub::BatchLogger.info('Rename to PDF')
-        SlideHub::ConvertUtil.new.rename_to_pdf(dir, file)
-        SlideHub::BatchLogger.info('Start converting from PDF to PPM')
-        SlideHub::ConvertUtil.new.pdf_to_ppm(dir, "#{file}.pdf")
-      when 'ppt', 'pptx'
-        SlideHub::BatchLogger.info('Start converting from PPT to PDF')
-        SlideHub::ConvertUtil.new.ppt_to_pdf(dir, file)
-        SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(dir, '').inspect)
-        SlideHub::BatchLogger.info('Start converting from PDF to PPM')
-        SlideHub::ConvertUtil.new.pdf_to_ppm(dir, "#{file}.pdf")
-        SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(dir, '').inspect)
-      else
-        false
-      end
-      SlideHub::BatchLogger.info('Start converting from PPM to JPG')
-      slide_image_list = SlideHub::ConvertUtil.new.ppm_to_jpg(dir)
-      SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(dir, '').inspect)
-      final_list = slide_image_list.dup
+      file_type = SlideHub::ConvertUtil.new.get_slide_file_type("#{dir}/#{file}")
+
+      self.convert_to_ppm(file_type, file, dir)
+      slide_image_list = self.convert_to_jpg(dir)
+      upload_file_list = slide_image_list.dup
 
       self.generate_json_list(slide_image_list, key, "#{dir}/list.json")
-      final_list.push("#{dir}/list.json")
+      upload_file_list.push("#{dir}/list.json")
 
       SlideHub::BatchLogger.info('Generating thumbnails')
       SlideHub::BatchLogger.info(slide_image_list.inspect)
       thumbnail_list = SlideHub::ConvertUtil.new.jpg_to_thumbnail(slide_image_list)
       thumbnail_list.each do |tm|
-        final_list.push(tm)
+        upload_file_list.push(tm)
       end if thumbnail_list.instance_of?(Array)
 
       transcript = SlideHub::ConvertUtil.new.pdf_to_transcript(dir, "#{file}.pdf")
-      final_list.push(transcript) if transcript
+      upload_file_list.push(transcript) if transcript
 
-      SlideHub::BatchLogger.info(final_list.inspect)
-      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, final_list, key)
+      SlideHub::BatchLogger.info(upload_file_list.inspect)
+      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, upload_file_list, key)
 
-      slide = Slide.where('slides.key = ?', key).first
-      slide.convert_status = 100
-      slide.extension = ".#{ft}"
-      slide.num_of_pages = slide_image_list.count
-      slide.save
+      self.update_database(key, file_type, slide_image_list.count)
       true
     end
+  end
+
+  def self.convert_to_ppm(file_type, file, dir)
+    SlideHub::BatchLogger.info("File Type is #{file_type}")
+    case file_type
+    when 'pdf'
+      SlideHub::BatchLogger.info('Rename to PDF')
+      SlideHub::ConvertUtil.new.rename_to_pdf(dir, file)
+      SlideHub::BatchLogger.info('Start converting from PDF to PPM')
+      SlideHub::ConvertUtil.new.pdf_to_ppm(dir, "#{file}.pdf")
+      true
+    when 'ppt', 'pptx'
+      SlideHub::BatchLogger.info('Start converting from PPT to PDF')
+      SlideHub::ConvertUtil.new.ppt_to_pdf(dir, file)
+      SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(dir, '').inspect)
+      SlideHub::BatchLogger.info('Start converting from PDF to PPM')
+      SlideHub::ConvertUtil.new.pdf_to_ppm(dir, "#{file}.pdf")
+      SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(dir, '').inspect)
+      true
+    else
+      false
+    end
+  end
+
+  def self convert_to_jpg(dir)
+    SlideHub::BatchLogger.info('Start converting from PPM to JPG')
+    slide_image_list = SlideHub::ConvertUtil.new.ppm_to_jpg(dir)
+    SlideHub::BatchLogger.info(SlideHub::ConvertUtil.new.get_local_file_list(dir, '').inspect)
+    slide_image_list
   end
 
   def self.generate_json_list(list, prefix, filename)
@@ -87,5 +95,13 @@ class Batch
     open(filename, 'w') do |io|
       JSON.dump(save_list, io)
     end
+  end
+
+  def self.update_database(key, file_type, num_of_pages)
+    slide = Slide.where('slides.key = ?', key).first
+    slide.convert_status = 100
+    slide.extension = ".#{file_type}"
+    slide.num_of_pages = num_of_pages
+    slide.save
   end
 end
