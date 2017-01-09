@@ -25,7 +25,11 @@ module Api
     class SlidesController < ApplicationController
       def index
         @slides = Slide.all.published.latest.includes(:user).includes(:category)
-        @slides = @slides.where('name like ?', "%#{params["name"]}%") if params['name']
+        if params['name']
+          @slides = @slides.where('name like ?', "%#{params["name"]}%")
+        elsif params[:tag]
+          @slides = @slides.tagged_with(params[:tag])
+        end
       end
 
       def show
