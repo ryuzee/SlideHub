@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   get 'player/:id' => 'player#show'
   get 'player/:id/:page' => 'player#show'
+  get 'html_player/:id' => 'html_player#show'
   get 'slides/embedded/:id' => 'player#show'
   get 'slides/embedded/:id/:page' => 'player#show'
   get 'slides/:id/embedded' => 'player#show'
@@ -58,6 +59,14 @@ Rails.application.routes.draw do
     resources :site_settings do
       get 'index', on: :collection
       post 'update', on: :collection
+    end
+  end
+
+  namespace :api, { format: 'json' } do
+    namespace :v1 do
+      resources :slides, only: [:show, :index]
+      resources :users, only: [:show]
+      get 'slides/:id/transcript' => 'slides#transcript'
     end
   end
 

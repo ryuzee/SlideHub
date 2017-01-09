@@ -55,7 +55,7 @@ class UsersController < ApplicationController
 
   def embedded
     @slides = user_slide_with_paginate(params[:id], 5)
-    uglified_js = render_to_string layout: 'plain', collection: @slide
+    uglified_js = render_to_string layout: 'javascript', collection: @slide
     render text: uglified_js, layout: false, content_type: 'application/javascript'
   end
 
@@ -74,6 +74,8 @@ class UsersController < ApplicationController
     end
 
     def username_to_id
-      params[:id] = User.username_to_id(params[:username]) if params.key?(:username)
+      if params.key?(:username)
+        params[:id] = User.username_to_id(params[:username])
+      end
     end
 end

@@ -49,5 +49,11 @@ module Myapp
                        request_specs: false
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
+
+    # For API Cross Origin Access
+    config.action_dispatch.default_headers = {
+      'Access-Control-Allow-Origin' => '*',
+      'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
+    }
   end
 end

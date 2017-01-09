@@ -25,27 +25,15 @@
 #  avatar_content_type    :string(255)
 #  avatar_file_size       :integer
 #  avatar_updated_at      :datetime
-#  username               :string(255)      not null
 #
 
-FactoryGirl.define do
-  factory :general_user, class: User do
-    id 998
-    email 'general998@example.com'
-    display_name 'Yoshi'
-    biography 'Bio'
-    password 'password'
-    admin false
-    username 'general998'
-  end
-
-  factory :user_admin, class: User do
-    id 999
-    email 'admin999@example.com'
-    display_name 'Takashi'
-    biography 'Bio'
-    password 'password'
-    admin true
-    username 'admin999'
+module Api
+  module V1
+    class UsersController < ApplicationController
+      def show
+        @user = User.where(id: params[:id]).select('id', 'username', 'display_name', 'biography', 'slides_count').first
+        render json: JSON.pretty_generate(JSON.parse(@user.to_json))
+      end
+    end
   end
 end
