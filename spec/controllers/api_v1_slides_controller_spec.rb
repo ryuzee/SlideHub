@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::SlidesController, type: :controller do
-  before(:each) { request.env["HTTP_ACCEPT"] = 'application/json' }
+  before(:each) { request.env['HTTP_ACCEPT'] = 'application/json' }
   render_views
   let(:first_user) { create(:first_user) }
-  list_json_keys = ['id', 'user_id', 'name', 'description', 'category_id', 'key', 'extension', 'num_of_pages', 'created_at', 'category_name', 'username', 'thumbnail_url', 'transcript_url', 'tags']
+  list_json_keys = %w(id user_id name description category_id key extension num_of_pages created_at category_name username thumbnail_url transcript_url tags)
 
   describe 'GET #index' do
     it 'render index' do
@@ -15,7 +15,7 @@ RSpec.describe Api::V1::SlidesController, type: :controller do
       json = JSON.parse(response.body);
       json.each do |j|
         list_json_keys.each do |k|
-          expect(j.has_key?(k)).to eq(true)
+          expect(j.key?(k)).to eq(true)
         end
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe Api::V1::SlidesController, type: :controller do
       expect(assigns(:slide)).to eq(slide)
       json = JSON.parse(response.body);
       list_json_keys.each do |k|
-        expect(json.has_key?(k)).to eq(true)
+        expect(json.key?(k)).to eq(true)
       end
     end
 
