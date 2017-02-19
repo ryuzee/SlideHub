@@ -59,10 +59,4 @@ describe 'Users' do
       expect(response.status).to eq(200)
     end
   end
-
-  describe 'GET /users/new' do
-    it 'does not exist!' do
-      expect { get '/users/new' }.to raise_error(AbstractController::ActionNotFound)
-    end
-  end
 end

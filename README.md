@@ -25,7 +25,7 @@ The previous version of SlideHub was made with CakePHP. And this version is a su
 
 This application depends on following technologies.
 
-* Ubuntu 12 or higher with OpenOffice, xpdf, unoconv and so on
+* Docker
 * [Note] Application can be placed at any servers. (Azure Virtual Machine or Amazon EC2 is NOT required.)
 * AWS or Azure
  * AWS: Amazon S3 / Amazon SQS
@@ -171,205 +171,64 @@ env | grep OSS
 
 **Also it's OK to logout and login to apply variables.**
 
-### Place application code
-
-Install git
-
-```
-sudo apt-get update
-sudo apt-get install -y git
-```
-
-Then clone application
-
-```
-sudo mkdir -p /opt/application/
-sudo git clone https://github.com/ryuzee/SlideHub /opt/application/current
-```
-
-### Install Middleware and require packages
-
-* Copy installer
-
-```
-cp /opt/application/current/script/*.sh /tmp/
-cd /tmp/
-```
-
- * Edit develop.sh or staging.sh and then set Linux user name and other variables.
- * Then run the script you've just edited.
- * The script will install all required packages including Ruby environment, nginx, several tools and so on.
- * The script will also create the database on your server. However, if you want to use a database running on other server, you need to create a database by your own.
-
-After that, you need to initialize database by executintg following commands after changing directory to the application.
-
-[warnings] If you run the database server on the other host, the commands must be executed after setting environmental variables.
-
-```
-cd /opt/application/current
-source ~/.bash_profile
-bundle
-bundle exec bin/rake db:migrate RAILS_ENV=(development|production)
-bundle exec bin/rake db:seed RAILS_ENV=(development|production)
-```
-
-And then, execute the command below to prepare assets
-
-```
-RAILS_ENV=production bundle exec rake assets:precompile
-```
-
-## Run the app
-
-### Run application manually
-
-```
-bundle exec rake unicorn:start
-```
-
-### Run application as a service
-
-Create new file for initctl
-
-```
-sudo vi /etc/init.d/unicorn
-```
-
-Paste the content below. And finally execute `sudo chmod 755 /etc/init.d/unicorn`
-
-```
-#!/bin/sh
-
-#chkconfig:2345 85 15
-#description:unicorn shell
-
-NAME="Unicorn"
-ENV=production
-USER=ubuntu
-
-ROOT_DIR="/opt/application/current"
-
-PID="/tmp/unicorn.pid"
-CONF="${ROOT_DIR}/config/unicorn.rb"
-OPTIONS=""
-
-start()
-{
-  if [ -e $PID ]; then
-    echo "$NAME already started"
-    exit 1
-  fi
-  echo "start $NAME"
-  cd $ROOT_DIR
-  su - ${USER} -c "cd ${ROOT_DIR} && bundle exec unicorn_rails -c ${ROOT_DIR}/config/unicorn.rb -E production -D -l 3000"
-}
-
-stop()
-{
-  if [ ! -e $PID ]; then
-    echo "$NAME not started"
-    exit 1
-  fi
-  echo "stop $NAME"
-  kill -QUIT `cat ${PID}`
-}
-
-force_stop()
-{
-  if [ ! -e $PID ]; then
-    echo "$NAME not started"
-    exit 1
-  fi
-  echo "stop $NAME"
-  kill -INT `cat ${PID}`
-}
-
-reload()
-{
-  if [ ! -e $PID ]; then
-    echo "$NAME not started"
-    start
-    exit 0
-  fi
-  echo "reload $NAME"
-  kill -HUP `cat ${PID}`
-}
-
-restart()
-{
-    stop
-    sleep 3
-    start
-}
-
-case "$1" in
-  start)
-    start
-    ;;
-  stop)
-    ;;
-  force-stop)
-    force_stop
-    ;;
-  reload)
-    reload
-    ;;
-  restart)
-    restart
-    ;;
-  *)
-    echo "Syntax Error: release [start|stop|force-stop|reload|restart]"
-    ;;
-esac
-```
-
-Finally, do as follows.
-
-```
-sudo apt-get install -y sysv-rc-conf
-sudo sysv-rc-conf unicorn on
-sudo service unicorn start
-```
-
-
-### For Development mode
-
-In the development environment, you can run the app as follows.
-
-```
-rake slidehub:dev
-```
-
-### Public Docker Image
-
-You can use public Docker Image.
+### Retrieve Docker Image
 
 ```
 docker pull ryuzee/slidehub:latest
 ```
 
-## Run application on Docker
-
-After you build your own Docker image or pull public image pointed above, you can run the app on the Docker as follows.
-Before run the app on the Docker, you need to create your own database on the other host to accumulate various data permanently.
-
-This sample shows how to run app on AWS with Docker.
+### Run Application
 
 ```
-docker run -d \
-  --env OSS_REGION=ap-northeast-1 \
-  --env OSS_SQS_URL=https://sqs.ap-northeast-1.amazonaws.com/1234567890/your-sqs-job-name \
-  --env OSS_BUCKET_NAME=your-bucket-name \
-  --env OSS_IMAGE_BUCKET_NAME=your-image-bucket.example.com \
-  --env OSS_USE_S3_STATIC_HOSTING=1 \
-  --env OSS_AWS_SECRET_KEY=suSh19iTaiO0toroUMa1TamarAnG1Nza \
-  --env OSS_AWS_ACCESS_ID=AKINATSUHAHIKARIMONO \
-  --env OSS_SECRET_KEY_BASE=z3y1x4w1v5u9t26535abcdefghijklmnopqrstu12345 \
-  --env OSS_DB_NAME=your-database-name \
-  --env OSS_DB_USERNAME=your-database-user \
-  --env OSS_DB_PASSWORD=your-database-password \
-  --env OSS_DB_URL=your-database-host \
--P --name oss ryuzee/slidehub
+/usr/bin/docker run -d \
+  --env OSS_REGION=$OSS_REGION \
+  --env OSS_SQS_URL=$OSS_SQS_URL \
+  --env OSS_BUCKET_NAME=$OSS_BUCKET_NAME \
+  --env OSS_IMAGE_BUCKET_NAME=$OSS_IMAGE_BUCKET_NAME \
+  --env OSS_USE_S3_STATIC_HOSTING=$OSS_USE_S3_STATIC_HOSTING \
+  --env OSS_AWS_SECRET_KEY=$OSS_AWS_SECRET_KEY \
+  --env OSS_AWS_ACCESS_ID=$OSS_AWS_ACCESS_ID \
+  --env OSS_USE_AZURE=$OSS_USE_AZURE \
+  --env OSS_AZURE_CONTAINER_NAME=$OSS_AZURE_CONTAINER_NAME \
+  --env OSS_AZURE_IMAGE_CONTAINER_NAME=$OSS_AZURE_IMAGE_CONTAINER_NAME \
+  --env OSS_AZURE_CDN_BASE_URL=$OSS_AZURE_CDN_BASE_URL \
+  --env OSS_AZURE_QUEUE_NAME=$OSS_AZURE_QUEUE_NAME \
+  --env OSS_AZURE_STORAGE_ACCESS_KEY=$OSS_AZURE_STORAGE_ACCESS_KEY \
+  --env OSS_AZURE_STORAGE_ACCOUNT_NAME=$OSS_AZURE_STORAGE_ACCOUNT_NAME \
+  --env OSS_SECRET_KEY_BASE=$OSS_SECRET_KEY_BASE \
+  --env OSS_DB_NAME=$OSS_DB_NAME \
+  --env OSS_DB_USERNAME=$OSS_DB_USERNAME \
+  --env OSS_DB_PASSWORD=$OSS_DB_PASSWORD \
+  --env OSS_DB_URL=$OSS_DB_URL \
+  --env OSS_SMTP_SERVER=$OSS_SMTP_SERVER \
+  --env OSS_SMTP_PORT=$OSS_SMTP_PORT \
+  --env OSS_SMTP_USERNAME=$OSS_SMTP_USERNAME \
+  --env OSS_SMTP_PASSWORD=$OSS_SMTP_PASSWORD \
+  --env OSS_SMTP_AUTH_METHOD=$OSS_SMTP_AUTH_METHOD \
+  --env OSS_PRODUCTION_HOST=$OSS_PRODUCTION_HOST \
+  --env OSS_ROOT_URL=$OSS_ROOT_URL \
+-P --name slidehub ryuzee/slidehub:latest`
+```
+
+### For Development mode
+
+You can use docker-compose for development. Try the commands as follows.
+Before running the command, please set several environmental variables in your computer.
+See docker-compose.yml
+
+```
+docker-compose build
+docker-compose run app bash -l -c 'bundle exec rake db:create RAILS_ENV=development'
+docker-compose run app bash -l -c 'bundle exec rake db:migrate RAILS_ENV=development'
+docker-compose run app bash -l -c 'bundle exec rake db:seed RAILS_ENV=development'
+docker-compose run app bash -l -c 'bundle exec rake db:test:prepare'
+docker-compose up -d
+```
+
+If you want to run conversion process in the development environment, run the command as follows.
+
+```
+docker-compose run app bash -l -c 'bin/rails runner -e development "require \"./lib/slide_hub/batch\"; Batch.execute"'
 ```
 
 ## Register batch procedure to cron (If you do not use Docker)
