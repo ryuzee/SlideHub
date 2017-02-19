@@ -343,6 +343,7 @@ docker-compose build
 docker-compose run app bash -l -c 'bundle exec rake db:create RAILS_ENV=development'
 docker-compose run app bash -l -c 'bundle exec rake db:migrate RAILS_ENV=development'
 docker-compose run app bash -l -c 'bundle exec rake db:seed RAILS_ENV=development'
+docker-compose run app bash -l -c 'bundle exec rake db:test:prepare'
 docker-compose up -d
 ```
 

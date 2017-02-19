@@ -66,6 +66,7 @@ RSpec.configure do |config|
   config.include ControllerMacros, type: :controller
 
   # DatabaseCleaner
+  require 'database_cleaner'
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean_with(:truncation)
