@@ -334,10 +334,22 @@ sudo service unicorn start
 
 ### For Development mode
 
-In the development environment, you can run the app as follows.
+You can use docker-compose for development. Try the commands as follows.
+Before running the command, please set several environmental variables in your computer.
+See docker-compose.yml
 
 ```
-rake slidehub:dev
+docker-compose build
+docker-compose run app bash -l -c 'bundle exec rake db:create RAILS_ENV=development'
+docker-compose run app bash -l -c 'bundle exec rake db:migrate RAILS_ENV=development'
+docker-compose run app bash -l -c 'bundle exec rake db:seed RAILS_ENV=development'
+docker-compose up -d
+```
+
+If you want to run conversion process in the development environment, run the command as follows.
+
+```
+docker-compose run app bash -l -c 'bin/rails runner -e development "require \"./lib/slide_hub/batch\"; Batch.execute"'
 ```
 
 ### Public Docker Image
