@@ -7,13 +7,14 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 if User.count.zero?
-  User.create(
+  User.create!(
     email: 'admin@example.com',
     password: 'passw0rd',
     password_confirmation: 'passw0rd',
     display_name: 'admin',
     biography: 'Administrator',
     admin: true,
+    username: 'admin-default'
   )
 end
 
