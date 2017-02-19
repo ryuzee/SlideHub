@@ -171,6 +171,8 @@ env | grep OSS
 
 **Also it's OK to logout and login to apply variables.**
 
+`.env` file may be useful for this purpose.
+
 ### Retrieve Docker Image
 
 ```
@@ -221,8 +223,16 @@ docker-compose build
 docker-compose run app bash -l -c 'bundle exec rake db:create RAILS_ENV=development'
 docker-compose run app bash -l -c 'bundle exec rake db:migrate RAILS_ENV=development'
 docker-compose run app bash -l -c 'bundle exec rake db:seed RAILS_ENV=development'
-docker-compose run app bash -l -c 'bundle exec rake db:test:prepare'
+
 docker-compose up -d
+```
+
+Run tests.
+
+```
+docker-compose run app bash -l -c 'bundle exec rake db:create RAILS_ENV=test'
+docker-compose run app bash -l -c 'bundle exec rake db:test:prepare'
+docker-compose run app bash -l -c 'bundle exec rspec'
 ```
 
 If you want to run conversion process in the development environment, run the command as follows.
