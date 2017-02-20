@@ -182,7 +182,7 @@ docker pull ryuzee/slidehub:latest
 ### Run Application
 
 ```
-/usr/bin/docker run -d \
+$CONTAINER_ID=/usr/bin/docker run -d \
   --env OSS_REGION=$OSS_REGION \
   --env OSS_SQS_URL=$OSS_SQS_URL \
   --env OSS_BUCKET_NAME=$OSS_BUCKET_NAME \
@@ -210,6 +210,14 @@ docker pull ryuzee/slidehub:latest
   --env OSS_PRODUCTION_HOST=$OSS_PRODUCTION_HOST \
   --env OSS_ROOT_URL=$OSS_ROOT_URL \
 -P --name slidehub ryuzee/slidehub:latest`
+```
+
+Then prepare database as follows.
+
+```
+`docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:create RAILS_ENV=production'`
+`docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:migrate RAILS_ENV=production'`
+`docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:seed RAILS_ENV=production'
 ```
 
 ### For Development mode
