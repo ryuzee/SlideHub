@@ -1,0 +1,47 @@
+version: '2'
+services:
+  app_mssql:
+    build:
+      context: .
+      dockerfile: 'dockerfile_dev'
+    environment:
+      RAILS_ENV: development
+      OSS_BUCKET_NAME: $OSS_BUCKET_NAME
+      OSS_IMAGE_BUCKET_NAME: $OSS_IMAGE_BUCKET_NAME
+      OSS_USE_S3_STATIC_HOSTING: $OSS_USE_S3_STATIC_HOSTING
+      OSS_REGION: $OSS_REGION
+      OSS_CDN_BASE_URL: $OSS_CDN_BASE_URL
+      OSS_SQS_URL: $OSS_SQS_URL
+      OSS_AWS_ACCESS_ID: $OSS_AWS_ACCESS_ID
+      OSS_AWS_SECRET_KEY: $OSS_AWS_SECRET_KEY
+      OSS_DB_ENGINE_DEV: 'sqlserver'
+      OSS_DB_PORT_DEV: '1433'
+      OSS_DB_NAME_DEV: 'slidehub'
+      OSS_DB_USERNAME_DEV: 'sa'
+      OSS_DB_PASSWORD_DEV: 'P@55w0rd'
+      OSS_DB_URL_DEV: 'sqlserver'
+      OSS_DB_ENGINE_TEST: 'sqlserver'
+      OSS_DB_PORT_TEST: '1433'
+      OSS_DB_NAME_TEST: 'test_slidehub'
+      OSS_DB_USERNAME_TEST: 'sa'
+      OSS_DB_PASSWORD_TEST: 'P@55w0rd'
+      OSS_DB_URL_TEST: 'sqlserver'
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/opt/application/current
+    links:
+      - sqlserver
+  sqlserver:
+    image: microsoft/mssql-server-linux
+    hostname: 'sqlserver'
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'P@55w0rd'
+    ports:
+      - '1433:1433'
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+volumes:
+  sqlserver-data:
+    driver: local

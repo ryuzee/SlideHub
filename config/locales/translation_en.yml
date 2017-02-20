@@ -63,7 +63,7 @@ en:
         downloadable: "Downloadable"  #g
         embedded_view: "Embedded View"  #g
         extension: "Extension"  #g
-        key: "Key"  #g
+        object_key: "Key"  #g
         modified_at: "Modified at"  #g
         name: "Name"  #g
         page_view: "Page View"  #g

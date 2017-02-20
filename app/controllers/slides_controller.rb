@@ -10,7 +10,7 @@
 #  category_id    :integer          not null
 #  created_at     :datetime         not null
 #  modified_at    :datetime
-#  key            :string(255)      default("")
+#  object_key     :string(255)      default("")
 #  extension      :string(10)       default(""), not null
 #  convert_status :integer          default(0)
 #  total_view     :integer          default(0), not null
@@ -51,20 +51,20 @@ class SlidesController < ApplicationController
   end
 
   def destroy
-    CloudConfig::SERVICE.delete_slide(@slide.key)
-    CloudConfig::SERVICE.delete_generated_files(@slide.key)
+    CloudConfig::SERVICE.delete_slide(@slide.object_key)
+    CloudConfig::SERVICE.delete_generated_files(@slide.object_key)
     @slide.destroy
     redirect_to slides_path
   end
 
   def create
-    key = params[:slide][:key]
-    slide_params = params.require(:slide).permit(:name, :description, :key, :downloadable, :category_id, :tag_list)
+    key = params[:slide][:object_key]
+    slide_params = params.require(:slide).permit(:name, :description, :object_key, :downloadable, :category_id, :tag_list)
     @slide = Slide.new(slide_params)
     @slide.user_id = current_user.id
     if @slide.save
-      slide = Slide.where('slides.key = ?', key).first
-      CloudConfig::SERVICE.send_message({ id: slide.id, key: key }.to_json)
+      slide = Slide.where('slides.object_key = ?', key).first
+      CloudConfig::SERVICE.send_message({ id: slide.id, object_key: key }.to_json)
       redirect_to slide_path(slide.id)
     else
       render "slides/#{CloudConfig.service_name}/new"
@@ -76,13 +76,13 @@ class SlidesController < ApplicationController
   end
 
   def update
-    slide_params = params.require(:slide).permit(:name, :description, :key, :downloadable, :category_id, :tag_list, :convert_status)
+    slide_params = params.require(:slide).permit(:name, :description, :object_key, :downloadable, :category_id, :tag_list, :convert_status)
     slide_convert_status = params[:slide][:convert_status].to_i
 
     @slide.assign_attributes(slide_params)
     if @slide.update_attributes(slide_params)
       if slide_convert_status.zero?
-        CloudConfig::SERVICE.send_message({ id: @slide.id, key: @slide.key }.to_json)
+        CloudConfig::SERVICE.send_message({ id: @slide.id, object_key: @slide.object_key }.to_json)
       end
       redirect_to slide_path(@slide.id)
     else
@@ -101,6 +101,6 @@ class SlidesController < ApplicationController
     end
 
     def duplicate_key?
-      redirect_to slides_path if Slide.key_exist?(params[:slide][:key])
+      redirect_to slides_path if Slide.key_exist?(params[:slide][:object_key])
     end
 end

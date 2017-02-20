@@ -37,6 +37,7 @@ FactoryGirl.define do
     password 'password'
     admin false
     username 'general998'
+    reset_password_token 'general998'
   end
 
   factory :user_admin, class: User do
@@ -47,5 +48,6 @@ FactoryGirl.define do
     password 'password'
     admin true
     username 'admin999'
+    reset_password_token 'admin999'
   end
 end
