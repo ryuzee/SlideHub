@@ -15,13 +15,13 @@ class Batch
 
     resp.messages.each do |msg|
       obj = JSON.parse(msg.body)
-      SlideHub::BatchLogger.info("Start converting slide. id=#{obj['id']} key=#{obj['key']}")
-      result = BatchProcedure.new.convert_slide(obj['key'])
+      SlideHub::BatchLogger.info("Start converting slide. id=#{obj['id']} object_key=#{obj['object_key']}")
+      result = BatchProcedure.new.convert_slide(obj['object_key'])
       if result
-        SlideHub::BatchLogger.info("Delete message from Queue. id=#{obj['id']} key=#{obj['key']}")
+        SlideHub::BatchLogger.info("Delete message from Queue. id=#{obj['id']} object_key=#{obj['object_key']}")
         CloudConfig::SERVICE.delete_message(msg)
       else
-        SlideHub::BatchLogger.error("Slide conversion failed. id=#{obj['id']} key=#{obj['key']}")
+        SlideHub::BatchLogger.error("Slide conversion failed. id=#{obj['id']} object_key=#{obj['object_key']}")
       end
     end
   end
@@ -36,8 +36,8 @@ class BatchProcedure
     @upload_file_list = []
   end
 
-  def convert_slide(key)
-    @key = key
+  def convert_slide(object_key)
+    @object_key = object_key
     Dir.mktmpdir do |dir|
       @work_dir = dir
       SlideHub::BatchLogger.info("Current directory is #{@work_dir}")
@@ -56,7 +56,7 @@ class BatchProcedure
   private
 
     def save_file
-      CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, @key, "#{@work_dir}/#{@work_file}")
+      CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, @object_key, "#{@work_dir}/#{@work_file}")
       @file_type = SlideHub::ConvertUtil.new.get_slide_file_type("#{@work_dir}/#{@work_file}")
     end
 
@@ -106,7 +106,7 @@ class BatchProcedure
     def generate_json
       save_list = []
       @slide_image_list.each do |item|
-        save_list.push("#{@key}/#{File.basename(item)}")
+        save_list.push("#{@object_key}/#{File.basename(item)}")
       end
       open("#{@work_dir}/list.json", 'w') do |io|
         JSON.dump(save_list, io)
@@ -116,11 +116,11 @@ class BatchProcedure
 
     def upload_files
       SlideHub::BatchLogger.info(@upload_file_list.inspect)
-      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, @upload_file_list, @key)
+      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, @upload_file_list, @object_key)
     end
 
     def update_database
-      slide = Slide.where('slides.key = ?', @key).first
+      slide = Slide.where('slides.object_key = ?', @object_key).first
       slide.convert_status = 100
       slide.extension = ".#{@file_type}"
       slide.num_of_pages = @slide_image_list.count

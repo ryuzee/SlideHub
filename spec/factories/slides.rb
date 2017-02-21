@@ -10,7 +10,7 @@
 #  category_id    :integer          not null
 #  created_at     :datetime         not null
 #  modified_at    :datetime
-#  key            :string(255)      default("")
+#  object_key     :string(255)      default("")
 #  extension      :string(10)       default(""), not null
 #  convert_status :integer          default(0)
 #  total_view     :integer          default(0), not null
@@ -27,7 +27,7 @@ FactoryGirl.define do
     category_id 1
     name 'Hoge'
     description 'FUGA'
-    sequence(:key) { |n| "abcdefg#{n}" }
+    sequence(:object_key) { |n| "abcdefg#{n}" }
     extension '.pdf'
     convert_status 100
     num_of_pages 1
@@ -47,6 +47,7 @@ FactoryGirl.define do
     admin true
     initialize_with { User.find_or_create_by(id: id) }
     username 'admin02'
+    reset_password_token 'admin02'
   end
 
   factory :first_category, class: Category do

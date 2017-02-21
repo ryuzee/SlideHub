@@ -6,11 +6,11 @@ module SlideUtil
   end
 
   def download_slide
-    url = CloudConfig::SERVICE.get_slide_download_url(@slide.key)
+    url = CloudConfig::SERVICE.get_slide_download_url(@slide.object_key)
     # @TODO: handle response code
     require 'open-uri'
     data = open(url).read
-    send_data data, disposition: 'attachment', filename: "#{@slide.key}#{@slide.extension}"
+    send_data data, disposition: 'attachment', filename: "#{@slide.object_key}#{@slide.extension}"
   end
 
   def slide_position

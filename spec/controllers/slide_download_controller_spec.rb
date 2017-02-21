@@ -13,7 +13,7 @@ RSpec.describe SlideDownloadController, type: :controller do
       slide = create(:slide)
       get :show, params: { id: slide.id }
       expect(response.status).to eq(200)
-      expect(response.headers['Content-Disposition']).to eq("attachment; filename=\"#{slide.key}#{slide.extension}\"")
+      expect(response.headers['Content-Disposition']).to eq("attachment; filename=\"#{slide.object_key}#{slide.extension}\"")
     end
 
     it 'fails to download file because of permission' do

@@ -14,7 +14,7 @@ require 'securerandom'
 #  category_id    :integer          not null
 #  created_at     :datetime         not null
 #  modified_at    :datetime
-#  key            :string(255)      default("")
+#  object_key     :string(255)      default("")
 #  extension      :string(10)       default(""), not null
 #  convert_status :integer          default(0)
 #  total_view     :integer          default(0), not null
@@ -41,8 +41,8 @@ class Slide < ActiveRecord::Base
   validates :name, length: { maximum: 255 }
   validates :description, presence: true
   validates :description, length: { maximum: 2048 }
-  validates :key, presence: true
-  validates :key, uniqueness: true
+  validates :object_key, presence: true
+  validates :object_key, uniqueness: true
   validates :category_id, presence: true
   # validates :category_id, :presence => true, :inclusion => { :in => Category.all.map(&:id) }
 
@@ -70,7 +70,7 @@ class Slide < ActiveRecord::Base
   end
 
   def self.key_exist?(key)
-    Slide.where('slides.key = ?', key).count > 0
+    Slide.where('slides.object_key = ?', key).count > 0
   end
 
   def self.related_slides(category_id, slide_id, limit = 10)
@@ -82,15 +82,15 @@ class Slide < ActiveRecord::Base
   end
 
   def thumbnail_url
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{key}/thumbnail.jpg"
+    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/thumbnail.jpg"
   end
 
   def transcript_url
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{key}/transcript.txt"
+    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/transcript.txt"
   end
 
   def page_list_url
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{key}/list.json"
+    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/list.json"
   end
 
   def page_list
@@ -98,7 +98,7 @@ class Slide < ActiveRecord::Base
     result = []
     (1..num_of_pages).each do |i|
       n = i.to_s.rjust(len, '0')
-      result.push("#{key}/slide-#{n}.jpg")
+      result.push("#{object_key}/slide-#{n}.jpg")
     end
     result
   end

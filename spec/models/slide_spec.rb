@@ -40,8 +40,8 @@ describe 'Slide' do
   describe 'thumbnail_url' do
     it 'url is valid' do
       FactoryGirl.create(:slide)
-      key = Slide.find(1).key
-      expect(Slide.find(1).thumbnail_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{key}/thumbnail.jpg")
+      object_key = Slide.find(1).object_key
+      expect(Slide.find(1).thumbnail_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/thumbnail.jpg")
     end
   end
 
@@ -84,35 +84,35 @@ describe 'Slide' do
   describe 'transcript_url' do
     it 'url is valid' do
       FactoryGirl.create(:slide)
-      key = Slide.find(1).key
-      expect(Slide.find(1).transcript_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{key}/transcript.txt")
+      object_key = Slide.find(1).object_key
+      expect(Slide.find(1).transcript_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/transcript.txt")
     end
   end
 
   describe 'page_list_url' do
     it 'url is valid' do
       FactoryGirl.create(:slide)
-      key = Slide.find(1).key
-      expect(Slide.find(1).page_list_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{key}/list.json")
+      object_key = Slide.find(1).object_key
+      expect(Slide.find(1).page_list_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/list.json")
     end
   end
 
   describe 'page_list' do
     it 'returns page list (1 page)' do
       FactoryGirl.create(:slide)
-      key = Slide.find(1).key
-      expect(Slide.find(1).page_list).to eq(["#{key}/slide-1.jpg"])
+      object_key = Slide.find(1).object_key
+      expect(Slide.find(1).page_list).to eq(["#{object_key}/slide-1.jpg"])
     end
 
     it 'returns page list (10 page)' do
       FactoryGirl.create(:slide)
       slide = Slide.where('slides.id = ?', 1).first
-      key = slide.key
+      object_key = slide.object_key
       slide.num_of_pages = 10
       slide.save
-      expected = ["#{key}/slide-01.jpg", "#{key}/slide-02.jpg", "#{key}/slide-03.jpg",
-                  "#{key}/slide-04.jpg", "#{key}/slide-05.jpg", "#{key}/slide-06.jpg",
-                  "#{key}/slide-07.jpg", "#{key}/slide-08.jpg", "#{key}/slide-09.jpg", "#{key}/slide-10.jpg"]
+      expected = ["#{object_key}/slide-01.jpg", "#{object_key}/slide-02.jpg", "#{object_key}/slide-03.jpg",
+                  "#{object_key}/slide-04.jpg", "#{object_key}/slide-05.jpg", "#{object_key}/slide-06.jpg",
+                  "#{object_key}/slide-07.jpg", "#{object_key}/slide-08.jpg", "#{object_key}/slide-09.jpg", "#{object_key}/slide-10.jpg"]
       expect(Slide.find(1).page_list).to eq(expected)
     end
   end

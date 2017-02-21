@@ -65,7 +65,7 @@ RSpec.describe SlidesController, type: :controller do
       data = build(:slide)
       login_by_user first_user
       post :create, params: { slide: data.attributes }
-      id = Slide.where(key: data.key).first.id
+      id = Slide.where(object_key: data.object_key).first.id
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{id}"
     end
@@ -83,9 +83,9 @@ RSpec.describe SlidesController, type: :controller do
     it 'failed to create record because of duplicate key' do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
       slides = create_list(:slide, 2)
-      first_key = slides[0].key
+      first_key = slides[0].object_key
       login_by_user first_user
-      slides[1].key = first_key
+      slides[1].object_key = first_key
       post :create, params: { slide: slides[1].attributes }
       expect(response.status).to eq(302)
       expect(response).to redirect_to slides_path

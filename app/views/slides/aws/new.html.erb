@@ -28,7 +28,7 @@
       </div>
     </div>
     <% policy = CloudConfig::SERVICE.create_policy %>
-    <input class="fval" type="hidden" id="key"  name="key" value='<%= rand_name %>' class="form-control"/>
+    <input class="fval" type="hidden" id="object_key"  name="object_key" value='<%= rand_name %>' class="form-control"/>
     <input class="fval" type="hidden" name="acl" value="<%= policy['acl'] %>" />
     <input class="fval" type="hidden" name="success_action_status" value="<%= policy['success_action_status'] %>" />
     <input class="fval" type="hidden" id="content_type" name="Content-Type" value="application/octetstream" class="form-control"/>
@@ -92,7 +92,7 @@
       <%= f.error_span(:category_id) %>
     </div>
   </div>
-  <%= f.hidden_field :key, :id => 'SlideKey' %>
+  <%= f.hidden_field :object_key, :id => 'SlideKey' %>
   <div class="form-group">
     <%= f.label t('activerecord.models.tag'), :class => 'control-label col-sm-2' %>
     <div class="col-sm-10">

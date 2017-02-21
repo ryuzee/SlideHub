@@ -53,6 +53,11 @@ set -- $PORT_STR
 PORT=$2
 echo "Listening port is $PORT"
 
+echo "Migration started..."
+`/usr/bin/docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:create RAILS_ENV=production'`
+`/usr/bin/docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:migrate RAILS_ENV=production'`
+`/usr/bin/docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:seed RAILS_ENV=production'
+
 CNT=0
 while :
 do
