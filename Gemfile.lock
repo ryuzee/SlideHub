@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/dnrce/yaml_db.git
+  revision: 253941f84fd97065bc3ac7d180d480ccdab4dbfb
+  branch: bug/109-unquoted-column
+  specs:
+    yaml_db (0.4.2)
+      rails (>= 3.0, < 5.1)
+      rake (>= 0.8.7)
+
+GIT
   remote: https://github.com/mnoack/nulldb.git
   revision: aa36e3c934d3619c6d57169dad5c04aa278d7549
   ref: aa36e3c
@@ -625,6 +634,7 @@ DEPENDENCIES
   webmock (~> 1.22.6)
   will_paginate
   will_paginate-bootstrap
+  yaml_db!
 
 BUNDLED WITH
-   1.13.6
+   1.14.4
