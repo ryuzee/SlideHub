@@ -25,8 +25,8 @@ The previous version of SlideHub was made with CakePHP. And this version is a su
 
 This application depends on following technologies.
 
-* Docker
-* [Note] Application can be placed at any servers. (Azure Virtual Machine or Amazon EC2 is NOT required.)
+* Docker (Azure Virtual Machine or Amazon EC2 is NOT required)
+* MySQL or SQL Server or Azure SQL Database
 * AWS or Azure
  * AWS: Amazon S3 / Amazon SQS
  * Azure: Blob Storage / Blob Queue
