@@ -20,12 +20,14 @@ services:
       OSS_DB_USERNAME_DEV: 'sa'
       OSS_DB_PASSWORD_DEV: 'P@55w0rd'
       OSS_DB_URL_DEV: 'sqlserver'
+      OSS_DB_USE_AZURE_DEV: false
       OSS_DB_ENGINE_TEST: 'sqlserver'
       OSS_DB_PORT_TEST: '1433'
       OSS_DB_NAME_TEST: 'test_slidehub'
       OSS_DB_USERNAME_TEST: 'sa'
       OSS_DB_PASSWORD_TEST: 'P@55w0rd'
       OSS_DB_URL_TEST: 'sqlserver'
+      OSS_DB_USE_AZURE_TEST: false
     ports:
       - '3000:3000'
     volumes:
