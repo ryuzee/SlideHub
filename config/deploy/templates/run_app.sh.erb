@@ -36,6 +36,9 @@ CONTAINER_ID=`/usr/bin/docker run -d \
         --env OSS_DB_USERNAME=$OSS_DB_USERNAME \
         --env OSS_DB_PASSWORD=$OSS_DB_PASSWORD \
         --env OSS_DB_URL=$OSS_DB_URL \
+        --env OSS_DB_PORT=$OSS_DB_PORT \
+        --env OSS_DB_ENGINE=$OSS_DB_ENGINE \
+        --env OSS_DB_USE_AZURE=$OSS_DB_USE_AZURE \
         --env OSS_SMTP_SERVER=$OSS_SMTP_SERVER \
         --env OSS_SMTP_PORT=$OSS_SMTP_PORT \
         --env OSS_SMTP_USERNAME=$OSS_SMTP_USERNAME \
@@ -56,7 +59,7 @@ echo "Listening port is $PORT"
 echo "Migration started..."
 `/usr/bin/docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:create RAILS_ENV=production'`
 `/usr/bin/docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:migrate RAILS_ENV=production'`
-`/usr/bin/docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:seed RAILS_ENV=production'
+`/usr/bin/docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:seed RAILS_ENV=production'`
 
 CNT=0
 while :

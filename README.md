@@ -25,8 +25,8 @@ The previous version of SlideHub was made with CakePHP. And this version is a su
 
 This application depends on following technologies.
 
-* Docker
-* [Note] Application can be placed at any servers. (Azure Virtual Machine or Amazon EC2 is NOT required.)
+* Docker (Azure Virtual Machine or Amazon EC2 is NOT required)
+* MySQL or SQL Server or Azure SQL Database
 * AWS or Azure
  * AWS: Amazon S3 / Amazon SQS
  * Azure: Blob Storage / Blob Queue
@@ -143,18 +143,27 @@ OSS_DB_NAME=[DB name for Prod] # Set openslideshare if using installer
 OSS_DB_USERNAME=[DB Username for Prod] # Set root if using installer
 OSS_DB_PASSWORD=[DB Password for Prod] # Set passw0rd if using installer
 OSS_DB_URL=[DB URL for Prod] # Set localhost if using installer
+OSS_DB_ENGINE=[DB Engine] # Default 'mysql'. You can set 'mysql' or 'sqlserver'
+OSS_DB_PORT=[DB Port] # Default 3306
+OSS_DB_USE_AZURE=[false|true] # If you are using Azure SQL Database, set true
 
 # For development
 OSS_DB_NAME_DEV=[DB name for Dev]
 OSS_DB_USERNAME_DEV=[DB Username for Dev]
 OSS_DB_PASSWORD_DEV=[DB Password for Dev]
 OSS_DB_URL_DEV=[DB URL for Dev]
+OSS_DB_ENGINE_DEV=[DB ENGINE for Dev]
+OSS_DB_PORT_DEV=[DB PORT for Dev]
+OSS_DB_USE_AZURE_DEV=[Use SQL Database for Dev]
 
 # For test
 OSS_DB_NAME_TEST=[DB name for Test]
 OSS_DB_USERNAME_TEST=[DB Username for Test]
 OSS_DB_PASSWORD_TEST=[DB Password for Test]
 OSS_DB_URL_TEST=[DB URL for Test]
+OSS_DB_ENGINE_TEST=[DB ENGINE for Test]
+OSS_DB_PORT_TEST=[DB PORT for Test]
+OSS_DB_USE_AZURE_TEST=[Use SQL Database for Test]
 ```
 
 After setting values, exec the command below to apply environmental variables
@@ -202,6 +211,9 @@ $CONTAINER_ID=/usr/bin/docker run -d \
   --env OSS_DB_USERNAME=$OSS_DB_USERNAME \
   --env OSS_DB_PASSWORD=$OSS_DB_PASSWORD \
   --env OSS_DB_URL=$OSS_DB_URL \
+  --env OSS_DB_PORT=$OSS_DB_PORT \
+  --env OSS_DB_ENGINE=$OSS_DB_ENGINE \
+  --env OSS_DB_USE_AZURE=$OSS_DB_USE_AZURE \
   --env OSS_SMTP_SERVER=$OSS_SMTP_SERVER \
   --env OSS_SMTP_PORT=$OSS_SMTP_PORT \
   --env OSS_SMTP_USERNAME=$OSS_SMTP_USERNAME \

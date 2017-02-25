@@ -18,6 +18,7 @@ development:
   password: <%= ENV['OSS_DB_PASSWORD_DEV'] %>
   host: <%= ENV['OSS_DB_URL_DEV'] %>
   port: <%= ENV['OSS_DB_PORT_DEV']  ||= '3306' %>
+  azure: <%= ENV['OSS_DB_USE_AZURE_DEV'] ||= 'false' %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -32,6 +33,7 @@ test:
   password: <%= ENV['OSS_DB_PASSWORD_TEST'] %>
   host: <%= ENV['OSS_DB_URL_TEST'] %>
   port: <%= ENV['OSS_DB_PORT_TEST']  ||= '3306' %>
+  azure: <%= ENV['OSS_DB_USE_AZURE_TEST'] ||= 'false' %>
 
 production:
   adapter: <%= ENV['OSS_DB_ENGINE']  ||= 'mysql2' %>
@@ -43,3 +45,4 @@ production:
   password: <%= ENV['OSS_DB_PASSWORD'] %>
   host: <%= ENV['OSS_DB_URL'] %>
   port: <%= ENV['OSS_DB_PORT']  ||= '3306' %>
+  azure: <%= ENV['OSS_DB_USE_AZURE'] ||= 'false' %>

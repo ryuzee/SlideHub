@@ -26,4 +26,4 @@ erd.pdf
 .sass-cache
 sitemap.xml.gz
 /coverage
-
+/db/data.yml
