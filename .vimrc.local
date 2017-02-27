@@ -1,3 +1,0 @@
-" dbext
-let g:dbext_default_profile_mySQL = 'type=MYSQL:user=root:passwd=passw0rd:host=192.168.33.10:dbname=openslideshare'
-let g:dbext_default_profile = 'mySQL'
