@@ -33,22 +33,23 @@ module Api
       end
 
       def show
-        @slide = Slide.where(:id => params[:id]).published.includes(:user).includes(:category).first
+        @slide = Slide.where(id: params[:id]).published.includes(:user).includes(:category).first
         unless @slide
           not_found
         end
       end
 
       def transcript
-        @slide = Slide.where(:id => params[:id]).published.includes(:user).includes(:category).first
+        @slide = Slide.where(id: params[:id]).published.includes(:user).includes(:category).first
         unless @slide
           not_found
         end
       end
 
       private
+
         def not_found
-          render json: { "error" => 'No data found' }, :status => 404
+          render json: { 'error' => 'No data found' }, status: 404
         end
     end
   end
