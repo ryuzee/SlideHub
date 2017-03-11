@@ -92,7 +92,7 @@ GEM
     after_commit_action (1.0.1)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-    airbrussh (1.1.1)
+    airbrussh (1.1.2)
       sshkit (>= 1.6.1, != 1.7.0)
     annotate (2.7.1)
       activerecord (>= 3.2, < 6.0)
@@ -130,24 +130,22 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap3-datetimepicker-rails (4.17.42)
+    bootstrap3-datetimepicker-rails (4.17.47)
       momentjs-rails (>= 2.8.1)
     brakeman (3.4.0)
-    builder (3.2.2)
+    builder (3.2.3)
     bullet (5.4.2)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.10.0)
     byebug (9.0.6)
-    capistrano (3.5.0)
+    capistrano (3.8.0)
       airbrussh (>= 1.0.0)
-      capistrano-harrow
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
     capistrano-bundler (1.2.0)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
-    capistrano-harrow (0.5.3)
     capistrano-rails (1.1.8)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
@@ -204,7 +202,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     commonjs (0.2.7)
-    concurrent-ruby (1.0.2)
+    concurrent-ruby (1.0.5)
     counter_culture (0.2.3)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -221,7 +219,7 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
-    devise-bootstrap-views (0.0.9)
+    devise-bootstrap-views (0.0.10)
     devise-i18n (1.1.0)
     devise-i18n-views (0.3.7)
     diff-lcs (1.2.5)
@@ -265,7 +263,7 @@ GEM
     hashie (3.4.6)
     hirb (0.7.3)
     hitimes (1.2.4)
-    i18n (0.7.0)
+    i18n (0.8.1)
     i18n_generators (2.1.1)
       rails (>= 3.0.0)
     ice_nine (0.11.2)
@@ -304,7 +302,7 @@ GEM
     mime-types (2.99.3)
     mimemagic (0.3.2)
     mini_portile2 (2.1.0)
-    minitest (5.9.1)
+    minitest (5.10.1)
     momentjs-rails (2.15.1)
       railties (>= 3.1)
     multi_json (1.12.1)
@@ -313,9 +311,9 @@ GEM
     nenv (0.3.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-ssh (3.2.0)
+    net-ssh (4.1.0)
     nio4r (1.2.1)
-    nokogiri (1.6.8.1)
+    nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
     non-stupid-digest-assets (1.0.8)
       sprockets (>= 2.0)
@@ -366,9 +364,9 @@ GEM
       actionpack (~> 5.x)
       actionview (~> 5.x)
       activesupport (~> 5.x)
-    rails-dom-testing (2.0.1)
+    rails-dom-testing (2.0.2)
       activesupport (>= 4.2.0, < 6.0)
-      nokogiri (~> 1.6.0)
+      nokogiri (~> 1.6)
     rails-erd (1.5.0)
       activerecord (>= 3.2)
       activesupport (>= 3.2)
@@ -486,15 +484,15 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.12)
-    sshkit (1.11.3)
+    sshkit (1.12.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     systemu (2.6.5)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
-    thor (0.19.1)
-    thread_safe (0.3.5)
+    thor (0.19.4)
+    thread_safe (0.3.6)
     tilt (2.0.5)
     timers (4.1.1)
       hitimes
@@ -561,11 +559,11 @@ DEPENDENCIES
   azure-contrib!
   better_errors
   binding_of_caller
-  bootstrap3-datetimepicker-rails (~> 4.17.37)
+  bootstrap3-datetimepicker-rails (~> 4.17.47)
   brakeman
   bullet
   byebug
-  capistrano (~> 3.5.0)
+  capistrano (~> 3.8.0)
   capistrano-bundler
   capistrano-rails
   capistrano-rbenv
@@ -576,7 +574,7 @@ DEPENDENCIES
   counter_culture
   database_cleaner
   devise (= 4.2.0)
-  devise-bootstrap-views (= 0.0.9)
+  devise-bootstrap-views (= 0.0.10)
   devise-i18n (= 1.1.0)
   devise-i18n-views (= 0.3.7)
   dotenv-rails (= 2.1.1)

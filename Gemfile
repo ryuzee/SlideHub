@@ -58,7 +58,7 @@ gem 'dotenv-rails', '= 2.1.1'
 
 # Authentication
 gem 'devise', '4.2.0'
-gem 'devise-bootstrap-views', '0.0.9'
+gem 'devise-bootstrap-views', '0.0.10'
 gem 'devise-i18n', '1.1.0'
 gem 'devise-i18n-views', '0.3.7'
 
@@ -109,7 +109,7 @@ gem 'unicorn'
 
 # Datetime Picker for Bootstrap3
 gem 'momentjs-rails', '~> 2.15.1'
-gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
@@ -202,7 +202,7 @@ group :test do
 end
 
 group :deployment do
-  gem 'capistrano', '~> 3.5.0'
+  gem 'capistrano', '~> 3.8.0'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
