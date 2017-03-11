@@ -108,7 +108,7 @@ gem 'rails-settings-cached', '0.6.5'
 gem 'unicorn'
 
 # Datetime Picker for Bootstrap3
-gem 'momentjs-rails', '~> 2.15.1'
+gem 'momentjs-rails', '~> 2.17.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 
 # https://github.com/alexspeller/non-stupid-digest-assets
