@@ -59,7 +59,7 @@ gem 'dotenv-rails', '= 2.1.1'
 # Authentication
 gem 'devise', '4.2.0'
 gem 'devise-bootstrap-views', '0.0.10'
-gem 'devise-i18n', '1.1.0'
+gem 'devise-i18n', '1.1.1'
 gem 'devise-i18n-views', '0.3.7'
 
 # Compatibility with PHP version

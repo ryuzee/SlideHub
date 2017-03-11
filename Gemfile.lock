@@ -220,7 +220,7 @@ GEM
       responders
       warden (~> 1.2.3)
     devise-bootstrap-views (0.0.10)
-    devise-i18n (1.1.0)
+    devise-i18n (1.1.1)
     devise-i18n-views (0.3.7)
     diff-lcs (1.2.5)
     docile (1.1.5)
@@ -575,7 +575,7 @@ DEPENDENCIES
   database_cleaner
   devise (= 4.2.0)
   devise-bootstrap-views (= 0.0.10)
-  devise-i18n (= 1.1.0)
+  devise-i18n (= 1.1.1)
   devise-i18n-views (= 0.3.7)
   dotenv-rails (= 2.1.1)
   execjs
