@@ -54,7 +54,7 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 
 # Env Var
-gem 'dotenv-rails', '= 2.1.1'
+gem 'dotenv-rails', '= 2.2.0'
 
 # Authentication
 gem 'devise', '4.2.0'
