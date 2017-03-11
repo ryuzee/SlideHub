@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.0.0.1'
+gem 'rails', '5.0.2'
 gem 'rails-controller-testing'
 
 # Use sqlite3 as the database for Active Record
@@ -16,11 +16,11 @@ gem 'coffee-rails'
 gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '= 4.2.1'
+gem 'jquery-rails', '= 4.2.2'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.6.0'
+gem 'jbuilder', '~> 2.6.3'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -54,12 +54,12 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 
 # Env Var
-gem 'dotenv-rails', '= 2.1.1'
+gem 'dotenv-rails', '= 2.2.0'
 
 # Authentication
 gem 'devise', '4.2.0'
-gem 'devise-bootstrap-views', '0.0.9'
-gem 'devise-i18n', '1.1.0'
+gem 'devise-bootstrap-views', '0.0.10'
+gem 'devise-i18n', '1.1.1'
 gem 'devise-i18n-views', '0.3.7'
 
 # Compatibility with PHP version
@@ -108,8 +108,8 @@ gem 'rails-settings-cached', '0.6.5'
 gem 'unicorn'
 
 # Datetime Picker for Bootstrap3
-gem 'momentjs-rails', '~> 2.15.1'
-gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
+gem 'momentjs-rails', '~> 2.17.1'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
@@ -142,10 +142,7 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  #
-  # web-console 3.2 did NOT work well with better errors...
-  # see https://github.com/rails/web-console/issues/204
-  gem 'web-console', '~> 3.1.1'
+  gem 'web-console', '~> 3.4.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -202,7 +199,7 @@ group :test do
 end
 
 group :deployment do
-  gem 'capistrano', '~> 3.5.0'
+  gem 'capistrano', '~> 3.8.0'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'

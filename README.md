@@ -1,8 +1,10 @@
 # SlideHub [![Circle CI](https://circleci.com/gh/ryuzee/SlideHub.svg?style=svg)](https://circleci.com/gh/ryuzee/SlideHub)  [![Code Climate](https://codeclimate.com/github/ryuzee/SlideHub/badges/gpa.svg)](https://codeclimate.com/github/ryuzee/SlideHub)  [![Test Coverage](https://codeclimate.com/github/ryuzee/SlideHub/badges/coverage.svg)](https://codeclimate.com/github/ryuzee/SlideHub/coverage)
 
-This is an open source slidesharing application with Azure / AWS.
+**This is an open source slidesharing application with Azure / AWS.**
 
-The previous version of SlideHub was made with CakePHP. And this version is a successor of the previous version and is made with Ruby on Rails 4.
+If you like or use this project, please provide feedback to author - Star it ★
+
+The previous version of SlideHub was made with CakePHP. And this version is a successor of the previous version and is made with Ruby on Rails 5.
 ![Screenshot](capture1.png)
 
 ## Features
@@ -90,13 +92,63 @@ puts blob_service.get_service_properties.inspect
 
 * Create Azure Blob Queue (cf. slidehub-convert) and note the name.
 
-## Setting Environmental Variables
 
-You also need to set several environmental variables as follows.
-The easiest way is to add these lines to `/etc/environment` and restart your server.
-The other option is to create `.env` file at application root directory. I recommend you to select the first option.
+### Retrieve Docker Image
 
-### Cloud Settings (Azure)
+```
+docker pull ryuzee/slidehub:latest
+```
+
+## Run Application
+
+```
+$CONTAINER_ID=/usr/bin/docker run -d \
+  --env OSS_REGION=$OSS_REGION \
+  --env OSS_SQS_URL=$OSS_SQS_URL \
+  --env OSS_BUCKET_NAME=$OSS_BUCKET_NAME \
+  --env OSS_IMAGE_BUCKET_NAME=$OSS_IMAGE_BUCKET_NAME \
+  --env OSS_USE_S3_STATIC_HOSTING=$OSS_USE_S3_STATIC_HOSTING \
+  --env OSS_AWS_SECRET_KEY=$OSS_AWS_SECRET_KEY \
+  --env OSS_AWS_ACCESS_ID=$OSS_AWS_ACCESS_ID \
+  --env OSS_USE_AZURE=$OSS_USE_AZURE \
+  --env OSS_AZURE_CONTAINER_NAME=$OSS_AZURE_CONTAINER_NAME \
+  --env OSS_AZURE_IMAGE_CONTAINER_NAME=$OSS_AZURE_IMAGE_CONTAINER_NAME \
+  --env OSS_AZURE_CDN_BASE_URL=$OSS_AZURE_CDN_BASE_URL \
+  --env OSS_AZURE_QUEUE_NAME=$OSS_AZURE_QUEUE_NAME \
+  --env OSS_AZURE_STORAGE_ACCESS_KEY=$OSS_AZURE_STORAGE_ACCESS_KEY \
+  --env OSS_AZURE_STORAGE_ACCOUNT_NAME=$OSS_AZURE_STORAGE_ACCOUNT_NAME \
+  --env OSS_SECRET_KEY_BASE=$OSS_SECRET_KEY_BASE \
+  --env OSS_DB_NAME=$OSS_DB_NAME \
+  --env OSS_DB_USERNAME=$OSS_DB_USERNAME \
+  --env OSS_DB_PASSWORD=$OSS_DB_PASSWORD \
+  --env OSS_DB_URL=$OSS_DB_URL \
+  --env OSS_DB_PORT=$OSS_DB_PORT \
+  --env OSS_DB_ENGINE=$OSS_DB_ENGINE \
+  --env OSS_DB_USE_AZURE=$OSS_DB_USE_AZURE \
+  --env OSS_SMTP_SERVER=$OSS_SMTP_SERVER \
+  --env OSS_SMTP_PORT=$OSS_SMTP_PORT \
+  --env OSS_SMTP_USERNAME=$OSS_SMTP_USERNAME \
+  --env OSS_SMTP_PASSWORD=$OSS_SMTP_PASSWORD \
+  --env OSS_SMTP_AUTH_METHOD=$OSS_SMTP_AUTH_METHOD \
+  --env OSS_PRODUCTION_HOST=$OSS_PRODUCTION_HOST \
+  --env OSS_ROOT_URL=$OSS_ROOT_URL \
+-P --name slidehub ryuzee/slidehub:latest`
+```
+
+Then prepare database as follows.
+
+```
+`docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:create RAILS_ENV=production'`
+`docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:migrate RAILS_ENV=production'`
+`docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:seed RAILS_ENV=production'
+```
+
+### Environmental Variables
+
+The easiest way is to add these lines to `docker-compose.yml` when you are testing the app in your local environment.
+If you are trying to use the app for production, set these variables via any Docker platform.
+
+#### Cloud Settings (Azure)
 
 ```
 OSS_USE_AZURE=[0|1] # If you want to use Azure, set 1
@@ -108,7 +160,7 @@ OSS_AZURE_STORAGE_ACCESS_KEY=[Azure Storage Access Key]
 OSS_AZURE_STORAGE_ACCOUNT_NAME=[Azure Storage Accout Name]
 ```
 
-### Cloud Settings (AWS)
+#### Cloud Settings (AWS)
 
 ```
 OSS_BUCKET_NAME=[Original file bucket name]
@@ -121,7 +173,7 @@ OSS_AWS_ACCESS_ID=[Your AWS Access Key if you run app out of AWS]
 OSS_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
 ```
 
-### General Settings
+#### General Settings
 
 ```
 # Mandatory
@@ -166,73 +218,7 @@ OSS_DB_PORT_TEST=[DB PORT for Test]
 OSS_DB_USE_AZURE_TEST=[Use SQL Database for Test]
 ```
 
-After setting values, exec the command below to apply environmental variables
-
-```
-for line in $( cat /etc/environment ) ; do export $line ; done
-```
-
-then, please check the variables are correctly set.
-
-```
-env | grep OSS
-```
-
-**Also it's OK to logout and login to apply variables.**
-
-`.env` file may be useful for this purpose.
-
-### Retrieve Docker Image
-
-```
-docker pull ryuzee/slidehub:latest
-```
-
-### Run Application
-
-```
-$CONTAINER_ID=/usr/bin/docker run -d \
-  --env OSS_REGION=$OSS_REGION \
-  --env OSS_SQS_URL=$OSS_SQS_URL \
-  --env OSS_BUCKET_NAME=$OSS_BUCKET_NAME \
-  --env OSS_IMAGE_BUCKET_NAME=$OSS_IMAGE_BUCKET_NAME \
-  --env OSS_USE_S3_STATIC_HOSTING=$OSS_USE_S3_STATIC_HOSTING \
-  --env OSS_AWS_SECRET_KEY=$OSS_AWS_SECRET_KEY \
-  --env OSS_AWS_ACCESS_ID=$OSS_AWS_ACCESS_ID \
-  --env OSS_USE_AZURE=$OSS_USE_AZURE \
-  --env OSS_AZURE_CONTAINER_NAME=$OSS_AZURE_CONTAINER_NAME \
-  --env OSS_AZURE_IMAGE_CONTAINER_NAME=$OSS_AZURE_IMAGE_CONTAINER_NAME \
-  --env OSS_AZURE_CDN_BASE_URL=$OSS_AZURE_CDN_BASE_URL \
-  --env OSS_AZURE_QUEUE_NAME=$OSS_AZURE_QUEUE_NAME \
-  --env OSS_AZURE_STORAGE_ACCESS_KEY=$OSS_AZURE_STORAGE_ACCESS_KEY \
-  --env OSS_AZURE_STORAGE_ACCOUNT_NAME=$OSS_AZURE_STORAGE_ACCOUNT_NAME \
-  --env OSS_SECRET_KEY_BASE=$OSS_SECRET_KEY_BASE \
-  --env OSS_DB_NAME=$OSS_DB_NAME \
-  --env OSS_DB_USERNAME=$OSS_DB_USERNAME \
-  --env OSS_DB_PASSWORD=$OSS_DB_PASSWORD \
-  --env OSS_DB_URL=$OSS_DB_URL \
-  --env OSS_DB_PORT=$OSS_DB_PORT \
-  --env OSS_DB_ENGINE=$OSS_DB_ENGINE \
-  --env OSS_DB_USE_AZURE=$OSS_DB_USE_AZURE \
-  --env OSS_SMTP_SERVER=$OSS_SMTP_SERVER \
-  --env OSS_SMTP_PORT=$OSS_SMTP_PORT \
-  --env OSS_SMTP_USERNAME=$OSS_SMTP_USERNAME \
-  --env OSS_SMTP_PASSWORD=$OSS_SMTP_PASSWORD \
-  --env OSS_SMTP_AUTH_METHOD=$OSS_SMTP_AUTH_METHOD \
-  --env OSS_PRODUCTION_HOST=$OSS_PRODUCTION_HOST \
-  --env OSS_ROOT_URL=$OSS_ROOT_URL \
--P --name slidehub ryuzee/slidehub:latest`
-```
-
-Then prepare database as follows.
-
-```
-`docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:create RAILS_ENV=production'`
-`docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:migrate RAILS_ENV=production'`
-`docker exec $CONTAINER_ID bash -l -c 'bundle exec rake db:seed RAILS_ENV=production'
-```
-
-### For Development mode
+## For Development mode
 
 You can use docker-compose for development. Try the commands as follows.
 Before running the command, please set several environmental variables in your computer.
