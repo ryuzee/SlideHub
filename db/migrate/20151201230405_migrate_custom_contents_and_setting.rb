@@ -1,4 +1,4 @@
-class MigrateCustomContentsAndSetting < ActiveRecord::Migration
+class MigrateCustomContentsAndSetting < ActiveRecord::Migration[4.2]
   def up
     execute('TRUNCATE TABLE settings')
 

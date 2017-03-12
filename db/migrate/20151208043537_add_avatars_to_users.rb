@@ -1,4 +1,4 @@
-class AddAvatarsToUsers < ActiveRecord::Migration
+class AddAvatarsToUsers < ActiveRecord::Migration[4.2]
   def self.up
     change_table :users do |t|
       t.attachment :avatar
