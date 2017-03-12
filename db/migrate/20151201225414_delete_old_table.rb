@@ -1,4 +1,4 @@
-class DeleteOldTable < ActiveRecord::Migration
+class DeleteOldTable < ActiveRecord::Migration[4.2]
   def up
     drop_table 'tagged' if ActiveRecord::Base.connection.table_exists?('tagged')
     drop_table 'cake_sessions' if ActiveRecord::Base.connection.table_exists?('cake_sessions')

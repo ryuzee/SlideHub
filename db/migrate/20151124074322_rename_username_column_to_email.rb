@@ -1,4 +1,4 @@
-class RenameUsernameColumnToEmail < ActiveRecord::Migration
+class RenameUsernameColumnToEmail < ActiveRecord::Migration[4.2]
   def change
     rename_column :users, :username, :email
   end

@@ -1,4 +1,4 @@
-class AddUsernameToUser < ActiveRecord::Migration
+class AddUsernameToUser < ActiveRecord::Migration[4.2]
   def self.up
     add_column :users, :username, :string
     User.find_each do |user|

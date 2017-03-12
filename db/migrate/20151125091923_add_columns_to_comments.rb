@@ -1,4 +1,4 @@
-class AddColumnsToComments < ActiveRecord::Migration
+class AddColumnsToComments < ActiveRecord::Migration[4.2]
   def up
     rename_column :comments, :slide_id, :commentable_id
     rename_column :comments, :content, :comment
