@@ -38,15 +38,3 @@ if Category.count.zero?
     { id: 16, name: 'Travel' },
   ])
 end
-
-if CustomSetting.count.zero?
-  CustomSetting.create([
-    { id: 1, var: 'site.display_login_link', value: '1' },
-    { id: 2, var: 'site.only_admin_can_upload', value: '0' },
-    { id: 3, var: 'site.signup_enabled', value: '1' },
-    { id: 4, var: 'custom_content.center_bottom', value: '' },
-    { id: 5, var: 'custom_content.center_top', value: '' },
-    { id: 6, var: 'custom_content.right_top', value: '' },
-    { id: 7, var: 'site.name', value: 'SlideHub2' }
-  ])
-end
