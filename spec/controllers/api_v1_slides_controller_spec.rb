@@ -15,7 +15,7 @@ RSpec.describe Api::V1::SlidesController, type: :controller do
       json = JSON.parse(response.body);
       json.each do |j|
         list_json_keys.each do |k|
-          expect(j.has_key?(k)).to eq(true)
+          expect(j.key?(k)).to eq(true)
         end
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe Api::V1::SlidesController, type: :controller do
       expect(assigns(:slide)).to eq(slide)
       json = JSON.parse(response.body);
       list_json_keys.each do |k|
-        expect(json.has_key?(k)).to eq(true)
+        expect(json.key?(k)).to eq(true)
       end
     end
 
