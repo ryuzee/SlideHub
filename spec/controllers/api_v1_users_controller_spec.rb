@@ -8,9 +8,9 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         get 'show', params: { id: '998' }, format: 'json'
         expect(response.status).to eq(200)
         json = JSON.parse(response.body);
-        keys = ['id', 'username', 'display_name', 'biography', 'slides_count']
+        keys = %w(id username display_name biography slides_count)
         keys.each do |k|
-          expect(json.has_key?(k)).to eq(true)
+          expect(json.key?(k)).to eq(true)
         end
       end
     end
