@@ -12,5 +12,5 @@
 #
 
 # RailsSettings Model
-class CustomSetting < RailsSettings::CachedSettings
+class CustomSetting < RailsSettings::Base
 end
