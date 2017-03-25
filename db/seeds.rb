@@ -14,7 +14,7 @@ if User.count.zero?
     display_name: 'admin',
     biography: 'Administrator',
     admin: true,
-    username: 'admin-default'
+    username: 'admin-default',
   )
 end
 

@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   def embedded
     @slides = user_slide_with_paginate(params[:id], 5)
     uglified_js = render_to_string layout: 'javascript', collection: @slide
-    render text: uglified_js, layout: false, content_type: 'application/javascript'
+    render plain: uglified_js, layout: false, content_type: 'application/javascript'
   end
 
   private

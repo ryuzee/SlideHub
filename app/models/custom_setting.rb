@@ -12,5 +12,7 @@
 #
 
 # RailsSettings Model
-class CustomSetting < RailsSettings::CachedSettings
+class CustomSetting < RailsSettings::Base
+  source Rails.root.join('config/app.yml')
+  namespace Rails.env
 end

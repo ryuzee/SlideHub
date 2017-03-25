@@ -1,5 +1,6 @@
 module Admin
   class CustomContentsController < Admin::BaseController
+    before_action :save_current, only: [:index]
     def index
       @settings = CustomSetting.unscoped.where("var like 'custom_content.%'")
     end
@@ -8,8 +9,22 @@ module Admin
       params.require(:settings).map do |param|
         data = param.to_unsafe_h
         CustomSetting[data['var']] = data['value']
+        setting = CustomSetting.find_by(var: data['var']) || CustomSetting.new(var: data['var'])
+        setting.value = data['value']
+        setting.save
       end
       redirect_to '/admin/custom_contents/'
     end
+
+    private
+
+      def save_current
+        keys = %w(custom_content.center_top custom_content.center_bottom custom_content.right_top)
+        keys.each do |k|
+          setting = CustomSetting.find_by(var: k.to_s) || CustomSetting.new(var: k.to_s)
+          setting.value = CustomSetting[k]
+          setting.save
+        end
+      end
   end
 end
