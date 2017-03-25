@@ -126,7 +126,7 @@ gem 'activerecord-nulldb-adapter', git: 'https://github.com/mnoack/nulldb.git', 
 gem 'reserved_word'
 
 # dump database
-gem 'yaml_db', git: 'https://github.com/dnrce/yaml_db.git', branch: 'bug/109-unquoted-column'
+gem 'yaml_db', '~> 0.5.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
