@@ -225,6 +225,10 @@ OSS_DB_USE_AZURE_TEST=[Use SQL Database for Test]
 ```
 If you are using Mac for development, you may have performance issue.
 See https://github.com/EugenMayer/docker-sync
+
+Installing docker-sync => https://github.com/EugenMayer/docker-sync/wiki/1.-Installation
+
+Running docker-compose => docker-compose -f docker-compose.yml -f docker-compose-mac.yml ...
 ```
 
 You can use docker-compose for development. Try the commands as follows.
