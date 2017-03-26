@@ -1,9 +1,21 @@
 version: '2'
 services:
-  app_mssql:
+  sqlserver:
+    image: microsoft/mssql-server-linux
+    hostname: 'sqlserver'
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'P@55w0rd'
+    ports:
+      - '1433:1433'
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+  app:
     build:
       context: .
       dockerfile: 'dockerfile_dev'
+    depends_on:
+      - sqlserver
     environment:
       RAILS_ENV: development
       OSS_BUCKET_NAME: $OSS_BUCKET_NAME
@@ -32,18 +44,7 @@ services:
       - '3000:3000'
     volumes:
       - .:/opt/application/current
-    links:
-      - sqlserver
-  sqlserver:
-    image: microsoft/mssql-server-linux
-    hostname: 'sqlserver'
-    environment:
-      ACCEPT_EULA: 'Y'
-      SA_PASSWORD: 'P@55w0rd'
-    ports:
-      - '1433:1433'
-    volumes:
-      - sqlserver-data:/var/opt/mssql
+
 volumes:
   sqlserver-data:
     driver: local

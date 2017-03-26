@@ -1,0 +1,10 @@
+version: '2'
+
+volumes:
+  sync-volume:
+    external: true
+
+services:
+  app:
+    volumes:
+      - sync-volume:/opt/application/current

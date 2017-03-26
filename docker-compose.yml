@@ -1,9 +1,22 @@
 version: '2'
 services:
+  mysql:
+    image: mysql:5.7.10
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    hostname: 'mysql'
+    environment:
+      MYSQL_DATABASE: 'slidehub'
+      MYSQL_ROOT_PASSWORD: 'pass'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
   app:
     build:
       context: .
       dockerfile: 'dockerfile_dev'
+    depends_on:
+      - mysql
     environment:
       RAILS_ENV: development
       OSS_BUCKET_NAME: $OSS_BUCKET_NAME
@@ -26,19 +39,7 @@ services:
       - '3000:3000'
     volumes:
       - .:/opt/application/current
-    links:
-      - mysql
-  mysql:
-    image: mysql:5.7.10
-    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
-    hostname: 'mysql'
-    environment:
-      MYSQL_DATABASE: 'slidehub'
-      MYSQL_ROOT_PASSWORD: 'pass'
-    ports:
-      - '3306:3306'
-    volumes:
-      - mysql-data:/var/lib/mysql
+
 volumes:
   mysql-data:
     driver: local
