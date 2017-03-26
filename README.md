@@ -220,6 +220,13 @@ OSS_DB_USE_AZURE_TEST=[Use SQL Database for Test]
 
 ## For Development mode
 
+**WARNING**
+
+```
+If you are using Mac for development, you may have performance issue.
+See https://github.com/EugenMayer/docker-sync
+```
+
 You can use docker-compose for development. Try the commands as follows.
 Before running the command, please set several environmental variables in your computer.
 See docker-compose.yml
