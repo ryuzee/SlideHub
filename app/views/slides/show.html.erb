@@ -152,6 +152,8 @@ if @slide.tags.count > 0
 
 <div class="col-md-4" id="rightside">
 
+  <%= raw CustomSetting['custom_content.right_top'] %>
+
   <%= render 'users/right_side_bar', user: @slide.user %>
 
   <div class="panel panel-default h6">
