@@ -131,9 +131,9 @@ gem 'yaml_db', '~> 0.5.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'codeclimate-test-reporter'
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'codeclimate-test-reporter'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers', require: false
