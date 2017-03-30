@@ -133,11 +133,11 @@ group :development, :test do
   gem 'byebug'
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'rspec-rails'
   gem 'codeclimate-test-reporter'
+  gem 'rspec-rails'
   gem 'rspec_junit_formatter'
-  gem 'simplecov'
   gem 'shoulda-matchers', require: false
+  gem 'simplecov'
 end
 
 group :development do
@@ -191,8 +191,8 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'faker'
   gem 'database_cleaner'
+  gem 'faker'
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'webmock', '~> 1.22.6'
@@ -200,8 +200,8 @@ end
 
 group :deployment do
   gem 'capistrano', '~> 3.8.0'
-  gem 'capistrano-rails'
   gem 'capistrano-bundler'
+  gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'capistrano3-unicorn' # unicornを使っている場合のみ
 end
