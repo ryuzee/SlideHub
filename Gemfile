@@ -37,8 +37,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'mysql2'
 
 # Use SQLServer
-gem 'tiny_tds'
 gem 'activerecord-sqlserver-adapter'
+gem 'tiny_tds'
 
 # Apply bootstrap
 gem 'less-rails'
@@ -46,8 +46,8 @@ gem 'less-rails'
 # WORKAROUND: https://github.com/metaskills/less-rails/issues/122
 gem 'sprockets', '3.6.3'
 
-gem 'twitter-bootstrap-rails'
 gem 'execjs'
+gem 'twitter-bootstrap-rails'
 
 # Paginate
 gem 'will_paginate'
@@ -108,8 +108,8 @@ gem 'rails-settings-cached', '0.6.5'
 gem 'unicorn'
 
 # Datetime Picker for Bootstrap3
-gem 'momentjs-rails', '~> 2.17.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
+gem 'momentjs-rails', '~> 2.17.1'
 
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
@@ -131,12 +131,12 @@ gem 'yaml_db', '~> 0.5.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  gem 'rspec-rails'
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'simplecov'
-  gem 'rspec_junit_formatter'
+  gem 'rspec-rails'
   gem 'codeclimate-test-reporter'
+  gem 'rspec_junit_formatter'
+  gem 'simplecov'
   gem 'shoulda-matchers', require: false
 end
 
@@ -190,8 +190,8 @@ group :development do
 end
 
 group :test do
-  gem 'faker'
   gem 'capybara'
+  gem 'faker'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
@@ -201,7 +201,7 @@ end
 group :deployment do
   gem 'capistrano', '~> 3.8.0'
   gem 'capistrano-rails'
-  gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
+  gem 'capistrano-rbenv'
   gem 'capistrano3-unicorn' # unicornを使っている場合のみ
 end
