@@ -1,9 +1,21 @@
 class InitialDb < ActiveRecord::Migration[4.2]
   def self.up
-    create_table 'categories' do |t|
-      t.string 'name', limit: 255, null: false
-    end unless ActiveRecord::Base.connection.table_exists?('categories')
+    self.create_categories
+    self.create_comments
+    self.create_slides
+    self.create_tags
+    self.create_users
+  end
 
+  def self.create_categories
+    unless ActiveRecord::Base.connection.table_exists?('categories')
+      create_table 'categories' do |t|
+        t.string 'name', limit: 255, null: false
+      end
+    end
+  end
+
+  def self.create_comments
     unless ActiveRecord::Base.connection.table_exists?('comments')
       create_table 'comments' do |t|
         t.integer  'user_id',  limit: 4,     null: false
@@ -15,7 +27,9 @@ class InitialDb < ActiveRecord::Migration[4.2]
       add_index 'comments', ['slide_id'], name: 'idx_comments_slide_id_key', using: :btree
       add_index 'comments', ['user_id'], name: 'idx_comments_user_id_key', using: :btree
     end
+  end
 
+  def self.create_slides
     unless ActiveRecord::Base.connection.table_exists?('slides')
       create_table 'slides' do |t|
         t.integer  'user_id',        limit: 4,                     null: false
@@ -37,7 +51,9 @@ class InitialDb < ActiveRecord::Migration[4.2]
       add_index 'slides', ['page_view'], name: 'idx_slides_page_view_key', using: :btree
       add_index 'slides', ['user_id'], name: 'idx_slides_user_id_key', using: :btree
     end
+  end
 
+  def self.create_tags
     unless ActiveRecord::Base.connection.table_exists?('tags')
       create_table 'tags' do |t|
         t.string   'identifier', limit: 30
@@ -49,7 +65,9 @@ class InitialDb < ActiveRecord::Migration[4.2]
       end
       add_index 'tags', %w(identifier keyname), name: 'UNIQUE_TAG', unique: true, using: :btree
     end
+  end
 
+  def self.create_users
     unless ActiveRecord::Base.connection.table_exists?('users')
       create_table 'users' do |t|
         t.string   'username',     limit: 32,                    null: false
