@@ -24,6 +24,7 @@ module Myapp
     config.autoload_paths += %W(#{config.root}/lib/slide_hub)
 
     config.assets.paths << "#{Rails}/vendor/assets/fonts"
+    config.assets.paths << "#{Rails}/vendor/assets/bower_components"
     config.assets.digest = true
     config.public_file_server.enabled
 

@@ -13,11 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require jquery.lazyload
-//= require jquery.equalheights.min
-//= require jquery.sticky-kit.min
-//= require js.cookie-2.0.4.min
-//= require mousetrap.min
+//= require jquery.lazyload/jquery.lazyload
+//= require jquery.equalheights/jquery.equalheights.min
+//= require sticky-kit/jquery.sticky-kit.min
+//= require js-cookie/src/js.cookie
+//= require mousetrap/mousetrap.min
 //= require moment
 //= require moment/ja
 //= require bootstrap-datetimepicker
