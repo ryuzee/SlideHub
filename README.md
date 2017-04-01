@@ -220,6 +220,14 @@ OSS_DB_USE_AZURE_TEST=[Use SQL Database for Test]
 
 ## For Development mode
 
+### Requirements
+
+- docker-compose
+- Ruby environment including bundler
+- [bower](https://bower.io/)
+
+After cloning the repository, you have to run `bower install` command to retrieve libraries.
+
 **WARNING**
 
 ```
@@ -230,6 +238,8 @@ Installing docker-sync => https://github.com/EugenMayer/docker-sync/wiki/1.-Inst
 
 Running docker-compose => docker-compose -f docker-compose.yml -f docker-compose-mac.yml ...
 ```
+
+### Build images and run the app for testing
 
 You can use docker-compose for development. Try the commands as follows.
 Before running the command, please set several environmental variables in your computer.
@@ -244,7 +254,7 @@ docker-compose run app bash -l -c 'bundle exec rake db:seed RAILS_ENV=developmen
 docker-compose up -d
 ```
 
-Run tests.
+### Run tests
 
 ```
 docker-compose run app bash -l -c 'bundle exec rake db:create RAILS_ENV=test'

@@ -1,0 +1,27 @@
+{
+  "name": "SlideHub",
+  "description": "SlideHub Application",
+  "main": "index.js",
+  "authors": [
+    "Ryutaro YOSHIBA"
+  ],
+  "license": "MIT License",
+  "keywords": [
+    "SlideHub"
+  ],
+  "homepage": "http://www.ryuzee.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery.equalheights": "^1.5.2",
+    "jquery.lazyload": "^1.9.7",
+    "js-cookie": "^2.0.4",
+    "mousetrap": "^1.6.0",
+    "sticky-kit":"^1.1.2"
+  }
+}

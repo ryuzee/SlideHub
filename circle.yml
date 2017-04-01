@@ -19,6 +19,10 @@ database:
   override:
     - bundle exec rake db:create db:migrate
 
+test:
+  pre:
+    - bower install
+
 deployment:
   hub:
     branch: production
