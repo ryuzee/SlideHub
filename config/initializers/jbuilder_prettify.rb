@@ -1,4 +1,4 @@
-require "jbuilder"
+require 'jbuilder'
 
 class Jbuilder
   ##
@@ -9,7 +9,7 @@ class Jbuilder
   #
   attr_accessor :prettify
 
-  alias_method :_original_target, :target!
+  alias _original_target target!
 
   ##
   # A shortcut to enabling prettify.
