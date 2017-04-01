@@ -1,0 +1,20 @@
+{
+  "name": "jQuery.equalHeights",
+  "version": "1.5.2",
+  "main": [
+    "jquery.equalHeights.js"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "homepage": "https://github.com/mattbanks/jQuery.equalHeights",
+  "_release": "1.5.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.5.2",
+    "commit": "d41d695127b02df40383105b35b758f064786426"
+  },
+  "_source": "https://github.com/mattbanks/jQuery.equalHeights.git",
+  "_target": "^1.5.2",
+  "_originalSource": "jquery.equalheights"
+}
