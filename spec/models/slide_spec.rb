@@ -37,16 +37,59 @@ describe 'Slide' do
     end
   end
 
-  describe 'thumbnail_url' do
-    it 'url is valid' do
+  describe 'Creating "Slide" model' do
+    success_data = {user_id: 1, name: 'dummy', description: 'dummy', object_key: 'dummy', category_id: 1}
+    it "is valid with user_id, name, description, object_key and category" do
+      slide = Slide.new(success_data)
+      expect(slide.valid?).to eq(true)
+    end
+
+    it "is invalid without name" do
+      data = success_data.dup
+      data.delete(:name)
+      slide = Slide.new(data)
+      expect(slide.valid?).to eq(false)
+    end
+
+    it "is invalid without description" do
+      data = success_data.dup
+      data.delete(:description)
+      slide = Slide.new(data)
+      expect(slide.valid?).to eq(false)
+    end
+
+    it "is invalid without object_key" do
+      data = success_data.dup
+      data.delete(:object_key)
+      slide = Slide.new(data)
+      expect(slide.valid?).to eq(false)
+    end
+
+    it "is invalid without category" do
+      data = success_data.dup
+      data.delete(:category_id)
+      slide = Slide.new(data)
+      expect(slide.valid?).to eq(false)
+    end
+
+    it "is invalid without user" do
+      data = success_data.dup
+      data.delete(:user_id)
+      slide = Slide.new(data)
+      expect(slide.valid?).to eq(false)
+    end
+  end
+
+  describe 'Method "thumbnail_url"' do
+    it 'is valid' do
       FactoryGirl.create(:slide)
       object_key = Slide.find(1).object_key
       expect(Slide.find(1).thumbnail_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/thumbnail.jpg")
     end
   end
 
-  describe 'transcript' do
-    it 'retrieve transcript and put it into array' do
+  describe 'Transcript' do
+    it 'can be retrieved and put it into array' do
       allow_any_instance_of(Slide).to receive(:transcript_url).and_return('http://www.example.com/transcript.txt')
       stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
         body: 'a:1:{i:0;s:4:"Test";}',
@@ -58,7 +101,7 @@ describe 'Slide' do
       expect(slide.transcript_exist?(slide.transcript)).to eq(true)
     end
 
-    it 'try to retrieve transcript, but failed' do
+    it 'can not be ritrieved because of 404' do
       allow_any_instance_of(Slide).to receive(:transcript_url).and_return('http://www.example.com/transcript.txt')
       stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
         status: 404,
@@ -69,7 +112,7 @@ describe 'Slide' do
       expect(slide.transcript_exist?(slide.transcript)).to eq(false)
     end
 
-    it 'check the transcript is empty?' do
+    it 'can be retrieved. however the result is empty' do
       allow_any_instance_of(Slide).to receive(:transcript_url).and_return('http://www.example.com/transcript.txt')
       stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
         body: 'a:1:{i:0;s:0:"";}',
@@ -81,23 +124,23 @@ describe 'Slide' do
     end
   end
 
-  describe 'transcript_url' do
-    it 'url is valid' do
+  describe 'Method "transcript_url"' do
+    it 'returns valid url' do
       FactoryGirl.create(:slide)
       object_key = Slide.find(1).object_key
       expect(Slide.find(1).transcript_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/transcript.txt")
     end
   end
 
-  describe 'page_list_url' do
-    it 'url is valid' do
+  describe 'Method "page_list_url"' do
+    it 'returns valid url' do
       FactoryGirl.create(:slide)
       object_key = Slide.find(1).object_key
       expect(Slide.find(1).page_list_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/list.json")
     end
   end
 
-  describe 'page_list' do
+  describe 'Method "page_list"' do
     it 'returns page list (1 page)' do
       FactoryGirl.create(:slide)
       object_key = Slide.find(1).object_key
