@@ -38,41 +38,41 @@ describe 'Slide' do
   end
 
   describe 'Creating "Slide" model' do
-    success_data = {user_id: 1, name: 'dummy', description: 'dummy', object_key: 'dummy', category_id: 1}
-    it "is valid with user_id, name, description, object_key and category" do
+    success_data = { user_id: 1, name: 'dummy', description: 'dummy', object_key: 'dummy', category_id: 1 }
+    it 'is valid with user_id, name, description, object_key and category' do
       slide = Slide.new(success_data)
       expect(slide.valid?).to eq(true)
     end
 
-    it "is invalid without name" do
+    it 'is invalid without name' do
       data = success_data.dup
       data.delete(:name)
       slide = Slide.new(data)
       expect(slide.valid?).to eq(false)
     end
 
-    it "is invalid without description" do
+    it 'is invalid without description' do
       data = success_data.dup
       data.delete(:description)
       slide = Slide.new(data)
       expect(slide.valid?).to eq(false)
     end
 
-    it "is invalid without object_key" do
+    it 'is invalid without object_key' do
       data = success_data.dup
       data.delete(:object_key)
       slide = Slide.new(data)
       expect(slide.valid?).to eq(false)
     end
 
-    it "is invalid without category" do
+    it 'is invalid without category' do
       data = success_data.dup
       data.delete(:category_id)
       slide = Slide.new(data)
       expect(slide.valid?).to eq(false)
     end
 
-    it "is invalid without user" do
+    it 'is invalid without user' do
       data = success_data.dup
       data.delete(:user_id)
       slide = Slide.new(data)
