@@ -106,6 +106,10 @@ Style/IndentationConsistency:
 Style/Lambda:
   Enabled: false
 
+# 複数行にまたがる後置条件を警告する
+Style/MultilineIfModifier:
+  Enabled: false
+
 # 1_000_000 と区切り文字が 2 個以上必要になる場合のみ _ 区切りを必須にする
 Style/NumericLiterals:
   MinDigits: 7
