@@ -1,5 +1,5 @@
 # target_version:
-#   rubocop v0.41.1
+#   rubocop v0.48.0
 
 # 自動生成されるものはチェック対象から除外する
 AllCops:
@@ -205,6 +205,13 @@ Lint/UnusedMethodArgument:
 # 30 まではギリギリ許せる範囲だった
 Metrics/AbcSize:
   Max: 30
+
+# ブロックの長さは短く。ただしテストは除く
+Metrics/BlockLength:
+  Max: 20
+  Exclude:
+    - "config/environments/*.rb"
+    - "spec/**/*.rb"
 
 # 6 は強すぎるので緩める
 Metrics/CyclomaticComplexity:

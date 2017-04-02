@@ -42,16 +42,14 @@ module Aws
 
   module S3
     class DummyClient
-      def put_object(params = {})
-      end
+      def put_object(params = {}); end
 
       def get_object(params = {})
         filename = params[:response_target]
         File.open(filename, 'wb') { |f| f.write('hoge') }
       end
 
-      def delete_objects(params = {})
-      end
+      def delete_objects(params = {}); end
 
       def list_objects(params = {})
         Types::DummyListObjectOutput.new
