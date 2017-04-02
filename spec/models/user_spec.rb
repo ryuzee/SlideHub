@@ -51,7 +51,6 @@ describe 'User' do
     it 'can not be accepted' do
       invalid_usernames = [
         'ryuzee@example.com',
-        'search',
         '-ryuzee',
         'ryuzee-',
         'ryu zee',
@@ -59,6 +58,21 @@ describe 'User' do
         'ryuzee789012345678901234567890123',
         'a#b',
         'a' * (32 + 1),
+        'search',
+        'admin',
+        'slides',
+        'users',
+        'categories',
+        'popular',
+        'latest',
+        'statistics',
+        'dashboard',
+        'dashboards',
+        'api',
+        'www',
+        'blog',
+        'image',
+        'rss',
       ]
       expect(user).not_to allow_value(*invalid_usernames).for(:username)
     end
