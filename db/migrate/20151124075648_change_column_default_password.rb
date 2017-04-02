@@ -4,7 +4,4 @@ class ChangeColumnDefaultPassword < ActiveRecord::Migration[4.2]
     rename_column :users, :created, :created_at
     rename_column :users, :modified, :modified_at
   end
-
-  def down
-  end
 end

@@ -14,7 +14,7 @@ class AddUsernameToUser < ActiveRecord::Migration[4.2]
     username = username[1]
     say "#{username} was set"
     loop do
-      if User.where('username = ?', username).where('id != ?', user.id).count == 0
+      if User.where('username = ?', username).where('id != ?', user.id).count.zero?
         execute("update users set username = '#{username}' where id = #{user.id}")
         break
       else
