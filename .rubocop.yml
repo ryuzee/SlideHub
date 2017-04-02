@@ -180,6 +180,10 @@ Style/ClassAndModuleChildren:
     - nested
     - compact
 
+# シンボルのみで構成される配列に%iまたは%Iをつけるか
+Style/SymbolArray:
+  Enabled: false
+
 ##################### Lint ##################################
 
 # * 同名のメソッドがある場合にローカル変数に `_` を付ける

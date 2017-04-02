@@ -50,8 +50,8 @@ class Slide < ActiveRecord::Base
   scope :failed, -> { where('convert_status != 100') }
   scope :latest, -> { order('created_at desc') }
   scope :popular, -> { order('total_view desc') }
-  scope :category, -> (category_id) { where('category_id = ?', category_id) }
-  scope :owner, -> (user_id) { where('user_id = ?', user_id) }
+  scope :category, ->(category_id) { where('category_id = ?', category_id) }
+  scope :owner, ->(user_id) { where('user_id = ?', user_id) }
 
   def self.latest_slides(limit = 10)
     self.published.latest.
