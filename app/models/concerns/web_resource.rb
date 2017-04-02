@@ -16,14 +16,17 @@ module WebResource
 
   def get_php_serialized_data(location, limit = 10)
     result = get_contents(location, limit)
-    begin
-      response = result.dup.force_encoding('utf-8')
-      require 'php_serialization/unserializer'
-      return PhpSerialization::Unserializer.new.run(response)
-    rescue
-      return []
-    end if result
-    []
+    if result
+      begin
+        response = result.dup.force_encoding('utf-8')
+        require 'php_serialization/unserializer'
+        return PhpSerialization::Unserializer.new.run(response)
+      rescue
+        return []
+      end
+    else
+      []
+    end
   end
 
   def get_contents(location, limit = 10)

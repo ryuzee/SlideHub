@@ -11,8 +11,7 @@ module Admin
                 paginate(page: params[:page], per_page: 20)
     end
 
-    def edit
-    end
+    def edit; end
 
     def download
       download_slide
