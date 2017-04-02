@@ -33,6 +33,7 @@ FactoryGirl.define do
     num_of_pages 1
     sequence(:created_at, 1) { |i| Time.now - i.days }
     downloadable true
+    tag_list 'Sushi,Toro'
 
     association :user, factory: :first_user
     association :category, factory: :first_category
