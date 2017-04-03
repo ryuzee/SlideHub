@@ -78,6 +78,49 @@ describe 'User' do
     end
   end
 
+  describe 'valid passwords' do
+    it 'can be accepted' do
+      valid_passwords = %w(
+        12345678
+        abcdefgh
+        abc12345
+        #123abc$
+      )
+      expect(user).to allow_value(*valid_passwords).for(:password)
+    end
+  end
+
+  describe 'invalid passwords (0..7)' do
+    it 'can not be accepted' do
+      invalid_passwords = [
+        'abcdefg',
+        ' ' * 8,
+      ]
+      expect(user).not_to allow_value(*invalid_passwords).for(:password)
+    end
+  end
+
+  describe 'valid emails' do
+    it 'can be accepted' do
+      valid_emails = %w(
+        ryuzee@example.com
+        ryuzee@jp.example.com
+        ryuzee@tt
+      )
+      expect(user).to allow_value(*valid_emails).for(:email)
+    end
+  end
+
+  describe 'invalid emails' do
+    it 'can not be accepted' do
+      invalid_emails = [
+        'www.example.com',
+        'examplecom',
+      ]
+      expect(user).not_to allow_value(*invalid_emails).for(:email)
+    end
+  end
+
   describe 'invalid display names' do
     it 'can not be accepted' do
       invalid_usernames = [
