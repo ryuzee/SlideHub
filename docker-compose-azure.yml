@@ -1,0 +1,44 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5.7.10
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    hostname: 'mysql'
+    environment:
+      MYSQL_DATABASE: 'slidehub'
+      MYSQL_ROOT_PASSWORD: 'pass'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+  app:
+    build:
+      context: .
+      dockerfile: 'dockerfile_dev'
+    depends_on:
+      - mysql
+    environment:
+      RAILS_ENV: development
+      OSS_USE_AZURE: 1
+      OSS_AZURE_CONTAINER_NAME: $OSS_AZURE_CONTAINER_NAME
+      OSS_AZURE_IMAGE_CONTAINER_NAME: $OSS_AZURE_IMAGE_CONTAINER_NAME
+      OSS_AZURE_CDN_BASE_URL: $OSS_AZURE_CDN_BASE_URL
+      OSS_AZURE_QUEUE_NAME: $OSS_AZURE_QUEUE_NAME
+      OSS_AZURE_STORAGE_ACCOUNT_NAME: $OSS_AZURE_STORAGE_ACCOUNT_NAME
+      OSS_AZURE_STORAGE_ACCESS_KEY: $OSS_AZURE_STORAGE_ACCESS_KEY
+      OSS_DB_NAME_DEV: 'slidehub'
+      OSS_DB_USERNAME_DEV: 'root'
+      OSS_DB_PASSWORD_DEV: 'pass'
+      OSS_DB_URL_DEV: 'mysql'
+      OSS_DB_NAME_TEST: 'test_slidehub'
+      OSS_DB_USERNAME_TEST: 'root'
+      OSS_DB_PASSWORD_TEST: 'pass'
+      OSS_DB_URL_TEST: 'mysql'
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/opt/application/current
+
+volumes:
+  mysql-data:
+    driver: local
