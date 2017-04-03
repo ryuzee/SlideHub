@@ -14,12 +14,13 @@ GIT
 
 GIT
   remote: https://github.com/ryuzee/azure-contrib.git
-  revision: 75bdb68cc992c1201bde28f63f872c000115c2af
+  revision: b74076c225868854edc45b591f993859c21c4c33
+  ref: b74076c
   specs:
     azure-contrib (0.1.0)
       addressable
       azure
-      celluloid
+      celluloid (~> 0.17.3)
       hashie
 
 GIT
@@ -485,7 +486,7 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.5)
-    timers (4.1.1)
+    timers (4.1.2)
       hitimes
     tiny_tds (1.1.0)
       mini_portile2 (~> 2.0)
