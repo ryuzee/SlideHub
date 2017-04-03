@@ -87,7 +87,7 @@ gem 'aws-sdk-resources'
 # Azure
 gem 'azure', '~> 0.7.5'
 # gem 'azure-contrib', git: 'https://github.com/dmichael/azure-contrib.git'
-gem 'azure-contrib', git: 'https://github.com/ryuzee/azure-contrib.git'
+gem 'azure-contrib', git: 'https://github.com/ryuzee/azure-contrib.git', ref: 'b74076c'
 
 # Find file type
 gem 'ruby-filemagic'
