@@ -213,6 +213,7 @@ Metrics/BlockLength:
     - "config/environments/*.rb"
     - "spec/**/*.rb"
     - "lib/tasks/**/*.rb"
+    - "lib/tasks/**/*.rake"
 
 # 6 は強すぎるので緩める
 Metrics/CyclomaticComplexity:
