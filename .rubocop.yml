@@ -206,12 +206,13 @@ Lint/UnusedMethodArgument:
 Metrics/AbcSize:
   Max: 30
 
-# ブロックの長さは短く。ただしテストは除く
+# ブロックの長さは短く。ただしテストやタスクは除く
 Metrics/BlockLength:
   Max: 20
   Exclude:
     - "config/environments/*.rb"
     - "spec/**/*.rb"
+    - "lib/tasks/**/*.rb"
 
 # 6 は強すぎるので緩める
 Metrics/CyclomaticComplexity:
