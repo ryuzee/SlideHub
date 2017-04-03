@@ -92,7 +92,7 @@ describe 'User' do
 
   describe 'invalid passwords (0..7)' do
     it 'can not be accepted' do
-      invalid_passwords =[
+      invalid_passwords = [
         'abcdefg',
         ' ' * 8,
       ]
@@ -113,9 +113,9 @@ describe 'User' do
 
   describe 'invalid emails' do
     it 'can not be accepted' do
-      invalid_emails =[
+      invalid_emails = [
         'www.example.com',
-        'examplecom'
+        'examplecom',
       ]
       expect(user).not_to allow_value(*invalid_emails).for(:email)
     end
