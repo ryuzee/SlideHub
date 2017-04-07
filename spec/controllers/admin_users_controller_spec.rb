@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Admin::UsersController, type: :controller do
   describe 'Users' do
-    let(:user_admin) { create(:user_admin) }
+    let(:admin_user) { create(:admin_user) }
     before do
-      login_by_admin_user user_admin
+      login_by_admin_user admin_user
     end
 
     describe 'GET /admin/users/' do

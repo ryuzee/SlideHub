@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Admin::SiteSettingsController, type: :controller do
   describe 'SiteSettings' do
-    let(:user_admin) { create(:user_admin) }
+    let(:admin_user) { create(:admin_user) }
     before do
-      login_by_admin_user user_admin
+      login_by_admin_user admin_user
     end
 
     describe 'GET /admin/site_settings' do

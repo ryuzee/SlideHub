@@ -40,7 +40,7 @@ FactoryGirl.define do
     reset_password_token 'general998'
   end
 
-  factory :user_admin, class: User do
+  factory :admin_user, class: User do
     id 999
     email 'admin999@example.com'
     display_name 'Takashi'
