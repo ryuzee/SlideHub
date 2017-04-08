@@ -56,7 +56,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET /users/general998' do
       it 'works!' do
         create(:general_user)
-        get 'show', params: { id: '998' }
+        get 'show', params: { username: 'general998' }
         expect(response.status).to eq(200)
       end
     end
@@ -81,6 +81,36 @@ RSpec.describe UsersController, type: :controller do
       it 'redirect to login' do
         get 'index'
         expect(response.status).to eq(302)
+      end
+    end
+  end
+end
+
+RSpec.describe Devise::RegistrationsController, type: :controller do
+  describe '#new' do
+    before(:each) do
+      request.env['devise.mapping'] = Devise.mappings[:user]
+    end
+
+    context 'with sign_up enabled' do
+      render_views
+      it 'works' do
+        CustomSetting['site.signup_enabled'] = '1'
+        get :new
+        expect(response.status).to eq(200)
+        expect(response.body).to include('username', 'biography')
+      end
+    end
+
+    context 'with sign_up disabled' do
+      render_views
+      it 'can not be accessed' do
+        begin
+          CustomSetting['site.signup_enabled'] = '0'
+          expect { get :new }.to raise_error(ActionController::RoutingError, 'Not Found')
+        ensure
+          CustomSetting['site.signup_enabled'] = '1'
+        end
       end
     end
   end
