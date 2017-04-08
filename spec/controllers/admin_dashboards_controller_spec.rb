@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Admin::DashboardsController, type: :controller do
-
   describe 'GET /admin/dashboards' do
     context 'with admin permission' do
       let(:admin_user) { create(:admin_user) }
