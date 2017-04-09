@@ -4,8 +4,8 @@ class FeaturedSlide < ActiveRecord::Base
   validate :exsitence_of_slide_id
 
   private
+
     def exsitence_of_slide_id
       errors.add(:slide_id, :inclusion) unless Slide.published.pluck(:id).include?(slide_id)
     end
-
 end

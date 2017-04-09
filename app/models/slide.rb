@@ -68,7 +68,7 @@ class Slide < ActiveRecord::Base
   def self.featured_slides(limit = 10)
     self.published.popular.
       includes(:user).
-      where(:id => FeaturedSlide.pluck(:slide_id)).
+      where(id: FeaturedSlide.pluck(:slide_id)).
       limit(limit)
   end
 
