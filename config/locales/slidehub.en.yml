@@ -1,6 +1,7 @@
 ---
 en:
   actions: "Actions"
+  add: "Add"
   admin_dashboard: "Admin Dashboard"
   back_to_dashboard: "Back to Dashboard"
   category: "Category"
@@ -11,6 +12,9 @@ en:
   download_slide: "Download Slide"
   edit_slide: "Edit Slide"
   embedded_code: "Embedded Code"
+  featured_slides: "Featured Slides"
+  featured_slide_was_deleted: "Featured Slide was successfully deleted"
+  featured_slide_was_added: "Featured Slide was successfully added"
   latest: "Latest"
   latest_slides: "Latest Slides"
   latest_published_slides: "Latest Published Slides"
@@ -31,6 +35,7 @@ en:
   re_upload_slide: "Re-upload"
   save_settings: "Save Settings"
   search: "Search"
+  set_featured_slide: "Set featured slide"
   show_embedded_code: "Show Embedded Code"
   show_slide_vertically: "Show Slide Vertically"
   show_slide_with_normal_mode: "Show Slide with Normal Mode"

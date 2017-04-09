@@ -1,0 +1,17 @@
+<h3><%= t(:featured_slides) %>&nbsp;&nbsp;<small><a href="/admin/dashboards/index"><%= t :back_to_dashboard %></a></small></h3>
+
+<%= form_for @featured_slide, :html => { :class => "form-horizontal slide" }, :url => "/admin/featured_slides"  do |f| %>
+
+  <div class="control-group">
+    <%= f.label :slide_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :slide_id, :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:slide_id) %>
+  </div>
+
+  <br clear="all" />
+
+  <%= f.submit t('add'), :class => 'btn btn-primary' %>
+
+<% end %>

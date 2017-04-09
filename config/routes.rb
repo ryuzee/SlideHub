@@ -44,6 +44,9 @@ Rails.application.routes.draw do
     resources :dashboards do
       get 'index', on: :collection
     end
+
+    resources :featured_slides, only: [:index, :new, :create, :destroy]
+
     resources :slides do
       get 'index', on: :collection
       get 'edit', on: :collection

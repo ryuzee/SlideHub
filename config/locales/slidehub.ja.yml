@@ -1,6 +1,7 @@
 ---
 ja:
   actions: "操作"
+  add: "追加する"
   admin_dashboard: "管理者ダッシュボード"
   helpers:
     links:
@@ -15,6 +16,9 @@ ja:
   download_slide: "スライドのダウンロード"
   edit_slide: "スライドの編集"
   embedded_code: "埋め込みコード"
+  featured_slides: "注目のスライド"
+  featured_slide_was_deleted: "注目のスライドを削除しました"
+  featured_slide_was_added: "注目のスライドを設定しました"
   latest: "最新"
   latest_slides: "最新のスライド"
   latest_published_slides: "最新の公開スライド"
@@ -37,6 +41,7 @@ ja:
   save_settings: "設定を保存"
   search: "検索"
   search_slides: "スライドの検索"
+  set_featured_slide: "注目のスライドを設定する"
   show_embedded_code: "埋め込みコードを表示"
   show_slide_vertically: "スライドを縦に並べて表示"
   show_slide_with_normal_mode: "スライドを通常表示"
