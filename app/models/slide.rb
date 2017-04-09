@@ -65,6 +65,13 @@ class Slide < ActiveRecord::Base
       limit(limit)
   end
 
+  def self.featured_slides(limit = 10)
+    self.published.popular.
+      includes(:user).
+      where(:id => FeaturedSlide.pluck(:slide_id)).
+      limit(limit)
+  end
+
   def self.ransackable_attributes(auth_object = nil)
     (column_names + ['tag_search']) + _ransackers.keys
   end

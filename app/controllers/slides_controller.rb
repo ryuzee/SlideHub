@@ -34,6 +34,7 @@ class SlidesController < ApplicationController
   def index
     @latest_slides = Slide.latest_slides(8)
     @popular_slides = Slide.popular_slides(8)
+    @featured_slides = Slide.featured_slides(4)
   end
 
   def show

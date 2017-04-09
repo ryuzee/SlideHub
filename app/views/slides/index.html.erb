@@ -1,4 +1,18 @@
 <% content_for :title, t(:top_page) %>
+
+<% if @featured_slides.count > 0 %>
+<div class="row" id="featured">
+  <div class="col-md-12">
+    <%- model_class = Slide -%>
+    <h3><%=t :featured_slides %></h3>
+
+    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @featured_slides %>
+
+  </div>
+</div>
+<% end %>
+
+
 <div class="row" id="popular">
   <div class="col-md-12">
     <%- model_class = Slide -%>
