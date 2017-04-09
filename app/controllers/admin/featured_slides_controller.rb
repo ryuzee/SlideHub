@@ -13,7 +13,6 @@ module Admin
       if @featured_slide.save
         redirect_to admin_featured_slides_path, notice: t(:featured_slide_was_added)
       else
-        # ValidationエラーなどでDBに保存できない場合 new.html.erb を再表示
         render 'new'
       end
     end
