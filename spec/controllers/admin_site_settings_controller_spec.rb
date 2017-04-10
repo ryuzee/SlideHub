@@ -22,6 +22,7 @@ RSpec.describe Admin::SiteSettingsController, type: :controller do
         expect(response).to redirect_to '/admin/site_settings/'
         settings = CustomSetting.unscoped.where("var like 'site.Neta%'")
         expect(settings.length).to eq(2)
+        expect(flash[:notice]).to eq(I18n.t(:site_settings_were_saved))
       end
     end
   end

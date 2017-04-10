@@ -13,7 +13,7 @@ module Admin
         setting.value = data['value']
         setting.save
       end
-      redirect_to '/admin/custom_contents/'
+      redirect_to '/admin/custom_contents/', notice: t(:custom_contents_were_saved)
     end
 
     private
