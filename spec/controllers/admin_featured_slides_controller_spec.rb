@@ -29,6 +29,7 @@ RSpec.describe Admin::FeaturedSlidesController, type: :controller do
           post :create, params: { featured_slide: { slide_id: slide.id } }
           expect(response.status).to eq(302)
           expect(response).to redirect_to '/admin/featured_slides'
+          expect(flash[:notice]).to eq(I18n.t(:featured_slide_was_added))
         end
       end
 
@@ -49,6 +50,7 @@ RSpec.describe Admin::FeaturedSlidesController, type: :controller do
         delete :destroy, params: { id: slide.id }
         expect(response.status).to eq(302)
         expect(response).to redirect_to '/admin/featured_slides'
+        expect(flash[:notice]).to eq(I18n.t(:featured_slide_was_deleted))
       end
     end
   end

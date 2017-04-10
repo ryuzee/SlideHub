@@ -22,6 +22,7 @@ RSpec.describe Admin::CustomContentsController, type: :controller do
         expect(response).to redirect_to '/admin/custom_contents/'
         settings = CustomSetting.unscoped.where("var like 'custom_content.Neta%'")
         expect(settings.length).to eq(2)
+        expect(flash[:notice]).to eq(I18n.t(:custom_contents_were_saved))
       end
     end
   end
