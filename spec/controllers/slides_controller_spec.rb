@@ -27,6 +27,7 @@ RSpec.describe SlidesController, type: :controller do
   let(:first_user) { create(:first_user) }
 
   describe 'GET #index' do
+    render_views
     it 'render index' do
       get :index
       expect(response.status).to eq(200)
@@ -38,6 +39,13 @@ RSpec.describe SlidesController, type: :controller do
       get :index
       expect(response.status).to eq(200)
       expect(assigns(:latest_slides).to_a).to eq(@latest_slides)
+    end
+
+    it 'returns collect resource strings' do
+      request.env['HTTP_ACCEPT_LANGUAGE'] = 'ja'
+      get :index
+      expect(response.status).to eq(200)
+      expect(response.body).to include(I18n.t(:popular_slides))
     end
   end
 
