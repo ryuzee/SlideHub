@@ -1,5 +1,6 @@
 module Admin
   class CustomContentsController < Admin::BaseController
+    before_action :clear_cache
     before_action :save_current, only: [:index]
     def index
       @settings = CustomSetting.unscoped.where("var like 'custom_content.%'")
@@ -25,6 +26,10 @@ module Admin
           setting.value = CustomSetting[k]
           setting.save
         end
+      end
+
+      def clear_cache
+        Rails.cache.clear
       end
   end
 end
