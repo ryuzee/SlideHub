@@ -51,11 +51,11 @@ RSpec.describe SlidesController, type: :controller do
     it 'returns collect header' do
       get :index
       expect(response.status).to eq(200)
-      expect(response.body).to include("navbar-inverse")
+      expect(response.body).to include('navbar-inverse')
       begin
         CustomSetting['site.header_inverse'] = '0'
         get :index
-        expect(response.body).to include("navbar-default")
+        expect(response.body).to include('navbar-default')
       ensure
         CustomSetting['site.header_inverse'] = '1'
       end
