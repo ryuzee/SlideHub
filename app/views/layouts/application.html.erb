@@ -43,7 +43,7 @@
   </head>
   <body class="slidehub_body">
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar <% if CustomSetting['site.header_inverse'] == '1' %>navbar-inverse<% else %>navbar-default<% end %> navbar-fixed-top">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
           <span class="icon-bar"></span>
