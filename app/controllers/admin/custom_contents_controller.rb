@@ -20,7 +20,7 @@ module Admin
     private
 
       def save_current
-        keys = %w(custom_content.center_top custom_content.center_bottom custom_content.right_top)
+        keys = %w(custom_content.center_top custom_content.center_bottom custom_content.right_top custom_content.header_menus)
         keys.each do |k|
           setting = CustomSetting.find_by(var: k.to_s) || CustomSetting.new(var: k.to_s)
           setting.value = CustomSetting[k]

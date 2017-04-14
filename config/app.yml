@@ -9,6 +9,7 @@ defaults: &defaults
     center_top: ""
     center_bottom: ""
     right_top: ""
+    header_menus: "[]"
 
 development:
   <<: *defaults
