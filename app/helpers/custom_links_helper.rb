@@ -6,7 +6,7 @@ module CustomLinksHelper
     begin
       json = JSON.parse(source)
       json.each do |j|
-        if j.kind_of?(Hash) && j.key?('label') && j.key?('url')
+        if j.is_a?(Hash) && j.key?('label') && j.key?('url')
           result += "<li>#{link_to j['label'], j['url']}</li>"
         end
       end

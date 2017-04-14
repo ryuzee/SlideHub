@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'rails_helper'
 
-RSpec.describe CustomLinksHelper, :type => :helper do
-  describe "custom_links" do
+RSpec.describe CustomLinksHelper, type: :helper do
+  describe 'custom_links' do
     it "returns '' when option is empty" do
       begin
         CustomSetting['custom_content.header_menus'] = ''
@@ -21,7 +21,7 @@ RSpec.describe CustomLinksHelper, :type => :helper do
       end
     end
 
-    it "returns valid html" do
+    it 'returns valid html' do
       begin
         CustomSetting['custom_content.header_menus'] = '[
 {"label": "test1", "url": "http://test1.example.com/"},
