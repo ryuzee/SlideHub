@@ -67,6 +67,7 @@
             <li><%= link_to t("popular"), "/popular"  %></li>
             <li><%= link_to t("latest"), "/latest"  %></li>
             <li><%= link_to t("search"), "/search"  %></li>
+            <%= raw custom_links %>
           </ul>
           <% if user_signed_in? %>
           <ul class="nav navbar-nav navbar-right">
