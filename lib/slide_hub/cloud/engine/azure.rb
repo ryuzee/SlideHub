@@ -146,6 +146,7 @@ module SlideHub
           expiration_time = Time.now + 1800
           bs = ::Azure::Blob::BlobService.new
           uri = bs.generate_uri Addressable::URI.escape("#{@config.bucket_name}/#{blob_name}"), {}
+          uri.scheme = 'https'
 
           signer = ::Azure::Contrib::Auth::SharedAccessSignature.new(uri, {
             resource:    'b',

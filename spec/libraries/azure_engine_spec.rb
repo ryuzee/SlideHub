@@ -4,6 +4,7 @@ require 'digest/md5'
 require 'tempfile'
 require 'securerandom'
 require 'tmpdir'
+require 'uri'
 
 module Azure
   module Queue
@@ -70,7 +71,7 @@ module Azure
       end
 
       def generate_uri(uri, options = {})
-        'http://www.example.com'
+        URI('http://www.example.com')
       end
     end
   end
