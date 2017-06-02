@@ -70,7 +70,7 @@ module Azure
       end
 
       def generate_uri(uri, options = {})
-        'http://www.example.com'
+        URI.new('http://www.example.com')
       end
     end
   end
