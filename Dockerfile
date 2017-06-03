@@ -7,7 +7,7 @@ WORKDIR /opt/application/current/
 COPY Gemfile /opt/application/current/
 COPY Gemfile.lock /opt/application/current/
 
-RUN /bin/bash -lc 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bundle install --without development test'
+RUN /bin/bash -lc 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bundle install --deployment --without development test'
 
 RUN apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
