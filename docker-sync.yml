@@ -8,5 +8,3 @@ options:
 syncs:
   sync-volume:
     src: '.'
-    dest: '/opt/application/current'
-    sync_strategy: 'unison'
