@@ -207,6 +207,7 @@ if @slide.tags.count > 0
 
 <script type="text/javascript">
   $(document).ready(function(){
+    new Clipboard('#copy-to-clipboard');
     $("#show_embedded").click(function(){
       $('.embedded_dialog').modal('show');
     });
@@ -241,9 +242,12 @@ if @slide.tags.count > 0
     <div class="modal-content">
       <div class="modal-header">Embedded Code</div>
       <div class="modal-body">
-        <%= "<script src=\"#{root_url}player/#{@slide.id}\"></script>" %>
+        <div class="form-group">
+          <input class="form-control" id="embedded_url" value="<%= "<script src=\"#{root_url}player/#{@slide.id}\"></script>" %>" />
+        </div>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="copy-to-clipboard" data-clipboard-target="#embedded_url">Copy</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>

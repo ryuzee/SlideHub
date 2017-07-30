@@ -21,4 +21,5 @@
 //= require moment
 //= require moment/ja
 //= require bootstrap-datetimepicker
+//= require clipboard/dist/clipboard.min
 //= require_tree .
