@@ -20,7 +20,7 @@ gem 'jquery-rails', '= 4.2.2'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.6.3'
+gem 'jbuilder', '~> 2.7.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -54,12 +54,12 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 
 # Env Var
-gem 'dotenv-rails', '= 2.2.0'
+gem 'dotenv-rails', '= 2.2.1'
 
 # Authentication
-gem 'devise', '4.2.0'
-gem 'devise-bootstrap-views', '0.0.10'
-gem 'devise-i18n', '1.1.1'
+gem 'devise', '4.3.0'
+gem 'devise-bootstrap-views', '0.0.11'
+gem 'devise-i18n', '1.2.0'
 gem 'devise-i18n-views', '0.3.7'
 
 # Compatibility with PHP version
@@ -126,7 +126,7 @@ gem 'activerecord-nulldb-adapter', git: 'https://github.com/mnoack/nulldb.git', 
 gem 'reserved_word'
 
 # dump database
-gem 'yaml_db', '~> 0.5.0'
+gem 'yaml_db', '~> 0.6.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -142,7 +142,7 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 3.4.0'
+  gem 'web-console', '~> 3.5.1'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -151,7 +151,7 @@ group :development do
   gem 'annotate'
 
   # Static Analysis
-  gem 'rubocop', '~> 0.48.0'
+  gem 'rubocop', '~> 0.49.1'
 
   gem 'guard'
   gem 'guard-rubocop'
