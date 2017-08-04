@@ -8,3 +8,8 @@ options:
 syncs:
   sync-volume:
     src: '.'
+    notify_terminal: true
+    sync_host_ip: 'auto'
+    sync_excludes: [ '.bundle', 'vendor/bundle', '.docker-sync', 'tmp/cache']
+    sync_excludes_type: 'Name'
+    sync_prefer: 'default'
