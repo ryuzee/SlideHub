@@ -27,8 +27,6 @@
 #  avatar_updated_at      :datetime
 #
 
-require 'pp'
-
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: [:index]
   before_action :username_to_id, only: [:show, :embedded]
