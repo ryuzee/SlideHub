@@ -16,7 +16,7 @@ gem 'coffee-rails'
 gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '= 4.2.2'
+gem 'jquery-rails', '= 4.3.1'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -70,7 +70,9 @@ gem 'php-serialization'
 gem 'acts_as_commentable', git: 'https://github.com/ryuzee/acts_as_commentable.git'
 
 # Manage Tags
-gem 'acts-as-taggable-on', '~> 4.0'
+# Force using 4.0.0 because 5.x has several bugs...
+# https://github.com/mbleigh/acts-as-taggable-on/issues/841
+gem 'acts-as-taggable-on', '~> 4.0.0'
 
 # Complicated Search
 gem 'ransack'
@@ -199,7 +201,7 @@ group :test do
 end
 
 group :deployment do
-  gem 'capistrano', '~> 3.8.0'
+  gem 'capistrano', '~> 3.9.0'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
