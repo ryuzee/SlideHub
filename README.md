@@ -5,7 +5,7 @@
 If you like or use this project, please provide feedback to author - Star it ★
 
 The previous version of SlideHub was made with CakePHP. And this version is a successor of the previous version and is made with Ruby on Rails 5.
-![Screenshot](capture1.png)
+![Screenshot](docs/images/capture1.png)
 
 ## Features
 
@@ -92,6 +92,22 @@ puts blob_service.get_service_properties.inspect
 
 * Create Azure Blob Queue (cf. slidehub-convert) and note the name.
 
+## Prepare Database Server
+
+SlideHub can use MySQL and SQLServer (including Azure SQL Database).
+There are several options to run a database server as follows.
+
+* Launch virtual machine and install database software by your own
+* Use Amazon Relational Database Services (RDS)
+* Use Azure SQLDatabase
+
+You need to get these variables as follows.
+
+* Database URL
+* Database user name
+* Database password
+
+And then, create database for the app. (Tables can be created by Rails migration)
 
 ### Retrieve Docker Image
 
@@ -100,6 +116,9 @@ docker pull ryuzee/slidehub:latest
 ```
 
 ## Run Application
+
+The easiest way to run the app is to use Kubernetes, Amazon ECS(Elastic Container Service), Azure Web Apps on Linux or Azure Container Service.
+However, if you want to run app by docker command, see follows.
 
 ```
 $CONTAINER_ID=/usr/bin/docker run -d \
