@@ -53,9 +53,6 @@ gem 'twitter-bootstrap-rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 
-# Env Var
-gem 'dotenv-rails', '= 2.2.1'
-
 # Authentication
 gem 'devise', '4.3.0'
 gem 'devise-bootstrap-views', '0.0.11'
