@@ -217,10 +217,6 @@ GEM
     devise-i18n-views (0.3.7)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    dotenv (2.2.1)
-    dotenv-rails (2.2.1)
-      dotenv (= 2.2.1)
-      railties (>= 3.2, < 5.2)
     equalizer (0.0.11)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -578,7 +574,6 @@ DEPENDENCIES
   devise-bootstrap-views (= 0.0.11)
   devise-i18n (= 1.2.0)
   devise-i18n-views (= 0.3.7)
-  dotenv-rails (= 2.2.1)
   execjs
   factory_girl
   factory_girl_rails
