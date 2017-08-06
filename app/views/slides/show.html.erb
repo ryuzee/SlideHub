@@ -240,15 +240,15 @@ if @slide.tags.count > 0
 <div class="modal fade embedded_dialog" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">Embedded Code</div>
+      <div class="modal-header"><%= t(:embedded_code) %></div>
       <div class="modal-body">
         <div class="form-group">
           <input class="form-control" id="embedded_url" value="<%= "<script src=\"#{root_url}player/#{@slide.id}\"></script>" %>" />
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="copy-to-clipboard" data-clipboard-target="#embedded_url">Copy</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" id="copy-to-clipboard" data-clipboard-target="#embedded_url"><%= t(:copy) %></button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal"><%= t(:close) %></button>
       </div>
     </div>
   </div>
