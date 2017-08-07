@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 describe 'FeaturedSlide' do
-
   describe 'Creating "FeaturedSlide" model' do
-
     it 'is valid with existing slide' do
       slide = create(:slide)
       success_data = { slide_id: slide.id }
