@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/mnoack/nulldb.git
-  revision: aa36e3c934d3619c6d57169dad5c04aa278d7549
-  ref: aa36e3c
-  specs:
-    activerecord-nulldb-adapter (0.3.3)
-      activerecord (>= 2.0.0)
-
-GIT
   remote: https://github.com/ryuzee/acts_as_commentable.git
   revision: 11dc244ba5118344f3f34f2fbb5cec6ecc0d3767
   specs:
@@ -70,6 +62,8 @@ GEM
       activemodel (= 5.0.2)
       activesupport (= 5.0.2)
       arel (~> 7.0)
+    activerecord-nulldb-adapter (0.3.7)
+      activerecord (>= 2.0.0)
     activerecord-sqlserver-adapter (5.0.4)
       activerecord (~> 5.0.0)
     activesupport (5.0.2)
@@ -544,7 +538,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-nulldb-adapter!
+  activerecord-nulldb-adapter
   activerecord-sqlserver-adapter
   acts-as-taggable-on (~> 4.0.0)
   acts_as_commentable!
