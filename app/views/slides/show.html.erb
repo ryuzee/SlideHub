@@ -82,7 +82,7 @@ if @slide.tags.count > 0
    <div id="slide_div_box" style="padding:20px;">
     <div class="slide_detail_row">
         <span class="h3"><%= strip_tags @slide.name %></span>
-      <p><%= strip_tags @slide.description %></p>
+      <p><%= raw nl2br(sanitize(@slide.description)) %></p>
     </div>
 
     <!--tab-->
