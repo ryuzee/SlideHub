@@ -5,8 +5,4 @@ module ApplicationHelper
     prefix = 'js' + Digest::MD5.hexdigest(SecureRandom.hex + Time.now.strftime('%Y%m%d%H%M%S'))
     prefix
   end
-
-  def nl2br(str)
-    str.gsub(/\r\n|\r|\n/, '<br />')
-  end
 end
