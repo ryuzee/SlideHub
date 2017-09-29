@@ -43,7 +43,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - .:/opt/application/current
+      - .:/opt/application/current:cached
 
 volumes:
   sqlserver-data:
