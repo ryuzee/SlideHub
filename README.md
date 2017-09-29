@@ -241,22 +241,13 @@ OSS_DB_USE_AZURE_TEST=[Use SQL Database for Test]
 
 ### Requirements
 
-- docker-compose
+- Docker (>= 17.06)
+- docker-compose (>= 1.12.0)
 - Ruby environment including bundler
 - [bower](https://bower.io/)
 
 After cloning the repository, you have to run `bower install` command to retrieve libraries.
 
-**WARNING**
-
-```
-If you are using Mac for development, you may have performance issue.
-See https://github.com/EugenMayer/docker-sync
-
-Installing docker-sync => https://github.com/EugenMayer/docker-sync/wiki/1.-Installation
-
-Running docker-compose => docker-compose -f docker-compose.yml -f docker-compose-mac.yml ...
-```
 
 ### Build images and run the app for testing
 
