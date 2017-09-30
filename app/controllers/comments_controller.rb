@@ -16,21 +16,21 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
 
   def create
-    comment = params.require(:comment).permit(:comment, :user_id, :commentable_id, :commentable_type)
+    comment = params.require(:comment).permit(:comment, :user_id, :slide_id)
     @comment = Comment.new(comment)
     @comment.user_id = current_user.id
     unless @comment.save
       # @TODO: show error message...
     end
-    redirect_to slide_path(params[:comment][:commentable_id])
+    redirect_to slide_path(params[:comment][:slide_id])
   end
 
   def destroy
     @comment = Comment.find(params[:id])
-    id = @comment.commentable_id
+    slide_id = @comment.slide_id
     if @comment.user_id == current_user.id
       @comment.destroy
     end
-    redirect_to slide_path(id)
+    redirect_to slide_path(slide_id)
   end
 end

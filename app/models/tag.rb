@@ -7,5 +7,5 @@
 #  taggings_count :integer          default(0)
 #
 
-class Tag < ActiveRecord::Base
+class Tag < ApplicationRecord
 end

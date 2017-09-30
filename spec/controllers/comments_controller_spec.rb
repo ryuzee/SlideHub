@@ -4,12 +4,10 @@
 #
 #  id               :integer          not null, primary key
 #  user_id          :integer          not null
-#  commentable_id   :integer          not null
+#  slide_id   :integer          not null
 #  comment          :text(65535)      not null
 #  created_at       :datetime         not null
 #  modified_at      :datetime
-#  commentable_type :string(255)      default("Slide")
-#  role             :string(255)      default("comments")
 #
 
 require 'rails_helper'
@@ -23,8 +21,7 @@ RSpec.describe CommentsController, type: :controller do
       it 'works!' do
         login_by_user general_user
         comment_data = {}
-        comment_data[:commentable_id] = data[:id]
-        comment_data[:commentable_type] = 'Slide'
+        comment_data[:slide_id] = data[:id]
         comment_data[:user_id] = general_user.id
         comment_data[:comment] = 'Test'
         post :create, params: { comment: comment_data }
@@ -39,8 +36,7 @@ RSpec.describe CommentsController, type: :controller do
     describe 'fail to add new comments by anonymous user' do
       it 'works!' do
         comment_data = {}
-        comment_data[:commentable_id] = data[:id]
-        comment_data[:commentable_type] = 'Slide'
+        comment_data[:slide_id] = data[:id]
         comment_data[:user_id] = general_user.id
         comment_data[:comment] = 'Test'
         post :create, params: { comment: comment_data }

@@ -19,7 +19,9 @@
             <div class="slidecard-description"><%= strip_tags(slide.description).truncate(80) %></div>
             </div>
             <div class="slidecard-information">
-              <div class="h5" style="margin-top:2px;margin-bottom:2px;">by <a href="/<%= slide.user.username %>"><%= strip_tags slide.user_display_name %></a></div>
+              <div class="h5" style="margin-top:2px;margin-bottom:2px;">
+                by <a href="/<%= slide.user_username %>">
+                  <%= strip_tags slide.user_display_name %></a></div>
               <%= slide.created_at.to_s(:default) %> | <%= slide.num_of_pages %> pages | <%= slide.total_view %> views
             </div>
           </div>

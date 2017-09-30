@@ -8,5 +8,5 @@
 #  modified :datetime
 #
 
-class Config < ActiveRecord::Base
+class Config < ApplicationRecord
 end

@@ -1,15 +1,16 @@
 version: '2'
 services:
   sqlserver:
-    image: microsoft/mssql-server-linux
+    image: microsoft/mssql-server-linux:2017-latest
     hostname: 'sqlserver'
     environment:
-      ACCEPT_EULA: 'Y'
-      SA_PASSWORD: 'P@55w0rd'
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: StrongPassw0rd
+      MSSQL_PID: Developer
     ports:
       - '1433:1433'
     volumes:
-      - sqlserver-data:/var/opt/mssql
+      - ms-sqlserver-data:/var/opt/mssql
   app:
     build:
       context: .
@@ -26,25 +27,25 @@ services:
       OSS_SQS_URL: $OSS_SQS_URL
       OSS_AWS_ACCESS_ID: $OSS_AWS_ACCESS_ID
       OSS_AWS_SECRET_KEY: $OSS_AWS_SECRET_KEY
-      OSS_DB_ENGINE_DEV: 'sqlserver'
-      OSS_DB_PORT_DEV: '1433'
-      OSS_DB_NAME_DEV: 'slidehub'
-      OSS_DB_USERNAME_DEV: 'sa'
-      OSS_DB_PASSWORD_DEV: 'P@55w0rd'
-      OSS_DB_URL_DEV: 'sqlserver'
-      OSS_DB_USE_AZURE_DEV: false
-      OSS_DB_ENGINE_TEST: 'sqlserver'
-      OSS_DB_PORT_TEST: '1433'
-      OSS_DB_NAME_TEST: 'test_slidehub'
-      OSS_DB_USERNAME_TEST: 'sa'
-      OSS_DB_PASSWORD_TEST: 'P@55w0rd'
-      OSS_DB_URL_TEST: 'sqlserver'
-      OSS_DB_USE_AZURE_TEST: false
+      OSS_DB_ENGINE_DEV: sqlserver
+      OSS_DB_PORT_DEV: 1433
+      OSS_DB_NAME_DEV: slidehub
+      OSS_DB_USERNAME_DEV: sa
+      OSS_DB_PASSWORD_DEV: StrongPassw0rd
+      OSS_DB_URL_DEV: sqlserver
+      OSS_DB_USE_AZURE_DEV: 'false'
+      OSS_DB_ENGINE_TEST: sqlserver
+      OSS_DB_PORT_TEST: 1433
+      OSS_DB_NAME_TEST: test_slidehub
+      OSS_DB_USERNAME_TEST: sa
+      OSS_DB_PASSWORD_TEST: StrongPassw0rd
+      OSS_DB_URL_TEST: sqlserver
+      OSS_DB_USE_AZURE_TEST: 'false'
     ports:
       - '3000:3000'
     volumes:
       - .:/opt/application/current:cached
 
 volumes:
-  sqlserver-data:
+  ms-sqlserver-data:
     driver: local

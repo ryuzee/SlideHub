@@ -5,7 +5,7 @@ class PlayerController < ApplicationController
   def show
     # increment only when the player is embedded in other site...
     unless params.key?(:inside) && params[:inside] == '1'
-      @slide.increment(:embedded_view).increment(:total_view).save
+      @slide.increment!(:embedded_view).increment!(:total_view)
     end
     @start_position = slide_position
     s = render_to_string layout: 'javascript', collection: @slide

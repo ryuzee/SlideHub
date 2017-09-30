@@ -1,19 +1,22 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.0.2'
+gem 'rails', '5.1.4'
 gem 'rails-controller-testing'
+
+# See https://qiita.com/shinichinomura/items/41e03d7e4fa56841e654
+gem 'json', '~> 1.8.6'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.6'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier', '~> 3.2.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', '~> 0.12.3', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '= 4.3.1'
@@ -37,14 +40,18 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'mysql2'
 
 # Use SQLServer
-gem 'activerecord-sqlserver-adapter'
+# gem 'activerecord-sqlserver-adapter', '~> 5.1.1'
+# See https://github.com/rails-sqlserver/activerecord-sqlserver-adapter/issues/613
+gem 'activerecord-sqlserver-adapter', git: 'https://github.com/rails-sqlserver/activerecord-sqlserver-adapter.git'
 gem 'tiny_tds'
 
 # Apply bootstrap
-gem 'less-rails'
+# gem 'less-rails'
+# See https://qiita.com/Jey/items/f69e93755be8ec959124
+gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails.git'
 
 # WORKAROUND: https://github.com/metaskills/less-rails/issues/122
-gem 'sprockets', '3.6.3'
+gem 'sprockets', '3.7.1'
 
 gem 'execjs'
 gem 'twitter-bootstrap-rails'
@@ -63,19 +70,15 @@ gem 'devise-i18n-views', '0.3.7'
 # See https://github.com/divoxx/ruby-php-serialization
 gem 'php-serialization'
 
-# Add comments
-gem 'acts_as_commentable', git: 'https://github.com/ryuzee/acts_as_commentable.git'
-
 # Manage Tags
-# Force using 4.0.0 because 5.x has several bugs...
-# https://github.com/mbleigh/acts-as-taggable-on/issues/841
-gem 'acts-as-taggable-on', '~> 4.0.0'
+# https://github.com/mbleigh/acts-as-taggable-on/issues/808
+gem 'acts-as-taggable-on', git: 'https://github.com/mbleigh/acts-as-taggable-on.git'
 
 # Complicated Search
 gem 'ransack'
 
 # Manage Title and meta tags
-gem 'meta-tags'
+gem 'meta-tags', '~> 2.6.0'
 gem 'sitemap_generator'
 
 # AWS!!
@@ -193,13 +196,5 @@ group :test do
   gem 'faker'
   gem 'launchy'
   gem 'selenium-webdriver'
-  gem 'webmock', '~> 1.22.6'
-end
-
-group :deployment do
-  gem 'capistrano', '~> 3.9.0'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
-  gem 'capistrano-rbenv'
-  gem 'capistrano3-unicorn' # unicornを使っている場合のみ
+  gem 'webmock', '~> 3.0.1'
 end

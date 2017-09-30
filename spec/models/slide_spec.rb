@@ -24,6 +24,9 @@
 require 'rails_helper'
 
 describe 'Slide' do
+  let!(:first_user) { create(:first_user) }
+  let!(:first_category) { create(:first_category) }
+
   before do
     SlideHub::Cloud::Engine::AWS.configure do |config|
       config.region = 'ap-northeast-1'
@@ -39,6 +42,7 @@ describe 'Slide' do
 
   describe 'Creating "Slide" model' do
     success_data = { user_id: 1, name: 'dummy', description: 'dummy', object_key: 'dummy', category_id: 1 }
+
     it 'is valid with user_id, name, description, object_key and category' do
       slide = Slide.new(success_data)
       expect(slide.valid?).to eq(true)
