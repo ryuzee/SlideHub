@@ -1,8 +1,7 @@
 require 'simplecov'
 require 'codeclimate-test-reporter'
-require 'webmock'
+require 'webmock/rspec'
 require 'shoulda/matchers'
-include WebMock::API
 WebMock.allow_net_connect!
 
 # save to CircleCI's artifacts directory if we're on CircleCI

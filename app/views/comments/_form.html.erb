@@ -22,8 +22,7 @@
       <%= f.error_span(:comment) %>
     </div>
   </div>
-  <%= f.hidden_field :commentable_id, :value => comment.commentable_id %>
-  <%= f.hidden_field :commentable_type, :value => comment.commentable_type %>
+  <%= f.hidden_field :slide_id, :value => comment.slide_id %>
   <%= f.hidden_field :user_id, :value => current_user.id %>
 
 

@@ -1,4 +1,4 @@
-class FeaturedSlide < ActiveRecord::Base
+class FeaturedSlide < ApplicationRecord
   belongs_to :slide
   validates :slide_id, uniqueness: true
   validate :exsitence_of_slide_id

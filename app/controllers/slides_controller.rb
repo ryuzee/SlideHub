@@ -38,12 +38,12 @@ class SlidesController < ApplicationController
   end
 
   def show
-    @slide.increment(:page_view).increment(:total_view).save
+    @slide.increment!(:page_view).increment!(:total_view)
     @start_position = slide_position
     if user_signed_in?
       @comment = @slide.comments.new
     end
-    @posted_comments = @slide.comments.recent.limit(10).all.includes(:user)
+    @posted_comments = @slide.comments.limit(10).all.includes(:user)
   end
 
   def new

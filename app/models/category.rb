@@ -6,5 +6,5 @@
 #  name :string(255)      not null
 #
 
-class Category < ActiveRecord::Base
+class Category < ApplicationRecord
 end

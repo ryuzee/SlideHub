@@ -25,16 +25,15 @@ require 'securerandom'
 #  comments_count :integer          default(0), not null
 #
 
-class Slide < ActiveRecord::Base
+class Slide < ApplicationRecord
   include WebResource
   belongs_to :user
-  delegate :display_name, to: :user, prefix: true
   delegate :username, to: :user, prefix: true
+  delegate :display_name, to: :user, prefix: true
   counter_culture :user
   belongs_to :category
   delegate :name, to: :category, prefix: true
-  has_many :comments, as: :commentable, dependent: :delete_all
-  acts_as_commentable :private
+  has_many :comments, dependent: :delete_all
   acts_as_taggable
   validates :user_id, presence: true
   validates :name, presence: true

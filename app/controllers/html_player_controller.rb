@@ -4,7 +4,6 @@ class HtmlPlayerController < ApplicationController
   layout 'simple'
 
   def show
-    @slide.increment(:page_view).increment(:total_view).save
-    @slide.increment(:page_view).increment(:embedded_view).save
+    @slide.increment!(:page_view).increment!(:total_view).increment!(:embedded_view)
   end
 end
