@@ -2,12 +2,12 @@
 #
 # Table name: comments
 #
-#  id               :integer          not null, primary key
-#  user_id          :integer          not null
-#  slide_id   :integer          not null
-#  comment          :text(65535)      not null
-#  created_at       :datetime         not null
-#  modified_at      :datetime
+#  id          :integer          not null, primary key
+#  user_id     :integer          not null
+#  slide_id    :integer          not null
+#  comment     :text(65535)      not null
+#  created_at  :datetime         not null
+#  modified_at :datetime
 #
 
 class Comment < ApplicationRecord

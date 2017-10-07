@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SlideDownloadController, type: :controller do
-  let(:first_user) { create(:first_user) }
+  let(:slide) { create(:slide) }
 
   describe 'GET #show' do
     it 'success to download file' do
@@ -10,7 +10,6 @@ RSpec.describe SlideDownloadController, type: :controller do
         body: 'test',
         status: 200,
       )
-      slide = create(:slide)
       get :show, params: { id: slide.id }
       expect(response.status).to eq(200)
       expect(response.headers['Content-Disposition']).to eq("attachment; filename=\"#{slide.object_key}#{slide.extension}\"")
@@ -18,7 +17,6 @@ RSpec.describe SlideDownloadController, type: :controller do
 
     it 'fails to download file because of permission' do
       FactoryGirl.create(:slide)
-      slide = Slide.find(1)
       slide.downloadable = false
       slide.save
       get :show, params: { id: slide.id }

@@ -24,8 +24,8 @@
 require 'rails_helper'
 
 describe 'Slide' do
-  let!(:first_user) { create(:first_user) }
-  let!(:first_category) { create(:first_category) }
+  let!(:default_user) { create(:default_user) }
+  let!(:default_category) { create(:default_category) }
 
   before do
     SlideHub::Cloud::Engine::AWS.configure do |config|

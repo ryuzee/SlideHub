@@ -32,7 +32,7 @@ require 'spec_helper'
 require 'rails_helper'
 
 describe 'User' do
-  let(:user) { build(:general_user) }
+  let(:user) { build(:default_user) }
 
   describe 'valid usernames' do
     it 'can be accepted' do
@@ -174,17 +174,17 @@ describe 'User' do
     end
 
     it 'is invalid with a username that is already used by others' do
-      general_user = FactoryGirl.create(:general_user)
+      default_user = FactoryGirl.create(:default_user)
       data = success_data.dup
-      data[:username] = general_user[:username]
+      data[:username] = default_user[:username]
       user = User.new(data)
       expect(user.valid?).to eq(false)
     end
 
     it 'is invalid with an email that is already used by others' do
-      general_user = FactoryGirl.create(:general_user)
+      default_user = FactoryGirl.create(:default_user)
       data = success_data.dup
-      data[:email] = general_user[:email]
+      data[:email] = default_user[:email]
       user = User.new(data)
       expect(user.valid?).to eq(false)
     end
@@ -192,9 +192,9 @@ describe 'User' do
 
   describe 'username_to_id' do
     it 'returns user_id' do
-      general_user = FactoryGirl.create(:general_user)
-      id = User.username_to_id(general_user.username)
-      expect(id).to eq(998)
+      default_user = FactoryGirl.create(:default_user)
+      id = User.username_to_id(default_user.username)
+      expect(id).to eq(1)
     end
   end
 end

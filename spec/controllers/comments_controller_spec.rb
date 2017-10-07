@@ -15,14 +15,14 @@ require 'rails_helper'
 RSpec.describe CommentsController, type: :controller do
   describe 'Comments' do
     let(:data) { create(:slide) }
-    let(:general_user) { create(:general_user) }
+    let(:another_user) { create(:another_user) }
 
     describe 'add new comments by login user' do
       it 'works!' do
-        login_by_user general_user
+        login_by_user another_user
         comment_data = {}
         comment_data[:slide_id] = data[:id]
-        comment_data[:user_id] = general_user.id
+        comment_data[:user_id] = another_user.id
         comment_data[:comment] = 'Test'
         post :create, params: { comment: comment_data }
         expect(response.status).to eq(302)
@@ -37,7 +37,7 @@ RSpec.describe CommentsController, type: :controller do
       it 'works!' do
         comment_data = {}
         comment_data[:slide_id] = data[:id]
-        comment_data[:user_id] = general_user.id
+        comment_data[:user_id] = another_user.id
         comment_data[:comment] = 'Test'
         post :create, params: { comment: comment_data }
         expect(response.status).to eq(302)
@@ -50,7 +50,7 @@ RSpec.describe CommentsController, type: :controller do
     describe 'delete comment by login user' do
       it 'works!' do
         c = create(:comment_for_slide)
-        login_by_user general_user
+        login_by_user another_user
         get :destroy, params: { id: c.id }
         expect(response.status).to eq(302)
         expect(response).to redirect_to "/slides/#{data.id}"

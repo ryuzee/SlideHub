@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe PlayerController, type: :controller do
-  let(:first_user) { create(:first_user) }
+  let(:slide) { create(:slide) }
 
   describe 'GET #show' do
     it 'succeeds to return encrypted JavaScript' do
       allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      slide = create(:slide)
       get :show, params: { id: slide.id }
       expect(response.status).to eq(200)
       updated_data = Slide.find(slide.id)
@@ -16,7 +15,6 @@ RSpec.describe PlayerController, type: :controller do
 
     it 'succeeds to return encrypted JavaScript for inside' do
       allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      slide = create(:slide)
       get :show, params: { id: slide.id, inside: 1 }
       expect(response.status).to eq(200)
       updated_data = Slide.find(slide.id)

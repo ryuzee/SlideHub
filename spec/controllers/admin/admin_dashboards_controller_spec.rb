@@ -24,8 +24,8 @@ RSpec.describe Admin::DashboardsController, type: :controller do
 
     context 'by normal loggedin user' do
       it 'redirect to login' do
-        general_user = create(:general_user)
-        login_by_user general_user
+        default_user = create(:default_user)
+        login_by_user default_user
         get 'index'
         expect(response.status).to eq(302)
         expect(response).to redirect_to '/users/sign_in'
