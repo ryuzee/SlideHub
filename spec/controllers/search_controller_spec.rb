@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SearchController, type: :controller do
-  let(:first_user) { create(:first_user) }
+  let(:slide) { create(:slide) }
 
   describe 'GET #index' do
     it 'render index' do

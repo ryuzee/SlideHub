@@ -24,7 +24,7 @@
 require 'rails_helper'
 
 RSpec.describe SlidesController, type: :controller do
-  let(:first_user) { create(:first_user) }
+  let(:default_user) { create(:default_user) }
 
   describe 'GET #index' do
     render_views
@@ -65,7 +65,7 @@ RSpec.describe SlidesController, type: :controller do
   describe 'GET #show' do
     it 'assigns @comment if user logged in' do
       slide = create(:slide)
-      login_by_user first_user
+      login_by_user default_user
       get :show, params: { id: slide.id }
       expect(assigns(:comment)).to be_an_instance_of(Comment)
     end
@@ -73,7 +73,7 @@ RSpec.describe SlidesController, type: :controller do
 
   describe 'GET #new' do
     it 'render new' do
-      login_by_user first_user
+      login_by_user default_user
       get :new
       expect(response.status).to eq(200)
       expect(response).to render_template :new
@@ -84,7 +84,7 @@ RSpec.describe SlidesController, type: :controller do
     it 'succeed to create record' do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
       data = build(:slide)
-      login_by_user first_user
+      login_by_user default_user
       post :create, params: { slide: data.attributes }
       id = Slide.where(object_key: data.object_key).first.id
       expect(response.status).to eq(302)
@@ -95,7 +95,7 @@ RSpec.describe SlidesController, type: :controller do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
       data = build(:slide)
       data.category_id = nil # cause validation error
-      login_by_user first_user
+      login_by_user default_user
       post :create, params: { slide: data.attributes }
       expect(response.status).to eq(200)
       expect(response).to render_template 'slides/aws/new'
@@ -105,7 +105,7 @@ RSpec.describe SlidesController, type: :controller do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
       slides = create_list(:slide, 2)
       first_key = slides[0].object_key
-      login_by_user first_user
+      login_by_user default_user
       slides[1].object_key = first_key
       post :create, params: { slide: slides[1].attributes }
       expect(response.status).to eq(302)
@@ -116,8 +116,8 @@ RSpec.describe SlidesController, type: :controller do
   describe 'GET #edit' do
     it 'render edit' do
       create(:slide)
-      login_by_user first_user
-      slide_id = Slide.where("user_id = #{first_user.id}").first.id
+      login_by_user default_user
+      slide_id = Slide.where("user_id = #{default_user.id}").first.id
       get :edit, params: { id: slide_id }
       expect(response.status).to eq(200)
       expect(response).to render_template 'slides/aws/edit'
@@ -125,9 +125,9 @@ RSpec.describe SlidesController, type: :controller do
 
     it 'redirect to show' do
       create(:slide)
-      general_user = create(:general_user)
-      login_by_user general_user
-      slide_id = Slide.where("user_id = #{first_user.id}").first.id
+      another_user = create(:another_user)
+      login_by_user another_user
+      slide_id = Slide.where("user_id = #{default_user.id}").first.id
       get :edit, params: { id: slide_id }
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{slide_id}"
@@ -137,8 +137,8 @@ RSpec.describe SlidesController, type: :controller do
   describe 'POST #update' do
     it 'failed to update record because the user is not the owner' do
       data = create(:slide)
-      general_user = create(:general_user)
-      login_by_user general_user
+      another_user = create(:another_user)
+      login_by_user another_user
       post :update, params: { id: data.id, slide: data.attributes }
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{data.id}"
@@ -148,7 +148,7 @@ RSpec.describe SlidesController, type: :controller do
       data = create(:slide)
       data.convert_status = 100
       data.name = nil
-      login_by_user first_user
+      login_by_user default_user
       post :update, params: { id: data.id, slide: data.attributes }
       expect(response.status).to eq(200)
       expect(response).to render_template 'slides/aws/edit'
@@ -158,7 +158,7 @@ RSpec.describe SlidesController, type: :controller do
       data = create(:slide)
       data.convert_status = 100
       data.name = 'Engawa'
-      login_by_user first_user
+      login_by_user default_user
       post :update, params: { id: data.id, slide: data.attributes }
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{data.id}"
@@ -171,7 +171,7 @@ RSpec.describe SlidesController, type: :controller do
       data = create(:slide)
       data.convert_status = 0 # Not converted yet...
       data.name = 'Engawa'
-      login_by_user first_user
+      login_by_user default_user
       post :update, params: { id: data.id, slide: data.attributes }
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{data.id}"
@@ -183,8 +183,8 @@ RSpec.describe SlidesController, type: :controller do
   describe 'DELETE #destroy' do
     it 'failed to delete the slide because the user is not the owner' do
       data = create(:slide)
-      general_user = create(:general_user)
-      login_by_user general_user
+      another_user = create(:another_user)
+      login_by_user another_user
       delete :destroy, params: { id: data.id }
       expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{data.id}"
@@ -194,7 +194,7 @@ RSpec.describe SlidesController, type: :controller do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:delete_slide).and_return(true)
       allow(SlideHub::Cloud::Engine::AWS).to receive(:delete_generated_files).and_return(true)
       data = create(:slide)
-      login_by_user first_user
+      login_by_user default_user
       delete :destroy, params: { id: data.id }
       expect(response.status).to eq(302)
       expect(response).to redirect_to '/slides/index'

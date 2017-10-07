@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe SlidePageCountController, type: :controller do
-  let(:first_user) { create(:first_user) }
+  let(:slide) { create(:slide) }
 
   describe 'GET #show' do
     it 'succeeds to retrieve json' do
       allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
-      slide = create(:slide)
       get :show, params: { id: slide.id }
       expect(response.status).to eq(200)
       json = JSON.parse(response.body)
@@ -23,7 +22,6 @@ RSpec.describe SlidePageCountController, type: :controller do
 
     it 'returns 0 because of a failure of retrieving json' do
       allow_any_instance_of(Slide).to receive(:page_list).and_return(false)
-      slide = create(:slide)
       get :show, params: { id: slide.id }
       expect(response.status).to eq(200)
       json = JSON.parse(response.body)

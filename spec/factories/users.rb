@@ -29,7 +29,19 @@
 #
 
 FactoryGirl.define do
-  factory :general_user, class: User do
+  factory :default_user, class: User do
+    id 1
+    email 'user01@example.com'
+    display_name 'User01'
+    biography 'Bio'
+    password 'password'
+    admin false
+    username 'user01'
+    reset_password_token 'user01'
+    initialize_with { User.find_or_create_by(id: id) }
+  end
+
+  factory :another_user, class: User do
     id 998
     email 'general998@example.com'
     display_name 'Yoshi'
@@ -38,6 +50,7 @@ FactoryGirl.define do
     admin false
     username 'general998'
     reset_password_token 'general998'
+    initialize_with { User.find_or_create_by(id: id) }
   end
 
   factory :admin_user, class: User do
@@ -49,5 +62,6 @@ FactoryGirl.define do
     admin true
     username 'admin999'
     reset_password_token 'admin999'
+    initialize_with { User.find_or_create_by(id: id) }
   end
 end

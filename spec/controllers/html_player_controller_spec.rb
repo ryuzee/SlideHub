@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe HtmlPlayerController, type: :controller do
-  let(:first_user) { create(:first_user) }
+  let(:default_user) { create(:default_user) }
 
   describe 'GET #show' do
     it 'succeeds to return html for iFrame' do

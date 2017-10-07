@@ -30,10 +30,11 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  let!(:default_user) { create(:default_user) }
+
   describe 'When logged in' do
-    let(:general_user) { create(:general_user) }
     before do
-      login_by_user general_user
+      login_by_user default_user
     end
 
     describe 'GET /users/index' do
@@ -45,34 +46,30 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'No Login' do
-    describe 'GET /users/998' do
+    describe 'GET /users/1' do
       it 'works!' do
-        create(:general_user)
-        get 'show', params: { id: '998' }
+        get 'show', params: { id: '1' }
         expect(response.status).to eq(200)
       end
     end
 
-    describe 'GET /users/general998' do
+    describe 'GET /users/user01' do
       it 'works!' do
-        create(:general_user)
-        get 'show', params: { username: 'general998' }
+        get 'show', params: { username: 'user01' }
         expect(response.status).to eq(200)
       end
     end
 
-    describe 'GET /users/998?sort_by=popularity' do
+    describe 'GET /users/1?sort_by=popularity' do
       it 'works!' do
-        create(:general_user)
-        get 'show', params: { id: '998', sort_by: 'popularity' }
+        get 'show', params: { id: '1', sort_by: 'popularity' }
         expect(response.status).to eq(200)
       end
     end
 
-    describe 'GET /users/998/embedded' do
+    describe 'GET /users/1/embedded' do
       it 'works!' do
-        create(:general_user)
-        get 'embedded', params: { id: '998' }
+        get 'embedded', params: { id: '1' }
         expect(response.status).to eq(200)
       end
     end

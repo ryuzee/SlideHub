@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe StatisticsController, type: :controller do
   describe 'When logged in' do
-    let(:general_user) { create(:general_user) }
+    let(:default_user) { create(:default_user) }
     before do
-      login_by_user general_user
+      login_by_user default_user
     end
 
     describe 'GET /statistics/index' do
