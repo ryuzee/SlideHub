@@ -15,5 +15,12 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         end
       end
     end
+
+    describe 'GET /users/448 (There is no user)' do
+      it 'returns error' do
+        get :show, params: { id: 448 }, format: 'json'
+        expect(response.status).to eq(404)
+      end
+    end
   end
 end

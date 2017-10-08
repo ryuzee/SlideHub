@@ -22,7 +22,7 @@
 #
 module Api
   module V1
-    class SlidesController < ApplicationController
+    class SlidesController < Api::V1::BaseController
       def index
         @slides = Slide.all.published.latest.includes(:user).includes(:category)
         if params['name']
@@ -45,12 +45,6 @@ module Api
           not_found
         end
       end
-
-      private
-
-        def not_found
-          render json: { 'error' => 'No data found' }, status: 404
-        end
     end
   end
 end
