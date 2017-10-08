@@ -29,10 +29,14 @@
 
 module Api
   module V1
-    class UsersController < ApplicationController
+    class UsersController < Api::V1::BaseController
       def show
         @user = User.where(id: params[:id]).select('id', 'username', 'display_name', 'biography', 'slides_count').first
-        render json: JSON.pretty_generate(JSON.parse(@user.to_json))
+        if @user
+          render json: JSON.pretty_generate(JSON.parse(@user.to_json))
+        else
+          not_found
+        end
       end
     end
   end
