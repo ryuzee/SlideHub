@@ -124,7 +124,7 @@ GEM
       faraday_middleware (~> 0.10)
       nokogiri (~> 1.6)
     bcrypt (3.1.11)
-    better_errors (2.3.0)
+    better_errors (2.4.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
@@ -211,7 +211,7 @@ GEM
     diff-lcs (1.3)
     docile (1.1.5)
     equalizer (0.0.11)
-    erubi (1.6.1)
+    erubi (1.7.0)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.8.1)
@@ -372,7 +372,7 @@ GEM
       rake
     raindrops (0.19.0)
     rake (12.1.0)
-    ransack (1.8.3)
+    ransack (1.8.4)
       actionpack (>= 3.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
@@ -449,7 +449,7 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    sitemap_generator (5.3.1)
+    sitemap_generator (6.0.0)
       builder (~> 3.0)
     spring (2.0.2)
       activesupport (>= 4.2)
@@ -504,7 +504,7 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    webmock (3.0.1)
+    webmock (3.1.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -599,8 +599,8 @@ DEPENDENCIES
   uglifier (~> 3.2.0)
   unicorn
   view_source_map
-  web-console (~> 3.5.1)
-  webmock (~> 3.0.1)
+  web-console
+  webmock
   will_paginate
   will_paginate-bootstrap
   yaml_db (~> 0.6.0)
