@@ -137,7 +137,7 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 3.5.1'
+  gem 'web-console'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -158,7 +158,6 @@ group :development do
 
   # Visualize Rails Console
   gem 'hirb'
-  # gem 'hirb-unicode'
 
   # Generate ER
   gem 'rails-erd'
@@ -190,5 +189,5 @@ group :test do
   gem 'faker'
   gem 'launchy'
   gem 'selenium-webdriver'
-  gem 'webmock', '~> 3.0.1'
+  gem 'webmock'
 end

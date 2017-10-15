@@ -16,7 +16,6 @@ SimpleCov.start do
 
   SimpleCov.formatters = [
     SimpleCov::Formatter::HTMLFormatter,
-    CodeClimate::TestReporter::Formatter,
   ]
 end
 
