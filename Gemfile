@@ -2,13 +2,10 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.1.4'
-gem 'rails-controller-testing'
 
 # See https://qiita.com/shinichinomura/items/41e03d7e4fa56841e654
 gem 'json', '~> 1.8.6'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.6'
 # Use Uglifier as compressor for JavaScript assets
@@ -30,6 +27,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# Use sqlite3 as the database for Active Record
+gem 'sqlite3'
 # Use mysql
 gem 'mysql2'
 
@@ -57,7 +56,7 @@ gem 'will_paginate-bootstrap'
 # Authentication
 gem 'devise', '4.3.0'
 gem 'devise-bootstrap-views', '0.0.11'
-gem 'devise-i18n', '1.2.0'
+gem 'devise-i18n', '1.3.0'
 gem 'devise-i18n-views', '0.3.7'
 
 # Compatibility with PHP version
@@ -72,11 +71,11 @@ gem 'acts-as-taggable-on', git: 'https://github.com/mbleigh/acts-as-taggable-on.
 gem 'ransack'
 
 # Manage Title and meta tags
-gem 'meta-tags', '~> 2.6.0'
+gem 'meta-tags'
 gem 'sitemap_generator'
 
 # AWS!!
-gem 'aws-sdk', '>= 2.0.0'
+gem 'aws-sdk', '~> 2.6'
 gem 'aws-sdk-core'
 gem 'aws-sdk-resources'
 
@@ -110,8 +109,8 @@ gem 'momentjs-rails', '~> 2.17.1'
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
 
-# see https://github.com/thoughtbot/paperclip/issues/2021
-gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git'
+# Upload images to Cloud
+gem 'paperclip'
 gem 'paperclip-azure'
 
 # see http://blog.zeit.io/use-a-fake-db-adapter-to-play-nice-with-rails-assets-precompilation/
@@ -131,6 +130,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
+  gem 'rails-controller-testing'
   gem 'shoulda-matchers', require: false
   gem 'simplecov'
 end
