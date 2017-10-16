@@ -128,59 +128,45 @@ group :development, :test do
   gem 'codeclimate-test-reporter'
   gem 'factory_girl'
   gem 'factory_girl_rails'
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
-  gem 'rails-controller-testing'
   gem 'shoulda-matchers', require: false
   gem 'simplecov'
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-
   # Insert Annotation to files
   gem 'annotate'
-
-  # Static Analysis
-  gem 'rubocop', '~> 0.49.1'
-
-  gem 'guard'
-  gem 'guard-rubocop'
-
-  gem 'i18n_generators'
-
-  # Find N+1 issue
-  gem 'bullet'
-
-  # Visualize Rails Console
-  gem 'hirb'
-
-  # Generate ER
-  gem 'rails-erd'
-
-  # Display the environment name
-  # https://github.com/dtaniwaki/rack-dev-mark
-  gem 'rack-dev-mark'
-
-  # Include template path
-  gem 'view_source_map'
-
   # Display nice error screen
   gem 'better_errors'
   gem 'binding_of_caller'
-
-  # Finding code smell
-  gem 'reek'
-
-  # Rails Best Practice
-  gem 'rails_best_practices'
-
   # Brakeman
   gem 'brakeman', require: false
+  # Find N+1 issue
+  gem 'bullet'
+  gem 'guard'
+  gem 'guard-rubocop'
+  # Visualize Rails Console
+  gem 'hirb'
+  gem 'i18n_generators'
+  # Display the environment name
+  # https://github.com/dtaniwaki/rack-dev-mark
+  gem 'rack-dev-mark'
+  # Rails Best Practice
+  gem 'rails_best_practices'
+  # Generate ER
+  gem 'rails-erd'
+  # Finding code smell
+  gem 'reek'
+  # Static Analysis
+  gem 'rubocop', '~> 0.49.1'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+  # Include template path
+  gem 'view_source_map'
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console'
 end
 
 group :test do
