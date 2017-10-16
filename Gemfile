@@ -2,13 +2,10 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.1.4'
-gem 'rails-controller-testing'
 
 # See https://qiita.com/shinichinomura/items/41e03d7e4fa56841e654
 gem 'json', '~> 1.8.6'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.6'
 # Use Uglifier as compressor for JavaScript assets
@@ -30,6 +27,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# Use sqlite3 as the database for Active Record
+gem 'sqlite3'
 # Use mysql
 gem 'mysql2'
 
@@ -57,7 +56,7 @@ gem 'will_paginate-bootstrap'
 # Authentication
 gem 'devise', '4.3.0'
 gem 'devise-bootstrap-views', '0.0.11'
-gem 'devise-i18n', '1.2.0'
+gem 'devise-i18n', '1.3.0'
 gem 'devise-i18n-views', '0.3.7'
 
 # Compatibility with PHP version
@@ -72,11 +71,11 @@ gem 'acts-as-taggable-on', git: 'https://github.com/mbleigh/acts-as-taggable-on.
 gem 'ransack'
 
 # Manage Title and meta tags
-gem 'meta-tags', '~> 2.6.0'
+gem 'meta-tags'
 gem 'sitemap_generator'
 
 # AWS!!
-gem 'aws-sdk', '>= 2.0.0'
+gem 'aws-sdk', '~> 2.6'
 gem 'aws-sdk-core'
 gem 'aws-sdk-resources'
 
@@ -110,8 +109,8 @@ gem 'momentjs-rails', '~> 2.17.1'
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
 
-# see https://github.com/thoughtbot/paperclip/issues/2021
-gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git'
+# Upload images to Cloud
+gem 'paperclip'
 gem 'paperclip-azure'
 
 # see http://blog.zeit.io/use-a-fake-db-adapter-to-play-nice-with-rails-assets-precompilation/
@@ -129,6 +128,7 @@ group :development, :test do
   gem 'codeclimate-test-reporter'
   gem 'factory_girl'
   gem 'factory_girl_rails'
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers', require: false
@@ -136,51 +136,37 @@ group :development, :test do
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-
   # Insert Annotation to files
   gem 'annotate'
-
-  # Static Analysis
-  gem 'rubocop', '~> 0.49.1'
-
-  gem 'guard'
-  gem 'guard-rubocop'
-
-  gem 'i18n_generators'
-
-  # Find N+1 issue
-  gem 'bullet'
-
-  # Visualize Rails Console
-  gem 'hirb'
-
-  # Generate ER
-  gem 'rails-erd'
-
-  # Display the environment name
-  # https://github.com/dtaniwaki/rack-dev-mark
-  gem 'rack-dev-mark'
-
-  # Include template path
-  gem 'view_source_map'
-
   # Display nice error screen
   gem 'better_errors'
   gem 'binding_of_caller'
-
-  # Finding code smell
-  gem 'reek'
-
-  # Rails Best Practice
-  gem 'rails_best_practices'
-
   # Brakeman
   gem 'brakeman', require: false
+  # Find N+1 issue
+  gem 'bullet'
+  gem 'guard'
+  gem 'guard-rubocop'
+  # Visualize Rails Console
+  gem 'hirb'
+  gem 'i18n_generators'
+  # Display the environment name
+  # https://github.com/dtaniwaki/rack-dev-mark
+  gem 'rack-dev-mark'
+  # Rails Best Practice
+  gem 'rails_best_practices'
+  # Generate ER
+  gem 'rails-erd'
+  # Finding code smell
+  gem 'reek'
+  # Static Analysis
+  gem 'rubocop', '~> 0.49.1'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+  # Include template path
+  gem 'view_source_map'
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console'
 end
 
 group :test do
