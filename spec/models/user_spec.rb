@@ -174,7 +174,7 @@ describe 'User' do
     end
 
     it 'is invalid with a username that is already used by others' do
-      default_user = FactoryGirl.create(:default_user)
+      default_user = FactoryBot.create(:default_user)
       data = success_data.dup
       data[:username] = default_user[:username]
       user = User.new(data)
@@ -182,7 +182,7 @@ describe 'User' do
     end
 
     it 'is invalid with an email that is already used by others' do
-      default_user = FactoryGirl.create(:default_user)
+      default_user = FactoryBot.create(:default_user)
       data = success_data.dup
       data[:email] = default_user[:email]
       user = User.new(data)
@@ -192,7 +192,7 @@ describe 'User' do
 
   describe 'username_to_id' do
     it 'returns user_id' do
-      default_user = FactoryGirl.create(:default_user)
+      default_user = FactoryBot.create(:default_user)
       id = User.username_to_id(default_user.username)
       expect(id).to eq(1)
     end

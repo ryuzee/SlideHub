@@ -28,7 +28,7 @@
 #  username               :string(255)      not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :default_user, class: User do
     id 1
     email 'user01@example.com'

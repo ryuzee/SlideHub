@@ -86,7 +86,7 @@ describe 'Slide' do
 
   describe 'Method "thumbnail_url"' do
     it 'is valid' do
-      FactoryGirl.create(:slide)
+      FactoryBot.create(:slide)
       object_key = Slide.find(1).object_key
       expect(Slide.find(1).thumbnail_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/thumbnail.jpg")
     end
@@ -99,7 +99,7 @@ describe 'Slide' do
         body: 'a:1:{i:0;s:4:"Test";}',
         status: 200,
       )
-      FactoryGirl.create(:slide)
+      FactoryBot.create(:slide)
       slide = Slide.find(1)
       expect(slide.transcript).to eq(['Test'])
       expect(slide.transcript_exist?(slide.transcript)).to eq(true)
@@ -110,7 +110,7 @@ describe 'Slide' do
       stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
         status: 404,
       )
-      FactoryGirl.create(:slide)
+      FactoryBot.create(:slide)
       slide = Slide.find(1)
       expect(slide.transcript).to eq([])
       expect(slide.transcript_exist?(slide.transcript)).to eq(false)
@@ -122,7 +122,7 @@ describe 'Slide' do
         body: 'a:1:{i:0;s:0:"";}',
         status: 200,
       )
-      FactoryGirl.create(:slide)
+      FactoryBot.create(:slide)
       slide = Slide.find(1)
       expect(slide.transcript_exist?(slide.transcript)).to eq(false)
     end
@@ -130,7 +130,7 @@ describe 'Slide' do
 
   describe 'Method "transcript_url"' do
     it 'returns valid url' do
-      FactoryGirl.create(:slide)
+      FactoryBot.create(:slide)
       object_key = Slide.find(1).object_key
       expect(Slide.find(1).transcript_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/transcript.txt")
     end
@@ -138,7 +138,7 @@ describe 'Slide' do
 
   describe 'Method "page_list_url"' do
     it 'returns valid url' do
-      FactoryGirl.create(:slide)
+      FactoryBot.create(:slide)
       object_key = Slide.find(1).object_key
       expect(Slide.find(1).page_list_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/list.json")
     end
@@ -146,13 +146,13 @@ describe 'Slide' do
 
   describe 'Method "page_list"' do
     it 'returns page list (1 page)' do
-      FactoryGirl.create(:slide)
+      FactoryBot.create(:slide)
       object_key = Slide.find(1).object_key
       expect(Slide.find(1).page_list).to eq(["#{object_key}/slide-1.jpg"])
     end
 
     it 'returns page list (10 page)' do
-      FactoryGirl.create(:slide)
+      FactoryBot.create(:slide)
       slide = Slide.where('slides.id = ?', 1).first
       object_key = slide.object_key
       slide.num_of_pages = 10
