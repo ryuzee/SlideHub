@@ -16,7 +16,7 @@ RSpec.describe SlideDownloadController, type: :controller do
     end
 
     it 'fails to download file because of permission' do
-      FactoryGirl.create(:slide)
+      FactoryBot.create(:slide)
       slide.downloadable = false
       slide.save
       get :show, params: { id: slide.id }

@@ -21,7 +21,7 @@
 #  comments_count :integer          default(0), not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :slide, class: Slide do
     name 'Hoge'
     description 'FUGA'

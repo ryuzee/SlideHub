@@ -6,7 +6,7 @@
 #  name :string(255)      not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :default_category, class: Category do
     id 1
     name 'Category1'
