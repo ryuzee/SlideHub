@@ -51,7 +51,7 @@ gem 'will_paginate-bootstrap'
 # Authentication
 gem 'devise', '4.3.0'
 gem 'devise-bootstrap-views', '0.0.11'
-gem 'devise-i18n', '1.3.0'
+gem 'devise-i18n', '1.4.0'
 gem 'devise-i18n-views', '0.3.7'
 
 # Compatibility with PHP version
