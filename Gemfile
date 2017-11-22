@@ -61,9 +61,11 @@ gem 'aws-sdk', '~> 2.6'
 gem 'aws-sdk-core'
 gem 'aws-sdk-resources'
 # Azure
-gem 'azure', '~> 0.7.5'
+gem 'azure', '= 0.7.6'
 # gem 'azure-contrib', git: 'https://github.com/dmichael/azure-contrib.git'
 gem 'azure-contrib', git: 'https://github.com/ryuzee/azure-contrib.git', ref: 'b74076c'
+gem 'azure-core', '= 0.1.5'
+# gem 'azure-storage', '~> 0.12.0'
 # Find file type
 gem 'ruby-filemagic'
 # Handle images
@@ -82,8 +84,9 @@ gem 'momentjs-rails', '~> 2.17.1'
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
 # Upload images to Cloud
-gem 'paperclip'
-gem 'paperclip-azure'
+# gem 'paperclip'
+gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git', ref: '915c904d9a1382f53f4dcc822878ebb7c2024bb6'
+gem 'paperclip-azure', '~> 0.3.0'
 # see http://blog.zeit.io/use-a-fake-db-adapter-to-play-nice-with-rails-assets-precompilation/
 gem 'activerecord-nulldb-adapter'
 # reserved words for username
