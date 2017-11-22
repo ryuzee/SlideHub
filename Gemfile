@@ -35,7 +35,7 @@ gem 'tiny_tds'
 gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails.git'
 gem 'sprockets', '3.7.1'
 gem 'execjs'
-gem 'twitter-bootstrap-rails'
+gem 'twitter-bootstrap-rails', '~> 3.2.2'
 # Paginate
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
