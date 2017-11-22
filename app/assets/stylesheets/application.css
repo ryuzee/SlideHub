@@ -10,11 +10,12 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- * = require_tree .
- * = require_self
  * = require devise_bootstrap_views
  * = require bootstrap_and_overrides
  * = require bootstrap-datetimepicker
  * = require sticky-footer-navbar
  * = require slidehub
+ * = require font-awesome
+ * = require_self
+ * = require_tree .
  */
