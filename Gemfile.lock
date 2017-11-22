@@ -219,6 +219,8 @@ GEM
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.18)
+    font-awesome-rails (4.7.0.2)
+      railties (>= 3.2, < 5.2)
     formatador (0.2.5)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -483,11 +485,11 @@ GEM
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.3)
-    twitter-bootstrap-rails (3.2.2)
-      actionpack (>= 3.1)
-      execjs (>= 2.2.2, >= 2.2)
-      less-rails (>= 2.5.0)
-      railties (>= 3.1)
+    twitter-bootstrap-rails (4.0.0)
+      actionpack (~> 5.0, >= 5.0.1)
+      execjs (~> 2.7)
+      less-rails (~> 2.8, >= 2.8.0)
+      railties (~> 5.0, >= 5.0.1)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
     uglifier (3.2.0)
@@ -559,6 +561,7 @@ DEPENDENCIES
   factory_bot
   factory_bot_rails
   faker
+  font-awesome-rails
   guard
   guard-rubocop
   hirb
@@ -602,7 +605,7 @@ DEPENDENCIES
   therubyracer (~> 0.12.3)
   tiny_tds
   turbolinks
-  twitter-bootstrap-rails (~> 3.2.2)
+  twitter-bootstrap-rails (~> 4.0)
   uglifier (~> 3.2.0)
   unicorn
   view_source_map
