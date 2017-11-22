@@ -71,7 +71,7 @@ gem 'pdf-reader'
 # counter cache transaction
 gem 'counter_culture'
 # save settings
-gem 'rails-settings-cached', '0.6.5'
+gem 'rails-settings-cached', '0.6.6'
 # AP Server
 gem 'unicorn'
 # Datetime Picker for Bootstrap3

@@ -355,7 +355,7 @@ GEM
       ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rails-settings-cached (0.6.5)
+    rails-settings-cached (0.6.6)
       rails (>= 4.2.0)
     rails_best_practices (1.19.0)
       activesupport
@@ -580,7 +580,7 @@ DEPENDENCIES
   rails (= 5.1.4)
   rails-controller-testing
   rails-erd
-  rails-settings-cached (= 0.6.5)
+  rails-settings-cached (= 0.6.6)
   rails_best_practices
   ransack
   reek
