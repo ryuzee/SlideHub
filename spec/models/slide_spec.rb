@@ -184,6 +184,14 @@ describe 'Slide_on_Azure' do
     end
   end
 
+  describe 'Method "thumbnail_url"' do
+    it 'is valid' do
+      FactoryBot.create(:slide)
+      object_key = Slide.find(1).object_key
+      expect(Slide.find(1).thumbnail_url).to eq("https://azure_test.blob.core.windows.net/my-image-bucket/#{object_key}/thumbnail.jpg")
+    end
+  end
+
   describe 'Method "transcript_url"' do
     it 'returns valid url' do
       FactoryBot.create(:slide)
