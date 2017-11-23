@@ -56,9 +56,10 @@
         </button>
         <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;<%= CustomSetting['site.name'] %></a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
-
-          <ul class="nav navbar-nav navbar-left">
-            <li class="dropdown">
+          <ul class="nav navbar-nav">
+            <li class="<%= 'active' if controller.controller_name == 'popular_slides' %>"><%= link_to t("popular"), "/popular"  %></li>
+            <li class="<%= 'active' if controller.controller_name == 'latest_slides' %>"><%= link_to t("latest"), "/latest"  %></li>
+            <li class="dropdown<%= ' active' if controller.controller_name == 'categories' %>">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= t 'category' %><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <% @categories.each do |cat| %>
@@ -66,11 +67,7 @@
                 <% end %>
               </ul>
             </li>
-          </ul>
-          <ul class="nav navbar-nav">
-            <li><%= link_to t("popular"), "/popular"  %></li>
-            <li><%= link_to t("latest"), "/latest"  %></li>
-            <li><%= link_to t("search"), "/search"  %></li>
+            <li class="<%= 'active' if controller.controller_name == 'search' %>"><%= link_to t("search"), "/search"  %></li>
             <%= raw custom_links %>
           </ul>
           <% if user_signed_in? %>
