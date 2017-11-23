@@ -98,7 +98,7 @@ RSpec.describe SlidesController, type: :controller do
       login_by_user default_user
       post :create, params: { slide: data.attributes }
       expect(response.status).to eq(200)
-      expect(response).to render_template 'slides/aws/new'
+      expect(response).to render_template "slides/#{CloudConfig::service_name}/new"
     end
 
     it 'failed to create record because of duplicate key' do
@@ -120,7 +120,7 @@ RSpec.describe SlidesController, type: :controller do
       slide_id = Slide.where("user_id = #{default_user.id}").first.id
       get :edit, params: { id: slide_id }
       expect(response.status).to eq(200)
-      expect(response).to render_template 'slides/aws/edit'
+      expect(response).to render_template "slides/#{CloudConfig::service_name}/edit"
     end
 
     it 'redirect to show' do
@@ -151,7 +151,7 @@ RSpec.describe SlidesController, type: :controller do
       login_by_user default_user
       post :update, params: { id: data.id, slide: data.attributes }
       expect(response.status).to eq(200)
-      expect(response).to render_template 'slides/aws/edit'
+      expect(response).to render_template "slides/#{CloudConfig::service_name}/edit"
     end
 
     it 'succeeds to update the record without running conversion' do

@@ -28,6 +28,8 @@ describe 'Slide' do
   let!(:default_category) { create(:default_category) }
 
   before do
+    CloudConfig.class_eval { remove_const(:SERVICE) }
+    CloudConfig::SERVICE = SlideHub::Cloud::Engine::AWS
     SlideHub::Cloud::Engine::AWS.configure do |config|
       config.region = 'ap-northeast-1'
       config.aws_access_id = 'aws_access_id'
@@ -161,6 +163,40 @@ describe 'Slide' do
                   "#{object_key}/slide-04.jpg", "#{object_key}/slide-05.jpg", "#{object_key}/slide-06.jpg",
                   "#{object_key}/slide-07.jpg", "#{object_key}/slide-08.jpg", "#{object_key}/slide-09.jpg", "#{object_key}/slide-10.jpg"]
       expect(Slide.find(1).page_list).to eq(expected)
+    end
+  end
+end
+
+describe 'Slide_on_Azure' do
+  let!(:default_user) { create(:default_user) }
+  let!(:default_category) { create(:default_category) }
+
+  before do
+    CloudConfig.class_eval { remove_const(:SERVICE) }
+    CloudConfig::SERVICE = SlideHub::Cloud::Engine::Azure
+    SlideHub::Cloud::Engine::Azure.configure do |config|
+      config.bucket_name = 'my-bucket'
+      config.image_bucket_name = 'my-image-bucket'
+      config.cdn_base_url = ''
+      config.queue_name = 'my-queue'
+      config.azure_storage_account_name = 'azure_test'
+      config.azure_storage_access_key = 'azure_test_key'
+    end
+  end
+
+  describe 'Method "transcript_url"' do
+    it 'returns valid url' do
+      FactoryBot.create(:slide)
+      object_key = Slide.find(1).object_key
+      expect(Slide.find(1).transcript_url).to eq("https://azure_test.blob.core.windows.net/my-image-bucket/#{object_key}/transcript.txt")
+    end
+  end
+
+  describe 'Method "page_list_url"' do
+    it 'returns valid url' do
+      FactoryBot.create(:slide)
+      object_key = Slide.find(1).object_key
+      expect(Slide.find(1).page_list_url).to eq("https://azure_test.blob.core.windows.net/my-image-bucket/#{object_key}/list.json")
     end
   end
 end
