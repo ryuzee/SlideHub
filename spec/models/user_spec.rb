@@ -36,13 +36,13 @@ describe 'User' do
 
   describe 'valid usernames' do
     it 'can be accepted' do
-      valid_usernames = %w(
+      valid_usernames = %w[
         ryuzee
         ryuzee-1234
         ryuzee_1234
         RYUZEE
         ryu
-      )
+      ]
       expect(user).to allow_value(*valid_usernames).for(:username)
     end
   end
@@ -80,12 +80,12 @@ describe 'User' do
 
   describe 'valid passwords' do
     it 'can be accepted' do
-      valid_passwords = %w(
+      valid_passwords = %w[
         12345678
         abcdefgh
         abc12345
         #123abc$
-      )
+      ]
       expect(user).to allow_value(*valid_passwords).for(:password)
     end
   end
@@ -102,11 +102,11 @@ describe 'User' do
 
   describe 'valid emails' do
     it 'can be accepted' do
-      valid_emails = %w(
+      valid_emails = %w[
         ryuzee@example.com
         ryuzee@jp.example.com
         ryuzee@tt
-      )
+      ]
       expect(user).to allow_value(*valid_emails).for(:email)
     end
   end
