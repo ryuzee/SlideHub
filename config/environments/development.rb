@@ -83,7 +83,7 @@ Rails.application.configure do
 
   config.rack_dev_mark.enable = true
 
-  config.web_console.whitelisted_ips = %w(10.0.2.2 192.168.0.0/16 127.0.0.1)
+  config.web_console.whitelisted_ips = %w[10.0.2.2 192.168.0.0/16 127.0.0.1]
   config.consider_all_requests_local = true
   BetterErrors::Middleware.allow_ip! '10.0.2.2'
   BetterErrors::Middleware.allow_ip! '127.0.0.1'

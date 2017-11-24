@@ -23,8 +23,8 @@ module Myapp
     config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
 
-    config.autoload_paths += %W(#{config.root}/lib)
-    config.autoload_paths += %W(#{config.root}/lib/slide_hub)
+    config.autoload_paths += %W[#{config.root}/lib]
+    config.autoload_paths += %W[#{config.root}/lib/slide_hub]
 
     config.assets.paths << "#{Rails}/vendor/assets/fonts"
     config.assets.paths << "#{Rails}/vendor/assets/bower_components"
@@ -57,7 +57,7 @@ module Myapp
     # For API Cross Origin Access
     config.action_dispatch.default_headers = {
       'Access-Control-Allow-Origin' => '*',
-      'Access-Control-Request-Method' => %w(GET POST OPTIONS).join(','),
+      'Access-Control-Request-Method' => %w[GET POST OPTIONS].join(','),
     }
   end
 end
