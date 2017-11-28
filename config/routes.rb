@@ -73,6 +73,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :custom, { format: 'css' } do
+    get 'override' => 'css#show'
+  end
+
   # config/routes.rb
   Rails.application.routes.draw do
     root 'slides#index'
