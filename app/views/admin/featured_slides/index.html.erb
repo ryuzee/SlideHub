@@ -18,6 +18,7 @@
         </thead>
         <tbody>
             <% @featured_slides.each do |fs| %>
+              <% next if fs.slide.nil? %>
             <tr>
                 <td><a href="/slides/<%= fs.slide.id %>"><%= fs.slide.id %></a></td>
                 <td><a href="/slides/<%= fs.slide.id %>"><%= fs.slide.name %></a>&nbsp;</td>
