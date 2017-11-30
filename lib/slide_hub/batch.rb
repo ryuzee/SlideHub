@@ -41,7 +41,7 @@ class BatchProcedure
     Dir.mktmpdir do |dir|
       @work_dir = dir
       SlideHub::BatchLogger.info("Current directory is #{@work_dir}")
-      save_file
+      return false unless save_file
       convert_to_ppm
       convert_to_jpg
       generate_json
@@ -56,8 +56,9 @@ class BatchProcedure
   private
 
     def save_file
-      CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, @object_key, "#{@work_dir}/#{@work_file}")
+      return false unless CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, @object_key, "#{@work_dir}/#{@work_file}")
       @file_type = SlideHub::ConvertUtil.new.get_slide_file_type("#{@work_dir}/#{@work_file}")
+      true
     end
 
     def convert_to_ppm
