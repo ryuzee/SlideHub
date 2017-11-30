@@ -130,7 +130,7 @@ module SlideHub
         def self.delete_files(container, files)
           bs = ::Azure::Blob::BlobService.new
           files.each do |f|
-            bs.delete_blob(container, f)
+            bs.delete_blob(container, f[:key])
           end
         end
 

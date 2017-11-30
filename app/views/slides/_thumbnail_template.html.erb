@@ -1,5 +1,6 @@
     <div class="row" style="max-width:1024px; margin:0 auto;">
     <% slides.each do |slide| %>
+      <% next if slide.nil? %>
       <% if slide.convert_status < 0 then %>
         <% image_url = "/oss/images/failed_to_convert_small.jpg" %>
       <% elsif slide.convert_status < 100 then %>
