@@ -100,14 +100,12 @@ module SlideHub
         end
 
         def self.save_file(container, key, destination)
-          begin
-            bs = ::Azure::Blob::BlobService.new
-            _blob, content = bs.get_blob(container, key)
-            File.open(destination, 'wb') { |f| f.write(content) }
-            true
-          rescue
-            false
-          end
+          bs = ::Azure::Blob::BlobService.new
+          _blob, content = bs.get_blob(container, key)
+          File.open(destination, 'wb') { |f| f.write(content) }
+          true
+        rescue
+          false
         end
 
         def self.delete_slide(key)

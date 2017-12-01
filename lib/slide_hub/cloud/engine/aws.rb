@@ -138,16 +138,14 @@ module SlideHub
         end
 
         def self.save_file(bucket, key, destination)
-          begin
-            Aws::S3::Client.new(region: @config.region).get_object(
-              response_target: destination,
-              bucket: bucket,
-              key: key,
-            )
-            true
-          rescue
-            false
-          end
+          Aws::S3::Client.new(region: @config.region).get_object(
+            response_target: destination,
+            bucket: bucket,
+            key: key,
+          )
+          true
+        rescue
+          false
         end
 
         def self.delete_slide(key)
