@@ -12,10 +12,9 @@ module Admin
     def edit; end
 
     def update
-      params.permit! # It's OK because of admin
       @user = User.find(params[:user][:id])
-      @user.assign_attributes(params[:user])
-      if @user.update_attributes(params[:user])
+      @user.assign_attributes(user_params)
+      if @user.update_attributes(user_params)
         redirect_to admin_users_path
       else
         render :edit
@@ -26,6 +25,10 @@ module Admin
 
       def set_user
         @user = User.find(params[:id])
+      end
+
+      def user_params
+        params.require(:user).permit(:id, :username, :display_name, :email, :biography, :admin)
       end
   end
 end
