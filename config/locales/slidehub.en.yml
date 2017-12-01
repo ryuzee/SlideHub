@@ -15,6 +15,7 @@ en:
   display_name: "Display Name"
   download_slide: "Download Slide"
   edit_slide: "Edit Slide"
+  edit_user: "Edit User"
   embedded_code: "Embedded Code"
   embedded_view: "Embedded View"
   error_save_slide: "%{errors} errors prohibited this slide from being saved:"

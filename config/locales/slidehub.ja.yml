@@ -19,6 +19,7 @@ ja:
   display_name: "表示名"
   download_slide: "スライドのダウンロード"
   edit_slide: "スライドの編集"
+  edit_user: "ユーザーの編集"
   embedded_code: "埋め込みコード"
   embedded_view: "埋め込み表示回数"
   error_save_slide: "エラーが%{errors}個あるためスライドを保存できません。"

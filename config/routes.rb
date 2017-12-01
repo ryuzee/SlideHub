@@ -54,7 +54,12 @@ Rails.application.routes.draw do
     end
     get 'slides/:id/download' => 'slides#download'
 
-    resources :users, only: [:index]
+    resources :users do
+      get 'index', on: :collection
+      get 'edit', on: :collection
+      post 'update', on: :collection
+    end
+
     resources :custom_contents do
       get 'index', on: :collection
       post 'update', on: :collection
