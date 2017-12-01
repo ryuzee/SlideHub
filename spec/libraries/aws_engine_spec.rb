@@ -220,8 +220,9 @@ describe 'SlideHub::Cloud::Engine::AWS' do
     it 'succeeds to save file' do
       Dir.mktmpdir do |dir|
         destination = "#{dir}/#{SecureRandom.hex}"
-        SlideHub::Cloud::Engine::AWS.save_file('container', 'key', destination)
+        expect(SlideHub::Cloud::Engine::AWS.save_file('container', 'key', destination)).to eq(true)
         expect(File.exist?(destination)).to eq(true)
+        expect(SlideHub::Cloud::Engine::AWS.save_file('container', 'key', nil)).to eq(false)
       end
     end
 

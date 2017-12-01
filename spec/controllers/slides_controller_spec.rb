@@ -83,6 +83,7 @@ RSpec.describe SlidesController, type: :controller do
   describe 'POST #create' do
     it 'succeed to create record' do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
+      allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
       data = build(:slide)
       login_by_user default_user
       post :create, params: { slide: data.attributes }
@@ -93,6 +94,7 @@ RSpec.describe SlidesController, type: :controller do
 
     it 'faled to create record because of validation' do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
+      allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
       data = build(:slide)
       data.category_id = nil # cause validation error
       login_by_user default_user
@@ -103,6 +105,7 @@ RSpec.describe SlidesController, type: :controller do
 
     it 'failed to create record because of duplicate key' do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
+      allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
       slides = create_list(:slide, 2)
       first_key = slides[0].object_key
       login_by_user default_user
@@ -168,6 +171,7 @@ RSpec.describe SlidesController, type: :controller do
 
     it 'succeeds to update the record with running conversion' do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
+      allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
       data = create(:slide)
       data.convert_status = 0 # Not converted yet...
       data.name = 'Engawa'

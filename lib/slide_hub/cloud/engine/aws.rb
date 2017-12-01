@@ -143,6 +143,9 @@ module SlideHub
             bucket: bucket,
             key: key,
           )
+          true
+        rescue
+          false
         end
 
         def self.delete_slide(key)
