@@ -20,7 +20,7 @@ module Admin
     private
 
       def save_current
-        keys = %w[site.display_login_link site.only_admin_can_upload site.signup_enabled site.name site.header_inverse site.favicon]
+        keys = %w[site.display_login_link site.only_admin_can_upload site.signup_enabled site.name site.header_inverse site.favicon site.footer]
         keys.each do |k|
           setting = CustomSetting.find_by(var: k.to_s) || CustomSetting.new(var: k.to_s)
           setting.value = CustomSetting[k]

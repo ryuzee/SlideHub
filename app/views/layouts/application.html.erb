@@ -104,9 +104,14 @@
 
     <div class="footer">
       <div class="container">
-        <p class="text-muted">
-          &copy; 2017&nbsp; Ryuzee. MIT License. Version: <%= SlideHub::VERSION %> | <a href="https://github.com/ryuzee/SlideHub"><%= t(:project_page) %></a>
-        </p>
+        <div class="row">
+          <div class="col-md-6">
+            <p class="text-muted text-left"><%= raw CustomSetting['site.footer'] %></p>
+          </div>
+          <div class="col-md-6">
+            <p class="text-muted text-right">Powered by <a href="https://github.com/ryuzee/SlideHub" target="_blank">SlideHub</a> <%= SlideHub::VERSION %></p>
+          </div>
+        </div>
       </div>
     </div>
   </body>
