@@ -63,6 +63,10 @@ Rails.application.routes.draw do
       get 'index', on: :collection
       post 'update', on: :collection
     end
+
+    get 'logs/index' => 'logs#index'
+    get 'logs/show' => 'logs#show'
+
   end
 
   namespace :api, { format: 'json' } do

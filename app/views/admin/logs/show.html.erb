@@ -1,0 +1,11 @@
+<h3><%= @path %>&nbsp;&nbsp;<small><a href="/admin/logs/index"><%= t :back_to_list %></a></small></h3>
+
+<div class="panel panel-default">
+<div class="panel-body">
+
+<% @result.each do |line| %>
+  <%= line %><br />
+<% end %>
+
+</div>
+</div>
