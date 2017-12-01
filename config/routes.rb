@@ -54,7 +54,12 @@ Rails.application.routes.draw do
     end
     get 'slides/:id/download' => 'slides#download'
 
-    resources :users, only: [:index]
+    resources :users do
+      get 'index', on: :collection
+      get 'edit', on: :collection
+      post 'update', on: :collection
+    end
+
     resources :custom_contents do
       get 'index', on: :collection
       post 'update', on: :collection
@@ -63,6 +68,9 @@ Rails.application.routes.draw do
       get 'index', on: :collection
       post 'update', on: :collection
     end
+
+    get 'logs/index' => 'logs#index'
+    get 'logs/show' => 'logs#show'
   end
 
   namespace :api, { format: 'json' } do

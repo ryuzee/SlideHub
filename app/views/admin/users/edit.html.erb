@@ -1,0 +1,74 @@
+<h3><%= t(:edit_user) %>&nbsp;&nbsp;<small><a href="/admin/dashboards/index"><%= t :back_to_dashboard %></a></small></h3>
+
+  <%= form_for @user, :html => { :class => "form-horizontal user" }, :url => "/admin/users/index"  do |f| %>
+    <% if @user.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  <%= f.hidden_field :id %>
+
+  <div class="control-group">
+    <%= f.label :id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field "_id", :value => @user[:id], :disabled => "disabled", :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:user_id) %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :username, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :username, :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:username) %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :display_name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :display_name, :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:display_name) %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :email, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :email, :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:email) %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :biography, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :biography, :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:biography) %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :admin, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :admin, :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:admin) %>
+  </div>
+
+  <br clear="all" />
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            admin_users_path, :class => 'btn btn-default' %>
+
+<% end %>
