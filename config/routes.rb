@@ -71,7 +71,6 @@ Rails.application.routes.draw do
 
     get 'logs/index' => 'logs#index'
     get 'logs/show' => 'logs#show'
-
   end
 
   namespace :api, { format: 'json' } do
