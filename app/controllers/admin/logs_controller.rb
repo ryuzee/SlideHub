@@ -19,7 +19,7 @@ module Admin
     private
 
       def retrieve
-        path = Rails.root.join('log/*')
+        path = Rails.root.join('log', '*')
         @files = Dir.glob(path)
       end
   end

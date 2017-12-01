@@ -16,7 +16,7 @@ RSpec.describe Admin::LogsController, type: :controller do
 
     describe 'GET /admin/logs/show' do
       it 'works!' do
-        get :show, params: { path: Rails.root.join('log/test.log') }
+        get :show, params: { path: Rails.root.join('log', 'test.log') }
         expect(response.status).to eq(200)
       end
 
