@@ -29,3 +29,5 @@ sitemap.xml.gz
 /db/data.yml
 .docker-sync
 /public/assets
+docker-compose*prod.yml
+docker-compose*production.yml
