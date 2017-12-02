@@ -5,19 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-
-if User.count.zero?
-  User.create!(
-    email: 'admin@example.com',
-    password: 'passw0rd',
-    password_confirmation: 'passw0rd',
-    display_name: 'admin',
-    biography: 'Administrator',
-    admin: true,
-    username: 'admin-default',
-  )
-end
-
 if Category.count.zero?
   Category.create([
                     { id: 1, name: 'Books' },
@@ -37,4 +24,17 @@ if Category.count.zero?
                     { id: 15, name: 'Technology' },
                     { id: 16, name: 'Travel' },
                   ])
+end
+
+if User.where(admin: true).count.zero?
+  admin = User.new(
+    email: 'admin@example.com',
+    password: 'passw0rd',
+    password_confirmation: 'passw0rd',
+    display_name: 'admin',
+    biography: 'Administrator',
+    admin: true,
+    username: 'admin-default',
+  )
+  admin.save(validate: false)
 end
