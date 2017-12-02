@@ -28,3 +28,4 @@ sitemap.xml.gz
 /coverage
 /db/data.yml
 .docker-sync
+/public/assets
