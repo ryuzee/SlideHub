@@ -33,6 +33,10 @@ This application depends on following technologies.
  * AWS: Amazon S3 / Amazon SQS
  * Azure: Blob Storage / Blob Queue
 
+## Run the application on Azure Environment within 20 minutes
+
+**If you want to get the application running on Azure without manual efforts, See [the instruction](docs/azure.md).**
+
 ## Preparing Infrastructure
 
 ### AWS
