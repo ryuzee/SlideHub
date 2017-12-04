@@ -1,6 +1,7 @@
 module Admin
   class CustomFilesController < Admin::BaseController
     before_action :set_custom_file, only: [:destroy]
+    before_action :attached_check, only: [:create]
     after_action :delete_tmp_file, only: [:create]
 
     def index
@@ -12,27 +13,19 @@ module Admin
     end
 
     def create
-      uploaded_file = custom_file_params[:file]
-      return redirect_to new_admin_custom_file_path if uploaded_file.blank?
+      save_tmp_file(custom_file_params[:file])
 
-      filename = uploaded_file.original_filename
-      @output_path = Rails.root.join('tmp', uploaded_file.original_filename)
-      File.open(@output_path, 'w+b') do |fp|
-        fp.write  uploaded_file.read
-      end
+      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, [@output_path], 'custom-files')
 
-      upload_file_list = [@output_path]
-      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, upload_file_list, 'custom-files')
-
-      existing_record = CustomFile.where(path: filename).first
+      existing_record = CustomFile.where(path: custom_file_params[:file].original_filename).first
       if existing_record
-        @custom_file = existing_record
-        @custom_file.description = custom_file_params[:description]
+        custom_file = existing_record
+        custom_file.description = custom_file_params[:description]
       else
-        @custom_file = CustomFile.create(path: filename, description: custom_file_params[:description])
+        custom_file = CustomFile.create(path: custom_file_params[:file].original_filename, description: custom_file_params[:description])
       end
 
-      @custom_file.save!
+      custom_file.save!
       redirect_to admin_custom_files_path
     end
 
@@ -53,6 +46,17 @@ module Admin
 
       def set_custom_file
         @custom_file = CustomFile.find(params[:id])
+      end
+
+      def attached_check
+        redirect_to new_admin_custom_file_path if custom_file_params[:file].blank?
+      end
+
+      def save_tmp_file(uploaded_file)
+        @output_path = Rails.root.join('tmp', uploaded_file.original_filename)
+        File.open(@output_path, 'w+b') do |fp|
+          fp.write  uploaded_file.read
+        end
       end
 
       def delete_tmp_file
