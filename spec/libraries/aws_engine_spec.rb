@@ -82,15 +82,17 @@ module Aws
         def access_key_id
           'iam_access_key'
         end
+
         def secret_access_key
           'iam_secret_access_key'
         end
+
         def session_token
           'iam_session_token'
         end
       end
       def config
-        {:credentials => DummyCredential.new}
+        { credentials: DummyCredential.new }
       end
     end
   end

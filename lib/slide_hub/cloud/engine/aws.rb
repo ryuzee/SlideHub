@@ -236,7 +236,7 @@ module SlideHub
             ],
           }
 
-          unless security_token.blank?
+          if security_token.present?
             p_array['conditions'].push({ 'x-amz-security-token' => security_token })
           end
 
