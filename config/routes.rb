@@ -64,10 +64,14 @@ Rails.application.routes.draw do
       get 'index', on: :collection
       post 'update', on: :collection
     end
+
     resources :site_settings do
       get 'index', on: :collection
       post 'update', on: :collection
     end
+
+    get 'custom_files/index' => 'custom_files#index'
+    resources :custom_files, only: [:index, :new, :create, :destroy]
 
     get 'logs/index' => 'logs#index'
     get 'logs/show' => 'logs#show'

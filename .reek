@@ -12,3 +12,6 @@ NestedIterators:
 
 DuplicateMethodCall:
   max_calls: 2
+
+InstanceVariableAssumption:
+  enabled: false

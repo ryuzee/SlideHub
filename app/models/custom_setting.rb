@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  var        :string(255)      not null
-#  value      :text(65535)
+#  value      :text(4294967295)
 #  thing_id   :integer
 #  thing_type :string(30)
 #  created_at :datetime

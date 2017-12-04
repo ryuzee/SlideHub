@@ -1,0 +1,19 @@
+<h3><%= t(:custom_files) %>&nbsp;&nbsp;<small><a href="/admin/dashboards/index"><%= t :back_to_dashboard %></a></small></h3>
+
+<%= form_for @custom_file, :multipart => true, :html => { :class => "form-horizontal slide" }, :url => "/admin/custom_files"  do |f| %>
+
+  <div class="control-group">
+    <%= f.file_field :file %>
+
+    <%= f.label t(:description), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :description, :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:slide_id) %>
+  </div>
+
+  <br clear="all" />
+
+  <%= f.submit t('add'), :class => 'btn btn-primary' %>
+
+<% end %>
