@@ -25,7 +25,7 @@ RSpec.describe Admin::CustomFilesController, type: :controller do
       it 'works!' do
         allow(SlideHub::Cloud::Engine::AWS).to receive(:upload_files).and_return(true)
         allow(SlideHub::Cloud::Engine::Azure).to receive(:upload_files).and_return(true)
-        post 'create', params: { custom_file: {file: fixture_file_upload('dummy.txt', "text/html"), description: 'hoge'} }
+        post 'create', params: { custom_file: { file: fixture_file_upload('dummy.txt', 'text/html'), description: 'hoge' } }
         expect(response.status).to eq(302)
         expect(response).to redirect_to admin_custom_files_path
         expect(File.exist?(Rails.root.join('tmp', 'dummy.txt'))).to eq(false)
@@ -35,7 +35,7 @@ RSpec.describe Admin::CustomFilesController, type: :controller do
         allow(SlideHub::Cloud::Engine::AWS).to receive(:upload_files).and_return(true)
         allow(SlideHub::Cloud::Engine::Azure).to receive(:upload_files).and_return(true)
         custom_file = create(:default_custom_file)
-        post 'create', params: { custom_file: {file: fixture_file_upload('dummy.txt', "text/html"), description: 'hoge'} }
+        post 'create', params: { custom_file: { file: fixture_file_upload('dummy.txt', 'text/html'), description: 'hoge' } }
         expect(response.status).to eq(302)
         expect(response).to redirect_to admin_custom_files_path
         expect(CustomFile.find(custom_file.id).description).to eq('hoge')
@@ -47,7 +47,7 @@ RSpec.describe Admin::CustomFilesController, type: :controller do
         allow(SlideHub::Cloud::Engine::AWS).to receive(:delete_files).and_return(true)
         allow(SlideHub::Cloud::Engine::Azure).to receive(:delete_files).and_return(true)
         custom_file = create(:default_custom_file)
-        delete :destroy, params: { id: custom_file.id}
+        delete :destroy, params: { id: custom_file.id }
         expect(response.status).to eq(302)
         expect(response).to redirect_to admin_custom_files_path
         expect(CustomFile.find_by(id: custom_file.id)).to eq(nil)
