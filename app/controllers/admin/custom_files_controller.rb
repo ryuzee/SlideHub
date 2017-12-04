@@ -32,11 +32,8 @@ module Admin
         @custom_file.description = custom_file_params[:description]
       end
 
-      if @custom_file.save
-        redirect_to admin_custom_files_path
-      else
-        render 'new'
-      end
+      @custom_file.save!
+      redirect_to admin_custom_files_path
     end
 
     def destroy
