@@ -25,11 +25,11 @@ module Admin
       CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, upload_file_list, 'custom-files')
 
       existing_record = CustomFile.where(path: filename).first
-      if existing_record.nil?
-        @custom_file = CustomFile.create(path: filename, description: custom_file_params[:description])
-      else
+      if existing_record
         @custom_file = existing_record
         @custom_file.description = custom_file_params[:description]
+      else
+        @custom_file = CustomFile.create(path: filename, description: custom_file_params[:description])
       end
 
       @custom_file.save!
