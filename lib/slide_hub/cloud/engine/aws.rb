@@ -188,7 +188,10 @@ module SlideHub
 
         def self.create_policy
           base_time = Time.zone.now.in_time_zone('UTC')
+          self.create_policy_proc(base_time)
+        end
 
+        def self.create_policy_proc(base_time)
           if !@config.aws_access_id.blank? && !@config.aws_secret_key.blank?
             access_id = @config.aws_access_id
             secret_key = @config.aws_secret_key
@@ -233,7 +236,7 @@ module SlideHub
             ],
           }
 
-          unless security_token.empty?
+          if security_token.present?
             p_array['conditions'].push({ 'x-amz-security-token' => security_token })
           end
 
