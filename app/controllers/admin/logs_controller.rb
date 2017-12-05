@@ -7,7 +7,7 @@ module Admin
     def show
       @path = params[:path]
       @result = []
-      return redirect_to admin_logs_index_path unless @files.include?(@path)
+      return redirect_to admin_logs_index_path, :notice => t(:no_logs) unless @files.include?(@path)
 
       File.open(@path) do |file|
         file.read.split("\n").each do |line|
