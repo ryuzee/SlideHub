@@ -26,7 +26,7 @@ module Admin
       end
 
       custom_file.save!
-      redirect_to admin_custom_files_path, :notice => t(:custom_files_were_saved)
+      redirect_to admin_custom_files_path, notice: t(:custom_files_were_saved)
     end
 
     def destroy
@@ -35,7 +35,7 @@ module Admin
         CloudConfig::SERVICE.config.image_bucket_name,
         [{ key: "custom-files/#{@custom_file.path}" }],
       )
-      redirect_to admin_custom_files_path, :notice => t(:custom_files_were_deleted)
+      redirect_to admin_custom_files_path, notice: t(:custom_files_were_deleted)
     end
 
     private
@@ -49,7 +49,7 @@ module Admin
       end
 
       def attached_check
-        redirect_to new_admin_custom_file_path, :notice => t(:no_attached_file) if custom_file_params[:file].blank?
+        redirect_to new_admin_custom_file_path, notice: t(:no_attached_file) if custom_file_params[:file].blank?
       end
 
       def save_tmp_file(uploaded_file)

@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
 
     def set_uploadable
       @uploadable = user_signed_in?
-      @uploadable = false if user_signed_in? and !current_user.admin and CustomSetting['site.only_admin_can_upload'] == "1"
+      @uploadable = false if user_signed_in? && !current_user.admin && CustomSetting['site.only_admin_can_upload'] == '1'
     end
 
     def signup_enabled!

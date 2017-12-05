@@ -103,7 +103,7 @@ class SlidesController < ApplicationController
     end
 
     def uploadable?
-      redirect_to slides_path, flash: {warning: t(:no_permission)} unless @uploadable
+      redirect_to slides_path, flash: { warning: t(:no_permission) } unless @uploadable
     end
 
     def duplicate_key?
