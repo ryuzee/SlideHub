@@ -89,6 +89,15 @@ class Slide < ApplicationRecord
       includes(:user)
   end
 
+  def send_convert_request
+    CloudConfig::SERVICE.send_message({ id: id, object_key: object_key }.to_json)
+  end
+
+  def delete_uploaded_files
+    CloudConfig::SERVICE.delete_slide(object_key)
+    CloudConfig::SERVICE.delete_generated_files(object_key)
+  end
+
   def thumbnail_url
     "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/thumbnail.jpg"
   end

@@ -53,8 +53,7 @@ class SlidesController < ApplicationController
   end
 
   def destroy
-    CloudConfig::SERVICE.delete_slide(@slide.object_key)
-    CloudConfig::SERVICE.delete_generated_files(@slide.object_key)
+    @slide.delete_uploaded_files
     @slide.destroy
     redirect_to slides_path
   end
@@ -66,7 +65,7 @@ class SlidesController < ApplicationController
     @slide.user_id = current_user.id
     if @slide.save
       slide = Slide.where('slides.object_key = ?', key).first
-      CloudConfig::SERVICE.send_message({ id: slide.id, object_key: key }.to_json)
+      slide.send_convert_request
       redirect_to slide_path(slide.id)
     else
       render "slides/#{CloudConfig.service_name}/new"
@@ -84,7 +83,7 @@ class SlidesController < ApplicationController
     @slide.assign_attributes(slide_params)
     if @slide.update_attributes(slide_params)
       if slide_convert_status.zero?
-        CloudConfig::SERVICE.send_message({ id: @slide.id, object_key: @slide.object_key }.to_json)
+        @slide.send_convert_request
       end
       redirect_to slide_path(@slide.id)
     else
