@@ -40,6 +40,7 @@ ja:
   my_statistics: "自分の統計情報"
   my_slides: "自分のスライド"
   new_custom_file: "新しいファイルの登録"
+  no_permission: "指定したページにアクセスする権限がありません。"
   number_of_comments: "コメント数"
   number_of_conversion_failed: "変換失敗数"
   operation: "操作"

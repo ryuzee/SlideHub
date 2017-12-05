@@ -35,6 +35,7 @@ en:
   my_statistics: "My Statistics"
   my_slides: "My Slides"
   new_custom_file: "Upload new file"
+  no_permission: "You do not have any permission to access the page."
   number_of_comments: "# of Comments"
   number_of_conversion_failed: "# of Conversion Failed"
   operation: "Operation"

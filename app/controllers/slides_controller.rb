@@ -27,6 +27,7 @@ class SlidesController < ApplicationController
   before_action :set_related_slides, only: [:show]
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
   before_action :owner?, only: [:edit, :update, :destroy]
+  before_action :uploadable?, only: [:new, :create]
   before_action :duplicate_key?, only: [:create]
 
   protect_from_forgery
@@ -99,6 +100,10 @@ class SlidesController < ApplicationController
 
     def owner?
       redirect_to slide_path(@slide.id) if current_user.id != @slide.user_id
+    end
+
+    def uploadable?
+      redirect_to slides_path, flash: {warning: t(:no_permission)} unless @uploadable
     end
 
     def duplicate_key?

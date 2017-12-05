@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_category_data
+  before_action :set_uploadable
   before_action :signup_enabled!, if: :devise_controller?
 
   include ActsAsTaggableOn::TagsHelper
@@ -27,6 +28,11 @@ class ApplicationController < ActionController::Base
 
     def set_category_data
       @categories = Category.order('id asc')
+    end
+
+    def set_uploadable
+      @uploadable = user_signed_in?
+      @uploadable = false if user_signed_in? and !current_user.admin and CustomSetting['site.only_admin_can_upload'] == "1"
     end
 
     def signup_enabled!
