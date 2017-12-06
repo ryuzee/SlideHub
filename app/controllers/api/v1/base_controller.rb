@@ -1,4 +1,5 @@
 module Api
+  # :reek:UncommunicativeModuleName { enabled: false }
   module V1
     class BaseController < ApplicationController
       private

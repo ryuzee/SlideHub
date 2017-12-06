@@ -124,6 +124,7 @@ class Slide < ApplicationRecord
     get_php_serialized_data(self.transcript_url)
   end
 
+  # :reek:UtilityFunction: { enabled: false }
   def transcript_exist?(transcript)
     result = false
     if transcript.instance_of?(Array)

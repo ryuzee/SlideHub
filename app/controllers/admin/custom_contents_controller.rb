@@ -9,7 +9,6 @@ module Admin
     def update
       params.require(:settings).map do |param|
         data = param.to_unsafe_h
-        CustomSetting[data['var']] = data['value']
         setting = CustomSetting.find_by(var: data['var']) || CustomSetting.new(var: data['var'])
         setting.value = data['value']
         setting.save
@@ -19,15 +18,17 @@ module Admin
 
     private
 
+      # :reek:UtilityFunction: { enabled: false }
       def save_current
         keys = %w[custom_content.center_top custom_content.center_bottom custom_content.right_top custom_content.header_menus custom_content.css]
-        keys.each do |k|
-          setting = CustomSetting.find_by(var: k.to_s) || CustomSetting.new(var: k.to_s)
-          setting.value = CustomSetting[k]
+        keys.each do |key|
+          setting = CustomSetting.find_by(var: key.to_s) || CustomSetting.new(var: key.to_s)
+          setting.value = CustomSetting[key]
           setting.save
         end
       end
 
+      # :reek:UtilityFunction: { enabled: false }
       def clear_cache
         Rails.cache.clear
       end

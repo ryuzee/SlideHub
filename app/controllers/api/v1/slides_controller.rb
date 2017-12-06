@@ -21,6 +21,7 @@
 #  comments_count :integer          default(0), not null
 #
 module Api
+  # :reek:UncommunicativeModuleName { enabled: false }
   module V1
     class SlidesController < Api::V1::BaseController
       def index
