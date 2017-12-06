@@ -64,6 +64,7 @@ class Slide < ApplicationRecord
       limit(limit)
   end
 
+  # :reek:UncommunicativeVariableName { enabled: false }
   def self.featured_slides(limit = 10)
     ids = FeaturedSlide.order(created_at: 'desc').pluck(:slide_id)
     slides = self.published.
@@ -110,6 +111,7 @@ class Slide < ApplicationRecord
     "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/list.json"
   end
 
+  # :reek:UncommunicativeVariableName { enabled: false }
   def page_list
     len = num_of_pages.abs.to_s.length
     result = []
