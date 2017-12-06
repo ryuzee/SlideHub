@@ -104,7 +104,7 @@ describe 'Slide' do
       FactoryBot.create(:slide)
       slide = Slide.find(1)
       expect(slide.transcript).to eq(['Test'])
-      expect(slide.transcript_exist?(slide.transcript)).to eq(true)
+      expect(slide.transcript_exist?).to eq(true)
     end
 
     it 'can not be ritrieved because of 404' do
@@ -115,7 +115,7 @@ describe 'Slide' do
       FactoryBot.create(:slide)
       slide = Slide.find(1)
       expect(slide.transcript).to eq([])
-      expect(slide.transcript_exist?(slide.transcript)).to eq(false)
+      expect(slide.transcript_exist?).to eq(false)
     end
 
     it 'can be retrieved. however the result is empty' do
@@ -126,7 +126,7 @@ describe 'Slide' do
       )
       FactoryBot.create(:slide)
       slide = Slide.find(1)
-      expect(slide.transcript_exist?(slide.transcript)).to eq(false)
+      expect(slide.transcript_exist?).to eq(false)
     end
   end
 

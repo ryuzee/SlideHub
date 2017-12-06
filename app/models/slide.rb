@@ -64,6 +64,7 @@ class Slide < ApplicationRecord
       limit(limit)
   end
 
+  # :reek:UncommunicativeVariableName { enabled: false }
   def self.featured_slides(limit = 10)
     ids = FeaturedSlide.order(created_at: 'desc').pluck(:slide_id)
     slides = self.published.
@@ -89,6 +90,15 @@ class Slide < ApplicationRecord
       includes(:user)
   end
 
+  def send_convert_request
+    CloudConfig::SERVICE.send_message({ id: id, object_key: object_key }.to_json)
+  end
+
+  def delete_uploaded_files
+    CloudConfig::SERVICE.delete_slide(object_key)
+    CloudConfig::SERVICE.delete_generated_files(object_key)
+  end
+
   def thumbnail_url
     "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/thumbnail.jpg"
   end
@@ -101,6 +111,7 @@ class Slide < ApplicationRecord
     "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/list.json"
   end
 
+  # :reek:UncommunicativeVariableName { enabled: false }
   def page_list
     len = num_of_pages.abs.to_s.length
     result = []
@@ -112,10 +123,10 @@ class Slide < ApplicationRecord
   end
 
   def transcript
-    get_php_serialized_data(self.transcript_url)
+    @transcript ||= get_php_serialized_data(self.transcript_url)
   end
 
-  def transcript_exist?(transcript)
+  def transcript_exist?
     result = false
     if transcript.instance_of?(Array)
       transcript.each do |tran|

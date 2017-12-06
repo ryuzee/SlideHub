@@ -95,7 +95,7 @@ if @slide.tags.count > 0
       <!-- Transcript -->
       <div class="tab-pane fade in active" id="tab1">
       <% transcripts = @slide.transcript %>
-      <% show_tran = @slide.transcript_exist?(transcripts) %>
+      <% show_tran = @slide.transcript_exist? %>
       <% if show_tran %>
       <% page_count = 0 %>
         <div class="slide_description">

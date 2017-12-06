@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_category_data
   before_action :set_uploadable
-  before_action :signup_enabled!, if: :devise_controller?
+  before_action :signup_enabled?, if: :devise_controller?
 
   include ActsAsTaggableOn::TagsHelper
 
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
       @uploadable = false if user_signed_in? && !current_user.admin && CustomSetting['site.only_admin_can_upload'] == '1'
     end
 
-    def signup_enabled!
+    def signup_enabled?
       return unless request.get?
       if request.path == '/users/sign_up' && CustomSetting['site.signup_enabled'] != '1'
         raise ActionController::RoutingError, 'Not Found'
@@ -44,8 +44,8 @@ class ApplicationController < ActionController::Base
 
     def configure_permitted_parameters
       actions = [:sign_up, :account_update]
-      actions.each do |a|
-        devise_parameter_sanitizer.permit(a, keys: [:display_name, :biography, :avatar, :username])
+      actions.each do |action|
+        devise_parameter_sanitizer.permit(action, keys: [:display_name, :biography, :avatar, :username])
       end
     end
 end

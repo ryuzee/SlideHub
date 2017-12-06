@@ -32,6 +32,7 @@ ja:
   featured_slide_was_deleted: "注目のスライドを削除しました"
   featured_slide_was_added: "注目のスライドを設定しました"
   file: "ファイル"
+  key: "キー"
   latest: "最新"
   latest_slides: "最新のスライド"
   latest_published_slides: "最新の公開スライド"
@@ -80,4 +81,5 @@ ja:
   transcripts: "Transcript"
   user_list: "ユーザー一覧"
   upload_slide: "スライドのアップロード"
+  value: "値"
   view_all_slides: "全てのスライドを見る"

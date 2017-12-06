@@ -28,6 +28,7 @@
 #
 
 module Api
+  # :reek:UncommunicativeModuleName { enabled: false }
   module V1
     class UsersController < Api::V1::BaseController
       def show
