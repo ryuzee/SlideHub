@@ -5,7 +5,11 @@ class Dashboard
   # :reek:FeatureEnvy { enabled: false }
   def initialize
     slide_table = Slide.arel_table
-    @summary ||= Slide.select([slide_table[:page_view].sum.as('page_view'), slide_table[:download_count].sum.as('download_count'), slide_table[:embedded_view].sum.as('embedded_view')]).all[0]
+    @summary ||= Slide.select(
+      [slide_table[:page_view].sum.as('page_view'),
+       slide_table[:download_count].sum.as('download_count'),
+       slide_table[:embedded_view].sum.as('embedded_view')],
+    ).all[0]
   end
 
   def slide_count
