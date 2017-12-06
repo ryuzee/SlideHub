@@ -8,8 +8,8 @@ class PlayerController < ApplicationController
       @slide.increment!(:embedded_view).increment!(:total_view)
     end
     @start_position = slide_position
-    s = render_to_string layout: 'javascript', collection: @slide
-    render plain: s, layout: false, content_type: 'application/javascript'
+    content = render_to_string layout: 'javascript', collection: @slide
+    render plain: content, layout: false, content_type: 'application/javascript'
   end
 
   private

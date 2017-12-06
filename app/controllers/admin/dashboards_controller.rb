@@ -6,11 +6,11 @@ module Admin
       @conversion_failed_count = Slide.failed.count
       @comment_count = Comment.count
 
-      s = Slide.arel_table
-      rec = Slide.select([s[:page_view].sum.as('page_view'), s[:download_count].sum.as('download_count'), s[:embedded_view].sum.as('embedded_view')]).all[0]
-      @page_view = rec.page_view
-      @download_count = rec.download_count
-      @embedded_view = rec.embedded_view
+      slide_table = Slide.arel_table
+      summary = Slide.select([slide_table[:page_view].sum.as('page_view'), slide_table[:download_count].sum.as('download_count'), slide_table[:embedded_view].sum.as('embedded_view')]).all[0]
+      @page_view = summary.page_view
+      @download_count = summary.download_count
+      @embedded_view = summary.embedded_view
 
       @latest_slides = Slide.latest_slides
       @popular_slides = Slide.popular_slides

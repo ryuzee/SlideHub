@@ -6,8 +6,8 @@ class SearchController < ApplicationController
     ransack_params.delete('tag_search') if ransack_params.present?
 
     table = tag_search ? Slide.tagged_with(tag_search, any: true) : Slide
-    @q = table.search(ransack_params)
-    @slides = @q.result(distinct: true).
+    @search = table.search(ransack_params)
+    @slides = @search.result(distinct: true).
               published.latest.
               includes(:user).
               paginate(page: params[:page], per_page: 20)
