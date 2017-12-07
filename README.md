@@ -1,4 +1,4 @@
-# SlideHub [![Circle CI](https://circleci.com/gh/ryuzee/SlideHub.svg?style=svg)](https://circleci.com/gh/ryuzee/SlideHub)  [![Code Climate](https://codeclimate.com/github/ryuzee/SlideHub/badges/gpa.svg)](https://codeclimate.com/github/ryuzee/SlideHub)  [![Test Coverage](https://codeclimate.com/github/ryuzee/SlideHub/badges/coverage.svg)](https://codeclimate.com/github/ryuzee/SlideHub/coverage)
+# SlideHub [![Circle CI](https://circleci.com/gh/ryuzee/SlideHub.svg?style=svg)](https://circleci.com/gh/ryuzee/SlideHub)  [![Test Coverage](https://codeclimate.com/github/ryuzee/SlideHub/badges/coverage.svg)](https://codeclimate.com/github/ryuzee/SlideHub/coverage)
 
 **This is an open source slidesharing application with Azure / AWS.**
 
