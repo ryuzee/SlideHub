@@ -40,10 +40,11 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @slides = user_slide_with_paginate(params[:id])
+    user_id = params[:id]
+    @user = User.find(user_id)
+    @slides = user_slide_with_paginate(user_id)
     @tags = Slide.published.
-            owner(params[:id]).
+            owner(user_id).
             tag_counts_on(:tags).order('count DESC')
     respond_to do |format|
       format.html {}
