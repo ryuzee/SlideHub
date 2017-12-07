@@ -174,8 +174,6 @@ GEM
       sexp_processor
     codeclimate-engine-rb (0.4.0)
       virtus (~> 1.0)
-    codeclimate-test-reporter (1.0.8)
-      simplecov (<= 0.13)
     coderay (1.1.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -549,7 +547,6 @@ DEPENDENCIES
   bullet
   byebug
   capybara
-  codeclimate-test-reporter
   coffee-rails
   counter_culture
   database_cleaner

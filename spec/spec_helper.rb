@@ -1,5 +1,4 @@
 require 'simplecov'
-require 'codeclimate-test-reporter'
 require 'webmock/rspec'
 require 'shoulda/matchers'
 WebMock.allow_net_connect!
