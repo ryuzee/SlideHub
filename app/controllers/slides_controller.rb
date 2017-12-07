@@ -21,6 +21,7 @@
 #  comments_count :integer          default(0), not null
 #
 
+# :reek:TooManyInstanceVariables { enabled: false }
 class SlidesController < ApplicationController
   include SlideUtil
   before_action :set_slide, only: [:edit, :update, :show, :destroy]
@@ -33,9 +34,7 @@ class SlidesController < ApplicationController
   protect_from_forgery
 
   def index
-    @latest_slides = Slide.latest_slides(8)
-    @popular_slides = Slide.popular_slides(8)
-    @featured_slides = Slide.featured_slides(4)
+    @slide_index = SlideIndex.new
   end
 
   def show

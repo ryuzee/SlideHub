@@ -38,7 +38,7 @@ RSpec.describe SlidesController, type: :controller do
       @latest_slides = create_list(:slide, 2)
       get :index
       expect(response.status).to eq(200)
-      expect(assigns(:latest_slides).to_a).to eq(@latest_slides)
+      expect(assigns(:slide_index).latest_slides).to eq(@latest_slides)
     end
 
     it 'returns collect resource strings' do

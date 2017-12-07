@@ -1,12 +1,12 @@
 <% content_for :title, t(:top_page) %>
 
-<% if @featured_slides.count > 0 %>
+<% if @slide_index.featured_slides.count > 0 %>
 <div class="row" id="featured">
   <div class="col-md-12">
     <%- model_class = Slide -%>
     <h3><%=t :featured_slides %></h3>
 
-    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @featured_slides %>
+    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.featured_slides %>
 
   </div>
 </div>
@@ -18,7 +18,7 @@
     <%- model_class = Slide -%>
     <h3><%=t :popular_slides %>&nbsp;&nbsp;<small><a href="/popular"><%= t :more_slides %></a></small></h3>
 
-    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @popular_slides %>
+    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.popular_slides %>
 
   </div>
 </div>
@@ -28,7 +28,7 @@
     <%- model_class = Slide -%>
     <h3><%=t :latest_slides %>&nbsp;&nbsp;<small><a href="/latest"><%= t :more_slides %></a></small></h3>
 
-    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @latest_slides %>
+    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.latest_slides %>
 
   </div>
 </div>
