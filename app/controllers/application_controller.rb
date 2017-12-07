@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
 
   private
 
+    # :reek:FeatureEnvy { enabled: false }
     def set_locale
       locale = locale_from_accept_language
       I18n.locale = (I18n.available_locales.include?(locale.to_sym) ? locale.to_sym : I18n.default_locale)

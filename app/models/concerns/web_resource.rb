@@ -2,6 +2,7 @@ require 'net/http'
 require 'uri'
 require 'json'
 
+# :reek:DataClump { enabled: false }
 module WebResource
   extend ActiveSupport::Concern
 
@@ -29,6 +30,7 @@ module WebResource
     end
   end
 
+  # :reek:FeatureEnvy { enabled: false }
   def get_contents(location, limit = 10)
     raise ArgumentError, 'too many HTTP redirects' if limit.zero?
     uri = URI.parse(location)
@@ -42,8 +44,7 @@ module WebResource
       when Net::HTTPSuccess
         response.body
       when Net::HTTPRedirection
-        location = response['location']
-        get_contents(location, limit - 1)
+        get_contents(response['location'], limit - 1)
       else
         false
       end

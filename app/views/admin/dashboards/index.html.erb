@@ -7,7 +7,7 @@
         <span class="info-box-icon bg-aqua"><i class="fa fa-file-image-o"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"># of Slides</span>
-        <span class="info-box-number"><%= @slide_count %></span>
+        <span class="info-box-number"><%= @dashboard.slide_count %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
@@ -16,7 +16,7 @@
         <span class="info-box-icon bg-red"><i class="ion ion-ios-people-outline"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"># of Users</span>
-        <span class="info-box-number"><%= @user_count %></span>
+        <span class="info-box-number"><%= @dashboard.user_count %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
@@ -26,7 +26,7 @@
         <span class="info-box-icon bg-green"><i class="ion ion-eye"></i></span>
       <div class="info-box-content">
           <span class="info-box-text"># of Page View</span>
-          <span class="info-box-number"><%= @page_view %></span>
+          <span class="info-box-number"><%= @dashboard.page_view %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
@@ -35,7 +35,7 @@
         <span class="info-box-icon bg-yellow"><i class="ion ion-ios-download-outline"></i></span>
       <div class="info-box-content">
           <span class="info-box-text"># of Download</span>
-          <span class="info-box-number"><%= @download_count %></span>
+          <span class="info-box-number"><%= @dashboard.download_count %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
@@ -52,9 +52,9 @@
         </thead>
         <tbody>
             <tr>
-                <td><%= @conversion_failed_count %>&nbsp;</td>
-                <td><%= @comment_count %>&nbsp;</td>
-                <td><%= @embedded_view %>&nbsp;</td>
+                <td><%= @dashboard.conversion_failed_count %>&nbsp;</td>
+                <td><%= @dashboard.comment_count %>&nbsp;</td>
+                <td><%= @dashboard.embedded_view %>&nbsp;</td>
             </tr>
         </tbody>
     </table>
@@ -83,7 +83,7 @@
               </tr>
             </thead>
             <tbody>
-            <% @latest_slides.each do |slide| %>
+            <% @dashboard.latest_slides.each do |slide| %>
               <tr>
                 <td><a href="/slides/<%= slide.id %>"><%= slide.id %></a></td>
                 <td><%= slide.name %></td>
@@ -121,7 +121,7 @@
               </tr>
             </thead>
             <tbody>
-            <% @popular_slides.each do |slide| %>
+            <% @dashboard.popular_slides.each do |slide| %>
               <tr>
                 <td><a href="/slides/<%= slide.id %>"><%= slide.id %></a></td>
                 <td><%= slide.name %></td>

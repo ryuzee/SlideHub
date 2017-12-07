@@ -74,6 +74,7 @@ class Slide < ApplicationRecord
     ids.collect { |id| slides.detect { |x| x.id == id.to_i } }
   end
 
+  # :reek:UnusedParameters { enabled: false }
   def self.ransackable_attributes(auth_object = nil)
     (column_names + ['tag_search']) + _ransackers.keys
   end

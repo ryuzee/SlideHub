@@ -8,8 +8,9 @@ module CustomLinksHelper
       json.each do |elm|
         result += "<li>#{link_to elm['label'], elm['url']}</li>"
       end
-    ensure
-      return result
+    rescue
+      result = ''
     end
+    result
   end
 end
