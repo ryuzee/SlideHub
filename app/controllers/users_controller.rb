@@ -32,10 +32,11 @@ class UsersController < ApplicationController
   before_action :username_to_id, only: [:show, :embedded]
 
   def index
-    @user = User.find(current_user.id)
-    @slides = user_slide_with_paginate(current_user.id)
+    user_id = current_user.id
+    @user = User.find(user_id)
+    @slides = user_slide_with_paginate(user_id)
     @tags = Slide.
-            owner(current_user.id).
+            owner(user_id).
             tag_counts_on(:tags).order('count DESC')
   end
 
