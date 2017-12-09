@@ -506,3 +506,11 @@ _::-webkit-full-page-media, _:future, :root .bx-wrapper .bx-viewport {
 .slidehub_body .field_with_errors .form-control {
   border: 1px solid red;
 }
+
+
+@media only screen and (max-width: 760px) {
+  .slidehub_body div#slide_div_box2 {
+    padding-left :0px !important;
+    padding-right: 0px !important;
+  }
+}
