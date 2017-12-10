@@ -52,7 +52,7 @@ module Azure
     end
 
     class DummyBlobService
-      def create_block_blob(container, key, content)
+      def create_block_blob(container, key, content, options = {})
         nil
       end
 
