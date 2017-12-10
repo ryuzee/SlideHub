@@ -10,14 +10,16 @@
       <% end %>
 
       <div class="<%= column_class %>" style="padding:4px;">
-        <div class="slidecard">
+        <div class="panel slidecard">
           <div class="slidecard-image">
-          <a href="<%= slide_path(slide.id) %>"><img src="<%= image_url %>" class="img-responsive" style="width:100%" /></a>
+            <a href="<%= slide_path(slide.id) %>"><img src="<%= image_url %>" class="img-responsive" style="width:100%" /></a>
           </div>
           <div class="slidecard-content">
             <div class="slidecard-basic-info">
-              <div class="slidecard-title"><span class="no_decoration"><a href="<%= slide_path(slide.id) %>"><%= strip_tags(slide.name).truncate(40) %></a></span></div>
-            <div class="slidecard-description"><%= strip_tags(slide.description).truncate(80) %></div>
+              <div class="slidecard-title">
+                <span class="no_decoration"><a href="<%= slide_path(slide.id) %>"><%= strip_tags(slide.name).truncate(40) %></a></span>
+              </div>
+              <div class="slidecard-description"><%= strip_tags(slide.description).truncate(80) %></div>
             </div>
             <div class="slidecard-information">
               <div class="h5" style="margin-top:2px;margin-bottom:2px;">

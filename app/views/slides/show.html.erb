@@ -79,13 +79,20 @@ if @slide.tags.count > 0
       </div>
     <% end %>
 
-   <div id="slide_div_box" style="padding:20px;">
+   <!--
+   <div class="panel" id="slide_div_box" style="padding:20px;">
+   -->
+   <div class="panel panel-default" style="margin-top:20px">
+    <!--
     <div class="slide_detail_row">
-        <span class="h3"><%= strip_tags @slide.name %></span>
-      <p><%= simple_format(h(@slide.description)) %></p>
+    -->
+    <div class="panel-heading">
+        <h2 class="h4"><%= strip_tags @slide.name %></h2>
+      <div class="h5"><%= simple_format(h(@slide.description)) %></div>
     </div>
 
     <!--tab-->
+    <div class="panel-body">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#tab1" data-toggle="tab"><%= t :transcripts %></a></li>
       <li><a href="#tab2" data-toggle="tab"><%= t 'activerecord.models.comment' %></a></li>
@@ -120,7 +127,7 @@ if @slide.tags.count > 0
         <a name="comment"></a>
         <% if not @posted_comments.empty? %>
           <% @posted_comments.each do |c| %>
-            <div class="media comment_post">
+            <div class="panel-body media comment_post">
               <div class="pull-left avatar50">
                 <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
               </div>
@@ -146,6 +153,7 @@ if @slide.tags.count > 0
           </div>
         <% end %>
       </div>
+    </div>
     </div>
   </div>
 </div>
@@ -191,16 +199,22 @@ if @slide.tags.count > 0
   <% if @related_slides.count > 0 %>
     <!-- Default panel contents -->
     <h3 class="h4"><%= t(:related_slides) %></h3>
-    <div style="border:1px solid #ccc;padding-bottom:0px;">
-    <ul class="thumbnail_with_text">
-    <% @related_slides.each do |s| %>
-    <li>
-      <a href="<%= slide_path(s.id) %>"><img src="<%= s.thumbnail_url %>"></a>
-      <h3 class="h5"><span class="no_decoration"><a href="<%= slide_path(s.id) %>"><%= strip_tags s.name.truncate(24) %></a></span></h3>
-      <p class="h6"><%= s.created_at %> by <a href="/<%= s.user.username %>"><%= strip_tags s.user.display_name %></a></p>
-    </li>
-    <% end %>
-    </ul>
+    <div class="panel panel-default">
+      <ul class="list-group">
+        <% @related_slides.each do |s| %>
+        <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="<%= slide_path(s.id) %>"><img src="<%= s.thumbnail_url %>" class="img-responsive" style="border:1px solid #ccc" /></a>
+          </div>
+          <div class="col-md-6">
+            <h3 class="h6"><span class="no_decoration"><a href="<%= slide_path(s.id) %>"><%= strip_tags s.name.truncate(24) %></a></span></h3>
+            <p class="h6"><%= s.created_at %> by <a href="/<%= s.user.username %>"><%= strip_tags s.user.display_name %></a></p>
+          </div>
+        </div>
+        </li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 </div>

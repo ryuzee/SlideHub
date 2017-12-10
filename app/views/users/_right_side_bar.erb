@@ -1,13 +1,15 @@
-<div class="profile-sidebar">
-  <div class="profile-userpic">
-    <%= image_tag(user.avatar.url(:medium), class: 'img-responsive') %>
-  </div>
-  <div class="profile-usertitle">
-    <div class="profile-usertitle-name">
-      <%= link_to strip_tags(user.display_name), "/#{user.username}" %>
+<div class="panel panel-default profile-sidebar">
+  <div class="panel-body">
+    <div class="profile-userpic">
+      <%= image_tag(user.avatar.url(:medium), class: 'img-responsive') %>
     </div>
-    <div class="profile-usertitle-job">
-      <%= strip_tags user.biography %>
+    <div class="profile-usertitle">
+      <div class="profile-usertitle-name">
+        <%= link_to strip_tags(user.display_name), "/#{user.username}" %>
+      </div>
+      <div class="profile-usertitle-job">
+        <%= strip_tags user.biography %>
+      </div>
     </div>
   </div>
 </div>
