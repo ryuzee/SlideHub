@@ -20,7 +20,7 @@ module Admin
 
       # :reek:UtilityFunction: { enabled: false }
       def save_current
-        keys = %w[site.display_login_link site.only_admin_can_upload site.signup_enabled site.name site.header_inverse site.favicon site.footer]
+        keys = %w[site.display_login_link site.only_admin_can_upload site.signup_enabled site.name site.header_inverse site.favicon site.footer site.theme]
         keys.each do |key|
           setting = CustomSetting.find_by(var: key.to_s) || CustomSetting.new(var: key.to_s)
           setting.value = CustomSetting[key]

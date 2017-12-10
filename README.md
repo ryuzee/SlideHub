@@ -7,6 +7,8 @@ If you like or use this project, please provide feedback to author - Star it ★
 The previous version of SlideHub was made with CakePHP. And this version is a successor of the previous version and is made with Ruby on Rails 5.
 ![Screenshot](docs/images/capture1.png)
 
+You can see other screenshot [here](docs/images/capture2.png).
+
 ## Features
 
 - Uploading slides (pptx, pdf)
