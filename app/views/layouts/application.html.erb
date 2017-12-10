@@ -15,6 +15,7 @@
 
     <% CustomSetting['site.theme'] = 'default' unless %w[default white dark].include?(CustomSetting['site.theme']) %>
     <link rel="stylesheet" href="/themes/<%= CustomSetting['site.theme'] %>/bootstrap.css" />
+    <link rel="stylesheet" href="/themes/<%= CustomSetting['site.theme'] %>/custom.css" />
     <%= stylesheet_link_tag "application", :media => "all" %>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/custom/override.css" />
