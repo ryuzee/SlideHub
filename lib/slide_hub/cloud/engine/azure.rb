@@ -84,7 +84,9 @@ module SlideHub
           files.each do |f|
             if File.exist?(f)
               content = File.open(f, 'rb', &:read)
-              bs.create_block_blob(container, "#{prefix}/#{File.basename(f)}", content)
+              require 'mime/types'
+              content_type = MIME::Types.type_for(File.extname(f))[0].to_s
+              bs.create_block_blob(container, "#{prefix}/#{File.basename(f)}", content, { content_type: content_type })
             end
           end
         end
