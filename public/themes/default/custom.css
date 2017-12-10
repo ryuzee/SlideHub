@@ -6,3 +6,61 @@ body.slidehub_body {
   line-height: 1.42857;
   background-image: url(/oss/images/background.png);
 }
+
+/** custom **/
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 50px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 50px;
+  background-color: #363636;
+}
+
+.footer div {
+  background-color: #363636;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 50px 15px 0;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
+}
+
+@media only screen and (min-width: 992px) {
+    .footer {
+        height: auto;
+    }
+}
+
+@media only screen and (max-width: 760px) {
+    .footer {
+        height: auto;
+    }
+}
