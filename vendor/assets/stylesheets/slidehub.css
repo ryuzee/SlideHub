@@ -37,14 +37,6 @@ body.slidehub_body {
   max-width:1024px; background-color:transparent; padding-top: 60px; margin-top:1em; border:none;
 }
 
-.slidehub_body img.slide_thumbnail {
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border:1px solid #999;
-  margin-bottom:4px;
-}
-
 .slidehub_body div.row a,
 .slidehub_body div.row a:hover,
 .slidehub_body div.row a:visited,
@@ -57,10 +49,6 @@ body.slidehub_body {
 .slidehub_body span.no_decoration a:visited,
 .slidehub_body span.no_decoration a:active {
   text-decoration: none;
-}
-
-.slidehub_body .bottom_margin {
-  margin-bottom: 4px;
 }
 
 .slidehub_body .bottom_padding_20 {
@@ -86,22 +74,6 @@ body.slidehub_body {
 
 .slidehub_body div.slide_detail_row {
   /** reserve **/
-}
-
-.slidehub_body div.related_slide_row {
-  border:1px solid #ccc;
-  padding:8px;
-}
-
-.slidehub_body img.related_slide_thumbnail {
-  border:1px solid #999;
-  margin-right:4px;
-  margin-bottom:4px;
-  float:left;
-}
-
-.slidehub_body div.bordered_box {
-  padding:8px;
 }
 
 /* Show slide vertically
@@ -223,7 +195,7 @@ body.slidehub_body {
 }
 
 .slidehub_body .slidecard .slidecard-reveal p{
-  margin:20px ;
+  margin:20px;
 }
 
 /* Avatar styles
@@ -321,36 +293,6 @@ body.slidehub_body {
   padding-right: 10px;
 }
 
-/* Related Slide styles
--------------------------------------------------- */
-.slidehub_body ul.thumbnail_with_text {
-  margin-left: 0px;
-  padding-left:0px;
-  margin-bottom:0px;
-  list-style-type: none;
-  background-color: #fff;
-}
-
-.slidehub_body ul.thumbnail_with_text li img {
-  float: left;
-  margin: 0 15px 0 0;
-  width: 120px;
-  border:1px solid #ccc;
-}
-
-.slidehub_body ul.thumbnail_with_text li p {
-}
-
-.slidehub_body ul.thumbnail_with_text li {
-  padding: 10px;
-  overflow: auto;
-}
-
-.slidehub_body ul.thumbnail_with_text li:hover {
-  background: #ddd;
-  cursor: pointer;
-}
-
 /* Share Button styles
 -------------------------------------------------- */
 .slidehub_body ul.share-buttons{
@@ -368,7 +310,6 @@ body.slidehub_body {
 .tag2 { font-size: 1.2em; }
 .tag3 { font-size: 1.4em; }
 .tag4 { font-size: 1.6em; }
-
 
 /* Error styles
 -------------------------------------------------- */
