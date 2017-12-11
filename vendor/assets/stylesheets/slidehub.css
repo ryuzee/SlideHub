@@ -23,28 +23,26 @@ body.slidehub_body {
   line-height: 1.2;
 }
 
-.slidehub_body img.slide_thumbnail {
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border:1px solid #999;
-  margin-bottom:4px;
-}
-
-.slidehub_body div#prev,
-.slidehub_body div#next,
-.slidehub_body div#pager {
-  display: inline;
-  font-weight:bold;
-  font-color:#fff !important;
-}
-
 .slidehub_body a,
 .slidehub_body a:hover,
 .slidehub_body a:visited,
 .slidehub_body a:active {
   overflow: hidden;
   outline: none;
+}
+
+/* Main Area styles
+-------------------------------------------------- */
+.slidehub_body #main_container {
+  max-width:1024px; background-color:transparent; padding-top: 60px; margin-top:1em; border:none;
+}
+
+.slidehub_body img.slide_thumbnail {
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border:1px solid #999;
+  margin-bottom:4px;
 }
 
 .slidehub_body div.row a,
@@ -61,26 +59,16 @@ body.slidehub_body {
   text-decoration: none;
 }
 
-.slidehub_body ul.share-buttons{
-  list-style: none;
-  padding: 0;
+.slidehub_body .bottom_margin {
+  margin-bottom: 4px;
 }
 
-.slidehub_body ul.share-buttons li{
-  display: inline;
+.slidehub_body .bottom_padding_20 {
+  padding-bottom: 20px;
 }
 
-@-moz-document url-prefix() {
-  div.slider {
-     padding-right: 1px;
-  }
-}
-
-_::-webkit-full-page-media, _:future {
-  /** reserve **/
-  padding-left:0px;
-}
-
+/* Slide Item Area styles
+-------------------------------------------------- */
 .slidehub_body div#slide_div_box {
   background-color: #fff !important;
   border:1px solid #ccc;
@@ -112,27 +100,12 @@ _::-webkit-full-page-media, _:future {
   float:left;
 }
 
-.slidehub_body div#slide_progress {
-  float: right;
-  width: 200px;
-  height: 6px;
-  margin-right: 10px;
-  margin-top: 8px;
-}
-
 .slidehub_body div.bordered_box {
   padding:8px;
 }
 
-.slidehub_body .bottom_margin {
-  margin-bottom: 4px;
-}
-
-.slidehub_body .bottom_padding_20 {
-  padding-bottom: 20px;
-}
-
-/** Show slide vertically **/
+/* Show slide vertically
+-------------------------------------------------- */
 .slidehub_body div.vertical_slide_box {
   border:1px solid #000;
   margin-bottom:0px;
@@ -144,15 +117,6 @@ _::-webkit-full-page-media, _:future {
 
 .slidehub_body div.icon_right span {
   color: #bbb;
-}
-
-.slidehub_body #main_container {
-  max-width:1024px; background-color:transparent; padding-top: 60px; margin-top:1em; border:none;
-}
-
-.slidehub_body div.alert {
-  margin-top:20px !important;
-  margin-bottom:0px !important;
 }
 
 /* Slide Card styles
@@ -387,6 +351,16 @@ _::-webkit-full-page-media, _:future {
   cursor: pointer;
 }
 
+/* Share Button styles
+-------------------------------------------------- */
+.slidehub_body ul.share-buttons{
+  list-style: none;
+  padding: 0;
+}
+
+.slidehub_body ul.share-buttons li{
+  display: inline;
+}
 
 /* Tag styles
 -------------------------------------------------- */
@@ -408,6 +382,11 @@ _::-webkit-full-page-media, _:future {
 
 .slidehub_body .field_with_errors .form-control {
   border: 1px solid red;
+}
+
+.slidehub_body div.alert {
+  margin-top:20px !important;
+  margin-bottom:0px !important;
 }
 
 /* Narrow Window styles
