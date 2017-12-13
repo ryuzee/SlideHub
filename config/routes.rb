@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'slides/popular' => 'popular_slides#index' # backward compatibility
   get 'page_count/:id' => 'slide_page_count#show'
 
-  get 'player/:id' => 'player#show'
+  get 'player/:id' => 'player#show', as: :player
   get 'player/:id/:page' => 'player#show'
   get 'html_player/:id' => 'html_player#show'
   get 'slides/embedded/:id' => 'player#show'
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get 'slides/:id/embedded/:page' => 'player#show'
 
   get 'download/:id' => 'slide_download#show'
-  get 'slides/:id/download' => 'slide_download#show'
+  get 'slides/:id/download' => 'slide_download#show', as: :download_slide
   get 'slides/download/:id' => 'slide_download#show'
 
   devise_for :users
@@ -34,10 +34,14 @@ Rails.application.routes.draw do
 
   resources :categories, only: [:show]
 
-  get ':username' => 'users#show'
-  get ':username/statistics' => 'users#statistics'
-  get ':username/embedded' => 'users#embedded'
+  require 'username_url_constrainer'
+  constraints(SlideHub::UsernameUrlConstrainer.new) do
+    get ':username' => 'users#show', as: :user_by_username
+    get ':username/statistics' => 'users#statistics', as: :statistics_by_username
+    get ':username/embedded' => 'users#embedded', as: :user_embedded_by_username
+  end
 
+  get 'statistics' => 'statistics#index'
   get 'statistics/index' => 'statistics#index'
 
   namespace :admin do
@@ -52,7 +56,7 @@ Rails.application.routes.draw do
       get 'edit', on: :collection
       post 'update', on: :collection
     end
-    get 'slides/:id/download' => 'slides#download'
+    get 'slides/:id/download' => 'slides#download', as: :download_slide
 
     resources :users do
       get 'index', on: :collection
@@ -62,12 +66,12 @@ Rails.application.routes.draw do
 
     resources :custom_contents do
       get 'index', on: :collection
-      post 'update', on: :collection
+      post 'update', on: :collection, as: :update
     end
 
     resources :site_settings do
       get 'index', on: :collection
-      post 'update', on: :collection
+      post 'update', on: :collection, as: :update
     end
 
     get 'custom_files/index' => 'custom_files#index'

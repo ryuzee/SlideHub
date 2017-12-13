@@ -14,9 +14,9 @@ end
 <div class="vertical_slide_box">
   <a name="img-<%= count-1 %>"></a>
   <% if count <= 2 %>
-    <img class="lazy img-responsive" src="<%= u %>" />
+    <%= image_tag u, class: "lazy img-responsive" %>
   <% else %>
-      <img class="lazy img-responsive" src="/oss/images/spacer640x480.png" data-original="<%= u %>" />
+    <%= image_tag "/oss/images/spacer640x480.png", class: "lazy img-responsive", data: { original: u } %>
   <% end %>
 </div>
 <div class="icon_right">
@@ -24,9 +24,9 @@ end
 </div>
 <% end %>
 <% elsif slide.convert_status < 0 %>
-    <img class="lazy img-responsive" src="/oss/images/failed_to_convert.jpg" />
+    <%= image_tag "/oss/images/failed_to_convert.jpg", class: "lazy img-responsive" %>
 <% else %>
-    <img class="lazy img-responsive" src="/oss/images/converting.jpg" />
+    <%= image_tag "/oss/images/converting.jpg", class: "lazy img-responsive" %>
 <% end %>
 
 <script type="text/javascript">

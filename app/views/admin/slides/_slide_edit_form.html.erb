@@ -1,6 +1,6 @@
-<link rel="stylesheet" type="text/css" href="/assets/bootstrap-datetimepicker.min.css">
-<script src="/assets/moment.js"></script>
-<script src="/assets/bootstrap-datetimepicker.min.js"></script>
+<%= stylesheet_link_tag "/assets/bootstrap-datetimepicker.min.css" %>
+<%= javascript_include_tag "/assets/moment.js" %>
+<%= javascript_include_tag "/assets/bootstrap-datetimepicker.min.js" %>
 <script type="text/javascript">
 $(function(){
   $('.datetimepicker').datetimepicker({
@@ -13,18 +13,17 @@ $(function(){
 });
 </script>
 
-<%#= form_for slide, html: { method: "post", :class => "form-horizontal slide" }, :url => {:controller => :slides, :action => :update } do |f| %>
-  <%= form_for slide, :html => { :class => "form-horizontal slide" }, :url => "/admin/slides/#{slide.id}"  do |f| %>
-    <% if slide.errors.any? %>
+<%= form_for slide, :html => { :class => "form-horizontal slide" }, :url => admin_slides_path(slide.id)  do |f| %>
+  <% if slide.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
         <h3 class="panel-title"><%= pluralize(slide.errors.count, "error") %> prohibited this slide from being saved:</h3>
       </div>
       <div class="panel-body">
         <ul>
-        <% slide.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
+          <% slide.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
         </ul>
       </div>
     </div>
@@ -157,6 +156,6 @@ $(function(){
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            slides_path, :class => 'btn btn-default' %>
+    slides_path, :class => 'btn btn-default' %>
 
 <% end %>

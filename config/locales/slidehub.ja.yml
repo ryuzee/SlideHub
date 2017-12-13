@@ -22,6 +22,7 @@ ja:
   description: "説明"
   display_name: "表示名"
   download_slide: "スライドのダウンロード"
+  downloads: "ダウンロード数"
   edit: "編集"
   edit_slide: "スライドの編集"
   edit_user: "ユーザーの編集"

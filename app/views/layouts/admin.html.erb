@@ -8,28 +8,28 @@
     <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: CustomSetting['site.name'], reverse: true %>
     <%= display_meta_tags %>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" type="text/css" href="/mc/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/mc/css/AdminLTE.min.css?<%= Time.now.strftime('%Y%m%d%H%M%S') %>">
-    <link rel="stylesheet" type="text/css" href="/mc/css/skins/skin-blue.min.css">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" type="text/css" href="/mc/css/admin_custom.css">
+    <%= stylesheet_link_tag "/mc/css/bootstrap.min.css" %>
+    <%= stylesheet_link_tag "/mc/css/AdminLTE.min.css" %>
+    <%= stylesheet_link_tag "/mc/css/skins/skin-blue.min.css" %>
+    <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" %>
+    <%= stylesheet_link_tag "https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" %>
+    <%= stylesheet_link_tag "/mc/css/admin_custom.css" %>
     <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
     <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
     <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
     <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <%= javascript_include_tag "https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js" %>
+      <%= javascript_include_tag "https://oss.maxcdn.com/respond/1.4.2/respond.min.js" %>
     <![endif]-->
     <!-- REQUIRED JS SCRIPTS -->
     <!-- jQuery 2.1.4 -->
-    <script src="/mc/js/jQuery-2.1.4.min.js"></script>
+    <%= javascript_include_tag "/mc/js/jQuery-2.1.4.min.js" %>
     <!-- Bootstrap 3.3.5 -->
-    <script src="/mc/js/bootstrap.min.js"></script>
+    <%= javascript_include_tag "/mc/js/bootstrap.min.js" %>
     <!-- AdminLTE App -->
-    <script src="/mc/js/app.min.js"></script>
+    <%= javascript_include_tag "/mc/js/app.min.js" %>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -38,7 +38,7 @@
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="/admin/dashboards/index" class="logo">
+        <a href="<%= admin_dashboards_path %>" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>M</b>C</span>
           <!-- logo for regular state and mobile devices -->
@@ -66,19 +66,19 @@
                   <!-- Menu Body -->
                   <li class="user-body">
                     <div class="col-xs-6 text-center">
-                      <a href="/statistics/index"><%= t(:my_statistics) %></a>
+                      <%= link_to t(:my_statistics), statistics_index_path %>
                     </div>
                     <div class="col-xs-6 text-center">
-                        <a href="/users/<%= current_user.id %>"><%= t(:my_slides) %></a>
+                      <%= link_to t(:my_slides), user_by_username_path(username: current_user.username) %>
                     </div>
                   </li>
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a class="btn btn-default btn-flat" href="/users/edit/"><%= t(:my_account) %></a>
+                      <%= link_to t(:my_account), edit_user_registration_path, :class => "btn btn-default btn-flat" %>
                     </div>
                     <div class="pull-right">
-                      <a class="btn btn-default btn-flat" href="/users/sign_out"><%= t(:logout) %></a>
+                      <%= link_to t(:logout), destroy_user_session_path, :class => "btn btn-default btn-flat" %>
                     </div>
                   </li>
                 </ul>
@@ -94,7 +94,7 @@
         <section class="sidebar">
 
           <!-- search form (Optional) -->
-          <form action="/admin/slides/index" method="get" class="sidebar-form">
+          <form action="<%= admin_slides_path %>" method="get" class="sidebar-form">
             <div class="input-group">
               <input type="text" name="q[name_cont]" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
@@ -107,23 +107,23 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
             <li class="header">Admin Menu</li>
-            <li><a href="/admin/dashboards/index"><i class="fa fa-link"></i> <span><%= t :admin_dashboard %></span></a></li>
-            <li><a href="/admin/slides/"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
-            <li><a href="/admin/featured_slides/"><i class="fa fa-link"></i> <span><%= t(:featured_slides) %></span></a></li>
-            <li><a href="/admin/users/"><i class="fa fa-link"></i> <span><%= t(:user_list) %></span></a></li>
-            <li><a href="/admin/site_settings/"><i class="fa fa-link"></i> <span><%= t(:site_settings) %></span></a></li>
-            <li><a href="/admin/custom_contents/"><i class="fa fa-link"></i> <span><%= t(:custom_contents_settings) %></span></a></li>
-            <li><a href="/admin/logs/index"><i class="fa fa-link"></i> <span><%= t(:logs) %></span></a></li>
-            <li><a href="/admin/custom_files/index"><i class="fa fa-link"></i> <span><%= t(:custom_files) %></span></a></li>
+            <li><a href="<%= admin_dashboards_path %>"><i class="fa fa-link"></i> <span><%= t :admin_dashboard %></span></a></li>
+            <li><a href="<%= admin_slides_path %>"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
+            <li><a href="<%= admin_featured_slides_path %>"><i class="fa fa-link"></i> <span><%= t(:featured_slides) %></span></a></li>
+            <li><a href="<%= admin_users_path %>"><i class="fa fa-link"></i> <span><%= t(:user_list) %></span></a></li>
+            <li><a href="<%= admin_site_settings_path %>"><i class="fa fa-link"></i> <span><%= t(:site_settings) %></span></a></li>
+            <li><a href="<%= admin_custom_contents_path %>"><i class="fa fa-link"></i> <span><%= t(:custom_contents_settings) %></span></a></li>
+            <li><a href="<%= admin_logs_index_path %>"><i class="fa fa-link"></i> <span><%= t(:logs) %></span></a></li>
+            <li><a href="<%= admin_custom_files_index_path %>"><i class="fa fa-link"></i> <span><%= t(:custom_files) %></span></a></li>
             <li class="header">Public Site</li>
-            <li><a href="/slides/"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
-            <li><a href="/popular"><i class="fa fa-link"></i> <span><%= t(:popular_slides) %></span></a></li>
-            <li><a href="/latest"><i class="fa fa-link"></i> <span><%= t(:latest_slides) %></span></a></li>
+            <li><a href="<%= slides_path %>"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
+            <li><a href="<%= popular_path %>"><i class="fa fa-link"></i> <span><%= t(:popular_slides) %></span></a></li>
+            <li><a href="<%= latest_path %>"><i class="fa fa-link"></i> <span><%= t(:latest_slides) %></span></a></li>
             <li class="treeview">
             <a href="#"><i class="fa fa-link"></i> <span><%= t('activerecord.models.category') %></span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <% @categories.each do |cat| %>
-                <li><a href="/categories/<%= cat.id %>"><%= cat.name %></a></li>
+                  <li><%= link_to cat.name, category_path(cat.id) %></li>
                 <% end %>
               </ul>
             </li>
@@ -148,7 +148,7 @@
       <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-          See <a href="https://github.com/ryuzee/SlideHub/" target="_blank"><%= t(:project_page) %></a>.
+          <%= link_to "See #{t(:project_page)}.", "https://github.com/ryuzee/SlideHub/", target: "_blank" %>
         </div>
         <!-- Default to the left -->
         <strong>Copyright &copy; 2017 Ryuzee. </strong> MIT License.
