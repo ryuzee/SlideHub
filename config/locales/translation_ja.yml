@@ -66,6 +66,7 @@ ja:
         download_count: "ダウンロード数"
         embedded_view: "埋め込みビュー"  #g
         extension: "拡張子"  #g
+        id: "ID"
         object_key: "キー"  #g
         modified_at: "更新日時"  #g
         name: "タイトル"  #g

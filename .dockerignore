@@ -21,6 +21,7 @@ docker-compose*.yml
 dockerfile*
 docs
 log/*.log
+rocro.yml
 tmp/cache/*
 tmp/pids/*
 tmp/sessions/*

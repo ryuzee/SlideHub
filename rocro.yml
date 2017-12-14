@@ -1,0 +1,4 @@
+inspecode:
+  experimental:
+    ignore:
+      - public/*
