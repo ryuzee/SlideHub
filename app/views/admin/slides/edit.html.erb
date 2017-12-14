@@ -1,3 +1,3 @@
-<h3><%= t(:edit_slide) %>&nbsp;&nbsp;<small><a href="/admin/dashboards/index"><%= t :back_to_dashboard %></a></small></h3>
+<h3><%= t(:edit_slide) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboards_path %></small></h3>
 
 <%= render :partial => 'slide_edit_form', :locals => { :slide => @slide } %>

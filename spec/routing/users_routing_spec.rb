@@ -62,5 +62,10 @@ describe UsersController do
     it 'routes to #destroy' do
       expect(delete('/users/1')).to route_to('users#destroy', id: '1')
     end
+
+    it 'routes to #show by username' do
+      user = create(:default_user)
+      expect(get("/#{user.username}")).to route_to('users#show', username: user.username)
+    end
   end
 end

@@ -1,16 +1,16 @@
-<h3><%= t(:edit_user) %>&nbsp;&nbsp;<small><a href="/admin/dashboards/index"><%= t :back_to_dashboard %></a></small></h3>
+<h3><%= t(:edit_user) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboards_path %></small></h3>
 
-  <%= form_for @user, :html => { :class => "form-horizontal user" }, :url => "/admin/users/index"  do |f| %>
-    <% if @user.errors.any? %>
+<%= form_for @user, :html => { :class => "form-horizontal user" }, :url => admin_users_path do |f| %>
+  <% if @user.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
         <h3 class="panel-title"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h3>
       </div>
       <div class="panel-body">
         <ul>
-        <% @user.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
         </ul>
       </div>
     </div>
@@ -69,6 +69,6 @@
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            admin_users_path, :class => 'btn btn-default' %>
+    admin_users_path, :class => 'btn btn-default' %>
 
 <% end %>

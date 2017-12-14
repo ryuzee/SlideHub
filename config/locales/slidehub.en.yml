@@ -18,6 +18,7 @@ en:
   description: "Description"
   display_name: "Display Name"
   download_slide: "Download Slide"
+  downloads: "Downloads"
   edit: "Edit"
   edit_slide: "Edit Slide"
   edit_user: "Edit User"

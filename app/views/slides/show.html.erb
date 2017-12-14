@@ -17,7 +17,7 @@ if @slide.tags.count > 0
    end
 %>
 <% set_meta_tags keywords: keywords %>
-<% set_meta_tags author: "#{root_url}#{@slide.user_username}" %>
+<% set_meta_tags author: user_by_username_url(username: @slide.user_username) %>
 <% set_meta_tags og: {
   title:    @slide.name,
   type:     'article',
@@ -35,7 +35,7 @@ if @slide.tags.count > 0
 
     <% if params[:vertical] != "1" %>
       <div style="padding-top:20px;">
-      <script type="application/javascript" src="<%= "#{root_url}player/#{@slide.id}/#{@start_position}?prefix=#{prefix}&inside=1" %>"></script>
+      <%= javascript_include_tag "#{player_url @slide.id}/#{@start_position}?prefix=#{prefix}&inside=1" %>
       <script type="application/javascript">
         window.onkeydown = function(evt) {
           if (evt.keyCode == 74 || evt.keyCode == 39) {
@@ -132,7 +132,7 @@ if @slide.tags.count > 0
                 <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
               </div>
               <div class="media-body">
-                <div class="h6" style="margin-top:0px"><a href="/<%= c.user.username %>"><%= strip_tags c.user.display_name %></a></div>
+                <div class="h6" style="margin-top:0px"><a href="<%= user_by_username_path(username: c.user.username) %>"><%= strip_tags c.user.display_name %></a></div>
                 <div class="h6"><%= strip_tags c.comment %></div>
                 <div class="h6"><%= c.created_at %>
                 <% if (user_signed_in? and current_user.id == c.user_id) %>
@@ -167,7 +167,7 @@ if @slide.tags.count > 0
   <div class="panel panel-default h6">
     <ul class="list-group">
       <li class="list-group-item"><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;<%= t(:published) %><span class="pull-right"><%= @slide.created_at %></span></li>
-      <li class="list-group-item"><i class="fa fa-th"></i>&nbsp;&nbsp;<%= t(:category) %><span class="pull-right"><a href="/categories/<%= @slide.category_id %>"><%= @slide.category_name %></a></span></li>
+      <li class="list-group-item"><i class="fa fa-th"></i>&nbsp;&nbsp;<%= t(:category) %><span class="pull-right"><a href="<%= category_path @slide.category_id %>"><%= @slide.category_name %></a></span></li>
       <li class="list-group-item"><i class="fa fa-eye"></i>&nbsp;&nbsp;<%= t(:total_view) %><span class="pull-right"><%= @slide.total_view %></span></li>
       <li class="list-group-item"><i class="fa fa-desktop"></i>&nbsp;&nbsp;<%= t(:embedded_view) %><span class="pull-right"><%= @slide.embedded_view %></span></li>
       <% if @slide.downloadable %>
@@ -189,7 +189,7 @@ if @slide.tags.count > 0
       <% end %>
       <% if @slide.tags.count > 0 %>
         <li class="list-group-item clearfix"><span class="pull-right"><% @slide.tags.each do |t| %>
-            <a href="/search?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;<% end %>
+            <a href="<%= search_path %>?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;<% end %>
         </li>
       <% end %>
       <li class="list-group-item"><%= render 'slides/share_buttons' %></li>
@@ -205,11 +205,11 @@ if @slide.tags.count > 0
         <li class="list-group-item">
         <div class="row">
           <div class="col-md-6">
-            <a href="<%= slide_path(s.id) %>"><img src="<%= s.thumbnail_url %>" class="img-responsive" style="border:1px solid #ccc" /></a>
+            <a href="<%= slide_path(s.id) %>"><%= image_tag s.thumbnail_url, :class => "img-responsive", :style => "border:1px solid #ccc" %></a>
           </div>
           <div class="col-md-6">
             <h3 class="h6"><span class="no_decoration"><a href="<%= slide_path(s.id) %>"><%= strip_tags s.name.truncate(24) %></a></span></h3>
-            <p class="h6"><%= s.created_at %> by <a href="/<%= s.user.username %>"><%= strip_tags s.user.display_name %></a></p>
+            <p class="h6"><%= s.created_at %> by <a href="<%= user_by_username_path(username: s.user.username) %>"><%= strip_tags s.user.display_name %></a></p>
           </div>
         </div>
         </li>
@@ -257,7 +257,7 @@ if @slide.tags.count > 0
       <div class="modal-header"><%= t(:embedded_code) %></div>
       <div class="modal-body">
         <div class="form-group">
-          <input class="form-control" id="embedded_url" value="<%= "<script src=\"#{root_url}player/#{@slide.id}\"></script>" %>" />
+          <input class="form-control" id="embedded_url" value="<%= javascript_include_tag(player_url(@slide.id)).to_str %>" />
         </div>
       </div>
       <div class="modal-footer">
