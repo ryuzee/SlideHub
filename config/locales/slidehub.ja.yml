@@ -3,14 +3,12 @@ ja:
   actions: "操作"
   add: "追加する"
   admin_dashboard: "管理者ダッシュボード"
-  helpers:
-    links:
-      cancel: "キャンセル"
   back_to_dashboard: "ダッシュボードに戻る"
   back_to_list: "一覧に戻る"
   biography: "自己紹介"
   category: "カテゴリ"
   close: "閉じる"
+  command: "コマンド"
   copy: "コピー"
   custom_contents_settings: "カスタムコンテンツ設定"
   custom_contents_were_saved: "カスタムコンテンツ設定を保存しました"
@@ -70,6 +68,8 @@ ja:
   show_embedded_code: "埋め込みコードを表示"
   show_slide_vertically: "スライドを縦に並べて表示"
   show_slide_with_normal_mode: "スライドを通常表示"
+  signin: "サインイン"
+  signup: "サインアップ"
   site_settings: "サイト設定"
   site_settings_were_saved: "サイト設定を保存しました"
   slide_author: "投稿者"
@@ -81,6 +81,10 @@ ja:
   total_view: "スライド表示回数"
   transcripts: "Transcript"
   user_list: "ユーザー一覧"
+  upload: "アップロード"
   upload_slide: "スライドのアップロード"
   value: "値"
   view_all_slides: "全てのスライドを見る"
+  helpers:
+    links:
+      cancel: "キャンセル"

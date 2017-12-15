@@ -54,18 +54,24 @@ en:
         var: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
 
       slide:
+
         all_comments: "All Comments"  #g
         base_tags: "Base tags"  #g
         category: :activerecord.models.category  #g
+        category_id: :activerecord.models.category  #g
         comments: "Comments"  #g
+        comments_count: "Comments"
+        created_at: "Created Date"  #g
         convert_status: "Convert Status"  #g
         description: "Description"  #g
         downloadable: "Downloadable"  #g
+        download_count: "Downloads"
         embedded_view: "Embedded View"  #g
         extension: "Extension"  #g
-        object_key: "Key"  #g
+        id: "ID"
         modified_at: "Modified at"  #g
         name: "Name"  #g
+        object_key: "Key"  #g
         page_view: "Page View"  #g
         private_comments: "Private Comments"  #g
         tag_taggings: "Tag Taggings"  #g
@@ -73,8 +79,8 @@ en:
         tags: "Tags"  #g
         total_view: "Total View"  #g
         user: :activerecord.models.user  #g
+        user_id: "User ID"
         num_of_pages: "Pages"
-        comments_count: "Comments"
 
       tag:
         name: "Name"  #g
@@ -82,6 +88,7 @@ en:
       user:
         admin: "Administrator"  #g
         biography: "Biography"  #g
+        created_at: "Created Date"  #g
         current_sign_in_at: Signed in at  #g
         current_sign_in_ip: "Signed-in from IP"  #g
         disabled: "Disabled"  #g

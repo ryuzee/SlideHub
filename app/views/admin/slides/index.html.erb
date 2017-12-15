@@ -6,7 +6,7 @@
     <thead>
       <tr>
         <th class="col-md-1"><%= sort_link(@search, :id) %></th>
-        <th class="col-md-2"><%= sort_link(@search, :name) %></th>
+        <th class="col-md-1"><%= sort_link(@search, :name) %></th>
         <th class="col-md-1"><%= sort_link(@search, :user_id) %></th>
         <th class="col-md-1"><%= sort_link(@search, :created_at) %></th>
         <th class="col-md-1"><%= sort_link(@search, :modified_at) %></th>
@@ -16,7 +16,7 @@
         <th class="col-md-1"><%= sort_link(@search, :embedded_view) %></th>
         <th class="col-md-1"><%= sort_link(@search, :download_count) %></th>
         <th class="col-md-1"><%= sort_link(@search, :comments_count) %></th>
-        <th class="col-md-1"><%= t('Command') %></th>
+        <th class="col-md-1"><%= t('command') %></th>
       </tr>
     </thead>
     <tbody>
