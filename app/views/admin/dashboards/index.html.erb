@@ -121,7 +121,6 @@
               </tr>
             </thead>
             <tbody>
-<<<<<<< HEAD
               <% @dashboard.popular_slides.each do |slide| %>
                 <tr>
                   <td><%= link_to slide.id, slide_path(slide.id) %></td>
@@ -130,16 +129,6 @@
                   <td><%= slide.created_at %></td>
                 </tr>
               <% end %>
-=======
-            <% @dashboard.popular_slides.each do |slide| %>
-              <tr>
-                <td><a href="/slides/<%= slide.id %>"><%= slide.id %></a></td>
-                <td><%= slide.name %></td>
-                <td><%= link_to slide.user_display_name, user_by_username_path(username: slide.user_username) %></td>
-                <td><%= slide.created_at %></td>
-              </tr>
-            <% end %>
->>>>>>> c022b55... [WIP]
             </tbody>
           </table>
         </div><!-- /.table-responsive -->
