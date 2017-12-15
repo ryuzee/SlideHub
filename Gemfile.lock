@@ -225,8 +225,6 @@ GEM
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.18)
-    font-awesome-rails (4.7.0.2)
-      railties (>= 3.2, < 5.2)
     formatador (0.2.5)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -558,7 +556,6 @@ DEPENDENCIES
   factory_bot
   factory_bot_rails
   faker
-  font-awesome-rails
   guard
   guard-rubocop
   hirb

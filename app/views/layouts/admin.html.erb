@@ -9,12 +9,8 @@
     <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: CustomSetting['site.name'], reverse: true %>
     <%= display_meta_tags %>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <%= stylesheet_link_tag "/mc/css/bootstrap.min.css" %>
-    <%= stylesheet_link_tag "/mc/css/AdminLTE.min.css" %>
-    <%= stylesheet_link_tag "/mc/css/skins/skin-blue.min.css" %>
-    <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" %>
-    <%= stylesheet_link_tag "https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" %>
-    <%= stylesheet_link_tag "/mc/css/admin_custom.css" %>
+    <%= stylesheet_link_tag "admin" %>
+    <%= stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" %>
     <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
     <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
     <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
@@ -24,14 +20,7 @@
       <%= javascript_include_tag "https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js" %>
       <%= javascript_include_tag "https://oss.maxcdn.com/respond/1.4.2/respond.min.js" %>
     <![endif]-->
-    <!-- REQUIRED JS SCRIPTS -->
-    <!-- jQuery 2.1.4 -->
-    <%= javascript_include_tag "/mc/js/jQuery-2.1.4.min.js" %>
-    <%= javascript_include_tag "/mc/js/rails.js" %>
-    <!-- Bootstrap 3.3.5 -->
-    <%= javascript_include_tag "/mc/js/bootstrap.min.js" %>
-    <!-- AdminLTE App -->
-    <%= javascript_include_tag "/mc/js/app.min.js" %>
+    <%= javascript_include_tag "admin" %>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">

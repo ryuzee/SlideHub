@@ -12,14 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
-//= require jquery.lazyload/jquery.lazyload
-//= require jquery.equalheights/jquery.equalheights.min
-//= require sticky-kit/jquery.sticky-kit.min
-//= require js-cookie/src/js.cookie
-//= require mousetrap/mousetrap.min
+//= require admin-lte/bootstrap/js/bootstrap
+//= require admin-lte/dist/js/app.js
 //= require moment
 //= require moment/ja
 //= require bootstrap-datetimepicker
-//= require clipboard/dist/clipboard.min
-//= require bootstrap
