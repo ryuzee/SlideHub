@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
+    <%= csrf_meta_tags %>
     <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: CustomSetting['site.name'], reverse: true %>
     <%= display_meta_tags %>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -26,6 +27,7 @@
     <!-- REQUIRED JS SCRIPTS -->
     <!-- jQuery 2.1.4 -->
     <%= javascript_include_tag "/mc/js/jQuery-2.1.4.min.js" %>
+    <%= javascript_include_tag "/mc/js/rails.js" %>
     <!-- Bootstrap 3.3.5 -->
     <%= javascript_include_tag "/mc/js/bootstrap.min.js" %>
     <!-- AdminLTE App -->
@@ -78,7 +80,7 @@
                       <%= link_to t(:my_account), edit_user_registration_path, :class => "btn btn-default btn-flat" %>
                     </div>
                     <div class="pull-right">
-                      <%= link_to t(:logout), destroy_user_session_path, :class => "btn btn-default btn-flat" %>
+                      <%= link_to t(:logout), destroy_user_session_path, method: :delete, :class => "btn btn-default btn-flat" %>
                     </div>
                   </li>
                 </ul>
