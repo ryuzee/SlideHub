@@ -18,11 +18,15 @@
     "tests"
   ],
   "dependencies": {
-    "jquery.equalheights": "^1.5.2",
-    "jquery.lazyload": "^1.9.7",
-    "js-cookie": "^2.0.4",
-    "mousetrap": "^1.6.0",
-    "sticky-kit":"^1.1.2",
-    "clipboard":"^1.7.1"
+    "jquery.equalheights": "1.5.2",
+    "jquery.lazyload": "1.9.7",
+    "js-cookie": "2.0.4",
+    "mousetrap": "1.6.0",
+    "sticky-kit": "1.1.2",
+    "clipboard": "1.7.1",
+    "admin-lte": "2.3.11"
+  },
+  "resolutions": {
+    "jquery": "3.2.1"
   }
 }
