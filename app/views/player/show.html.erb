@@ -214,7 +214,7 @@ div#<%= prefix %>page_positions{
   position: absolute;
 }
 </style>
-<% default_image = "#{root_url}oss/images/loading.jpg" %>
+<% default_image = image_url("loading.jpg") %>
 <div>
   <ul style="display:none" id="<%= prefix %>slide_list">
   <% if page_count > 0 %>
@@ -224,14 +224,14 @@ div#<%= prefix %>page_positions{
       <% if idx == 0 %>
         <% default_image = u %>
       <% end %>
-      <li><img class="lazy" src="<%= root_url %>oss/images/spacer.png" data-original="<%= u %>" /></li>
+      <li><img class="lazy" src="<%= image_url("spacer.png") %>" data-original="<%= u %>" /></li>
       <% idx += 1 %>
     <% end %>
   <% elsif @slide.convert_status < 0 %>
-    <% default_image = "#{root_url}oss/images/failed_to_convert.jpg" %>
+    <% default_image = image_url("failed_to_convert.jpg") %>
     <li><img class="lazy" data-original="<%= default_image %>" /></li>
   <% else %>
-    <% default_image = "#{root_url}oss/images/converting.jpg" %>
+    <% default_image = image_url("converting.jpg") %>
     <li><img class="lazy" data-original="<%= default_image %>" /></li>
   <% end %>
   </ul>
