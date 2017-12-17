@@ -16,7 +16,7 @@ end
   <% if count <= 2 %>
     <%= image_tag u, class: "lazy img-responsive" %>
   <% else %>
-    <%= image_tag "/oss/images/spacer640x480.png", class: "lazy img-responsive", data: { original: u } %>
+    <%= image_tag "spacer640x480.png", class: "lazy img-responsive", data: { original: u } %>
   <% end %>
 </div>
 <div class="icon_right">
@@ -24,9 +24,9 @@ end
 </div>
 <% end %>
 <% elsif slide.convert_status < 0 %>
-    <%= image_tag "/oss/images/failed_to_convert.jpg", class: "lazy img-responsive" %>
+    <%= image_tag "failed_to_convert.jpg", class: "lazy img-responsive" %>
 <% else %>
-    <%= image_tag "/oss/images/converting.jpg", class: "lazy img-responsive" %>
+    <%= image_tag "converting.jpg", class: "lazy img-responsive" %>
 <% end %>
 
 <script type="text/javascript">

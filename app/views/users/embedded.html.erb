@@ -2,9 +2,9 @@
   <div style="max-width:1024px; margin:0 auto;">
   <% @slides.each do |slide| %>
     <% if slide.convert_status < 0 then %>
-      <% image_url = "#{root_url}oss/images/failed_to_convert_small.jpg" %>
+      <% image_url = image_url("failed_to_convert_small.jpg") %>
     <% elsif slide.convert_status < 100 then %>
-      <% image_url = "#{root_url}oss/images/converting_small.jpg" %>
+      <% image_url = image_url("converting_small.jpg") %>
     <% else %>
       <% image_url = slide.thumbnail_url %>
     <% end %>
