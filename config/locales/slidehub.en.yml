@@ -88,3 +88,18 @@ en:
   helpers:
     links:
       cancel: "Cancel"
+  site:
+    display_login_link: "Display Login Link"
+    only_admin_can_upload: "Only administrators can upload slides"
+    signup_enabled: "Signup Enabled"
+    name: "Site Name"
+    header_inverse: "Inverse Header Color"
+    favicon: "favicion URL"
+    footer: "Footer"
+    theme: "Theme"
+  custom_content:
+    center_top: "Center Top"
+    center_botton: "Center Bottom"
+    right_top: "Right Top"
+    header_menus: "Header Menus"
+    css: "Custom CSS"

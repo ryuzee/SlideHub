@@ -16,8 +16,8 @@
         <% @settings.each do |s| %>
           <%= fields_for('settings[]', s, index: nil) do |fh| %>
             <tr>
-              <td><%= s.var %><%= fh.hidden_field :var %></td>
-              <td><%= fh.text_area :value, :class => 'form-control', :size => "30x5" %></td>
+              <td><%= t(s.var) %><%= fh.hidden_field :var %></td>
+              <td><%= generate_form_field(s, fh) %></td>
             </tr>
             <% index += 1 %>
           <% end %>

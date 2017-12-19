@@ -88,3 +88,18 @@ ja:
   helpers:
     links:
       cancel: "キャンセル"
+  site:
+    display_login_link: "ログインリンクを表示する"
+    only_admin_can_upload: "管理者のみアップロード可能にする"
+    signup_enabled: "サインアップを有効にする"
+    name: "サイト名"
+    header_inverse: "ヘッダー色を反転する"
+    favicon: "favicionのURL"
+    footer: "フッターの文字列"
+    theme: "テーマ"
+  custom_content:
+    center_top: "中央上部"
+    center_botton: "中央下部"
+    right_top: "右上部"
+    header_menus: "ヘッダー追加メニュー"
+    css: "カスタムCSS"
