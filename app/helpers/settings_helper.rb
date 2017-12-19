@@ -1,6 +1,6 @@
 module SettingsHelper
   def generate_form_field(setting, form)
-    var = settings.var
+    var = setting.var
     if %w[site.display_login_link site.only_admin_can_upload site.signup_enabled site.header_inverse].include?(var)
       return form.select :value, [%w[0 0], %w[1 1]], {}, { class: 'form-control' }
     end
