@@ -99,7 +99,7 @@ en:
     theme: "Theme"
   custom_content:
     center_top: "Center Top"
-    center_botton: "Center Bottom"
+    center_bottom: "Center Bottom"
     right_top: "Right Top"
     header_menus: "Header Menus"
     css: "Custom CSS"

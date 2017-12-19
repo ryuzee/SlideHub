@@ -99,7 +99,7 @@ ja:
     theme: "テーマ"
   custom_content:
     center_top: "中央上部"
-    center_botton: "中央下部"
+    center_bottom: "中央下部"
     right_top: "右上部"
     header_menus: "ヘッダー追加メニュー"
     css: "カスタムCSS"
