@@ -143,7 +143,7 @@ if @slide.tags.count > 0
             </div>
           <% end %>
         <% else %>
-          <div class="media comment_post"><div class="h6">No comments...</div></div>
+          <div class="media comment_post"><div class="h6"><%= t(:no_comments) %></div></div>
         <% end %>
 
         <% if user_signed_in? %>
