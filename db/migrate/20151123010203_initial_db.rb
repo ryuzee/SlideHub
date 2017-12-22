@@ -60,7 +60,7 @@ class InitialDb < ActiveRecord::Migration[4.2]
       t.datetime 'modified'
       t.integer  'occurrence', limit: 4,  default: 0, null: false
     end
-    add_index 'tags', %w(identifier keyname), name: 'UNIQUE_TAG', unique: true, using: :btree
+    add_index 'tags', %w[identifier keyname], name: 'UNIQUE_TAG', unique: true, using: :btree
   end
 
   def self.create_users
