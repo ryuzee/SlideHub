@@ -83,7 +83,7 @@ RSpec.describe UsersController, type: :controller do
   end
 end
 
-RSpec.describe Devise::RegistrationsController, type: :controller do
+RSpec.describe Users::RegistrationsController, type: :controller do
   describe '#new' do
     before(:each) do
       request.env['devise.mapping'] = Devise.mappings[:user]

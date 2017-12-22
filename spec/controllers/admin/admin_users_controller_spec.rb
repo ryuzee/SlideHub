@@ -56,5 +56,15 @@ RSpec.describe Admin::UsersController, type: :controller do
         expect(response).to render_template :edit
       end
     end
+
+    describe 'DELETE /admin/users' do
+      it 'works' do
+        target = create(:default_user)
+        delete :destroy, params: { id: target.id }
+        expect(response.status).to eq(302)
+        expect(response).to redirect_to admin_users_path
+        expect(User.where(id: target.id).count).to eq(0)
+      end
+    end
   end
 end

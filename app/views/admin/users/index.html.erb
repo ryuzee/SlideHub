@@ -6,9 +6,10 @@
     <thead>
       <tr>
         <th class="col-md-1"><%= sort_link(@search, :id) %></th>
-        <th class="col-md-3"><%= sort_link(@search, :email) %></th>
+        <th class="col-md-2"><%= sort_link(@search, :email) %></th>
         <th class="col-md-2"><%= sort_link(@search, :username) %></th>
         <th class="col-md-2"><%= sort_link(@search, :display_name) %></th>
+        <th class="col-md-1"><%= sort_link(@search, :provider) %></th>
         <th class="col-md-1"><%= sort_link(@search, :admin) %></th>
         <th class="col-md-1"><%= sort_link(@search, :slides_count) %></th>
         <th class="col-md-1"><%= sort_link(@search, :created_at) %></th>
@@ -22,6 +23,7 @@
           <td><%= user.email %></td>
           <td><%= user.username %></td>
           <td><%= user.display_name %></td>
+          <td><%= user.provider %></td>
           <td><%= user.admin %></td>
           <td><%= user.slides_count %></td>
           <td><%= user.created_at %></td>

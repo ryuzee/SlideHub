@@ -1,6 +1,11 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] = 'test'
 ENV['OSS_USE_AZURE'] ||= '0'
+ENV['OSS_TWITTER_CONSUMER_KEY'] ||= 'dummy'
+ENV['OSS_TWITTER_CONSUMER_SECRET'] ||= 'dummy'
+ENV['OSS_FACEBOOK_APP_ID'] ||= 'dummy'
+ENV['OSS_FACEBOOK_APP_SECRET'] ||= 'dummy'
+
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
@@ -61,6 +66,7 @@ RSpec.configure do |config|
   # deviseのテストヘルパーをロードする
   require 'devise'
   require 'support/controller_macros'
+  require 'support/omniauth_macros'
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
   config.include ControllerMacros, type: :controller

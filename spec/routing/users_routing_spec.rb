@@ -44,7 +44,7 @@ describe UsersController do
     end
 
     it 'routes to #sign_up' do
-      expect(get('/users/sign_up')).to route_to('devise/registrations#new')
+      expect(get('/users/sign_up')).to route_to('users/registrations#new')
     end
 
     it 'routes to #edit' do
@@ -52,7 +52,7 @@ describe UsersController do
     end
 
     it 'routes to #create' do
-      expect(post('/users')).to route_to('devise/registrations#create')
+      expect(post('/users')).to route_to('users/registrations#create')
     end
 
     it 'routes to #update' do
