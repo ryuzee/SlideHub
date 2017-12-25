@@ -1,6 +1,8 @@
 require 'simplecov'
 require 'webmock/rspec'
 require 'shoulda/matchers'
+require 'omniauth'
+
 WebMock.allow_net_connect!
 
 # save to CircleCI's artifacts directory if we're on CircleCI
@@ -28,3 +30,5 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 end
+
+OmniAuth.config.test_mode = true

@@ -46,6 +46,10 @@ gem 'devise', '4.3.0'
 gem 'devise-bootstrap-views', '0.0.11'
 gem 'devise-i18n', '1.4.0'
 gem 'devise-i18n-views', '0.3.7'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+
 # Compatibility with PHP version
 # See https://github.com/divoxx/ruby-php-serialization
 gem 'php-serialization'

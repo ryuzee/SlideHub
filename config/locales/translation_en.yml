@@ -1,108 +1,109 @@
 en:
   activerecord:
     models:
-      category: "Category"  #g
-      comment: "Comment"  #g
-      config: "Confif"  #g
-      custom_setting: "Custom Setting"  #g
-      rails_settings/cached_settings: "Cached Settings"  #g
-      rails_settings/scoped_settings: "Scoped Settings"  #g
-      rails_settings/settings: "Settings"  #g
-      slide: "Slide"  #g
-      tag: "Tag"  #g
-      user: User  #g
+      category: "Category"
+      comment: "Comment"
+      config: "Confif"
+      custom_setting: "Custom Setting"
+      rails_settings/cached_settings: "Cached Settings"
+      rails_settings/scoped_settings: "Scoped Settings"
+      rails_settings/settings: "Settings"
+      slide: "Slide"
+      tag: "Tag"
+      user: User
 
     attributes:
       category:
-        name: "Name"  #g
+        name: "Name"
 
       comment:
-        comment: "Comment"  #g
-        commentable: :activerecord.models.commentable  #g
-        commentable_type: "Commentable Type"  #g
-        modified_at: "Modified at"  #g
-        role: "Role"  #g
-        user: :activerecord.models.user  #g
+        comment: "Comment"
+        commentable: :activerecord.models.commentable
+        commentable_type: "Commentable Type"
+        modified_at: "Modified at"
+        role: "Role"
+        user: :activerecord.models.user
 
       config:
-        created: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
-        modified: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
-        value: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        created: "Created"
+        modified: "Modified"
+        value: "Value"
 
       custom_setting:
-        thing: :activerecord.models.thing  #g
-        thing_type: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
-        value: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
-        var: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        thing: :activerecord.models.thing
+        thing_type: "Thing Type"
+        value: "Value"
+        var: "Var"
 
       rails_settings/cached_settings:
-        thing: :activerecord.models.thing  #g
-        thing_type: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
-        value: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
-        var: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        thing: :activerecord.models.thing
+        thing_type: "Thing Type"
+        value: "Value"
+        var: "Var"
 
       rails_settings/scoped_settings:
-        thing: :activerecord.models.thing  #g
-        thing_type: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
-        value: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
-        var: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        thing: :activerecord.models.thing
+        thing_type: "Thing Type"
+        value: "Value"
+        var: "Var"
 
       rails_settings/settings:
-        thing: :activerecord.models.thing  #g
-        thing_type: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
-        value: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
-        var: "-//W3C//DTD HTML 4.01 Transitional//EN"  #g
+        thing: :activerecord.models.thing
+        thing_type: "Thing Type"
+        value: "Value"
+        var: "Var"
 
       slide:
 
-        all_comments: "All Comments"  #g
-        base_tags: "Base tags"  #g
-        category: :activerecord.models.category  #g
-        category_id: :activerecord.models.category  #g
-        comments: "Comments"  #g
+        all_comments: "All Comments"
+        base_tags: "Base tags"
+        category: :activerecord.models.category
+        category_id: :activerecord.models.category
+        comments: "Comments"
         comments_count: "Comments"
-        created_at: "Created Date"  #g
-        convert_status: "Convert Status"  #g
-        description: "Description"  #g
-        downloadable: "Downloadable"  #g
+        created_at: "Created Date"
+        convert_status: "Convert Status"
+        description: "Description"
+        downloadable: "Downloadable"
         download_count: "Downloads"
-        embedded_view: "Embedded View"  #g
-        extension: "Extension"  #g
+        embedded_view: "Embedded View"
+        extension: "Extension"
         id: "ID"
-        modified_at: "Modified at"  #g
-        name: "Name"  #g
-        object_key: "Key"  #g
-        page_view: "Page View"  #g
-        private_comments: "Private Comments"  #g
-        tag_taggings: "Tag Taggings"  #g
-        taggings: "Taggings"  #g
-        tags: "Tags"  #g
-        total_view: "Total View"  #g
-        user: :activerecord.models.user  #g
+        modified_at: "Modified at"
+        name: "Name"
+        object_key: "Key"
+        page_view: "Page View"
+        private_comments: "Private Comments"
+        tag_taggings: "Tag Taggings"
+        taggings: "Taggings"
+        tags: "Tags"
+        total_view: "Total View"
+        user: :activerecord.models.user
         user_id: "User ID"
         num_of_pages: "Pages"
 
       tag:
-        name: "Name"  #g
+        name: "Name"
 
       user:
-        admin: "Administrator"  #g
-        biography: "Biography"  #g
-        created_at: "Created Date"  #g
-        current_sign_in_at: Signed in at  #g
-        current_sign_in_ip: "Signed-in from IP"  #g
-        disabled: "Disabled"  #g
-        display_name: "Display Name"  #g
-        email: Email  #g
-        encrypted_password: "Encrypted Password"  #g
-        last_sign_in_at: Last signed in at  #g
-        last_sign_in_ip: "Last signed in from IP"  #g
-        modified_at: "Modified"  #g
-        password: Password  #g
-        remember_created_at: "Remember created at"  #g
-        reset_password_sent_at: "Reset password sent at"  #g
-        reset_password_token: "Reset password token"  #g
-        slides: "Slides"  #g
+        admin: "Administrator"
+        biography: "Biography"
+        created_at: "Created Date"
+        current_sign_in_at: "Signed in at"
+        current_sign_in_ip: "Signed-in from IP"
+        disabled: "Disabled"
+        display_name: "Display Name"
+        email: "Email"
+        encrypted_password: "Encrypted Password"
+        last_sign_in_at: "Last signed in at"
+        last_sign_in_ip: "Last signed in from IP"
+        modified_at: "Modified"
+        password: "Password"
+        provider: "Auth Provider"
+        remember_created_at: "Remember created at"
+        reset_password_sent_at: "Reset password sent at"
+        reset_password_token: "Reset password token"
+        slides: "Slides"
         slides_count: "Slides"
         avatar: "Avatar"
         username: "Username"

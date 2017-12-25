@@ -3,6 +3,8 @@
   <div class="col-md-12">
     <h3><%= t('.sign_up', :default => "Sign up") %></h3>
 
+    <%= render "devise/shared/signin_with_omniauth" %>
+
     <%= bootstrap_devise_error_messages! %>
     <div class="panel panel-default">
       <div class="panel-body">
@@ -11,6 +13,7 @@
             <%= f.label :email %>
             <%= f.email_field :email, autofocus: true, class: "form-control" %>
           </div>
+<% if f.object.password_required? %>
           <div class="form-group">
             <%= f.label :password %><br />
             <%= f.password_field :password, class: "form-control" %>
@@ -19,6 +22,7 @@
             <%= f.label :password_confirmation %>
             <%= f.password_field :password_confirmation, class: "form-control" %>
           </div>
+<% end %>
           <div class="form-group">
             <%= f.label t "activerecord.attributes.user.username" %>
             <%= f.text_field :username, class: "form-control" %>
@@ -36,8 +40,6 @@
         <% end %>
       </div>
     </div>
-    <%= render "devise/shared/links" %>
-
   </div>
 </div>
 <br />

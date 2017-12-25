@@ -29,9 +29,10 @@
 #
 
 class User < ApplicationRecord
+  attr_accessor :skip_password_validation
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
   self.table_name = 'users'
   validates :display_name, presence: true
@@ -46,7 +47,61 @@ class User < ApplicationRecord
   has_attached_file :avatar, styles: { medium: '192x192>', thumb: '100x100#' }, default_url: 'avatar/:style/missing.png'
   validates_attachment_content_type :avatar, content_type: %r{\Aimage/.*\Z}
 
+  def password_required?
+    return false if skip_password_validation
+    # super && provider.blank?
+    provider.blank?
+  end
+
+  def update_with_password(params, *options)
+    if !password_required?
+      update_attributes(params, *options)
+    else
+      super
+    end
+  end
+
   def self.username_to_id(username)
     User.where('username = ?', username).first.id
+  end
+
+  def self.new_with_session(params, session)
+    if session['devise.user_attributes']
+      new(session['devise.user_attributes']) do |user|
+        user.attributes = params
+        user.valid?
+      end
+    else
+      super
+    end
+  end
+
+  def self.find_for_facebook_oauth(auth)
+    user = User.find_by(provider: auth.provider, uid: auth.uid)
+    unless user
+      user = User.create(username:     auth.extra.raw_info.username,
+                         display_name: auth.extra.raw_info.name,
+                         biography: '',
+                         provider: auth.provider,
+                         uid:      auth.uid,
+                         email:    auth.info.email,
+                         token:    auth.credentials.token,
+                         password: Devise.friendly_token[0, 20])
+    end
+    user
+  end
+
+  def self.find_for_twitter_oauth(auth)
+    user = User.find_by(provider: auth.provider, uid: auth.uid)
+    unless user
+      user = User.create(username:     auth.info.nickname,
+                         display_name: auth.info.name,
+                         biography: auth.info.description,
+                         provider: auth.provider,
+                         uid:      auth.uid,
+                         email:    '',
+                         password: Devise.friendly_token[0, 20])
+    end
+    user
   end
 end

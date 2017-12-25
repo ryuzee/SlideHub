@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171222114708) do
+ActiveRecord::Schema.define(version: 20171222180708) do
 
   create_table "categories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -125,6 +125,9 @@ ActiveRecord::Schema.define(version: 20171222114708) do
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string "username", null: false
+    t.string "provider"
+    t.string "uid"
+    t.string "token"
     t.index ["email"], name: "idx_username_ukey", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true

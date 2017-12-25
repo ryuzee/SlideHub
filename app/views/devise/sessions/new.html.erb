@@ -2,7 +2,10 @@
 
 <div class="row">
   <div class="col-md-12">
-    <h3><%= t('.sign_in', :default => "Sign in") %></h3>
+    <h3><%= t(:signin) %></h3>
+
+    <%= render "devise/shared/signin_with_omniauth" %>
+
     <div class="panel panel-default">
       <div class="panel-body">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form" }) do |f| %>
@@ -11,7 +14,7 @@
             <%= f.email_field :email, autofocus: true, class: "form-control" %>
           </div>
           <div class="form-group">
-            <%= f.label :password %>
+            <%= f.label :password %><%= render "devise/shared/forget_password" %>
             <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
           </div>
           <% if devise_mapping.rememberable? %>
@@ -22,11 +25,11 @@
               </label>
             </div>
           <% end %>
-          <%= f.submit  t('.sign_in', :default => "Sign in"), class: "btn btn-primary" %>
+          <%= f.submit t(:signin), class: "btn btn-primary" %>
         <% end %>
       </div>
     </div>
-    <%= render "devise/shared/links" %>
+    <%= render "devise/shared/signup_link" %>
 
   </div>
 </div>

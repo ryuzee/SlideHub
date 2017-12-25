@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get 'slides/:id/download' => 'slide_download#show', as: :download_slide
   get 'slides/download/:id' => 'slide_download#show'
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations' }
   resources :slides do
     get 'index', on: :collection
   end
@@ -62,6 +62,7 @@ Rails.application.routes.draw do
       get 'index', on: :collection
       get 'edit', on: :collection
       post 'update', on: :collection
+      delete 'destroy', on: :collection
     end
 
     resources :custom_contents do

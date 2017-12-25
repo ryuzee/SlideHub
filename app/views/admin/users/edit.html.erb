@@ -69,5 +69,8 @@
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t("helpers.links.cancel"), admin_users_path, :class => 'btn btn-default' %>
+  <%= link_to t(:delete_user), admin_user_path(@user[:id]), :method => 'delete', :class => 'btn btn-danger pull-right', data: {:confirm => t(:confirm_to_delete_user)} %>
 
 <% end %>
+
+
