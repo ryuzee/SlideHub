@@ -1,5 +1,5 @@
 # target_version:
-#   rubocop v0.49.1
+#   rubocop v0.52.0
 
 # 自動生成されるものはチェック対象から除外する
 AllCops:
@@ -120,7 +120,7 @@ Style/PerlBackrefs:
   AutoCorrect: false
 
 # has_ から始まるメソッドは許可する
-Style/PredicateName:
+Naming/PredicateName:
   NamePrefixBlacklist:
     - "is_"
     - "have_"
