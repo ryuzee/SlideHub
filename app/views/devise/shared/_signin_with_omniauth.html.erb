@@ -1,14 +1,16 @@
-<%- if devise_mapping.omniauthable? and (Rails.configuration.x.facebook_enabled or Rails.configuration.x.twitter_enabled) %>
+<% if CustomSetting['site.signup_enabled'] == '1' %>
+<% if devise_mapping.omniauthable? and (Rails.configuration.x.facebook_enabled or Rails.configuration.x.twitter_enabled) %>
     <div class="main">
       <div class="row">
-  <%- resource_class.omniauth_providers.each do |provider| %>
+  <% resource_class.omniauth_providers.each do |provider| %>
     <% next if provider.to_s == 'twitter' and Rails.configuration.x.twitter_enabled == false %>
     <% next if provider.to_s == 'facebook' and Rails.configuration.x.facebook_enabled == false %>
         <div class="col-xs-6 col-sm-6 col-md-6">
           <%= link_to t(:signin_with_provider, :provider => provider.to_s.titleize), omniauth_authorize_path(resource_name, provider), :class => 'btn btn-lg btn-primary btn-block' %>
         </div>
-  <% end -%>
+  <% end %>
       </div>
     </div>
     <br clear="all" />
-<% end -%>
+<% end %>
+<% end %>
