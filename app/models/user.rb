@@ -77,8 +77,7 @@ class User < ApplicationRecord
   end
 
   def self.find_for_facebook_oauth(auth)
-    user = User.where(provider: auth.provider, uid: auth.uid).first
-
+    user = User.find_by(provider: auth.provider, uid: auth.uid)
     unless user
       user = User.create(username:     auth.extra.raw_info.username,
                          display_name: auth.extra.raw_info.name,
@@ -93,7 +92,7 @@ class User < ApplicationRecord
   end
 
   def self.find_for_twitter_oauth(auth)
-    user = User.where(provider: auth.provider, uid: auth.uid).first
+    user = User.find_by(provider: auth.provider, uid: auth.uid)
     unless user
       user = User.create(username:     auth.info.nickname,
                          display_name: auth.info.name,
