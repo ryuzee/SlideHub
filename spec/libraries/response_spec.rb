@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'spec_helper'
 
 describe 'SlideHub::Cloud::Queue::Response' do
   describe 'add message' do

@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Myapp
+module SlideHub
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
@@ -33,15 +33,6 @@ module Myapp
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     # config.active_record.raise_in_transactional_callbacks = true
-
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      address: ENV['OSS_SMTP_SERVER'],
-      port: ENV['OSS_SMTP_PORT'],
-      authentication: ENV['OSS_SMTP_AUTH_METHOD'],
-      user_name: ENV['OSS_SMTP_USERNAME'],
-      password: ENV['OSS_SMTP_PASSWORD'],
-    }
 
     config.generators do |g|
       g.test_framework :rspec,

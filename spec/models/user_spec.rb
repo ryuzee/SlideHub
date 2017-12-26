@@ -28,7 +28,6 @@
 #  username               :string(255)      not null
 #
 
-require 'spec_helper'
 require 'rails_helper'
 
 describe 'User' do

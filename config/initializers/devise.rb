@@ -12,7 +12,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = ENV['OSS_FROM_EMAIL'] || ENV['OSS_SMTP_USERNAME'] || 'info@example.com'
+  config.mailer_sender = Rails.application.config.slidehub.mail_sender
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -260,27 +260,19 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-  if ENV.key?('OSS_FACEBOOK_APP_ID') && ENV.key?('OSS_FACEBOOK_APP_SECRET') &&
-     ENV['OSS_FACEBOOK_APP_ID'].present? && ENV['OSS_FACEBOOK_APP_SECRET'].present?
+  if Rails.application.config.slidehub.facebook?
     config.omniauth(:facebook,
-                    ENV['OSS_FACEBOOK_APP_ID'],
-                    ENV['OSS_FACEBOOK_APP_SECRET'],
+                    Rails.application.config.slidehub.facebook_app_id,
+                    Rails.application.config.slidehub.facebook_app_secret,
                     scope: 'email',
                     token_params: { parse: :json },
                     display: 'popup')
-    Rails.configuration.x.facebook_enabled = true
-  else
-    Rails.configuration.x.facebook_enabled = false
   end
 
-  if ENV.key?('OSS_TWITTER_CONSUMER_KEY') && ENV.key?('OSS_TWITTER_CONSUMER_SECRET') &&
-     ENV['OSS_TWITTER_CONSUMER_KEY'].present? && ENV['OSS_TWITTER_CONSUMER_SECRET'].present?
+  if Rails.application.config.slidehub.twitter?
     config.omniauth(:twitter,
-                    ENV['OSS_TWITTER_CONSUMER_KEY'],
-                    ENV['OSS_TWITTER_CONSUMER_SECRET'],
+                    Rails.application.config.slidehub.twitter_consumer_key,
+                    Rails.application.config.slidehub.twitter_consumer_secret,
                     display: 'popup')
-    Rails.configuration.x.twitter_enabled = true
-  else
-    Rails.configuration.x.twitter_enabled = false
   end
 end
