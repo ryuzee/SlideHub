@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'spec_helper'
 require 'digest/md5'
 require 'tempfile'
 require 'securerandom'

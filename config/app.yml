@@ -5,6 +5,7 @@ defaults: &defaults
     signup_enabled: "1"
     name: "SlideHub"
     header_inverse: "1"
+    theme: "default"
   custom_content:
     center_top: ""
     center_bottom: ""
