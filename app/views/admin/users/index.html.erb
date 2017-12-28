@@ -13,7 +13,7 @@
         <th class="col-md-1"><%= sort_link(@search, :admin) %></th>
         <th class="col-md-1"><%= sort_link(@search, :slides_count) %></th>
         <th class="col-md-1"><%= sort_link(@search, :created_at) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :modified_at) %></th>
+        <th class="col-md-1"><%= sort_link(@search, :updated_at) %></th>
       </tr>
     </thead>
     <tbody>
@@ -27,7 +27,7 @@
           <td><%= user.admin %></td>
           <td><%= user.slides_count %></td>
           <td><%= user.created_at %></td>
-          <td><%= user.modified_at %></td>
+          <td><%= user.updated_at %></td>
         </tr>
       <% end %>
     </tbody>

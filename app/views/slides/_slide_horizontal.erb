@@ -1,0 +1,38 @@
+    <%= javascript_include_tag "#{player_url slide.id}/#{start_position}?prefix=#{prefix}&inside=1" %>
+    <script type="application/javascript">
+      window.onkeydown = function(evt) {
+        if (evt.keyCode == 74 || evt.keyCode == 39) {
+          // j
+          OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index+1);
+        }
+        if (evt.keyCode == 75 || evt.keyCode == 37) {
+          // k
+          OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index-1);
+        }
+      }
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var timer = setInterval( updateDiv, 10 * 1000);
+        function updateDiv() {
+          var pages = <%= slide.num_of_pages %>;
+          if (pages > 0) {
+            return;
+          }
+          $.ajax({
+            type: 'GET',
+            async: false,
+            url: "/page_count/<%= slide.id %>",
+            cache: false,
+            dataType: 'json',
+            success: function(json) {
+              if (json.page_count + 0 > 0) {
+                location.reload();
+              }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {}
+          });
+        }
+      });
+    </script>
+

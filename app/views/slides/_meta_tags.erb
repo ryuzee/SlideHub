@@ -1,0 +1,27 @@
+<%
+
+page_list = slide.page_list
+if page_list.instance_of?(Array) && page_list.count > 0
+  u = slide.thumbnail_url
+else
+  u = image_url("converting.jpg")
+end
+
+keywords =  [slide.name]
+if slide.tags.count > 0
+  slide.tags.each do |t|
+    keywords.push t.to_s
+  end
+end
+
+set_meta_tags og: {
+  title:    slide.name,
+  type:     'article',
+  url:      slide_url(slide.id),
+  image:    u
+}
+set_meta_tags author: user_by_username_url(username: slide.user_username)
+set_meta_tags keywords: keywords
+set_meta_tags description: strip_tags(slide.description).truncate(100)
+
+%>

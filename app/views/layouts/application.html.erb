@@ -53,8 +53,10 @@
             <li class="dropdown<%= ' active' if controller.controller_name == 'categories' %>">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= t 'category' %><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
+                <% cache 'categories', expires_in: 10.minutes, skip_digest: true do %>
                 <% @categories.each do |cat| %>
                 <li><%= link_to cat.name, category_path(cat.id) %></li>
+                <% end %>
                 <% end %>
               </ul>
             </li>
