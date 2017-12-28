@@ -34,7 +34,6 @@ module SlideHub
 
     # others
     config.slidehub.root_url = ENV['OSS_ROOT_URL']
-    config.slidehub.production_host = ENV['OSS_PRODUCTION_HOST']
   end
 end
 
@@ -48,5 +47,5 @@ Rails.application.config.action_mailer.smtp_settings = {
 }
 
 if Rails.env.production?
-  Rails.application.config.action_mailer.default_url_options = { host: Rails.application.config.slidehub.production_host }
+  Rails.application.config.action_mailer.default_url_options = { host: Rails.application.config.slidehub.root_url }
 end

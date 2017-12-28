@@ -80,6 +80,7 @@ Rails.application.routes.draw do
 
     get 'logs/index' => 'logs#index'
     get 'logs/show' => 'logs#show'
+    get 'logs/download' => 'logs#download', as: :logs_download
   end
 
   namespace :api, { format: 'json' } do
