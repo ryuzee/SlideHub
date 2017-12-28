@@ -1,9 +1,9 @@
-<h3><%= @path %>&nbsp;&nbsp;<small><%= link_to t(:back_to_list), admin_logs_index_path %></small></h3>
+<h3><%= @path %>&nbsp;<%= t(:last_lines) %>&nbsp;&nbsp;<small><%= link_to(t(:download), admin_logs_download_path + "?path=#{@path}")%>&nbsp;&nbsp;<%= link_to t(:back_to_list), admin_logs_index_path %></small></h3>
 
 <div class="panel panel-default">
   <div class="panel-body">
     <% @result.each do |line| %>
-    <%= line %><br />
+    <%= raw line %><br />
     <% end %>
   </div>
 </div>

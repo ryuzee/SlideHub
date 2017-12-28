@@ -9,11 +9,20 @@ module Admin
       @result = []
       return redirect_to admin_logs_index_path, notice: t(:no_logs) unless @files.include?(@path)
 
-      File.open(@path) do |file|
-        file.read.split("\n").each do |line|
-          @result.push line
+      require 'io'
+      require 'log_util'
+      open(@path) do |io|
+        io.tail(300).each do |line|
+          @result.push SlideHub::LogUtil.escape_to_html(line)
         end
       end
+    end
+
+    def download
+      path = params[:path]
+      return redirect_to admin_logs_index_path, notice: t(:no_logs) unless @files.include?(path)
+      stat = File.stat(path)
+      send_file(path, filename: File.basename(path), length: stat.size)
     end
 
     private

@@ -25,5 +25,18 @@ RSpec.describe Admin::LogsController, type: :controller do
         expect(response.status).to eq(302)
       end
     end
+
+    describe 'GET /admin/logs/download' do
+      it 'works!' do
+        get :download, params: { path: Rails.root.join('log', 'test.log') }
+        expect(response.status).to eq(200)
+        expect(response.headers['Content-Disposition']).to eq('attachment; filename="test.log"')
+      end
+
+      it 'redirect to index' do
+        get :download, params: { path: '/etc/password' }
+        expect(response.status).to eq(302)
+      end
+    end
   end
 end
