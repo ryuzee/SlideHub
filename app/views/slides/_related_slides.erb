@@ -1,0 +1,21 @@
+  <% if related_slides.count > 0 %>
+    <!-- Default panel contents -->
+    <h3 class="h4"><%= t(:related_slides) %></h3>
+    <div class="panel panel-default">
+      <ul class="list-group">
+        <% related_slides.each do |s| %>
+        <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="<%= slide_path(s.id) %>"><%= image_tag s.thumbnail_url, :class => "img-responsive", :style => "border:1px solid #ccc" %></a>
+          </div>
+          <div class="col-md-6">
+            <h3 class="h6"><span class="no_decoration"><a href="<%= slide_path(s.id) %>"><%= strip_tags s.name.truncate(24) %></a></span></h3>
+            <p class="h6"><%= s.created_at %> by <a href="<%= user_by_username_path(username: s.user.username) %>"><%= strip_tags s.user.display_name %></a></p>
+          </div>
+        </div>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>

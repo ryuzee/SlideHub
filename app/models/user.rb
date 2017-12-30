@@ -9,7 +9,7 @@
 #  admin                  :boolean          default(FALSE), not null
 #  disabled               :boolean          default(FALSE)
 #  created_at             :datetime         not null
-#  modified_at            :datetime
+#  updated_at             :datetime
 #  biography              :text(65535)
 #  slides_count           :integer          default(0)
 #  encrypted_password     :string(255)      default(""), not null

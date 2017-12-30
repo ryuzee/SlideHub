@@ -7,7 +7,7 @@
 #  slide_id    :integer          not null
 #  comment     :text(65535)      not null
 #  created_at  :datetime         not null
-#  modified_at :datetime
+#  updated_at  :datetime
 #
 
 class Comment < ApplicationRecord

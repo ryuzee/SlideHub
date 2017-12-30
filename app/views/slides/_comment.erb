@@ -1,0 +1,28 @@
+<% if not posted_comments.empty? %>
+  <% posted_comments.each do |c| %>
+  <div class="panel-body media comment_post">
+    <div class="pull-left avatar50" style="padding-right:0px !important">
+      <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
+    </div>
+    <div class="media-body" style="padding-left:10px;">
+      <div class="h6" style="margin-top:0px"><a href="<%= user_by_username_path(username: c.user.username) %>"><%= strip_tags c.user.display_name %></a></div>
+      <div class="h6"><%= strip_tags c.comment %></div>
+      <div class="h6"><%= c.created_at %>
+        <% if (user_signed_in? and current_user.id == c.user_id) %>
+          &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to t(:delete), "/comments/#{c.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?" } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+<% else %>
+  <div class="media comment_post"><div class="h6"><%= t(:no_comments) %></div></div>
+<% end %>
+
+<% if user_signed_in? %>
+  <br />
+  <div class="comments form">
+    <%= render :partial => 'comments/form', :locals => { :comment => comment } %>
+  </div>
+<% end %>
+

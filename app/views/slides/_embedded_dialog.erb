@@ -1,0 +1,26 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    new Clipboard('#copy-to-clipboard');
+    $("#show_embedded").click(function(){
+      $('.embedded_dialog').modal('show');
+    });
+  });
+</script>
+
+<div class="modal fade embedded_dialog" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><%= t(:embedded_code) %></div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input class="form-control" id="embedded_url" value="<%= javascript_include_tag(player_url(slide.id)).to_str %>" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="copy-to-clipboard" data-clipboard-target="#embedded_url"><%= t(:copy) %></button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal"><%= t(:close) %></button>
+      </div>
+    </div>
+  </div>
+</div>
+
