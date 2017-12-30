@@ -20,7 +20,7 @@ en:
         comment: "Comment"
         commentable: :activerecord.models.commentable
         commentable_type: "Commentable Type"
-        modified_at: "Modified at"
+        updated_at: "Modified at"
         role: "Role"
         user: :activerecord.models.user
 
@@ -69,7 +69,7 @@ en:
         embedded_view: "Embedded View"
         extension: "Extension"
         id: "ID"
-        modified_at: "Modified at"
+        updated_at: "Modified at"
         name: "Name"
         object_key: "Key"
         page_view: "Page View"
@@ -97,7 +97,7 @@ en:
         encrypted_password: "Encrypted Password"
         last_sign_in_at: "Last signed in at"
         last_sign_in_ip: "Last signed in from IP"
-        modified_at: "Modified"
+        updated_at: "Modified"
         password: "Password"
         provider: "Auth Provider"
         remember_created_at: "Remember created at"

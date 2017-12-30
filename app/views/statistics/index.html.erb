@@ -9,7 +9,7 @@
       <tr>
         <th class="col-md-5"><%= sort_link(@search, :name) %></th>
         <th class="col-md-1"><%= sort_link(@search, :created_at) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :modified_at) %></th>
+        <th class="col-md-1"><%= sort_link(@search, :updated_at) %></th>
         <th class="col-md-1"><%= sort_link(@search, :convert_status) %></th>
         <th class="col-md-1"><%= sort_link(@search, :page_view) %></th>
         <th class="col-md-1"><%= sort_link(@search, :embedded_view) %></th>
@@ -22,7 +22,7 @@
         <tr>
           <td><%= link_to slide.name, slide_path(slide.id) %>&nbsp;</td>
           <td><%= slide.created_at %></td>
-          <td><%= slide.modified_at %></td>
+          <td><%= slide.updated_at %></td>
           <td><%= slide.convert_status %></td>
           <td><%= slide.page_view %></td>
           <td><%= slide.embedded_view %></td>

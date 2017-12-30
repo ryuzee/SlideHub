@@ -9,7 +9,7 @@
 #  downloadable   :boolean          default(FALSE), not null
 #  category_id    :integer          not null
 #  created_at     :datetime         not null
-#  modified_at    :datetime
+#  updated_at     :datetime
 #  object_key     :string(255)      default("")
 #  extension      :string(10)       default(""), not null
 #  convert_status :integer          default(0)

@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171222180708) do
+ActiveRecord::Schema.define(version: 20171228133207) do
 
   create_table "categories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "comments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -21,7 +23,7 @@ ActiveRecord::Schema.define(version: 20171222180708) do
     t.integer "slide_id", null: false
     t.text "comment", null: false
     t.datetime "created_at", null: false
-    t.datetime "modified_at"
+    t.datetime "updated_at"
     t.index ["slide_id"], name: "idx_comments_slide_id_key"
     t.index ["slide_id"], name: "index_comments_on_slide_id"
     t.index ["user_id"], name: "idx_comments_user_id_key"
@@ -67,7 +69,7 @@ ActiveRecord::Schema.define(version: 20171222180708) do
     t.boolean "downloadable", default: false, null: false
     t.integer "category_id", null: false
     t.datetime "created_at", null: false
-    t.datetime "modified_at"
+    t.datetime "updated_at"
     t.string "object_key", default: ""
     t.string "extension", limit: 10, default: "", null: false
     t.integer "convert_status", default: 0
@@ -108,7 +110,7 @@ ActiveRecord::Schema.define(version: 20171222180708) do
     t.boolean "admin", default: false, null: false
     t.boolean "disabled", default: false
     t.datetime "created_at", null: false
-    t.datetime "modified_at"
+    t.datetime "updated_at"
     t.text "biography"
     t.integer "slides_count", default: 0
     t.string "encrypted_password", default: "", null: false

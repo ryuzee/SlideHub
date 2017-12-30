@@ -1,0 +1,19 @@
+<% transcripts = slide.transcript %>
+<% show_tran = slide.transcript_exist? %>
+<% if show_tran %>
+  <% page_count = 0 %>
+  <div class="slide_description">
+    <% transcripts.each do |tran| %>
+      <% page_count += 1 %>
+      <% if not tran.empty? %>
+        <% if params[:vertical] != "1" %>
+          <div class="h6"><a href="#page_top" onclick="javascript:OSSJSPARTS<%= prefix %>.move_to(<%= page_count - 1 %>);"><%= page_count %>.</a> <%= tran %></div>
+        <% else %>
+          <div class="h6"><a href="#img-<%= page_count - 1 %>"><%= page_count %>.</a> <%= tran %></div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="slide_description"><div class="h6">No Transcript...</div></div>
+<% end %>

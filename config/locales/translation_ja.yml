@@ -20,7 +20,7 @@ ja:
         comment: "コメント"
         commentable: :activerecord.models.commentable
         commentable_type: Commentableタイプ
-        modified_at: "変更されました"
+        updated_at: "変更されました"
         role: "役割"
         user: :activerecord.models.user
 
@@ -68,7 +68,7 @@ ja:
         extension: "拡張子"
         id: "ID"
         object_key: "キー"
-        modified_at: "更新日時"
+        updated_at: "更新日時"
         name: "タイトル"
         page_view: "ページビュー"
         private_comments: "プライベートのコメント"
@@ -95,7 +95,7 @@ ja:
         encrypted_password: "暗号化されたパスワード"
         last_sign_in_at: "前回のサインイン時刻"
         last_sign_in_ip: "前回のサインイン元IPアドレス"
-        modified_at: "更新日時"
+        updated_at: "更新日時"
         created_at: "登録日時"
         password: "パスワード"
         provider: "認証プロバイダー"

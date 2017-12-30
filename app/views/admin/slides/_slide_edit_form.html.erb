@@ -79,12 +79,12 @@ $(function(){
     <%= f.error_span(:created_at) %>
   </div>
   <div class="control-group" style="position: relative">
-    <%= f.label :modified_at, :class => 'control-label' %>
+    <%= f.label :updated_at, :class => 'control-label' %>
     <div class="input-group datetimepicker">
-      <%= f.text_field :modified_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
+      <%= f.text_field :updated_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
       <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
     </div>
-    <%= f.error_span(:modified_at) %>
+    <%= f.error_span(:updated_at) %>
   </div>
   <div class="control-group">
     <%= f.label :object_key, :class => 'control-label' %>
