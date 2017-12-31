@@ -30,7 +30,7 @@ RSpec.describe Admin::UsersController, type: :controller do
         data[:display_name] = update_name
         keys = %w[id username display_name email biography admin]
         data_attr = data.attributes
-        data_attr.each do |k, _v|
+        data_attr.each_key do |k, _v|
           data_attr.delete(k) unless keys.include?(k)
         end
         post :update, params: { user: data_attr }
@@ -48,7 +48,7 @@ RSpec.describe Admin::UsersController, type: :controller do
         data[:display_name] = update_name
         keys = %w[id username display_name email biography admin]
         data_attr = data.attributes
-        data_attr.each do |k, _v|
+        data_attr.each_key do |k, _v|
           data_attr.delete(k) unless keys.include?(k)
         end
         post :update, params: { user: data_attr }

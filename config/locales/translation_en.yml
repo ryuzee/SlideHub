@@ -5,6 +5,7 @@ en:
       comment: "Comment"
       config: "Confif"
       custom_setting: "Custom Setting"
+      page: Page
       rails_settings/cached_settings: "Cached Settings"
       rails_settings/scoped_settings: "Scoped Settings"
       rails_settings/settings: "Settings"
@@ -52,6 +53,10 @@ en:
         thing_type: "Thing Type"
         value: "Value"
         var: "Var"
+
+      page:
+        path: "Path"
+        content: "Content"
 
       slide:
 

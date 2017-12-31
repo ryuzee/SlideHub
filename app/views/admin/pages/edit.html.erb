@@ -1,0 +1,42 @@
+<h3><%= t(:page) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboards_path %></small></h3>
+
+<%= form_for @page, :html => { :class => "form-horizontal page" }, :url => admin_page_path(@page.id) do |f| %>
+
+    <% if @page.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= t('error_save_page', errors: @page.errors.count) %></h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @page.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+
+    <%= f.label t(:path), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :path, :class => 'form-control' %>
+    </div>
+
+    <%= f.label t(:title), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :title, :class => 'form-control' %>
+    </div>
+
+    <%= f.label t(:content), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :content, :cols => 70, :rows => 20, :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:page_id) %>
+  </div>
+
+  <br clear="all" />
+  <%= f.submit t('update'), :class => 'btn btn-primary' %>
+
+<% end %>
