@@ -7,7 +7,7 @@ gem 'json', '~> 1.8.6'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.7'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '~> 4.0.2'
+gem 'uglifier', '~> 4.1.2'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -42,7 +42,7 @@ gem 'twitter-bootstrap-rails', '~> 4.0'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 # Authentication
-gem 'devise', '4.3.0'
+gem 'devise', '4.4.0'
 gem 'devise-bootstrap-views', '0.0.11'
 gem 'devise-i18n', '1.5.0'
 gem 'devise-i18n-views', '0.3.7'
@@ -136,7 +136,7 @@ group :development do
   # Finding code smell
   gem 'reek'
   # Static Analysis
-  gem 'rubocop', '~> 0.52.0'
+  gem 'rubocop', '~> 0.52.1'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   # Include template path
