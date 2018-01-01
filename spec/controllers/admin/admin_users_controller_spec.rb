@@ -33,7 +33,7 @@ RSpec.describe Admin::UsersController, type: :controller do
         data_attr.each_key do |k, _v|
           data_attr.delete(k) unless keys.include?(k)
         end
-        post :update, params: { user: data_attr }
+        post :update, params: { id: data.id, user: data_attr }
         new_name = User.find(target.id).display_name
         expect(new_name).to eq(update_name)
         expect(response.status).to eq(302)
@@ -51,7 +51,7 @@ RSpec.describe Admin::UsersController, type: :controller do
         data_attr.each_key do |k, _v|
           data_attr.delete(k) unless keys.include?(k)
         end
-        post :update, params: { user: data_attr }
+        post :update, params: { id: data.id, user: data_attr }
         expect(response.status).to eq(200)
         expect(response).to render_template :edit
       end
