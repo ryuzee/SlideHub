@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     get ':username/embedded' => 'users#embedded', as: :user_embedded_by_username
   end
 
+  get 'pages/:path' => 'pages#show'
   get 'statistics' => 'statistics#index'
   get 'statistics/index' => 'statistics#index'
 
@@ -81,6 +82,9 @@ Rails.application.routes.draw do
     get 'logs/index' => 'logs#index'
     get 'logs/show' => 'logs#show'
     get 'logs/download' => 'logs#download', as: :logs_download
+
+    get 'pages/index' => 'pages#index'
+    resources :pages, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 
   namespace :api, { format: 'json' } do

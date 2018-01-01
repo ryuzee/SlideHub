@@ -1,0 +1,35 @@
+<h3><%= t(:page_list) %>&nbsp;&nbsp;<small><%= link_to t(:new_page), new_admin_page_path %></small>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboards_path %></small></h3>
+
+<div class="panel panel-default">
+  <!-- Table -->
+  <table class="table table-striped table-bordered small">
+    <thead>
+      <tr>
+        <th class="col-md-1"><%= sort_link(@search, :id) %></th>
+        <th class="col-md-2"><%= sort_link(@search, :path) %></th>
+        <th class="col-md-4"><%= sort_link(@search, :title) %></th>
+        <th class="col-md-2"><%= sort_link(@search, :created_at) %></th>
+        <th class="col-md-2"><%= sort_link(@search, :updated_at) %></th>
+        <th class="col-md-1"><%= t(:operation) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @pages.each do |page| %>
+        <tr>
+          <td><%= link_to page.id, edit_admin_page_path(page.id) %> &nbsp;</td>
+          <td><%= page.path %></td>
+          <td><%= page.title %></td>
+          <td><%= page.created_at %></td>
+          <td><%= page.updated_at %></td>
+          <td>
+            <%= button_to t(:delete), admin_page_path(page.id), method: :delete, class: 'btn btn-primary', form_class: 'form-inline', data: {:confirm => t(:confirm_to_delete_page)} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <%= will_paginate @pages, :renderer => BootstrapPagination::Rails %>
+</div>

@@ -5,6 +5,7 @@ ja:
       comment: "コメント"
       config: "設定"
       custom_setting: "カスタム設定"
+      page: "ページ"
       rails_settings/cached_settings: "設定/キャッシュされた設定をレール"
       rails_settings/scoped_settings: "設定/スコープの設定をレール"
       rails_settings/settings: "設定/設定をレール"
@@ -52,6 +53,12 @@ ja:
         thing_type: "シングタイプ"
         value: "値"
         var: "項目"
+
+      page:
+        path: "パス"
+        content: "コンテンツ"
+        created_at: "登録日時"
+        updated_at: "更新日時"
 
       slide:
         all_comments: "すべてのコメント"
