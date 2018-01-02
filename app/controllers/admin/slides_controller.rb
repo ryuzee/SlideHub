@@ -1,7 +1,7 @@
 module Admin
   class SlidesController < Admin::BaseController
     include SlideUtil
-    before_action :set_slide, only: [:edit, :download]
+    before_action :set_slide, only: [:edit, :update, :download]
 
     def index
       ransack_params = params[:q]
@@ -19,7 +19,6 @@ module Admin
 
     def update
       params.permit! # It's OK because of admin
-      @slide = Slide.find(params[:slide][:id])
       if @slide.update_attributes(params[:slide])
         redirect_to "/admin/slides/#{@slide.id}/edit"
       else

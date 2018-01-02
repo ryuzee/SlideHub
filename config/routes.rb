@@ -52,12 +52,9 @@ Rails.application.routes.draw do
 
     resources :featured_slides, only: [:index, :new, :create, :destroy]
 
-    resources :slides do
-      get 'index', on: :collection
-      get 'edit', on: :collection
-      post 'update', on: :collection
-    end
-    get 'slides/:id/download' => 'slides#download', as: :download_slide
+    resources :slides, only: [:index, :edit, :update]
+
+    resources :slide_download, only: [:show]
 
     resources :users, only: [:index, :edit, :update, :destroy]
 

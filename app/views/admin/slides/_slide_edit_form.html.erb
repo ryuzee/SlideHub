@@ -10,7 +10,7 @@ $(function(){
 });
 </script>
 
-<%= form_for slide, :html => { :class => "form-horizontal slide" }, :url => admin_slides_path(slide.id)  do |f| %>
+<%= form_for slide, :html => { :class => "form-horizontal slide" }, :url => admin_slide_path(slide.id)  do |f| %>
   <% if slide.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
@@ -25,7 +25,6 @@ $(function(){
       </div>
     </div>
   <% end %>
-  <%= f.hidden_field :id %>
 
   <div class="control-group">
     <%= f.label :id, :class => 'control-label' %>

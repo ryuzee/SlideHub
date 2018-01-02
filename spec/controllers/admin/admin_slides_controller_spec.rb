@@ -22,28 +22,13 @@ RSpec.describe Admin::SlidesController, type: :controller do
       end
     end
 
-    describe 'GET /admin/slides/download/1' do
-      it 'works!' do
-        allow(SlideHub::Cloud::Engine::AWS).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
-        allow(SlideHub::Cloud::Engine::Azure).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
-        stub_request(:any, 'http://www.example.com/1.pdf').to_return(
-          body: 'test',
-          status: 200,
-        )
-        slide = create(:slide)
-        get :download, params: { id: slide.id }
-        expect(response.status).to eq(200)
-        expect(response.headers['Content-Disposition']).to eq("attachment; filename=\"#{slide.object_key}#{slide.extension}\"")
-      end
-    end
-
     describe 'POST /admin/slides/update' do
       it 'works!' do
         create(:slide)
         data = Slide.find(1)
         update_name = 'SushiKuitai'
         data[:name] = update_name
-        post :update, params: { slide: data.attributes }
+        post :update, params: { id: data.id, slide: data.attributes }
         expect(response.status).to eq(302)
         new_name = Slide.find(1).name
         expect(update_name).to eq(new_name)
@@ -56,7 +41,7 @@ RSpec.describe Admin::SlidesController, type: :controller do
         data = Slide.find(1)
         update_name = '' # validation error
         data[:name] = update_name
-        post :update, params: { slide: data.attributes }
+        post :update, params: { id: data.id, slide: data.attributes }
         expect(response.status).to eq(200)
         expect(response).to render_template :edit
       end
