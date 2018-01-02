@@ -46,17 +46,13 @@ Rails.application.routes.draw do
   get 'statistics/index' => 'statistics#index'
 
   namespace :admin do
-    resources :dashboards do
-      get 'index', on: :collection
-    end
-
+    resource :dashboard, only: [:show]
     resources :featured_slides, only: [:index, :new, :create, :destroy]
-
     resources :slides, only: [:index, :edit, :update]
-
     resources :slide_download, only: [:show]
-
     resources :users, only: [:index, :edit, :update, :destroy]
+    resources :custom_files, only: [:index, :new, :create, :destroy]
+    resources :pages, only: [:index, :new, :create, :edit, :update, :destroy]
 
     resources :custom_contents do
       get 'index', on: :collection
@@ -68,15 +64,9 @@ Rails.application.routes.draw do
       post 'update', on: :collection, as: :update
     end
 
-    get 'custom_files/index' => 'custom_files#index'
-    resources :custom_files, only: [:index, :new, :create, :destroy]
-
     get 'logs/index' => 'logs#index'
     get 'logs/show' => 'logs#show'
     get 'logs/download' => 'logs#download', as: :logs_download
-
-    get 'pages/index' => 'pages#index'
-    resources :pages, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 
   namespace :api, { format: 'json' } do

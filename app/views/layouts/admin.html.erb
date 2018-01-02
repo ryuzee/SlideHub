@@ -29,7 +29,7 @@
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="<%= admin_dashboards_path %>" class="logo">
+        <a href="<%= admin_dashboard_path %>" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>M</b>C</span>
           <!-- logo for regular state and mobile devices -->
@@ -98,7 +98,7 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
             <li class="header">Admin Menu</li>
-            <li><a href="<%= admin_dashboards_path %>"><i class="fa fa-link"></i> <span><%= t :admin_dashboard %></span></a></li>
+            <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-link"></i> <span><%= t :admin_dashboard %></span></a></li>
             <li><a href="<%= admin_slides_path %>"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
             <li><a href="<%= admin_featured_slides_path %>"><i class="fa fa-link"></i> <span><%= t(:featured_slides) %></span></a></li>
             <li><a href="<%= admin_users_path %>"><i class="fa fa-link"></i> <span><%= t(:user_list) %></span></a></li>
@@ -106,7 +106,7 @@
             <li><a href="<%= admin_custom_contents_path %>"><i class="fa fa-link"></i> <span><%= t(:custom_contents_settings) %></span></a></li>
             <li><a href="<%= admin_pages_path %>"><i class="fa fa-link"></i> <span><%= t(:page_list) %></span></a></li>
             <li><a href="<%= admin_logs_index_path %>"><i class="fa fa-link"></i> <span><%= t(:logs) %></span></a></li>
-            <li><a href="<%= admin_custom_files_index_path %>"><i class="fa fa-link"></i> <span><%= t(:custom_files) %></span></a></li>
+            <li><a href="<%= admin_custom_files_path %>"><i class="fa fa-link"></i> <span><%= t(:custom_files) %></span></a></li>
             <li class="header">Public Site</li>
             <li><a href="<%= slides_path %>"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
             <li><a href="<%= popular_path %>"><i class="fa fa-link"></i> <span><%= t(:popular_slides) %></span></a></li>

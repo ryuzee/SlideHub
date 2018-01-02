@@ -1,4 +1,4 @@
-<h3><%= t(:page) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboards_path %></small></h3>
+<h3><%= t(:page) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
 
 <%= form_for @page, :html => { :class => "form-horizontal page" }, :url => admin_page_path(@page.id) do |f| %>
 
