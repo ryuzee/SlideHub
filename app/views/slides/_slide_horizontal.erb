@@ -22,7 +22,7 @@
           $.ajax({
             type: 'GET',
             async: false,
-            url: "/page_count/<%= slide.id %>",
+            url: "<%= slide_page_count_path(slide.id) %>",
             cache: false,
             dataType: 'json',
             success: function(json) {

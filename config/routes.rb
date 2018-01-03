@@ -1,38 +1,43 @@
 Rails.application.routes.draw do
-  get 'search' => 'search#index'
-  get 'latest' => 'latest_slides#index'
-  get 'slides/latest' => 'latest_slides#index' # backward compatibility
-  get 'popular' => 'popular_slides#index'
-  get 'slides/popular' => 'popular_slides#index' # backward compatibility
-  get 'page_count/:id' => 'slide_page_count#show'
 
+  # backward compatibility
+  get 'slides/latest' => 'latest#index'
+  get 'slides/popular' => 'popular#index'
+  get 'slides/view/:id' => 'slides#show'
+  get 'users/view/:id' => 'users#show'
+  get 'download/:id' => 'slide_download#show'
+  get 'slides/:id/download' => 'slide_download#show'
+  get 'slides/download/:id' => 'slide_download#show'
+
+  # route to player
   get 'player/:id' => 'player#show', as: :player
   get 'player/:id/:page' => 'player#show'
-  get 'html_player/:id' => 'html_player#show'
   get 'slides/embedded/:id' => 'player#show'
   get 'slides/embedded/:id/:page' => 'player#show'
   get 'slides/:id/embedded' => 'player#show'
   get 'slides/:id/embedded/:page' => 'player#show'
 
-  get 'download/:id' => 'slide_download#show'
-  get 'slides/:id/download' => 'slide_download#show', as: :download_slide
-  get 'slides/download/:id' => 'slide_download#show'
-
+  # route to user
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations' }
-  resources :slides do
-    get 'index', on: :collection
-  end
-  get 'slides/view/:id' => 'slides#show'
-  get 'slides/:id/:page' => 'slides#show'
-  get 'users/view/:id' => 'users#show'
   get 'users/:id/embedded' => 'users#embedded'
   resources :users do
     get 'index', on: :collection
   end
 
-  resources :comments, only: [:create, :destroy]
+  # route to slide
+  resources :slides do
+    get 'index', on: :collection
+  end
+  get 'slides/:id/:page' => 'slides#show'
 
+  resources :comments, only: [:create, :destroy]
   resources :categories, only: [:show]
+  resources :slide_page_count, only: [:show]
+  resources :search, only: [:index]
+  resources :latest, only: [:index]
+  resources :popular, only: [:index]
+  resources :html_player, only: [:show]
+  resources :slide_download, only: [:show]
 
   require 'username_url_constrainer'
   constraints(SlideHub::UsernameUrlConstrainer.new) do
