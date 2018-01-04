@@ -1,6 +1,6 @@
 module Admin
   class UsersController < Admin::BaseController
-    before_action :set_user, only: [:edit, :destroy]
+    before_action :set_user, only: [:edit, :update, :destroy]
 
     def index
       ransack_params = params[:q]
@@ -12,7 +12,6 @@ module Admin
     def edit; end
 
     def update
-      @user = User.find(params[:user][:id])
       @user.skip_password_validation = true
       @user.assign_attributes(user_params)
       if @user.update_attributes(user_params)

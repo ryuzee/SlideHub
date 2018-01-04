@@ -1,6 +1,6 @@
 module Admin
   class PagesController < Admin::BaseController
-    before_action :set_page, only: [:edit, :destroy]
+    before_action :set_page, only: [:edit, :update, :destroy]
 
     def index
       ransack_params = params[:q]
@@ -25,7 +25,6 @@ module Admin
     def edit; end
 
     def update
-      @page = Page.find(params[:id])
       if @page.update_attributes(page_params)
         redirect_to admin_pages_path, notice: t(:page_was_updated)
       else

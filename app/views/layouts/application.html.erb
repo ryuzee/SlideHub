@@ -29,8 +29,8 @@
   <% end %>
 
     <%= javascript_include_tag "application" %>
-    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:latest_slides) %>)" href="<%= latest_path(format: "rss") %>" />
-    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:popular_slides) %>)" href="<%= popular_path(format: "rss") %>" />
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:latest_slides) %>)" href="<%= latest_index_path(format: "rss") %>" />
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:popular_slides) %>)" href="<%= popular_index_path(format: "rss") %>" />
   </head>
   <body class="slidehub_body">
 
@@ -48,8 +48,8 @@
         <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;<%= CustomSetting['site.name'] %></a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li class="<%= 'active' if controller.controller_name == 'popular_slides' %>"><%= link_to t("popular"), popular_path  %></li>
-            <li class="<%= 'active' if controller.controller_name == 'latest_slides' %>"><%= link_to t("latest"), latest_path  %></li>
+            <li class="<%= 'active' if controller.controller_name == 'popular_slides' %>"><%= link_to t("popular"), popular_index_path  %></li>
+            <li class="<%= 'active' if controller.controller_name == 'latest_slides' %>"><%= link_to t("latest"), latest_index_path  %></li>
             <li class="dropdown<%= ' active' if controller.controller_name == 'categories' %>">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= t 'category' %><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -60,7 +60,7 @@
                 <% end %>
               </ul>
             </li>
-            <li class="<%= 'active' if controller.controller_name == 'search' %>"><%= link_to t("search"), search_path  %></li>
+            <li class="<%= 'active' if controller.controller_name == 'search' %>"><%= link_to t("search"), search_index_path  %></li>
             <%= raw custom_links %>
           </ul>
           <% if user_signed_in? %>
@@ -74,7 +74,7 @@
               <li><a href="<%= edit_user_registration_path %>"><i class="fa fa-user"></i>&nbsp;<%= t :my_account %></a></li>
               <!-- admin -->
               <li class="divider"></li>
-              <li><a href="<%= admin_dashboards_path %>"><i class="fa fa-wrench"></i></span>&nbsp;<%= t :admin_dashboard %></a></li>
+              <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-wrench"></i></span>&nbsp;<%= t :admin_dashboard %></a></li>
               <!-- // admin -->
               <li class="divider"></li>
               <li><%= link_to t(:logout), destroy_user_session_path, method: :delete %></li>

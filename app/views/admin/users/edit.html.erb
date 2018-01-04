@@ -1,6 +1,6 @@
-<h3><%= t(:edit_user) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboards_path %></small></h3>
+<h3><%= t(:edit_user) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
 
-<%= form_for @user, :html => { :class => "form-horizontal user" }, :url => admin_users_path do |f| %>
+<%= form_for @user, :html => { :class => "form-horizontal user" }, :url => admin_user_path(@user.id) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
@@ -15,7 +15,6 @@
       </div>
     </div>
   <% end %>
-  <%= f.hidden_field :id %>
 
   <div class="control-group">
     <%= f.label :id, :class => 'control-label' %>

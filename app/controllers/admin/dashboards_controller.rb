@@ -1,6 +1,6 @@
 module Admin
   class DashboardsController < Admin::BaseController
-    def index
+    def show
       @dashboard = Dashboard.new
     end
   end

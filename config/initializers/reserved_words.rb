@@ -1,1 +1,1 @@
-ReservedWord.list.push('slides', 'popular', 'latest', 'statistics', 'dashboards', 'www', 'image')
+ReservedWord.list.push('slides', 'popular', 'latest', 'statistics', 'dashboard', 'dashboards', 'www', 'image')

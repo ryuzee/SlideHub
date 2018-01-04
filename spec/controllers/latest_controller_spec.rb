@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PopularSlidesController, type: :controller do
+RSpec.describe LatestController, type: :controller do
   let(:slide) { create(:slide) }
 
   describe 'GET #index' do
