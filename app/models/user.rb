@@ -49,8 +49,7 @@ class User < ApplicationRecord
 
   def password_required?
     return false if skip_password_validation
-    # super && provider.blank?
-    provider.blank?
+    super && provider.blank?
   end
 
   def update_with_password(params, *options)

@@ -42,8 +42,7 @@ gem 'twitter-bootstrap-rails', '~> 4.0'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 # Authentication
-# https://github.com/plataformatec/devise/issues/4742
-gem 'devise', '4.3.0'
+gem 'devise', '4.4.0'
 gem 'devise-bootstrap-views', '0.0.11'
 gem 'devise-i18n', '1.5.0'
 gem 'devise-i18n-views', '0.3.7'
