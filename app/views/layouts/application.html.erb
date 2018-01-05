@@ -48,8 +48,8 @@
         <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;<%= CustomSetting['site.name'] %></a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li class="<%= 'active' if controller.controller_name == 'popular_slides' %>"><%= link_to t("popular"), popular_index_path  %></li>
-            <li class="<%= 'active' if controller.controller_name == 'latest_slides' %>"><%= link_to t("latest"), latest_index_path  %></li>
+            <li class="<%= 'active' if controller.controller_name == 'popular' %>"><%= link_to t("popular"), popular_index_path  %></li>
+            <li class="<%= 'active' if controller.controller_name == 'latest' %>"><%= link_to t("latest"), latest_index_path  %></li>
             <li class="dropdown<%= ' active' if controller.controller_name == 'categories' %>">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= t 'category' %><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
