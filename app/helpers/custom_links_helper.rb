@@ -7,12 +7,12 @@ module CustomLinksHelper
       json = JSON.parse(source, quirks_mode: true)
       json.each do |elm|
         active_class = ''
-        if (elm['url'].start_with?("#{root_url}pages/") || elm['url'].start_with?('/pages/')) && controller.controller_name == 'pages'
+        if elm['url'].start_with?("#{root_url}pages/", '/pages/') && controller.controller_name == 'pages'
           active_class = ' class="active"'
         end
         result += "<li#{active_class}>#{link_to elm['label'], elm['url']}</li>"
       end
-    rescue
+    rescue StandardError
       result = ''
     end
     result
