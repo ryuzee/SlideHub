@@ -61,7 +61,7 @@
               </ul>
             </li>
             <li class="<%= 'active' if controller.controller_name == 'search' %>"><%= link_to t("search"), search_index_path  %></li>
-            <%= raw custom_links %>
+            <%= raw custom_links(controller) %>
           </ul>
           <% if user_signed_in? %>
           <ul class="nav navbar-nav navbar-right">
