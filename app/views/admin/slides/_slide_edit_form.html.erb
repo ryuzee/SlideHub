@@ -57,8 +57,10 @@ $(function(){
   </div>
   <div class="control-group">
     <%= f.label :downloadable, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :downloadable, :class => 'form-control' %>
+    <div class="controls checkbox">
+      <label>
+        <%= f.check_box :downloadable %><%= t('activerecord.attributes.slide.downloadable') %>
+      </label>
     </div>
     <%= f.error_span(:downloadable) %>
   </div>
