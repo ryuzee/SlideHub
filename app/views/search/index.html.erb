@@ -4,7 +4,7 @@
     <%- model_class = Slide -%>
     <h3><%=t :search_slides %></h3>
 
-    <%= render :partial => 'search_form', :locals => { :search_q => @search } %>
+    <%= render 'search_form', search_q: @search %>
 
     <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slides %>
 
