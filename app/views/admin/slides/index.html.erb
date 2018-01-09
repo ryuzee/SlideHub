@@ -24,7 +24,7 @@
         <tr>
           <td><%= link_to slide.id, slide_path(slide.id) %></td>
           <td><%= link_to slide.name, slide_path(slide.id) %>&nbsp;</td>
-          <td><%= link_to slide.user_id, "/#{slide.user_id}" %>&nbsp;</td>
+          <td><%= link_to slide.user_id, user_path(slide.user_id) %>&nbsp;</td>
           <td><%= slide.created_at %></td>
           <td><%= slide.updated_at %></td>
           <td><%= slide.convert_status %></td>
