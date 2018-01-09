@@ -1,5 +1,87 @@
 <h3><%= t(:slide_list) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
 
+<%= search_form_for @search, url: "/admin/slides", :html => { :class => "form-horizontal slide" } do |f| %>
+
+<div class="row">
+  <div class="col-md-3">
+    <div class="control-group">
+    <%= f.label :name_cont, t('activerecord.attributes.slide.name') %>
+    <%= f.search_field :name_cont, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="control-group">
+    <%= f.label :description_cont, t('activerecord.attributes.slide.description') %>
+    <%= f.search_field :description_cont, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="control-group">
+    <%= f.label :user_display_name_cont, t(:slide_author) %>
+    <%= f.search_field :user_display_name_cont, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="control-group">
+      <%= f.label :tag_search, t('activerecord.models.tag') %>
+      <% v = (request.query_parameters.has_key?(:q) and request.query_parameters[:q].has_key?(:tag_search)) ? request.query_parameters[:q][:tag_search] : "" %>
+      <%= f.text_field :tag_search, :value => v, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="control-group" style="position: relative">
+      <%= f.label :created_at_gteq ,t('published_date_from') %>
+      <div class="input-group datetimepicker">
+        <%= f.text_field :created_at_gteq, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="control-group" style="position: relative">
+      <%= f.label :created_at_lteq ,t('published_date_to') %>
+      <div class="input-group datetimepicker">
+        <%= f.text_field :created_at_lteq, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <%= f.label :downloadable, :class => 'control-label' %>
+    <div class="controls checkbox">
+      <label>
+        <%= f.check_box :downloadable_true, {}, 1, nil %><%= t('activerecord.attributes.slide.downloadable') %>
+      </label>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <br clear="all" />
+    <%= f.submit :class => 'btn btn-primary' %>
+  </div>
+</div>
+
+<% end %>
+<br clear="all" />
+
+<script type="text/javascript">
+$(function(){
+  $('.datetimepicker').datetimepicker({
+    useCurrent: false,
+    sideBySide: false,
+    showTodayButton: true,
+    showClear: true,
+    showClose: true
+  });
+});
+</script>
+
 <div class="panel panel-default">
   <!-- Table -->
   <table class="table table-striped table-bordered small">

@@ -4,11 +4,9 @@ module Admin
     before_action :set_slide, only: [:edit, :update, :download]
 
     def index
-      ransack_params = params[:q]
-      @search = Slide.search(ransack_params)
-      @slides = @search.result(distinct: true).
-                latest.
-                paginate(page: params[:page], per_page: 20)
+      slide_search = SlideSearch.new(params[:q])
+      @search = slide_search.search
+      @slides = slide_search.slides.latest.paginate(page: params[:page], per_page: 20)
     end
 
     def edit; end
