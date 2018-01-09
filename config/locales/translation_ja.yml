@@ -69,7 +69,7 @@ ja:
         comments: "コメント"
         convert_status: "変換状況"
         description: "詳細"
-        downloadable: "ダウンロード可否"
+        downloadable: "ダウンロード可能"
         download_count: "ダウンロード数"
         embedded_view: "埋め込みビュー"
         extension: "拡張子"

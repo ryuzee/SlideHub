@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: pages
+#
+#  id         :integer          not null, primary key
+#  path       :string(30)       not null
+#  title      :string(255)      not null
+#  content    :text(4294967295)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 require 'rails_helper'
 
 describe 'Page' do

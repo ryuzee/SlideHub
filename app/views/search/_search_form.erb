@@ -1,4 +1,4 @@
-<%= search_form_for search_q, url: "/search", :html => { :class => "form-horizontal slide" } do |f| %>
+<%= search_form_for search_q, url: search_index_path, :html => { :class => "form-horizontal slide" } do |f| %>
 
 <div class="row">
   <div class="col-md-4">
@@ -30,7 +30,7 @@
   </div>
   <div class="col-md-4">
     <div class="control-group" style="position: relative">
-      <%= f.label :created_at_lteq ,t('published_date_from') %>
+      <%= f.label :created_at_lteq ,t('published_date_to') %>
       <div class="input-group datetimepicker">
         <%= f.text_field :created_at_lteq, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>

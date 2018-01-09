@@ -4,11 +4,9 @@ module Admin
     before_action :set_slide, only: [:edit, :update, :download]
 
     def index
-      ransack_params = params[:q]
-      @search = Slide.search(ransack_params)
-      @slides = @search.result(distinct: true).
-                latest.
-                paginate(page: params[:page], per_page: 20)
+      slide_search = SlideSearch.new(params[:q])
+      @search = slide_search.search
+      @slides = slide_search.slides.latest.paginate(page: params[:page], per_page: 20)
     end
 
     def edit; end
@@ -20,7 +18,7 @@ module Admin
     def update
       params.permit! # It's OK because of admin
       if @slide.update_attributes(params[:slide])
-        redirect_to "/admin/slides/#{@slide.id}/edit"
+        redirect_to "/admin/slides/#{@slide.id}/edit", notice: t(:slide_was_updated)
       else
         render :edit
       end

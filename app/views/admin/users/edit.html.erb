@@ -58,8 +58,10 @@
 
   <div class="control-group">
     <%= f.label :admin, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :admin, :class => 'form-control' %>
+    <div class="controls checkbox">
+      <label>
+        <%= f.check_box :admin %><%= t('activerecord.attributes.user.admin') %>
+      </label>
     </div>
     <%= f.error_span(:admin) %>
   </div>
