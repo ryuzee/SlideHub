@@ -142,10 +142,10 @@
       <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-          <%= link_to "See #{t(:project_page)}.", "https://github.com/ryuzee/SlideHub/", target: "_blank" %>
+          Powered by <%= link_to "SlideHub", "https://github.com/ryuzee/SlideHub", target: "_blank" %> <%= SlideHub::VERSION %>
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2017 Ryuzee. </strong> MIT License.
+        <%= raw CustomSetting['site.footer'] %>
       </footer>
     </div><!-- ./wrapper -->
 
