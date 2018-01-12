@@ -8,18 +8,19 @@
         <th class="col-md-1"><%= sort_link(@search, :id) %></th>
         <th class="col-md-2"><%= sort_link(@search, :email) %></th>
         <th class="col-md-2"><%= sort_link(@search, :username) %></th>
-        <th class="col-md-2"><%= sort_link(@search, :display_name) %></th>
+        <th class="col-md-1"><%= sort_link(@search, :display_name) %></th>
         <th class="col-md-1"><%= sort_link(@search, :provider) %></th>
         <th class="col-md-1"><%= sort_link(@search, :admin) %></th>
         <th class="col-md-1"><%= sort_link(@search, :slides_count) %></th>
         <th class="col-md-1"><%= sort_link(@search, :created_at) %></th>
         <th class="col-md-1"><%= sort_link(@search, :updated_at) %></th>
+        <th class="col-md-1"><%= t('command') %></th>
       </tr>
     </thead>
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td><%= link_to user.id, edit_admin_user_path(user.id) %> &nbsp;</td>
+          <td><%= link_to user.id, user_path(user.id) %> &nbsp;</td>
           <td><%= user.email %></td>
           <td><%= user.username %></td>
           <td><%= user.display_name %></td>
@@ -28,6 +29,9 @@
           <td><%= user.slides_count %></td>
           <td><%= user.created_at %></td>
           <td><%= user.updated_at %></td>
+          <td>
+            <%= button_to t(:edit), edit_admin_user_path(user.id), method: 'get', class: 'btn btn-primary btn-xs', form_class: 'form-inline' %>
+          </td>
         </tr>
       <% end %>
     </tbody>

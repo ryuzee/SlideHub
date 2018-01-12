@@ -87,18 +87,18 @@ $(function(){
   <table class="table table-striped table-bordered small">
     <thead>
       <tr>
-        <th class="col-md-1"><%= sort_link(@search, :id) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :name) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :user_id) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :created_at) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :updated_at) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :convert_status) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :total_view) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :page_view) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :embedded_view) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :download_count) %></th>
-        <th class="col-md-1"><%= sort_link(@search, :comments_count) %></th>
-        <th class="col-md-1"><%= t('command') %></th>
+        <th><%= sort_link(@search, :id) %></th>
+        <th class="col-md-2"><%= sort_link(@search, :name) %></th>
+        <th><%= sort_link(@search, :user_id) %></th>
+        <th><%= sort_link(@search, :created_at) %></th>
+        <th><%= sort_link(@search, :updated_at) %></th>
+        <th><%= sort_link(@search, :convert_status) %></th>
+        <th><%= sort_link(@search, :total_view) %></th>
+        <th><%= sort_link(@search, :page_view) %></th>
+        <th><%= sort_link(@search, :embedded_view) %></th>
+        <th><%= sort_link(@search, :download_count) %></th>
+        <th><%= sort_link(@search, :comments_count) %></th>
+        <th colspan="4"><%= t('command') %></th>
       </tr>
     </thead>
     <tbody>
@@ -115,7 +115,10 @@ $(function(){
           <td><%= slide.embedded_view %></td>
           <td><%= slide.download_count %></td>
           <td><%= slide.comments_count %></td>
-          <td><a href="<%= slide.transcript_url %>" target="_blank"><i class="fa fa-file-text"></i></a>&nbsp;<a href="<%= slide.page_list_url %>" target="_blank"><i class="fa fa-jsfiddle"></i></a>&nbsp;<a href="<%= admin_slide_download_path(slide.id) %>"><i class="fa fa-cloud-download"></i></a>&nbsp;<a href="<%= edit_admin_slide_path(slide.id) %>"><i class="fa fa-pencil"></i></a></td>
+          <td><a href="<%= slide.transcript_url %>" target="_blank"><i class="fa fa-file-text"></i></a></td>
+          <td><a href="<%= slide.page_list_url %>" target="_blank"><i class="fa fa-jsfiddle"></i></a></td>
+          <td><a href="<%= admin_slide_download_path(slide.id) %>"><i class="fa fa-cloud-download"></i></a></td>
+          <td><a href="<%= edit_admin_slide_path(slide.id) %>"><i class="fa fa-pencil"></i></a></td>
         </tr>
       <% end %>
     </tbody>

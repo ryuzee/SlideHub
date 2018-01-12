@@ -22,7 +22,7 @@
           <td><%= page.created_at %></td>
           <td><%= page.updated_at %></td>
           <td>
-            <%= button_to t(:delete), admin_page_path(page.id), method: :delete, class: 'btn btn-primary', form_class: 'form-inline', data: {:confirm => t(:confirm_to_delete_page)} %>
+            <%= button_to t(:delete), admin_page_path(page.id), method: :delete, class: 'btn btn-primary btn-xs', form_class: 'form-inline', data: {:confirm => t(:confirm_to_delete_page)} %>
           </td>
         </tr>
       <% end %>

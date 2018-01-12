@@ -26,7 +26,7 @@
           <td><%= fs.slide.created_at %></td>
           <td><%= fs.slide.total_view %></td>
           <td><%= fs.slide.comments_count %></td>
-          <td><%= button_to t('delete'), admin_featured_slide_path(fs), :method => :delete, :class => 'btn btn-primary' %></td>
+          <td><%= button_to t('delete'), admin_featured_slide_path(fs), :method => :delete, :class => 'btn btn-primary btn-xs' %></td>
         </tr>
       <% end %>
     </tbody>
