@@ -74,7 +74,7 @@ $(function(){
   <div class="control-group" style="position: relative">
     <%= f.label :created_at, :class => 'control-label' %>
     <div class="input-group datetimepicker">
-      <%= f.text_field :created_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
+      <%= f.text_field :created_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm', value: (f.object.created_at.blank? ? '' : f.object.created_at.strftime('%Y/%m/%d %H:%M')) %>
       <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
     </div>
     <%= f.error_span(:created_at) %>
@@ -82,7 +82,7 @@ $(function(){
   <div class="control-group" style="position: relative">
     <%= f.label :updated_at, :class => 'control-label' %>
     <div class="input-group datetimepicker">
-      <%= f.text_field :updated_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
+      <%= f.text_field :updated_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' , value: (f.object.updated_at.blank? ? '' : f.object.updated_at.strftime('%Y/%m/%d %H:%M')) %>
       <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
     </div>
     <%= f.error_span(:updated_at) %>

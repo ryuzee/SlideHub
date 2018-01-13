@@ -107,8 +107,8 @@ $(function(){
           <td><%= link_to slide.id, slide_path(slide.id) %></td>
           <td><%= link_to slide.name, slide_path(slide.id) %>&nbsp;</td>
           <td><%= link_to slide.user_id, user_path(slide.user_id) %>&nbsp;</td>
-          <td><%= slide.created_at %></td>
-          <td><%= slide.updated_at %></td>
+          <td><%= slide.created_at.to_s(:middle) if slide.created_at %></td>
+          <td><%= slide.updated_at.to_s(:middle) if slide.updated_at %></td>
           <td><%= slide.convert_status %></td>
           <td><%= slide.total_view %></td>
           <td><%= slide.page_view %></td>
@@ -118,7 +118,9 @@ $(function(){
           <td><a href="<%= slide.transcript_url %>" target="_blank"><i class="fa fa-file-text"></i></a></td>
           <td><a href="<%= slide.page_list_url %>" target="_blank"><i class="fa fa-jsfiddle"></i></a></td>
           <td><a href="<%= admin_slide_download_path(slide.id) %>"><i class="fa fa-cloud-download"></i></a></td>
-          <td><a href="<%= edit_admin_slide_path(slide.id) %>"><i class="fa fa-pencil"></i></a></td>
+          <td>
+            <%= button_to t(:edit), edit_admin_slide_path(slide.id), method: 'get', class: 'btn btn-primary btn-xs', form_class: 'form-inline' %>
+          </td>
         </tr>
       <% end %>
     </tbody>

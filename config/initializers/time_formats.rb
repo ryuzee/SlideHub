@@ -8,4 +8,5 @@
 # カスタムフォーマットを定義
 Date::DATE_FORMATS[:default]      = '%Y/%m/%d'
 Time::DATE_FORMATS[:default]      = '%Y/%m/%d'
+Time::DATE_FORMATS[:middle] = '%Y/%m/%d %H:%M'
 Time::DATE_FORMATS[:long] = '%Y/%m/%d %H:%M:%S'
