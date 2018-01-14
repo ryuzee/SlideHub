@@ -55,6 +55,7 @@ Rails.application.routes.draw do
     resources :featured_slides, only: [:index, :new, :create, :destroy]
     resources :slides, only: [:index, :edit, :update]
     resources :slide_download, only: [:show]
+    resources :slide_reconvert, only: [:show]
     resources :users, only: [:index, :edit, :update, :destroy]
     resources :custom_files, only: [:index, :new, :create, :destroy]
     resources :pages, only: [:index, :new, :create, :edit, :update, :destroy]

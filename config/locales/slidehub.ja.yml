@@ -13,6 +13,7 @@ ja:
   copy: "コピー"
   confirm_to_delete_user: "ユーザーを削除してよろしいですか？"
   confirm_to_delete_page: "ページを削除してよろしいですか？"
+  confirm_to_send_reconvert_request: "スライドの再変換を実行してよろしいですか？"
   content: "コンテンツ"
   custom_contents_settings: "カスタムコンテンツ設定"
   custom_contents_were_saved: "カスタムコンテンツ設定を保存しました"
@@ -114,6 +115,7 @@ ja:
   helpers:
     links:
       cancel: "キャンセル"
+  send_convert_request_completed: "再変換のリクエストを送信しました"
   site:
     display_login_link: "ログインリンクを表示する"
     only_admin_can_upload: "管理者のみアップロード可能にする"

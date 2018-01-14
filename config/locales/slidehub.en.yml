@@ -13,6 +13,7 @@ en:
   copy: "Copy"
   confirm_to_delete_user: "Are you sure to delete selected user?"
   confirm_to_delete_page: "Are you sure to delete selected page?"
+  confirm_to_send_reconvert_request: "Are you sure to send slide convert request?"
   content: "Content"
   custom_contents_settings: "Custom Contents Settings"
   custom_contents_were_saved: "Custom Contents were successfully saved"
@@ -114,6 +115,7 @@ en:
   helpers:
     links:
       cancel: "Cancel"
+  send_convert_request_completed: "Sending conversion request completed"
   site:
     display_login_link: "Display Login Link"
     only_admin_can_upload: "Only administrators can upload slides"

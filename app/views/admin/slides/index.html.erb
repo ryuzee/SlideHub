@@ -98,7 +98,7 @@ $(function(){
         <th><%= sort_link(@search, :embedded_view) %></th>
         <th><%= sort_link(@search, :download_count) %></th>
         <th><%= sort_link(@search, :comments_count) %></th>
-        <th colspan="4"><%= t('command') %></th>
+        <th colspan="5"><%= t('command') %></th>
       </tr>
     </thead>
     <tbody>
@@ -118,6 +118,11 @@ $(function(){
           <td><a href="<%= slide.transcript_url %>" target="_blank"><i class="fa fa-file-text"></i></a></td>
           <td><a href="<%= slide.page_list_url %>" target="_blank"><i class="fa fa-jsfiddle"></i></a></td>
           <td><a href="<%= admin_slide_download_path(slide.id) %>"><i class="fa fa-cloud-download"></i></a></td>
+          <td>
+            <%= link_to admin_slide_reconvert_path(slide.id), :method => 'get', data: {:confirm => t(:confirm_to_send_reconvert_request)} do %>
+            <i class="fa fa-adjust"></i>
+            <% end %>
+          </td>
           <td>
             <%= button_to t(:edit), edit_admin_slide_path(slide.id), method: 'get', class: 'btn btn-primary btn-xs', form_class: 'form-inline' %>
           </td>
