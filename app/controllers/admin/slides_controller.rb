@@ -1,7 +1,6 @@
 module Admin
   class SlidesController < Admin::BaseController
-    include SlideUtil
-    before_action :set_slide, only: [:edit, :update, :download]
+    before_action :set_slide, only: [:edit, :update]
 
     def index
       slide_search = SlideSearch.new(params[:q])
@@ -10,10 +9,6 @@ module Admin
     end
 
     def edit; end
-
-    def download
-      download_slide
-    end
 
     def update
       params.permit! # It's OK because of admin
