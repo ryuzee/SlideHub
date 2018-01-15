@@ -27,6 +27,12 @@ RSpec.describe Admin::PagesController, type: :controller do
         expect(response.status).to eq(302)
         expect(response).to redirect_to admin_pages_path
       end
+
+      it 'render form' do
+        post 'create', params: { page: { path: 'abc', title: '', content: 'content' } }
+        expect(response.status).to eq(200)
+        expect(response).to render_template :new
+      end
     end
 
     describe 'GET /admin/pages/edit/1' do
