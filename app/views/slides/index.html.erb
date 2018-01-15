@@ -5,7 +5,7 @@
   <div class="col-md-12">
     <%- model_class = Slide -%>
     <h3><%=t :featured_slides %></h3>
-    <% cache 'featured_slides', expires_in: 10.minutes, skip_digest: true do %>
+    <% cache 'featured_slides', expires_in: 3.minutes, skip_digest: true do %>
     <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.featured_slides %>
     <% end %>
   </div>
@@ -17,7 +17,7 @@
   <div class="col-md-12">
     <%- model_class = Slide -%>
     <h3><%=t :popular_slides %>&nbsp;&nbsp;<small><a href="<%= popular_index_path %>"><%= t :more_slides %></a></small></h3>
-    <% cache 'popular_slides', expires_in: 10.minutes, skip_digest: true do %>
+    <% cache 'popular_slides', expires_in: 3.minutes, skip_digest: true do %>
     <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.popular_slides %>
     <% end %>
   </div>

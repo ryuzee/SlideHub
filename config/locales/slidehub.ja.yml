@@ -3,6 +3,7 @@ ja:
   actions: "操作"
   add: "追加する"
   admin_dashboard: "管理者ダッシュボード"
+  admin_menu: "管理者メニュー"
   back_to_dashboard: "ダッシュボードに戻る"
   back_to_list: "一覧に戻る"
   biography: "自己紹介"
@@ -12,6 +13,7 @@ ja:
   copy: "コピー"
   confirm_to_delete_user: "ユーザーを削除してよろしいですか？"
   confirm_to_delete_page: "ページを削除してよろしいですか？"
+  confirm_to_send_reconvert_request: "スライドの再変換を実行してよろしいですか？"
   content: "コンテンツ"
   custom_contents_settings: "カスタムコンテンツ設定"
   custom_contents_were_saved: "カスタムコンテンツ設定を保存しました"
@@ -74,6 +76,7 @@ ja:
   popular_slides: "人気のスライド"
   popular_tags: "人気のタグ"
   project_page: "プロジェクトページ"
+  public_site: "公開サイト"
   published: "公開日"
   published_date_from: "投稿日(From)"
   published_date_to: "投稿日(To)"
@@ -112,6 +115,7 @@ ja:
   helpers:
     links:
       cancel: "キャンセル"
+  send_convert_request_completed: "再変換のリクエストを送信しました"
   site:
     display_login_link: "ログインリンクを表示する"
     only_admin_can_upload: "管理者のみアップロード可能にする"

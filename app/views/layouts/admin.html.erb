@@ -97,22 +97,22 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-            <li class="header">Admin Menu</li>
-            <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-link"></i> <span><%= t :admin_dashboard %></span></a></li>
-            <li><a href="<%= admin_slides_path %>"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
-            <li><a href="<%= admin_featured_slides_path %>"><i class="fa fa-link"></i> <span><%= t(:featured_slides) %></span></a></li>
-            <li><a href="<%= admin_users_path %>"><i class="fa fa-link"></i> <span><%= t(:user_list) %></span></a></li>
-            <li><a href="<%= admin_site_settings_path %>"><i class="fa fa-link"></i> <span><%= t(:site_settings) %></span></a></li>
-            <li><a href="<%= admin_custom_contents_path %>"><i class="fa fa-link"></i> <span><%= t(:custom_contents_settings) %></span></a></li>
-            <li><a href="<%= admin_pages_path %>"><i class="fa fa-link"></i> <span><%= t(:page_list) %></span></a></li>
-            <li><a href="<%= admin_logs_index_path %>"><i class="fa fa-link"></i> <span><%= t(:logs) %></span></a></li>
-            <li><a href="<%= admin_custom_files_path %>"><i class="fa fa-link"></i> <span><%= t(:custom_files) %></span></a></li>
-            <li class="header">Public Site</li>
-            <li><a href="<%= slides_path %>"><i class="fa fa-link"></i> <span><%= t(:slide_list) %></span></a></li>
-            <li><a href="<%= popular_index_path %>"><i class="fa fa-link"></i> <span><%= t(:popular_slides) %></span></a></li>
-            <li><a href="<%= latest_index_path %>"><i class="fa fa-link"></i> <span><%= t(:latest_slides) %></span></a></li>
+            <li class="header"><%= t(:admin_menu) %></li>
+            <li class="<%= 'active' if controller.controller_name == 'dashboards' %>"><a href="<%= admin_dashboard_path %>"><i class="fa fa-home"></i> <span><%= t :admin_dashboard %></span></a></li>
+            <li class="<%= 'active' if controller.controller_name == 'slides' %>"><a href="<%= admin_slides_path %>"><i class="fa fa-file"></i> <span><%= t(:slide_list) %></span></a></li>
+            <li class="<%= 'active' if controller.controller_name == 'featured_slides' %>"><a href="<%= admin_featured_slides_path %>"><i class="fa fa-eye"></i> <span><%= t(:featured_slides) %></span></a></li>
+            <li class="<%= 'active' if controller.controller_name == 'users' %>"><a href="<%= admin_users_path %>"><i class="fa fa-user"></i> <span><%= t(:user_list) %></span></a></li>
+            <li class="<%= 'active' if controller.controller_name == 'site_settings' %>"><a href="<%= admin_site_settings_path %>"><i class="fa fa-cog"></i> <span><%= t(:site_settings) %></span></a></li>
+            <li class="<%= 'active' if controller.controller_name == 'custom_contents' %>"><a href="<%= admin_custom_contents_path %>"><i class="fa fa-code"></i> <span><%= t(:custom_contents_settings) %></span></a></li>
+            <li class="<%= 'active' if controller.controller_name == 'pages' %>"><a href="<%= admin_pages_path %>"><i class="fa fa-file-text"></i> <span><%= t(:page_list) %></span></a></li>
+            <li class="<%= 'active' if controller.controller_name == 'logs' %>"><a href="<%= admin_logs_index_path %>"><i class="fa fa-list"></i> <span><%= t(:logs) %></span></a></li>
+            <li class="<%= 'active' if controller.controller_name == 'custom_files' %>"><a href="<%= admin_custom_files_path %>"><i class="fa fa-upload"></i> <span><%= t(:custom_files) %></span></a></li>
+            <li class="header"><%= t(:public_site) %></li>
+            <li><a href="<%= slides_path %>"><i class="fa fa-file"></i> <span><%= t(:slide_list) %></span></a></li>
+            <li><a href="<%= popular_index_path %>"><i class="fa fa-star"></i> <span><%= t(:popular_slides) %></span></a></li>
+            <li><a href="<%= latest_index_path %>"><i class="fa fa-calendar"></i> <span><%= t(:latest_slides) %></span></a></li>
             <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span><%= t('activerecord.models.category') %></span> <i class="fa fa-angle-left pull-right"></i></a>
+            <a href="#"><i class="fa fa-filter"></i> <span><%= t('activerecord.models.category') %></span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <% cache 'admin_categories', expires_in: 10.minutes, skip_digest: true do %>
                 <% @categories.each do |cat| %>
@@ -142,10 +142,10 @@
       <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-          <%= link_to "See #{t(:project_page)}.", "https://github.com/ryuzee/SlideHub/", target: "_blank" %>
+          Powered by <%= link_to "SlideHub", "https://github.com/ryuzee/SlideHub", target: "_blank" %> <%= SlideHub::VERSION %>
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2017 Ryuzee. </strong> MIT License.
+        <%= raw CustomSetting['site.footer'] %>
       </footer>
     </div><!-- ./wrapper -->
 

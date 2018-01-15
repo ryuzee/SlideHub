@@ -19,7 +19,7 @@
           <td><%= "#{CloudConfig::SERVICE.resource_endpoint}/custom-files/#{custom_file.path}" %></td>
           <td><%= custom_file.description %></td>
           <td>
-            <%= button_to t(:delete), admin_custom_file_path(custom_file.id), method: :delete, class: 'btn btn-primary', form_class: 'form-inline' %>
+            <%= button_to t(:delete), admin_custom_file_path(custom_file.id), method: :delete, class: 'btn btn-primary btn-xs', form_class: 'form-inline' %>
           </td>
         </tr>
       <% end %>
