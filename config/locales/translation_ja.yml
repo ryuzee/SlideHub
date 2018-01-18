@@ -55,6 +55,7 @@ ja:
         var: "項目"
 
       page:
+        title: "タイトル"
         path: "パス"
         content: "コンテンツ"
         created_at: "登録日時"

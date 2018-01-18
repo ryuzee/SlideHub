@@ -55,6 +55,7 @@ en:
         var: "Var"
 
       page:
+        title: "Title"
         path: "Path"
         content: "Content"
 
