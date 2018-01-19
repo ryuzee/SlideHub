@@ -1,0 +1,14 @@
+<script type="text/javascript">
+$(function(){
+  $('#reset').on('click', function(e){
+    e.preventDefault();
+    $('input, textarea')
+      .not('input[type=\"radio\"], input[type=\"checkbox\"],:hidden, :button, :submit, :reset')
+      .val('');
+    $('input[type=\"radio\"], input[type=\"checkbox\"]')
+      .prop({'checked':false})
+    $('select')
+      .prop({'selected':false})
+  });
+});
+</script>

@@ -63,12 +63,15 @@
 
   <div class="col-md-12">
     <br clear="all" />
-    <%= f.submit :class => 'btn btn-primary' %>
+    <%= f.submit :class => 'btn btn-primary' %>&nbsp;&nbsp;
+    <%= f.button t(:reset), :class => 'btn btn-default', :id => 'reset' %>
   </div>
 </div>
 
 <% end %>
 <br clear="all" />
+
+<%= render 'shared/reset' %>
 
 <script type="text/javascript">
 $(function(){
