@@ -63,24 +63,16 @@
 
   <div class="col-md-12">
     <br clear="all" />
-    <%= f.submit :class => 'btn btn-primary' %>
+    <%= f.submit :class => 'btn btn-primary' %>&nbsp;&nbsp;
+    <%= f.button t(:reset), :class => 'btn btn-default', :id => 'reset' %>
   </div>
 </div>
 
 <% end %>
 <br clear="all" />
 
-<script type="text/javascript">
-$(function(){
-  $('.datetimepicker').datetimepicker({
-    useCurrent: false,
-    sideBySide: false,
-    showTodayButton: true,
-    showClear: true,
-    showClose: true
-  });
-});
-</script>
+<%= render 'shared/reset' %>
+<%= render 'shared/datetimepicker' %>
 
 <div class="panel panel-default">
   <!-- Table -->
