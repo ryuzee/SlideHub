@@ -82,6 +82,8 @@ ja:
   published_date_to: "投稿日(To)"
   related_slides: "関連するスライド"
   re_upload_slide: "再アップロード"
+  registered_date_from: "登録日(From)"
+  registered_date_to: "登録日(To)"
   reset: "リセット"
   save_settings: "設定を保存"
   search: "検索"

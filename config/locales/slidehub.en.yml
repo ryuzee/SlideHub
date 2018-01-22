@@ -83,6 +83,8 @@ en:
   related_slides: "Related Slides"
   re_upload_slide: "Re-upload"
   reset: "Reset"
+  registered_date_from: "Registered Date (From)"
+  registered_date_to: "Registered Date (To)"
   save_settings: "Save Settings"
   search: "Search"
   search_slides: "Search Slides"
