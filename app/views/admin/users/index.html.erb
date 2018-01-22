@@ -1,5 +1,79 @@
 <h3><%= t(:user_list) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
 
+<%= search_form_for @search, url: admin_users_path, :html => { :class => "form-horizontal slide" } do |f| %>
+
+<div class="row">
+  <div class="col-md-3">
+    <div class="control-group">
+    <%= f.label :email_cont, t('activerecord.attributes.user.email') %>
+    <%= f.search_field :email_cont, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="control-group">
+    <%= f.label :username_cont, t('activerecord.attributes.user.username') %>
+    <%= f.search_field :username_cont, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="control-group">
+    <%= f.label :display_name_cont, t('activerecord.attributes.user.display_name') %>
+    <%= f.search_field :display_name_cont, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="control-group">
+    <%= f.label :provider_cont, t('activerecord.attributes.user.provider') %>
+    <%= f.search_field :provider_cont, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="control-group" style="position: relative">
+      <%= f.label :created_at_gteq ,t('registered_date_from') %>
+      <div class="input-group datetimepicker">
+        <%= f.text_field :created_at_gteq, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="control-group" style="position: relative">
+      <%= f.label :created_at_lteq ,t('registered_date_to') %>
+      <div class="input-group datetimepicker">
+        <%= f.text_field :created_at_lteq, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <%= f.label :admin, :class => 'control-label' %>
+    <div class="controls checkbox">
+      <label>
+        <%= f.check_box :admin_true, {}, 1, nil %><%= t('activerecord.attributes.user.admin') %>
+      </label>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <br clear="all" />
+    <%= f.submit :class => 'btn btn-primary' %>&nbsp;&nbsp;
+    <%= f.button t(:reset), :class => 'btn btn-default', :id => 'reset' %>
+  </div>
+</div>
+
+<% end %>
+<br clear="all" />
+
+<%= render 'shared/reset' %>
+<%= render 'shared/datetimepicker' %>
+
+
 <div class="panel panel-default">
   <!-- Table -->
   <table class="table table-striped table-bordered small">
