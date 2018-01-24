@@ -68,14 +68,18 @@
             <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="avatar20" aria-hidden="true"><%= image_tag(current_user.avatar.url(:thumb)) %></span>&nbsp;<%= current_user.email %><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
+              <% if (CustomSetting['site.only_admin_can_upload']).to_i == 0 || current_user.admin == true %>
               <li><a href="<%= new_slide_path %>"><i class="fa fa-pencil"></i>&nbsp;<%= t 'upload' %>!!</a></li>
+              <% end %>
               <li><a href="<%= users_path %>"><i class="fa fa-list-alt"></i>&nbsp;<%= t :my_slides %></a></li>
               <li><a href="<%= statistics_path %>"><i class="fa fa-signal"></i>&nbsp;<%= t :my_statistics %></a></li>
               <li><a href="<%= edit_user_registration_path %>"><i class="fa fa-user"></i>&nbsp;<%= t :my_account %></a></li>
+              <% if current_user.admin %>
               <!-- admin -->
               <li class="divider"></li>
               <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-wrench"></i></span>&nbsp;<%= t :admin_dashboard %></a></li>
               <!-- // admin -->
+              <% end %>
               <li class="divider"></li>
               <li><%= link_to t(:logout), destroy_user_session_path, method: :delete %></li>
 
