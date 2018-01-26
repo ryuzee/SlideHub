@@ -6,7 +6,7 @@
     <% transcripts.each do |tran| %>
       <% tran = clear_invisible_string(tran) %>
       <% page_count += 1 %>
-      <% if not tran.empty? %>
+      <% if not tran.blank? %>
         <% if params[:vertical] != "1" %>
           <div class="h6"><a href="#page_top" onclick="javascript:OSSJSPARTS<%= prefix %>.move_to(<%= page_count - 1 %>);"><%= page_count %>.</a> <%= tran %></div>
         <% else %>
