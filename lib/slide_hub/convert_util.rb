@@ -53,7 +53,10 @@ module SlideHub
         current_page = i + 1
         cmd = "cd #{dir} && pdftotext #{file} -f #{current_page} -l #{current_page} - > #{dir}/#{current_page}.txt"
         system(cmd)
-        transcript.push(File.read("#{dir}/#{current_page}.txt").gsub(/([\r|\n|\t| |　]+)/, ' '))
+
+        str = File.read("#{dir}/#{current_page}.txt")
+        str.gsub!(/([\r|\n|\t| |　|\u{2028}]+)/, ' ')
+        transcript.push(str)
       end
       require 'php_serialization/serializer'
       File.write("#{dir}/transcript.txt", PhpSerialization::Serializer.new.run(transcript))
