@@ -506,4 +506,17 @@ div#<%= prefix %>page_positions{
   } else {
     window.onload = OSSJSPARTS<%= prefix %>.load_slide;
   }
+  window.onmousemove = handleMouseMove;
+  function handleMouseMove(evt) {
+    var evt = evt || window.event;
+    var id = OSSJSPARTS<%= prefix %>.add_css_prefix("slide_image");
+    var element = document.getElementById(id);
+    var current_pos = evt.clientX;
+    var rect = element.getBoundingClientRect();
+    if (current_pos < rect.left + (element.width / 2)) {
+      element.style.cursor = 'url(<%= image_url("left.png") %>), auto';
+    } else {
+      element.style.cursor = 'url(<%= image_url("right.png") %>), auto';
+    }
+  }
 </script>
