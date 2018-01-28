@@ -309,7 +309,6 @@ div#<%= prefix %>page_positions{
         }
       };
       slide_area.replaceChild(element, slide_area.childNodes.item(0));
-      // slide_area.appendChild(element);
 
       if (OSSJSPARTS<%= prefix %>.current_page_index >= findLi.length) {
         OSSJSPARTS<%= prefix %>.current_page_index = 0;
@@ -377,11 +376,19 @@ div#<%= prefix %>page_positions{
   <%# * Move to specific pages              %>
   <%# ************************************/ %>
   OSSJSPARTS<%= prefix %>.move_to = function(index) {
+    var img = eid(OSSJSPARTS<%= prefix %>.add_css_prefix('slide_image'));
+    <%# first page %>
+    if (index <= 0 ) {
+      img.style.cursor = 'none';
+    }
+    <%# last page %>
+    if (index >= OSSJSPARTS<%= prefix %>.slides.length -1) {
+      img.style.cursor = 'none';
+    }
     if (index > OSSJSPARTS<%= prefix %>.slides.length -1 || index < 0) {
       return;
     }
     OSSJSPARTS<%= prefix %>.current_page_index = index;
-    var img = eid(OSSJSPARTS<%= prefix %>.add_css_prefix('slide_image'));
     img.setAttribute('src', OSSJSPARTS<%= prefix %>.slides[index]);
     if (index < OSSJSPARTS<%= prefix %>.slides.length -2) {
       OSSJSPARTS<%= prefix %>.preload_image(index+1);
@@ -511,12 +518,23 @@ div#<%= prefix %>page_positions{
     var evt = evt || window.event;
     var id = OSSJSPARTS<%= prefix %>.add_css_prefix("slide_image");
     var element = document.getElementById(id);
+    setCursor(evt, element);
+  }
+  function setCursor(evt, element) {
     var current_pos = evt.clientX;
     var rect = element.getBoundingClientRect();
     if (current_pos < rect.left + (element.width / 2)) {
-      element.style.cursor = 'url(<%= image_url("left.png") %>), auto';
+      if (OSSJSPARTS<%= prefix %>.current_page_index > 0) {
+        element.style.cursor = 'url(<%= image_url("left.png") %>), auto';
+      } else {
+        element.style.cursor = 'none';
+      }
     } else {
-      element.style.cursor = 'url(<%= image_url("right.png") %>), auto';
+      if (OSSJSPARTS<%= prefix %>.current_page_index != OSSJSPARTS<%= prefix %>.slides.length -1 ) {
+        element.style.cursor = 'url(<%= image_url("right.png") %>), auto';
+      } else {
+        element.style.cursor = 'none';
+      }
     }
   }
 </script>
