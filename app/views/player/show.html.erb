@@ -64,4 +64,5 @@
   </div>
 </div>
 
-<%= render 'javascript', prefix: prefix %>
+<% s = render 'javascript', prefix: prefix, start_position: @start_position %>
+<%= raw s %>
