@@ -8,7 +8,7 @@
       <% page_count += 1 %>
       <% if not tran.blank? %>
         <% if params[:vertical] != "1" %>
-          <div class="h6"><a href="#page_top" onclick="javascript:OSSJSPARTS<%= prefix %>.move_to(<%= page_count - 1 %>);"><%= page_count %>.</a> <%= tran %></div>
+          <div class="h6"><a href="#page_top" onclick="javascript:OSSJSPARTS<%= prefix %>.moveTo(<%= page_count - 1 %>);"><%= page_count %>.</a> <%= tran %></div>
         <% else %>
           <div class="h6"><a href="#img-<%= page_count - 1 %>"><%= page_count %>.</a> <%= tran %></div>
         <% end %>

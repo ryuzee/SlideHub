@@ -3,11 +3,11 @@
       window.onkeydown = function(evt) {
         if (evt.keyCode == 74 || evt.keyCode == 39) {
           // j
-          OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index+1);
+          OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex+1);
         }
         if (evt.keyCode == 75 || evt.keyCode == 37) {
           // k
-          OSSJSPARTS<%= prefix %>.move_to(OSSJSPARTS<%= prefix %>.current_page_index-1);
+          OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex-1);
         }
       }
     </script>

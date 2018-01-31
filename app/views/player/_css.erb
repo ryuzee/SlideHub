@@ -1,0 +1,199 @@
+<style>
+.<%= prefix %>clearfix:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+div.<%= prefix %>right {
+  display:inline;
+  float: right;
+  margin-right:10px;
+}
+
+#<%= prefix %>slide_area, #<%= prefix %>command_area {
+  margin:0px;
+  padding:0px;
+  width:100%;
+  box-sizing: border-box;
+}
+
+#<%= prefix %>slide_area img {
+  width: 100%;
+  height:auto;
+  border-top:1px solid #000 !important;
+  border-left:1px solid #000 !important;
+  border-right:1px solid #000 !important;
+  border-bottom: 0px !important;
+  margin:0px !important;
+  box-sizing: border-box;
+  vertical-align: bottom !important;
+}
+
+div#<%= prefix %>progress_area {
+  height: 10px;
+  border-top:1px solid #000;
+  border-left:1px solid #000;
+  border-right:1px solid #000;
+  background-color: #555;
+}
+
+div#<%= prefix %>thumb {
+  width:20px;
+  border:0px;
+  background-color: green;
+}
+
+div#<%= prefix %>command_area {
+  border:1px solid #000;
+  background-color: #222;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, "Arial", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "游ゴシック", YuGothic, sans-serif !important;
+}
+
+div#<%= prefix %>command_inner {
+  padding:8px;
+}
+
+div#<%= prefix %>command_inner span {
+  font-size: 16px !important;
+  color: #fff;
+}
+
+div#<%= prefix %>command_inner a {
+  font-size: 16px !important;
+  color: #ccc !important;
+  text-decoration: none;
+}
+
+div#<%= prefix %>command_inner ul {
+  width: 200px;
+  margin: 0 auto;
+  padding: 0;
+  list-style-type: none !important;
+  list-style-image: none !important;
+}
+
+div#<%= prefix %>command_inner ul li {
+  float: left !important;
+  margin-right: 5px;
+  margin-top:0px !important;
+  border: 0px;
+  list-style: none !important;
+  padding-left: 0px !important;
+  padding-top:0px !important;
+}
+
+div#<%= prefix %>command_inner ul li:before {
+  display: none;
+  content: '';
+  margin-left:0px !important;
+  margin:0px;
+}
+
+div#<%= prefix %>command_inner ul li a {
+  color: #ccc;
+}
+
+div#<%= prefix %>command_inner a.<%= prefix %>icon {
+  margin-top: 0px;
+}
+
+@media screen and (max-width: 400px) {
+  div#<%= prefix %>command_inner a.<%= prefix %>icon {
+    display : none;
+  }
+}
+
+div#<%= prefix %>page_positions{
+  width: 70px !important;
+  text-align: center;
+  color: #ccc;
+  font-size:16px !important;
+}
+
+:-webkit-full-screen {
+  position: fixed;
+  width: 100%;
+  height:100%;
+  top: 0;
+  background: none;
+}
+
+:-ms-fullscreen {
+  position: fixed;
+  width: 100%;
+  height:100%;
+  top: 0;
+  background: none;
+}
+
+:fullscreen {
+  position: fixed;
+  width: 100%;
+  height:100%;
+  top: 0;
+  background: none;
+}
+
+<%# /******* Image *******/ %>
+:-webkit-full-screen #<%= prefix %>slide_area img {
+  width: 100%;
+  object-fit: contain;
+}
+:-moz-full-screen #<%= prefix %>slide_area img {
+  width: 100%;
+  object-fit: contain;
+}
+:-ms-fullscreen #<%= prefix %>slide_area img {
+  width: 100%;
+  object-fit: contain;
+}
+:fullscreen #<%= prefix %>slide_area img {
+  width: 100%;
+  object-fit: contain;
+}
+
+<%# /******* Progress Area ******/ %>
+:-webkit-full-screen #<%= prefix %>progress_area {
+  bottom: 40px;
+  position: absolute;
+  background-color: #555;
+  width: 100%;
+}
+:-moz-full-screen #<%= prefix %>progress_area {
+  bottom: 40px;
+  position: absolute;
+  background-color: #555;
+  width: 100%;
+}
+:-ms-fullscreen #<%= prefix %>progress_area {
+  bottom: 40px;
+  position: absolute;
+  background-color: #555;
+  width: 100%;
+}
+:fullscreen #<%= prefix %>progress_area {
+  bottom: 40px;
+  position: absolute;
+  background-color: #555;
+  width: 100%;
+}
+
+<%# /******* Bottom Area ******/ %>
+:-webkit-full-screen #<%= prefix %>command_area {
+  bottom: 0px;
+  position: absolute;
+}
+:-moz-full-screen #<%= prefix %>command_area {
+  bottom: 0px;
+  position: absolute;
+}
+:-ms-fullscreen #<%= prefix %>command_area {
+  bottom: 0px;
+  position: absolute;
+}
+:fullscreen #<%= prefix %>command_area {
+  bottom: 0px;
+  position: absolute;
+}
+</style>

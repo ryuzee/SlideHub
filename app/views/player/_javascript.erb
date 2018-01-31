@@ -1,0 +1,288 @@
+<script type="text/javascript">
+  function eid (id) {
+    return document.getElementById(id);
+  }
+
+  var OSSJSPARTS = {};
+  OSSJSPARTS.addCssPrefix = function(classVar) {
+    return OSSJSPARTS.classPrefix.concat(classVar);
+  };
+  OSSJSPARTS.name = "SlideHub Javascript Player";
+  OSSJSPARTS.currentPageIndex = <%= start_position - 1 %>;
+  OSSJSPARTS.slides = [];
+  OSSJSPARTS.classPrefix = "PREFIX"
+  OSSJSPARTS.aspect = 0.75;
+  OSSJSPARTS.progressbar = eid(OSSJSPARTS.addCssPrefix("progress_area"));
+  OSSJSPARTS.thumb = eid(OSSJSPARTS.addCssPrefix("thumb"));
+  OSSJSPARTS.progressbarRect = OSSJSPARTS.progressbar.getBoundingClientRect();
+  OSSJSPARTS.FullScreenIcon = eid(OSSJSPARTS.addCssPrefix("full_screen_icon"));
+
+  <%# /** Initialization **/ %>
+  OSSJSPARTS.loadSlide = function() {
+    var findUl = eid(OSSJSPARTS.addCssPrefix("slide_list"));
+    findLi = findUl.children;
+    for (var i = 0; i < findLi.length; i++){
+      var img = findLi[i].getElementsByTagName("img")[0];
+      OSSJSPARTS.slides.push(img.getAttribute("data-original"));
+    }
+    if (eid(OSSJSPARTS.addCssPrefix("slide_image")) == null) {
+      var slideArea = eid(OSSJSPARTS.addCssPrefix("slide_area"));
+      var element = document.createElement("img");
+      element.id = OSSJSPARTS.addCssPrefix("slide_image");
+      element.src = OSSJSPARTS.slides[0];
+      element.style.cursor = "pointer";
+      element.onload = function(){
+        OSSJSPARTS.aspect = element.height / element.width;
+      };
+      element.onclick = function(evt) {
+        if (!evt) {
+          evt = window.event;
+        }
+        var clickPos = evt.clientX;
+        var rect = element.getBoundingClientRect();
+        if (clickPos < rect.left + (element.width / 2)) {
+          OSSJSPARTS.moveTo(OSSJSPARTS.currentPageIndex - 1);
+        } else {
+          OSSJSPARTS.moveTo(OSSJSPARTS.currentPageIndex + 1);
+        }
+      };
+      slideArea.replaceChild(element, slideArea.childNodes.item(0));
+
+      if (OSSJSPARTS.currentPageIndex >= findLi.length) {
+        OSSJSPARTS.currentPageIndex = 0;
+      }
+
+      if (OSSJSPARTS.currentPageIndex != 0) {
+        OSSJSPARTS.moveTo(OSSJSPARTS.currentPageIndex);
+      }
+
+      if (findLi.length > 1) {
+        OSSJSPARTS.preloadImage[1];
+      }
+    }
+    OSSJSPARTS.showProgress();
+    OSSJSPARTS.setSliderPosition(OSSJSPARTS.currentPageIndex + 1);
+  };
+
+  <%# /************************************ %>
+  <%#  * Event Source                       %>
+  <%#  ************************************/ %>
+  OSSJSPARTS.progressbar.onclick = function(evt) {
+    if (!evt) {
+      evt = window.event;
+    }
+    var left = evt.clientX;
+
+    if (OSSJSPARTS.isFullScreen()) {
+      var len = Math.round(OSSJSPARTS.slides.length * left / screen.width);
+      OSSJSPARTS.thumb.style.width = left + "px";
+    } else {
+      var len = Math.round(OSSJSPARTS.slides.length * (left - OSSJSPARTS.progressbarRect.left) / (OSSJSPARTS.progressbarRect.right - OSSJSPARTS.progressbarRect.left));
+      OSSJSPARTS.thumb.style.width = (left - OSSJSPARTS.progressbarRect.left) + "px";
+    }
+    OSSJSPARTS.moveTo(len - 1);
+  };
+
+  <%# /************************************ %>
+  <%# * Display progressbar from page number %>
+  <%# ************************************/ %>
+  OSSJSPARTS.setSliderPosition = function (val){
+    var w = 0;
+    if (OSSJSPARTS.isFullScreen()) {
+      w = Math.round(screen.width * val / OSSJSPARTS.slides.length);
+    } else {
+      w = (Math.round(OSSJSPARTS.progressbarRect.right - OSSJSPARTS.progressbarRect.left) * val / OSSJSPARTS.slides.length);
+      if (w >= (OSSJSPARTS.progressbarRect.right - OSSJSPARTS.progressbarRect.left)) {
+        w = OSSJSPARTS.progressbarRect.right - OSSJSPARTS.progressbarRect.left - 1;
+      }
+    }
+    OSSJSPARTS.thumb.style.width = w + "px";
+  };
+
+  <%# /************************************ %>
+  <%# * Show cureent page number and total page %>
+  <%# ************************************/ %>
+  OSSJSPARTS.showProgress = function() {
+    var pagePositionArea = eid(OSSJSPARTS.addCssPrefix("page_positions"));
+    if (pagePositionArea != undefined && pagePositionArea != null) {
+      pagePositionArea.innerHTML = (OSSJSPARTS.currentPageIndex + 1) + " / " + OSSJSPARTS.slides.length;
+    }
+  };
+
+  <%# /************************************ %>
+  <%# * Move to specific pages              %>
+  <%# ************************************/ %>
+  OSSJSPARTS.moveTo = function(index) {
+    var img = eid(OSSJSPARTS.addCssPrefix("slide_image"));
+    if (index == 0 || index == OSSJSPARTS.slides.length - 1) {
+      OSSJSPARTS.resetCursor(img);
+    }
+    if (index > OSSJSPARTS.slides.length - 1 || index < 0) {
+      return;
+    }
+    OSSJSPARTS.currentPageIndex = index;
+    img.setAttribute("src", OSSJSPARTS.slides[index]);
+    if (index < OSSJSPARTS.slides.length - 2) {
+      OSSJSPARTS.preloadImage(index + 1);
+    }
+    OSSJSPARTS.showProgress();
+    OSSJSPARTS.setSliderPosition(index + 1);
+  };
+
+  <%# /************************************ %>
+  <%# * Preload Images for Slides %>
+  <%# ************************************/ %>
+  OSSJSPARTS.preloadImage = function(index) {
+    var hiddenImage = eid(OSSJSPARTS.addCssPrefix("hidden_image"));
+    if (hiddenImage == undefined || hiddenImage == null) {
+      var element = document.createElement("img");
+      element.id = OSSJSPARTS.addCssPrefix("hidden_image");
+      element.src = OSSJSPARTS.slides[index];
+      element.style.display = "none";
+      eid(OSSJSPARTS.addCssPrefix("slide_area")).parentNode.insertBefore(element, eid(OSSJSPARTS.addCssPrefix("slide_area")).nextSibling);
+    } else {
+      hiddenImage.src = OSSJSPARTS.slides[index];
+    }
+  };
+
+  <%# /************************************ %>
+  <%# * Entering into FullScreen Mode       %>
+  <%# ************************************/ %>
+  OSSJSPARTS.FullScreenIcon.onclick = function(){
+    var elm = eid(OSSJSPARTS.addCssPrefix("slidebox"));
+    commandAreaHeight = 50;
+    screenW = screen.width;
+    screenH = screen.height - commandAreaHeight;
+    imageW = screenH / OSSJSPARTS.aspect;
+    imageH = screenH;
+    if (imageW > screenW) {
+      imageW = screenW;
+      imageH = screenW * OSSJSPARTS.aspect;
+    }
+    widthPercent = (imageW / screenW * 100);
+    heightPercent = (imageH / screenH * 100);
+    marginLeft = Math.round((screenW - imageW) / 2);
+
+    var css = "";
+    css += ":-webkit-full-screen #PREFIXslide_area {"
+    css += "width:" + widthPercent + "% !important; height:" + heightPercent + "% !important;";
+    css += "float: left;";
+    css += "margin-left:" + marginLeft + "px;";
+    css += "}";
+
+    css += ":-moz-full-screen #PREFIXslide_area {"
+    css += "width:" + widthPercent + "% !important; height:" + heightPercent + "% !important;";
+    css += "float: left;";
+    css += "margin-left:" + marginLeft + "px;";
+    css += "}";
+
+    css += ":-ms-fullscreen #PREFIXslide_area {"
+    css += "width:" + widthPercent + "% !important; height:" + heightPercent + "% !important;";
+    css += "float: left;";
+    css += "margin-left:" + marginLeft + "px;";
+    css += "}";
+
+    css += ":fullscreen #PREFIXslide_area {"
+    css += "width:" + widthPercent + "% !important; height:" + heightPercent + "% !important;";
+    css += "float: left;";
+    css += "margin-left:" + marginLeft + "px;";
+    css += "}";
+
+    var style = document.createElement("style");
+    style.appendChild(document.createTextNode(css));
+    document.getElementsByTagName("head")[0].appendChild(style);
+    OSSJSPARTS.requestFullScreen(elm);
+  };
+
+  <%# /************************************ %>
+  <%# * Handling FullScreen Event           %>
+  <%# ************************************/ %>
+  OSSJSPARTS.handleFSevent = function() {
+    OSSJSPARTS.setSliderPosition(OSSJSPARTS.currentPageIndex + 1);
+  };
+
+  <%# /************************************ %>
+  <%# * Entering into Full Screen           %>
+  <%# ************************************/ %>
+  OSSJSPARTS.requestFullScreen = function(target) {
+    if (target.webkitRequestFullscreen) {
+      target.webkitRequestFullscreen();   <%# Chrome15+, Safari5.1+, Opera15+ %>
+    } else if (target.mozRequestFullScreen) {
+      target.mozRequestFullScreen();      <%# FF10+ %>
+    } else if (target.msRequestFullscreen) {
+      target.msRequestFullscreen();       <%# IE11+ %>
+    } else if (target.requestFullscreen) {
+      target.requestFullscreen();         <%# HTML5 Fullscreen API %>
+    }
+  };
+
+  <%# /************************************ %>
+  <%# * Current Screen Status               %>
+  <%# ************************************/ %>
+  OSSJSPARTS.isFullScreen = function(){
+    if ((document.webkitFullscreenElement && document.webkitFullscreenElement !== null)
+     || (document.mozFullScreenElement && document.mozFullScreenElement !== null)
+     || (document.msFullscreenElement && document.msFullscreenElement !== null)
+     || (document.fullScreenElement && document.fullScreenElement !== null)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  <%# /************************************ %>
+  <%# * Set EventListener                   %>
+  <%# ************************************/ %>
+  document.addEventListener("webkitfullscreenchange", OSSJSPARTS.handleFSevent, false);
+  document.addEventListener("mozfullscreenchange", OSSJSPARTS.handleFSevent, false);
+  document.addEventListener("MSFullscreenChange", OSSJSPARTS.handleFSevent, false);
+  document.addEventListener("fullscreenchange", OSSJSPARTS.handleFSevent, false);
+
+  OSSJSPARTS.setCursor = function(evt, element) {
+    var currentPos = evt.clientX;
+    var rect = element.getBoundingClientRect();
+    if (currentPos < rect.left + (element.width / 2)) {
+      if (OSSJSPARTS.currentPageIndex > 0) {
+        OSSJSPARTS.setLeftCursor(element);
+      } else {
+        OSSJSPARTS.resetCursor(element);
+      }
+    } else {
+      if (OSSJSPARTS.currentPageIndex != OSSJSPARTS.slides.length - 1) {
+        OSSJSPARTS.setRightCursor(element);
+      } else {
+        OSSJSPARTS.resetCursor(element);
+      }
+    }
+  };
+
+  OSSJSPARTS.resetCursor = function(element) {
+    element.style.cursor = "none";
+  };
+
+  OSSJSPARTS.setLeftCursor = function(element) {
+    element.style.cursor = "url(<%= image_url("left.png") %>), auto";
+  };
+
+  OSSJSPARTS.setRightCursor = function(element) {
+    element.style.cursor = "url(<%= image_url("right.png") %>), auto";
+  };
+
+  OSSJSPARTS.handleMouseMove = function(evt) {
+    var evt = evt || window.event;
+    var id = OSSJSPARTS.addCssPrefix("slide_image");
+    var element = document.getElementById(id);
+    OSSJSPARTS.setCursor(evt, element);
+  };
+
+  if (window.addEventListener) {
+    window.addEventListener("load", OSSJSPARTS.loadSlide, false);
+    window.addEventListener("mousemove", OSSJSPARTS.handleMouseMove, false);
+  } else if (window.attachEvent) {
+    window.attachEvent("onload", OSSJSPARTS.loadSlide);
+    window.attachEvent("onmousemove", OSSJSPARTS.handleMouseMove);
+  } else {
+    window.onload = OSSJSPARTS.loadSlide;
+    window.onmousemove = OSSJSPARTS.handleMouseMove;
+  }
+</script>
