@@ -2,199 +2,195 @@
   function eid (id) {
     return document.getElementById(id);
   }
+
   var OSSJSPARTS = {};
-  OSSJSPARTS.add_css_prefix = function(class_var) {
-    return OSSJSPARTS.class_prefix.concat(class_var);
+  OSSJSPARTS.addCssPrefix = function(classVar) {
+    return OSSJSPARTS.classPrefix.concat(classVar);
   };
   OSSJSPARTS.name = "SlideHub Javascript Player";
-  OSSJSPARTS.current_page_index = <%= start_position -1 %>;
+  OSSJSPARTS.currentPageIndex = <%= start_position - 1 %>;
   OSSJSPARTS.slides = [];
-  OSSJSPARTS.class_prefix = "PREFIX"
+  OSSJSPARTS.classPrefix = "PREFIX"
   OSSJSPARTS.aspect = 0.75;
-  OSSJSPARTS.progressbar = eid(OSSJSPARTS.add_css_prefix('progress_area'));
-  OSSJSPARTS.thumb = eid(OSSJSPARTS.add_css_prefix('thumb'));
-  OSSJSPARTS.progressbar_rect = OSSJSPARTS.progressbar.getBoundingClientRect();
-  OSSJSPARTS.full_screen_icon = eid(OSSJSPARTS.add_css_prefix('full_screen_icon'));
+  OSSJSPARTS.progressbar = eid(OSSJSPARTS.addCssPrefix("progress_area"));
+  OSSJSPARTS.thumb = eid(OSSJSPARTS.addCssPrefix("thumb"));
+  OSSJSPARTS.progressbarRect = OSSJSPARTS.progressbar.getBoundingClientRect();
+  OSSJSPARTS.FullScreenIcon = eid(OSSJSPARTS.addCssPrefix("full_screen_icon"));
 
   <%# /** Initialization **/ %>
-  OSSJSPARTS.load_slide = function() {
-    var findUl = eid(OSSJSPARTS.add_css_prefix('slide_list'));
+  OSSJSPARTS.loadSlide = function() {
+    var findUl = eid(OSSJSPARTS.addCssPrefix("slide_list"));
     findLi = findUl.children;
     for (var i = 0; i < findLi.length; i++){
-      var img = findLi[i].getElementsByTagName('img')[0];
-      OSSJSPARTS.slides.push(img.getAttribute('data-original'));
+      var img = findLi[i].getElementsByTagName("img")[0];
+      OSSJSPARTS.slides.push(img.getAttribute("data-original"));
     }
-    if (eid(OSSJSPARTS.add_css_prefix("slide_image")) == null) {
-      var slide_area = eid(OSSJSPARTS.add_css_prefix('slide_area'));
-      var element = document.createElement('img');
-      element.id = OSSJSPARTS.add_css_prefix("slide_image");
+    if (eid(OSSJSPARTS.addCssPrefix("slide_image")) == null) {
+      var slideArea = eid(OSSJSPARTS.addCssPrefix("slide_area"));
+      var element = document.createElement("img");
+      element.id = OSSJSPARTS.addCssPrefix("slide_image");
       element.src = OSSJSPARTS.slides[0];
-      element.style.cursor = 'pointer';
+      element.style.cursor = "pointer";
       element.onload = function(){
         OSSJSPARTS.aspect = element.height / element.width;
       };
       element.onclick = function(evt) {
-        if(!evt){
+        if (!evt) {
           evt = window.event;
         }
-        var click_pos = evt.clientX;
+        var clickPos = evt.clientX;
         var rect = element.getBoundingClientRect();
-        if (click_pos < rect.left + (element.width / 2)) {
-          OSSJSPARTS.move_to(OSSJSPARTS.current_page_index -1);
+        if (clickPos < rect.left + (element.width / 2)) {
+          OSSJSPARTS.moveTo(OSSJSPARTS.currentPageIndex - 1);
         } else {
-          OSSJSPARTS.move_to(OSSJSPARTS.current_page_index +1);
+          OSSJSPARTS.moveTo(OSSJSPARTS.currentPageIndex + 1);
         }
       };
-      slide_area.replaceChild(element, slide_area.childNodes.item(0));
+      slideArea.replaceChild(element, slideArea.childNodes.item(0));
 
-      if (OSSJSPARTS.current_page_index >= findLi.length) {
-        OSSJSPARTS.current_page_index = 0;
+      if (OSSJSPARTS.currentPageIndex >= findLi.length) {
+        OSSJSPARTS.currentPageIndex = 0;
       }
 
-      if (OSSJSPARTS.current_page_index != 0) {
-        OSSJSPARTS.move_to(OSSJSPARTS.current_page_index);
+      if (OSSJSPARTS.currentPageIndex != 0) {
+        OSSJSPARTS.moveTo(OSSJSPARTS.currentPageIndex);
       }
 
       if (findLi.length > 1) {
-        OSSJSPARTS.preload_image[1];
+        OSSJSPARTS.preloadImage[1];
       }
     }
-    OSSJSPARTS.show_progress();
-    OSSJSPARTS.set_slider_position(OSSJSPARTS.current_page_index + 1);
+    OSSJSPARTS.showProgress();
+    OSSJSPARTS.setSliderPosition(OSSJSPARTS.currentPageIndex + 1);
   };
 
   <%# /************************************ %>
   <%#  * Event Source                       %>
   <%#  ************************************/ %>
   OSSJSPARTS.progressbar.onclick = function(evt) {
-    if(!evt){
+    if (!evt) {
       evt = window.event;
     }
     var left = evt.clientX;
 
-    if (OSSJSPARTS.is_fullscreen()) {
+    if (OSSJSPARTS.isFullScreen()) {
       var len = Math.round(OSSJSPARTS.slides.length * left / screen.width);
-      OSSJSPARTS.thumb.style.width = left + 'px';
+      OSSJSPARTS.thumb.style.width = left + "px";
     } else {
-      var len = Math.round(OSSJSPARTS.slides.length * (left - OSSJSPARTS.progressbar_rect.left) / (OSSJSPARTS.progressbar_rect.right - OSSJSPARTS.progressbar_rect.left));
-      OSSJSPARTS.thumb.style.width = (left - OSSJSPARTS.progressbar_rect.left) + 'px';
+      var len = Math.round(OSSJSPARTS.slides.length * (left - OSSJSPARTS.progressbarRect.left) / (OSSJSPARTS.progressbarRect.right - OSSJSPARTS.progressbarRect.left));
+      OSSJSPARTS.thumb.style.width = (left - OSSJSPARTS.progressbarRect.left) + "px";
     }
-    OSSJSPARTS.move_to(len -1);
+    OSSJSPARTS.moveTo(len - 1);
   };
 
   <%# /************************************ %>
   <%# * Display progressbar from page number %>
   <%# ************************************/ %>
-  OSSJSPARTS.set_slider_position = function (val){
+  OSSJSPARTS.setSliderPosition = function (val){
     var w = 0;
-    if (OSSJSPARTS.is_fullscreen()) {
+    if (OSSJSPARTS.isFullScreen()) {
       w = Math.round(screen.width * val / OSSJSPARTS.slides.length);
     } else {
-      w = (Math.round(OSSJSPARTS.progressbar_rect.right - OSSJSPARTS.progressbar_rect.left) * val / OSSJSPARTS.slides.length);
-      if (w >= (OSSJSPARTS.progressbar_rect.right - OSSJSPARTS.progressbar_rect.left)) {
-        w = OSSJSPARTS.progressbar_rect.right - OSSJSPARTS.progressbar_rect.left -1;
+      w = (Math.round(OSSJSPARTS.progressbarRect.right - OSSJSPARTS.progressbarRect.left) * val / OSSJSPARTS.slides.length);
+      if (w >= (OSSJSPARTS.progressbarRect.right - OSSJSPARTS.progressbarRect.left)) {
+        w = OSSJSPARTS.progressbarRect.right - OSSJSPARTS.progressbarRect.left - 1;
       }
     }
-    OSSJSPARTS.thumb.style.width = w + 'px';
+    OSSJSPARTS.thumb.style.width = w + "px";
   };
 
   <%# /************************************ %>
   <%# * Show cureent page number and total page %>
   <%# ************************************/ %>
-  OSSJSPARTS.show_progress = function() {
-    var progress_area = eid(OSSJSPARTS.add_css_prefix('page_positions'));
-    if (progress_area != undefined && progress_area != null) {
-      progress_area.innerHTML = (OSSJSPARTS.current_page_index + 1) + " / " + OSSJSPARTS.slides.length;
+  OSSJSPARTS.showProgress = function() {
+    var pagePositionArea = eid(OSSJSPARTS.addCssPrefix("page_positions"));
+    if (pagePositionArea != undefined && pagePositionArea != null) {
+      pagePositionArea.innerHTML = (OSSJSPARTS.currentPageIndex + 1) + " / " + OSSJSPARTS.slides.length;
     }
   };
 
   <%# /************************************ %>
   <%# * Move to specific pages              %>
   <%# ************************************/ %>
-  OSSJSPARTS.move_to = function(index) {
-    var img = eid(OSSJSPARTS.add_css_prefix('slide_image'));
-    <%# first page %>
-    if (index <= 0 ) {
-      img.style.cursor = 'none';
+  OSSJSPARTS.moveTo = function(index) {
+    var img = eid(OSSJSPARTS.addCssPrefix("slide_image"));
+    if (index == 0 || index == OSSJSPARTS.slides.length - 1) {
+      OSSJSPARTS.resetCursor(img);
     }
-    <%# last page %>
-    if (index >= OSSJSPARTS.slides.length -1) {
-      img.style.cursor = 'none';
-    }
-    if (index > OSSJSPARTS.slides.length -1 || index < 0) {
+    if (index > OSSJSPARTS.slides.length - 1 || index < 0) {
       return;
     }
-    OSSJSPARTS.current_page_index = index;
-    img.setAttribute('src', OSSJSPARTS.slides[index]);
-    if (index < OSSJSPARTS.slides.length -2) {
-      OSSJSPARTS.preload_image(index+1);
+    OSSJSPARTS.currentPageIndex = index;
+    img.setAttribute("src", OSSJSPARTS.slides[index]);
+    if (index < OSSJSPARTS.slides.length - 2) {
+      OSSJSPARTS.preloadImage(index + 1);
     }
-    OSSJSPARTS.show_progress();
-    OSSJSPARTS.set_slider_position(index+1);
+    OSSJSPARTS.showProgress();
+    OSSJSPARTS.setSliderPosition(index + 1);
   };
 
   <%# /************************************ %>
   <%# * Preload Images for Slides %>
   <%# ************************************/ %>
-  OSSJSPARTS.preload_image = function(index) {
-    var hidden_image = eid(OSSJSPARTS.add_css_prefix('hidden_image'));
-    if (hidden_image == undefined || hidden_image == null) {
-      var element = document.createElement('img');
-      element.id = OSSJSPARTS.add_css_prefix('hidden_image');
+  OSSJSPARTS.preloadImage = function(index) {
+    var hiddenImage = eid(OSSJSPARTS.addCssPrefix("hidden_image"));
+    if (hiddenImage == undefined || hiddenImage == null) {
+      var element = document.createElement("img");
+      element.id = OSSJSPARTS.addCssPrefix("hidden_image");
       element.src = OSSJSPARTS.slides[index];
-      element.style.display = 'none';
-      eid(OSSJSPARTS.add_css_prefix('slide_area')).parentNode.insertBefore(element, eid(OSSJSPARTS.add_css_prefix('slide_area')).nextSibling);
+      element.style.display = "none";
+      eid(OSSJSPARTS.addCssPrefix("slide_area")).parentNode.insertBefore(element, eid(OSSJSPARTS.addCssPrefix("slide_area")).nextSibling);
     } else {
-      hidden_image.src = OSSJSPARTS.slides[index];
+      hiddenImage.src = OSSJSPARTS.slides[index];
     }
   };
 
   <%# /************************************ %>
   <%# * Entering into FullScreen Mode       %>
   <%# ************************************/ %>
-  OSSJSPARTS.full_screen_icon.onclick = function(){
-    var elm = eid(OSSJSPARTS.add_css_prefix('slidebox'));
-    command_area_height = 50;
-    screen_w = screen.width;
-    screen_h = screen.height - command_area_height;
-    image_w = screen_h / OSSJSPARTS.aspect;
-    image_h = screen_h;
-    if (image_w > screen_w) {
-      image_w = screen_w;
-      image_h = screen_w * OSSJSPARTS.aspect;
+  OSSJSPARTS.FullScreenIcon.onclick = function(){
+    var elm = eid(OSSJSPARTS.addCssPrefix("slidebox"));
+    commandAreaHeight = 50;
+    screenW = screen.width;
+    screenH = screen.height - commandAreaHeight;
+    imageW = screenH / OSSJSPARTS.aspect;
+    imageH = screenH;
+    if (imageW > screenW) {
+      imageW = screenW;
+      imageH = screenW * OSSJSPARTS.aspect;
     }
-    width_percent = (image_w / screen_w * 100);
-    height_percent = (image_h / screen_h * 100);
-    margin_left = Math.round((screen_w - image_w) / 2);
+    widthPercent = (imageW / screenW * 100);
+    heightPercent = (imageH / screenH * 100);
+    marginLeft = Math.round((screenW - imageW) / 2);
 
     var css = "";
-    css += ':-webkit-full-screen #PREFIXslide_area {'
-    css += 'width:' + width_percent + '% !important; height:' + height_percent + '% !important;';
-    css += 'float: left;';
-    css += 'margin-left:' + margin_left + 'px;';
-    css += '}';
+    css += ":-webkit-full-screen #PREFIXslide_area {"
+    css += "width:" + widthPercent + "% !important; height:" + heightPercent + "% !important;";
+    css += "float: left;";
+    css += "margin-left:" + marginLeft + "px;";
+    css += "}";
 
-    css += ':-moz-full-screen #PREFIXslide_area {'
-    css += 'width:' + width_percent + '% !important; height:' + height_percent + '% !important;';
-    css += 'float: left;';
-    css += 'margin-left:' + margin_left + 'px;';
-    css += '}';
+    css += ":-moz-full-screen #PREFIXslide_area {"
+    css += "width:" + widthPercent + "% !important; height:" + heightPercent + "% !important;";
+    css += "float: left;";
+    css += "margin-left:" + marginLeft + "px;";
+    css += "}";
 
-    css += ':-ms-fullscreen #PREFIXslide_area {'
-    css += 'width:' + width_percent + '% !important; height:' + height_percent + '% !important;';
-    css += 'float: left;';
-    css += 'margin-left:' + margin_left + 'px;';
-    css += '}';
+    css += ":-ms-fullscreen #PREFIXslide_area {"
+    css += "width:" + widthPercent + "% !important; height:" + heightPercent + "% !important;";
+    css += "float: left;";
+    css += "margin-left:" + marginLeft + "px;";
+    css += "}";
 
-    css += ':fullscreen #PREFIXslide_area {'
-    css += 'width:' + width_percent + '% !important; height:' + height_percent + '% !important;';
-    css += 'float: left;';
-    css += 'margin-left:' + margin_left + 'px;';
-    css += '}';
+    css += ":fullscreen #PREFIXslide_area {"
+    css += "width:" + widthPercent + "% !important; height:" + heightPercent + "% !important;";
+    css += "float: left;";
+    css += "margin-left:" + marginLeft + "px;";
+    css += "}";
 
-    var style = document.createElement('style');
+    var style = document.createElement("style");
     style.appendChild(document.createTextNode(css));
-    document.getElementsByTagName('head')[0].appendChild(style);
+    document.getElementsByTagName("head")[0].appendChild(style);
     OSSJSPARTS.requestFullScreen(elm);
   };
 
@@ -202,7 +198,7 @@
   <%# * Handling FullScreen Event           %>
   <%# ************************************/ %>
   OSSJSPARTS.handleFSevent = function() {
-    OSSJSPARTS.set_slider_position(OSSJSPARTS.current_page_index + 1);
+    OSSJSPARTS.setSliderPosition(OSSJSPARTS.currentPageIndex + 1);
   };
 
   <%# /************************************ %>
@@ -223,7 +219,7 @@
   <%# /************************************ %>
   <%# * Current Screen Status               %>
   <%# ************************************/ %>
-  OSSJSPARTS.is_fullscreen = function(){
+  OSSJSPARTS.isFullScreen = function(){
     if ((document.webkitFullscreenElement && document.webkitFullscreenElement !== null)
      || (document.mozFullScreenElement && document.mozFullScreenElement !== null)
      || (document.msFullscreenElement && document.msFullscreenElement !== null)
@@ -242,35 +238,51 @@
   document.addEventListener("MSFullscreenChange", OSSJSPARTS.handleFSevent, false);
   document.addEventListener("fullscreenchange", OSSJSPARTS.handleFSevent, false);
 
-  if (window.addEventListener) {
-    window.addEventListener('load', OSSJSPARTS.load_slide, false);
-  } else if (window.attachEvent) {
-    window.attachEvent('onload', OSSJSPARTS.load_slide);
-  } else {
-    window.onload = OSSJSPARTS.load_slide;
-  }
-  window.onmousemove = handleMouseMove;
-  function handleMouseMove(evt) {
-    var evt = evt || window.event;
-    var id = OSSJSPARTS.add_css_prefix("slide_image");
-    var element = document.getElementById(id);
-    setCursor(evt, element);
-  }
-  function setCursor(evt, element) {
-    var current_pos = evt.clientX;
+  OSSJSPARTS.setCursor = function(evt, element) {
+    var currentPos = evt.clientX;
     var rect = element.getBoundingClientRect();
-    if (current_pos < rect.left + (element.width / 2)) {
-      if (OSSJSPARTS.current_page_index > 0) {
-        element.style.cursor = 'url(<%= image_url("left.png") %>), auto';
+    if (currentPos < rect.left + (element.width / 2)) {
+      if (OSSJSPARTS.currentPageIndex > 0) {
+        OSSJSPARTS.setLeftCursor(element);
       } else {
-        element.style.cursor = 'none';
+        OSSJSPARTS.resetCursor(element);
       }
     } else {
-      if (OSSJSPARTS.current_page_index != OSSJSPARTS.slides.length -1 ) {
-        element.style.cursor = 'url(<%= image_url("right.png") %>), auto';
+      if (OSSJSPARTS.currentPageIndex != OSSJSPARTS.slides.length - 1) {
+        OSSJSPARTS.setRightCursor(element);
       } else {
-        element.style.cursor = 'none';
+        OSSJSPARTS.resetCursor(element);
       }
     }
+  };
+
+  OSSJSPARTS.resetCursor = function(element) {
+    element.style.cursor = "none";
+  };
+
+  OSSJSPARTS.setLeftCursor = function(element) {
+    element.style.cursor = "url(<%= image_url("left.png") %>), auto";
+  };
+
+  OSSJSPARTS.setRightCursor = function(element) {
+    element.style.cursor = "url(<%= image_url("right.png") %>), auto";
+  };
+
+  OSSJSPARTS.handleMouseMove = function(evt) {
+    var evt = evt || window.event;
+    var id = OSSJSPARTS.addCssPrefix("slide_image");
+    var element = document.getElementById(id);
+    OSSJSPARTS.setCursor(evt, element);
+  };
+
+  if (window.addEventListener) {
+    window.addEventListener("load", OSSJSPARTS.loadSlide, false);
+    window.addEventListener("mousemove", OSSJSPARTS.handleMouseMove, false);
+  } else if (window.attachEvent) {
+    window.attachEvent("onload", OSSJSPARTS.loadSlide);
+    window.attachEvent("onmousemove", OSSJSPARTS.handleMouseMove);
+  } else {
+    window.onload = OSSJSPARTS.loadSlide;
+    window.onmousemove = OSSJSPARTS.handleMouseMove;
   }
 </script>
