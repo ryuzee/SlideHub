@@ -7,7 +7,7 @@ gem 'json', '~> 1.8.6'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.7'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '~> 4.1.3'
+gem 'uglifier', '~> 4.1.5'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -25,9 +25,7 @@ gem 'sqlite3'
 # Use mysql
 gem 'mysql2'
 # Use SQLServer
-# gem 'activerecord-sqlserver-adapter', '~> 5.1.1'
-# See https://github.com/rails-sqlserver/activerecord-sqlserver-adapter/issues/613
-gem 'activerecord-sqlserver-adapter', git: 'https://github.com/rails-sqlserver/activerecord-sqlserver-adapter.git'
+gem 'activerecord-sqlserver-adapter'
 gem 'tiny_tds'
 # Apply bootstrap
 # gem 'less-rails'
@@ -42,9 +40,9 @@ gem 'twitter-bootstrap-rails', '~> 4.0'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 # Authentication
-gem 'devise', '4.4.0'
+gem 'devise', '4.4.1'
 gem 'devise-bootstrap-views', '0.0.11'
-gem 'devise-i18n', '1.5.0'
+gem 'devise-i18n', '1.5.1'
 gem 'devise-i18n-views', '0.3.7'
 gem 'omniauth'
 gem 'omniauth-facebook'
