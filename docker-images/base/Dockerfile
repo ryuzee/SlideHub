@@ -14,6 +14,8 @@ RUN bash -c "source /root/.bashrc && rbenv global 2.4.2"
 RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler"
 RUN bash -c "source /root/.bashrc && rbenv rehash"
 
+RUN cd /tmp && wget --tries 3 -O freetds-1.00.15.tar.gz "ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.00.15.tar.gz" && tar -xzvf freetds-1.00.15.tar.gz && cd freetds-1.00.15 && ./configure && make && sudo make install
+
 COPY supervisor.conf /etc/supervisor.conf
 
 RUN apt-get update && apt-get install -y unoconv xpdf xvfb fonts-vlgothic fonts-mplus fonts-migmix libmagickwand-dev

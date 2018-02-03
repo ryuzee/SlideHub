@@ -25,9 +25,7 @@ gem 'sqlite3'
 # Use mysql
 gem 'mysql2'
 # Use SQLServer
-# gem 'activerecord-sqlserver-adapter', '~> 5.1.1'
-# See https://github.com/rails-sqlserver/activerecord-sqlserver-adapter/issues/613
-gem 'activerecord-sqlserver-adapter', git: 'https://github.com/rails-sqlserver/activerecord-sqlserver-adapter.git'
+gem 'activerecord-sqlserver-adapter'
 gem 'tiny_tds'
 # Apply bootstrap
 # gem 'less-rails'
