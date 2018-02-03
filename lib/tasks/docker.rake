@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 require "#{File.dirname(__FILE__)}/../../lib/slide_hub/version"
 require 'open3'
 
@@ -11,11 +10,11 @@ namespace :docker do
       sh cmd
     end
 
-      cmd = "docker tag ryuzee/slidehub-base:latest ryuzee/slidehub-base:20180203"
-      o, e, _s = Open3.capture3(cmd)
-      if o.chomp! == '' || e != ''
-        raise 'Failed to add version tag to Docker image...'
-      end
+    cmd = 'docker tag ryuzee/slidehub-base:latest ryuzee/slidehub-base:20180203'
+    o, e, _s = Open3.capture3(cmd)
+    if o.chomp! == '' || e != ''
+      raise 'Failed to add version tag to Docker image...'
+    end
   end
 
   task :push_base do
