@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1.4'
+gem 'rails', '5.1.5'
 # See https://qiita.com/shinichinomura/items/41e03d7e4fa56841e654
 gem 'json', '~> 1.8.6'
 # Use SCSS for stylesheets
