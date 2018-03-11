@@ -29,6 +29,7 @@
 #  provider               :string(255)
 #  uid                    :string(255)
 #  token                  :string(255)
+#  twitter_account        :string(15)
 #
 
 require 'rails_helper'
@@ -46,6 +47,7 @@ describe 'User' do
         ryu
       ]
       expect(user).to allow_value(*valid_usernames).for(:username)
+      expect(user).to allow_value(*valid_usernames).for(:twitter_account)
     end
   end
 
@@ -77,6 +79,35 @@ describe 'User' do
         'rss',
       ]
       expect(user).not_to allow_value(*invalid_usernames).for(:username)
+    end
+  end
+
+
+  describe 'valid twitter account' do
+    it 'can be accepted' do
+      valid_twitter_accounts = %w[
+        ryuzee
+        ryuzee-1234
+        ryuzee_1234
+        RYUZEE
+        ryu
+      ]
+      expect(user).to allow_value(*valid_twitter_accounts).for(:twitter_account)
+    end
+  end
+
+  describe 'invalid twitter accounts' do
+    it 'can not be accepted' do
+      invalid_twitter_accounts = [
+        'ryuzee@example.com',
+        '-ryuzee',
+        'ryuzee-',
+        'ryu zee',
+        'ryuzee789012345678901234567890123',
+        'a#b',
+        'a' * (15 + 1),
+      ]
+      expect(user).not_to allow_value(*invalid_twitter_accounts).for(:twitter_account)
     end
   end
 

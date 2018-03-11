@@ -14,14 +14,22 @@ if slide.tags.count > 0
   end
 end
 
+set_meta_tags author: user_by_username_url(username: slide.user_username)
+set_meta_tags keywords: keywords
+set_meta_tags description: strip_tags(slide.description).truncate(100)
+
 set_meta_tags og: {
   title:    slide.name,
   type:     'article',
   url:      slide_url(slide.id),
   image:    u
 }
-set_meta_tags author: user_by_username_url(username: slide.user_username)
-set_meta_tags keywords: keywords
-set_meta_tags description: strip_tags(slide.description).truncate(100)
+
+unless slide.user_twitter_account.blank?
+  set_meta_tags twitter: {
+    card:    'summary_large_image',
+    site:    "@#{slide.user_twitter_account}"
+  }
+end
 
 %>

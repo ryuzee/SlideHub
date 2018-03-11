@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171230125243) do
+ActiveRecord::Schema.define(version: 20180311061152) do
 
   create_table "categories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -30,20 +30,20 @@ ActiveRecord::Schema.define(version: 20171230125243) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "custom_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "custom_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "path", null: false
     t.string "description"
     t.index ["path"], name: "idx_custom_files_ukey", unique: true
   end
 
-  create_table "featured_slides", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "featured_slides", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "slide_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slide_id"], name: "idx_featured_slides_ukey", unique: true
   end
 
-  create_table "pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "path", limit: 30, null: false
     t.string "title", null: false
     t.text "content", limit: 4294967295
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20171230125243) do
     t.index ["path"], name: "idx_pages_ukey", unique: true
   end
 
-  create_table "sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "session_id", null: false
     t.text "data"
     t.datetime "created_at", null: false
@@ -96,10 +96,10 @@ ActiveRecord::Schema.define(version: 20171230125243) do
 
   create_table "taggings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "tag_id"
-    t.integer "taggable_id"
     t.string "taggable_type"
-    t.integer "tagger_id"
+    t.integer "taggable_id"
     t.string "tagger_type"
+    t.integer "tagger_id"
     t.string "context", limit: 128
     t.datetime "created_at"
     t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20171230125243) do
     t.string "provider"
     t.string "uid"
     t.string "token"
+    t.string "twitter_account", limit: 15
     t.index ["email"], name: "idx_username_ukey", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true

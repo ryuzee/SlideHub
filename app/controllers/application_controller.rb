@@ -43,10 +43,11 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # TODO: move to specific controller??
     def configure_permitted_parameters
       actions = [:sign_up, :account_update]
       actions.each do |action|
-        devise_parameter_sanitizer.permit(action, keys: [:display_name, :biography, :avatar, :username])
+        devise_parameter_sanitizer.permit(action, keys: [:display_name, :biography, :avatar, :username, :twitter_account])
       end
     end
 end

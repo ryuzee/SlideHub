@@ -29,6 +29,7 @@
 #  provider               :string(255)
 #  uid                    :string(255)
 #  token                  :string(255)
+#  twitter_account        :string(15)
 #
 
 class User < ApplicationRecord
@@ -42,11 +43,20 @@ class User < ApplicationRecord
   validates :display_name, length: { maximum: 32 }
   validates :biography, presence: true
   validates :biography, length: { maximum: 1024 }
-  validates :username, uniqueness: true, length: { minimum: 3, maximum: 32 }
-  VALID_USERNAME_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,30}[a-zA-Z0-9]\z/
-  validates :username, format: { with: VALID_USERNAME_REGEX }, exclusion: { in: ReservedWord.list }
-  has_many :slides
 
+  VALID_USERNAME_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,30}[a-zA-Z0-9]\z/
+  validates :username, uniqueness: true,
+            length: { minimum: 3, maximum: 32 },
+            format: { with: VALID_USERNAME_REGEX },
+            exclusion: { in: ReservedWord.list }
+
+  # current twitter account length must be greater than 5...
+  VALID_TWITTER_ACCOUNT_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,15}[a-zA-Z0-9]\z/
+  validates :twitter_account, allow_nil: true, allow_blank: true,
+            length: { minimum: 1, maximum: 15 },
+            format: { with: VALID_TWITTER_ACCOUNT_REGEX }
+
+  has_many :slides
   has_attached_file :avatar, styles: { medium: '192x192>', thumb: '100x100#' }, default_url: 'avatar/:style/missing.png'
   validates_attachment_content_type :avatar, content_type: %r{\Aimage/.*\Z}
 
@@ -80,30 +90,28 @@ class User < ApplicationRecord
 
   def self.find_for_facebook_oauth(auth)
     user = User.find_by(provider: auth.provider, uid: auth.uid)
-    unless user
-      user = User.create(username:     auth.extra.raw_info.username,
+    user ||= User.create(username:     auth.extra.raw_info.username,
                          display_name: auth.extra.raw_info.name,
                          biography: '',
                          provider: auth.provider,
                          uid:      auth.uid,
                          email:    auth.info.email,
                          token:    auth.credentials.token,
+                         twitter_account: '',
                          password: Devise.friendly_token[0, 20])
-    end
     user
   end
 
   def self.find_for_twitter_oauth(auth)
     user = User.find_by(provider: auth.provider, uid: auth.uid)
-    unless user
-      user = User.create(username:     auth.info.nickname,
+    user ||= User.create(username:     auth.info.nickname,
                          display_name: auth.info.name,
                          biography: auth.info.description,
                          provider: auth.provider,
                          uid:      auth.uid,
                          email:    '',
+                         twitter_account: auth.info.nickname,
                          password: Devise.friendly_token[0, 20])
-    end
     user
   end
 end

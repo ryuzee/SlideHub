@@ -30,6 +30,7 @@ class Slide < ApplicationRecord
   belongs_to :user
   delegate :username, to: :user, prefix: true
   delegate :display_name, to: :user, prefix: true
+  delegate :twitter_account, to: :user, prefix: true
   counter_culture :user
   belongs_to :category
   delegate :name, to: :category, prefix: true
