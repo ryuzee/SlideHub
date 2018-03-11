@@ -82,7 +82,6 @@ describe 'User' do
     end
   end
 
-
   describe 'valid twitter account' do
     it 'can be accepted' do
       valid_twitter_accounts = %w[
