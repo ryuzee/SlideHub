@@ -57,7 +57,7 @@ class User < ApplicationRecord
                               length: { minimum: 1, maximum: 15 },
                               format: { with: VALID_TWITTER_ACCOUNT_REGEX }
 
-  has_many :slides
+  has_many :slides, dependent: :destroy
   has_attached_file :avatar, styles: { medium: '192x192>', thumb: '100x100#' }, default_url: 'avatar/:style/missing.png'
   validates_attachment_content_type :avatar, content_type: %r{\Aimage/.*\Z}
 
