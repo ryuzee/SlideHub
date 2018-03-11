@@ -29,6 +29,7 @@
 #  provider               :string(255)
 #  uid                    :string(255)
 #  token                  :string(255)
+#  twitter_account        :string(15)
 #
 
 FactoryBot.define do
