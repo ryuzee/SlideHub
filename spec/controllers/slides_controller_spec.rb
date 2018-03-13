@@ -149,7 +149,7 @@ RSpec.describe SlidesController, type: :controller do
 
     it 'failed to update the record because of validation error and then render edit' do
       data = create(:slide)
-      data.convert_status = 100
+      data.converted!
       data.name = nil
       login_by_user default_user
       post :update, params: { id: data.id, slide: data.attributes }
@@ -159,7 +159,7 @@ RSpec.describe SlidesController, type: :controller do
 
     it 'succeeds to update the record without running conversion' do
       data = create(:slide)
-      data.convert_status = 100
+      data.converted!
       data.name = 'Engawa'
       login_by_user default_user
       post :update, params: { id: data.id, slide: data.attributes }
@@ -173,7 +173,7 @@ RSpec.describe SlidesController, type: :controller do
       allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
       allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
       data = create(:slide)
-      data.convert_status = 0 # Not converted yet...
+      data.not_converted! # Not converted yet...
       data.name = 'Engawa'
       login_by_user default_user
       post :update, params: { id: data.id, slide: data.attributes }

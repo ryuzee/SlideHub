@@ -1,4 +1,10 @@
 ja:
+  enums:
+    slide:
+      convert_status:
+        converted: "変換済"
+        not_converted: "未変換"
+        convert_error: "変換失敗"
   activerecord:
     models:
       category: "カテゴリ"

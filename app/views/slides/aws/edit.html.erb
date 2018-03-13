@@ -103,7 +103,7 @@
   </div>
 
   <%= f.hidden_field :id, :value => @slide.id %>
-  <%= f.hidden_field :convert_status, :id => 'SlideConvertStatus', :value => @slide.convert_status %>
+  <%= f.hidden_field :convert_status, :id => 'SlideConvertStatus' %>
   <%= f.hidden_field :object_key, :id => 'SlideKey', :value => @slide.object_key %>
   <div class="form-group">
     <%= f.label t('activerecord.models.tag'), :class => 'control-label col-sm-2' %>

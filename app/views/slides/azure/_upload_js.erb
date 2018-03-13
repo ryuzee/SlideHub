@@ -144,7 +144,7 @@ $(document).ready(function() {
             var key   = '<%= rand_name %>';
             $("#SlideKey").val(key).change();
             <% if command != 'add' %>
-            $("#SlideConvertStatus").val(0);
+            $("#SlideConvertStatus").val("not_converted");
             <% end %>
           });
         });

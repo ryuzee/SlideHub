@@ -23,7 +23,7 @@ end
 <a href="#top"><i class="fa fa-arrow-up"></i></a>
 </div>
 <% end %>
-<% elsif slide.convert_status < 0 %>
+<% elsif slide.convert_error? %>
     <%= image_tag "failed_to_convert.jpg", class: "lazy img-responsive" %>
 <% else %>
     <%= image_tag "converting.jpg", class: "lazy img-responsive" %>

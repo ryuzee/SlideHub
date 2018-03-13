@@ -1,9 +1,9 @@
     <div class="row" style="max-width:1024px; margin:0 auto;">
     <% slides.each do |slide| %>
       <% next if slide.nil? %>
-      <% if slide.convert_status < 0 then %>
+      <% if slide.convert_error? then %>
         <% image_url = image_path("failed_to_convert_small.jpg") %>
-      <% elsif slide.convert_status < 100 then %>
+      <% elsif slide.converted? == false then %>
         <% image_url = image_path("converting_small.jpg") %>
       <% else %>
         <% image_url = slide.thumbnail_url %>

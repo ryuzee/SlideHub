@@ -104,7 +104,8 @@ $(function(){
   <div class="control-group">
     <%= f.label :convert_status, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :convert_status, :class => 'form-control' %>
+
+      <%= f.select :convert_status, Slide.convert_statuses.map {|k, v| [t("enums.slide.convert_status.#{k}"), k] }, :class => 'form-control' %>
     </div>
     <%= f.error_span(:convert_status) %>
   </div>

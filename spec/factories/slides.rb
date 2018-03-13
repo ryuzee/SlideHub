@@ -27,7 +27,7 @@ FactoryBot.define do
     description 'FUGA'
     sequence(:object_key) { |n| "abcdefg#{n}" }
     extension '.pdf'
-    convert_status 100
+    convert_status Slide.convert_statuses[:converted]
     num_of_pages 1
     sequence(:created_at, 1) { |i| Time.now - i.days }
     downloadable true
