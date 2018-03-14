@@ -9,8 +9,8 @@ RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
 RUN git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build
 ENV PATH /root/.rbenv/bin:$PATH
 ENV RAILS_ROOT /opt/application/current
-RUN bash -c "source /root/.bashrc && rbenv install 2.4.2"
-RUN bash -c "source /root/.bashrc && rbenv global 2.4.2"
+RUN bash -c "source /root/.bashrc && rbenv install 2.5.0"
+RUN bash -c "source /root/.bashrc && rbenv global 2.5.0"
 RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler"
 RUN bash -c "source /root/.bashrc && rbenv rehash"
 
