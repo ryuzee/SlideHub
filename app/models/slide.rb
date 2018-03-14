@@ -55,8 +55,6 @@ class Slide < ApplicationRecord
   scope :category, ->(category_id) { where('category_id = ?', category_id) }
   scope :owner, ->(user_id) { where('user_id = ?', user_id) }
 
-
-
   def self.latest_slides(limit = 10)
     self.published.latest.
       includes(:user).
