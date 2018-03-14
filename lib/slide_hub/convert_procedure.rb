@@ -105,7 +105,7 @@ class ConvertProcedure
 
     def update_database
       slide = Slide.where('slides.object_key = ?', object_key).first
-      slide.convert_status = 100
+      slide.converted!
       slide.extension = ".#{@file_type}"
       slide.num_of_pages = @slide_image_list.count
       slide.save

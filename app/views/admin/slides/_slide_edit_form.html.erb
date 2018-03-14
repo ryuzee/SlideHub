@@ -67,7 +67,7 @@ $(function(){
   <div class="control-group">
     <%= f.label t('activerecord.models.category'), :class => 'control-label' %>
     <div class="controls">
-      <%= f.collection_select :category_id, Category.all, :id, :name %>
+      <%= f.collection_select :category_id, Category.all, :id, :name,  {prompt: false}, {class: "form-control"} %>
     </div>
     <%= f.error_span(:category_id) %>
   </div>
@@ -104,7 +104,7 @@ $(function(){
   <div class="control-group">
     <%= f.label :convert_status, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :convert_status, :class => 'form-control' %>
+      <%= f.select :convert_status, Slide.convert_statuses.map {|k, v| [t("enums.slide.convert_status.#{k}"), k] }, {prompt: false}, {class: "form-control"} %>
     </div>
     <%= f.error_span(:convert_status) %>
   </div>

@@ -77,13 +77,10 @@ class SlidesController < ApplicationController
 
   def update
     slide_params = params.require(:slide).permit(:name, :description, :object_key, :downloadable, :category_id, :tag_list, :convert_status)
-    slide_convert_status = params[:slide][:convert_status].to_i
 
     @slide.assign_attributes(slide_params)
     if @slide.update_attributes(slide_params)
-      if slide_convert_status.zero?
-        @slide.send_convert_request
-      end
+      @slide.send_convert_request unless @slide.converted?
       redirect_to slide_path(@slide.id)
     else
       render "slides/#{CloudConfig.service_name}/edit"

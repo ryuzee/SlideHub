@@ -1,4 +1,10 @@
 en:
+  enums:
+    slide:
+      convert_status:
+        converted: "Converted"
+        not_converted: "Not Converted"
+        convert_error: "Convert Error"
   activerecord:
     models:
       category: "Category"

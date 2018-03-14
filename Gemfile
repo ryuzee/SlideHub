@@ -96,6 +96,8 @@ gem 'activerecord-nulldb-adapter'
 gem 'reserved_word'
 # dump database
 gem 'yaml_db', '~> 0.6.0'
+# i18n for enum
+gem 'enum_help'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
