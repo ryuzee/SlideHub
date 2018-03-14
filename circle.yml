@@ -5,6 +5,10 @@ machine:
   timezone:
     Asia/Tokyo
 
+  pre:
+    - sudo rm -rf /home/travis
+    - sudo ln -s /home/ubuntu /home/travis
+
   ruby:
     version:
       2.5.0
