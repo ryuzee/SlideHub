@@ -5,9 +5,13 @@ machine:
   timezone:
     Asia/Tokyo
 
+  pre:
+    - sudo rm -rf /home/travis
+    - sudo ln -s /home/ubuntu /home/travis
+
   ruby:
     version:
-      2.4.2
+      2.5.0
 
   environment:
     CIRCLE_ENV: test
