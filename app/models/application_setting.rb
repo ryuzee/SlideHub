@@ -1,7 +1,7 @@
 class ApplicationSetting
   @defaults = begin
-                content = open(Rails.root.join('config', 'app.yml')).read
-                hash = content.empty? ? {} : YAML.safe_load(ERB.new(content).result).to_hash
+                content = open(Rails.root.join('config/app.yml')).read
+                hash = content.empty? ? {} : YAML.load(ERB.new(content).result).to_hash
                 hash = hash[Rails.env] || {}
                 hash
               end
@@ -17,6 +17,7 @@ class ApplicationSetting
               end
 
   class << self
+
     def reload_settings
       @settings = load_settings
     end
@@ -33,7 +34,7 @@ class ApplicationSetting
 
     # get value
     def [](var_name)
-      @settings = Rails.cache.fetch('settings', expires_in: 30.seconds) do
+      @settings = Rails.cache.fetch('settings', expires_in: 30.second) do
         load_settings
       end
       var_name = var_name.to_s
