@@ -1,7 +1,7 @@
 class ApplicationSetting
   @defaults = begin
-                content = open(Rails.root.join('config/app.yml')).read
-                hash = content.empty? ? {} : YAML.load(ERB.new(content).result).to_hash
+                content = File.open(Rails.root.join('config', 'app.yml')).read
+                hash = content.empty? ? {} : YAML.safe_load(ERB.new(content).result, [], [], true).to_hash
                 hash = hash[Rails.env] || {}
                 hash
               end
@@ -17,7 +17,6 @@ class ApplicationSetting
               end
 
   class << self
-
     def reload_settings
       @settings = load_settings
     end
