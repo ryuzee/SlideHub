@@ -4,28 +4,28 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: CustomSetting['site.name'], reverse: true %>
+    <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: ApplicationSetting['site.name'], reverse: true %>
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
       <%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" %>
     <![endif]-->
-    <% CustomSetting['site.theme'] = 'default' unless %w[default white dark].include?(CustomSetting['site.theme']) %>
-    <%= stylesheet_link_tag "/themes/#{CustomSetting['site.theme']}/bootstrap.css" %>
-    <%= stylesheet_link_tag "/themes/#{CustomSetting['site.theme']}/custom.css" %>
+    <% ApplicationSetting['site.theme'] = 'default' unless %w[default white dark].include?(ApplicationSetting['site.theme']) %>
+    <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/bootstrap.css" %>
+    <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/custom.css" %>
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" %>
     <%= stylesheet_link_tag "/custom/override.css" %>
 
-  <% if CustomSetting['site.favicon'].blank? %>
+  <% if ApplicationSetting['site.favicon'].blank? %>
     <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
     <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
     <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
     <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
   <% else %>
-    <%= favicon_link_tag CustomSetting['site.favicon'], :rel => 'shortcut icon' %>
+    <%= favicon_link_tag ApplicationSetting['site.favicon'], :rel => 'shortcut icon' %>
   <% end %>
 
     <%= javascript_include_tag "application" %>
@@ -35,7 +35,7 @@
   <body class="slidehub_body">
 
     <%
-      inverse = CustomSetting['site.header_inverse']
+      inverse = ApplicationSetting['site.header_inverse']
       inverse = 0 if inverse.nil?
     %>
     <div class="navbar <% if inverse == '1' %>navbar-inverse<% else %>navbar-default<% end %> navbar-fixed-top">
@@ -45,7 +45,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;<%= CustomSetting['site.name'] %></a>
+        <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;<%= ApplicationSetting['site.name'] %></a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
             <li class="<%= 'active' if controller.controller_name == 'popular' %>"><%= link_to t("popular"), popular_index_path  %></li>
@@ -68,7 +68,7 @@
             <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="avatar20" aria-hidden="true"><%= image_tag(current_user.avatar.url(:thumb)) %></span>&nbsp;<%= current_user.email %><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <% if (CustomSetting['site.only_admin_can_upload']).to_i == 0 || current_user.admin == true %>
+              <% if (ApplicationSetting['site.only_admin_can_upload']).to_i == 0 || current_user.admin == true %>
               <li><a href="<%= new_slide_path %>"><i class="fa fa-pencil"></i>&nbsp;<%= t 'upload' %>!!</a></li>
               <% end %>
               <li><a href="<%= users_path %>"><i class="fa fa-list-alt"></i>&nbsp;<%= t :my_slides %></a></li>
@@ -87,7 +87,7 @@
             </li>
           </ul>
           <% else %>
-          <% if CustomSetting['site.display_login_link'] == "1" %>
+          <% if ApplicationSetting['site.display_login_link'] == "1" %>
           <ul class="nav navbar-nav navbar-right">
             <li><%= link_to t("signup"), new_user_registration_path %></li>
             <li><%= link_to t("signin"), new_user_session_path %></li>
@@ -100,11 +100,11 @@
 
     <a name="page_top"></a>
     <div class="container" id="main_container" role="main">
-      <%= raw CustomSetting['custom_content.center_top'] %>
+      <%= raw ApplicationSetting['custom_content.center_top'] %>
       <%= bootstrap_flash %>
 
       <%= yield %>
-      <%= raw CustomSetting['custom_content.center_bottom'] %>
+      <%= raw ApplicationSetting['custom_content.center_bottom'] %>
       <br clear="all" />
     </div> <!-- /container -->
 
@@ -112,7 +112,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <p class="text-muted text-left"><%= raw CustomSetting['site.footer'] %></p>
+            <p class="text-muted text-left"><%= raw ApplicationSetting['site.footer'] %></p>
           </div>
           <div class="col-md-6">
             <p class="text-muted text-right">Powered by <%= link_to "SlideHub", "https://github.com/ryuzee/SlideHub", target: "_blank" %> <%= SlideHub::VERSION %></p>

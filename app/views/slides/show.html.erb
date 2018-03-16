@@ -50,7 +50,7 @@
 
   <!--right sidebar -->
   <div class="col-md-4" id="rightside">
-    <%= raw CustomSetting['custom_content.right_top'] %>
+    <%= raw ApplicationSetting['custom_content.right_top'] %>
     <%= render 'users/right_side_bar', user: @slide.user %>
     <%= render 'slides/command_and_detail', slide: @slide %>
     <%= render 'slides/related_slides', related_slides: @related_slides %>

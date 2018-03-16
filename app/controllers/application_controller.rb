@@ -33,12 +33,12 @@ class ApplicationController < ActionController::Base
 
     def set_uploadable
       @uploadable = user_signed_in?
-      @uploadable = false if user_signed_in? && !current_user.admin && CustomSetting['site.only_admin_can_upload'] == '1'
+      @uploadable = false if user_signed_in? && !current_user.admin && ApplicationSetting['site.only_admin_can_upload'] == '1'
     end
 
     def signup_enabled?
       return unless request.get?
-      if request.path == '/users/sign_up' && CustomSetting['site.signup_enabled'] != '1'
+      if request.path == '/users/sign_up' && ApplicationSetting['site.signup_enabled'] != '1'
         raise ActionController::RoutingError, 'Not Found'
       end
     end

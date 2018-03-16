@@ -1,36 +1,15 @@
 module Admin
   class SiteSettingsController < Admin::BaseController
-    before_action :clear_cache
-    before_action :save_current, only: [:index]
     def index
-      @settings = CustomSetting.unscoped.where("var like 'site.%'")
+      @settings = ApplicationSetting.unscoped.where("var like 'site.%'")
     end
 
     def update
       params.require(:settings).map do |param|
         data = param.to_unsafe_h
-        setting = CustomSetting.find_by(var: data['var']) || CustomSetting.new(var: data['var'])
-        setting.value = data['value']
-        setting.save
+        ApplicationSetting[data['var']] = data['value']
       end
       redirect_to '/admin/site_settings/', notice: t(:site_settings_were_saved)
     end
-
-    private
-
-      # :reek:UtilityFunction: { enabled: false }
-      def save_current
-        keys = %w[site.display_login_link site.only_admin_can_upload site.signup_enabled site.name site.header_inverse site.favicon site.footer site.theme]
-        keys.each do |key|
-          setting = CustomSetting.find_by(var: key.to_s) || CustomSetting.new(var: key.to_s)
-          setting.value = CustomSetting[key]
-          setting.save
-        end
-      end
-
-      # :reek:UtilityFunction: { enabled: false }
-      def clear_cache
-        Rails.cache.clear
-      end
   end
 end

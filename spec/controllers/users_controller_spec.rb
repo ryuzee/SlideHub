@@ -92,7 +92,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
     context 'with sign_up enabled' do
       render_views
       it 'works' do
-        CustomSetting['site.signup_enabled'] = '1'
+        ApplicationSetting['site.signup_enabled'] = '1'
         get :new
         expect(response.status).to eq(200)
         expect(response.body).to include('username', 'biography')
@@ -103,10 +103,10 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       render_views
       it 'can not be accessed' do
         begin
-          CustomSetting['site.signup_enabled'] = '0'
+          ApplicationSetting['site.signup_enabled'] = '0'
           expect { get :new }.to raise_error(ActionController::RoutingError, 'Not Found')
         ensure
-          CustomSetting['site.signup_enabled'] = '1'
+          ApplicationSetting['site.signup_enabled'] = '1'
         end
       end
     end

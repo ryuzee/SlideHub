@@ -1,4 +1,4 @@
-<% if CustomSetting['site.signup_enabled'] == '1' %>
+<% if ApplicationSetting['site.signup_enabled'] == '1' %>
 <% if devise_mapping.registerable? && controller_name != 'registrations' %>
 <%= link_to t("signup"), new_registration_path(resource_name) %><br />
 <% end %>

@@ -6,7 +6,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
     <%= csrf_meta_tags %>
-    <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: CustomSetting['site.name'], reverse: true %>
+    <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: ApplicationSetting['site.name'], reverse: true %>
     <%= display_meta_tags %>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <%= stylesheet_link_tag "admin" %>
@@ -33,7 +33,7 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>M</b>C</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b><%= raw CustomSetting['site.name'] %></b>MC</span>
+          <span class="logo-lg"><b><%= raw ApplicationSetting['site.name'] %></b>MC</span>
         </a>
 
         <!-- Header Navbar -->
@@ -145,7 +145,7 @@
           Powered by <%= link_to "SlideHub", "https://github.com/ryuzee/SlideHub", target: "_blank" %> <%= SlideHub::VERSION %>
         </div>
         <!-- Default to the left -->
-        <%= raw CustomSetting['site.footer'] %>
+        <%= raw ApplicationSetting['site.footer'] %>
       </footer>
     </div><!-- ./wrapper -->
 
