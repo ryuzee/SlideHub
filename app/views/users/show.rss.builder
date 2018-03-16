@@ -1,7 +1,7 @@
 xml.instruct! :xml, version: '1.0'
 xml.rss('version' => '2.0', 'xmlns:dc' => 'http://purl.org/dc/elements/1.1/') do
   xml.channel do
-    xml.title "#{strip_tags @user.display_name}'s slides | #{strip_tags CustomSetting['site.name']}"
+    xml.title "#{strip_tags @user.display_name}'s slides | #{strip_tags ApplicationSetting['site.name']}"
 
     @slides.each do |slide|
       xml.item do
