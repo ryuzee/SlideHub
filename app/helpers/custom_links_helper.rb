@@ -2,7 +2,7 @@ module CustomLinksHelper
   def custom_links(controller)
     require 'json'
     result = ''
-    source = CustomSetting['custom_content.header_menus']
+    source = ApplicationSetting['custom_content.header_menus']
     begin
       json = JSON.parse(source, quirks_mode: true)
       json.each do |elm|

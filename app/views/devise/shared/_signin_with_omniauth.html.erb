@@ -1,4 +1,4 @@
-<% if CustomSetting['site.signup_enabled'] == '1' %>
+<% if ApplicationSetting['site.signup_enabled'] == '1' %>
 <% if devise_mapping.omniauthable? && Rails.application.config.slidehub.facebook? %>
     <div class="main">
       <div class="row">
