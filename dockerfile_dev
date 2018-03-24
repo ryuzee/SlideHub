@@ -17,5 +17,7 @@ COPY script/oss_docker_supervisor_dev.conf /etc/supervisor.conf
 
 RUN bash -l -c 'OSS_SECRET_KEY_BASE=dummy DB_ADAPTER=nulldb RAILS_ENV=production bundle exec rake assets:precompile'
 
-EXPOSE 3000
+RUN bash -l -c 'gem install mailcatcher --no-ri --no-rdoc'
+
+EXPOSE 3000 1080
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.conf"]
