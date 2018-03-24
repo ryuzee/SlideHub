@@ -39,8 +39,15 @@ services:
       OSS_FACEBOOK_APP_SECRET: $OSS_FACEBOOK_APP_SECRET
       OSS_TWITTER_CONSUMER_KEY: $OSS_TWITTER_CONSUMER_KEY
       OSS_TWITTER_CONSUMER_SECRET: $OSS_TWITTER_CONSUMER_SECRET
+      OSS_FROM_EMAIL: test@example.com
+      OSS_SMTP_SERVER: localhost
+      OSS_SMTP_PORT: 1025
+      OSS_SMTP_AUTH_METHOD: plain
+      OSS_SMTP_PASSWORD: test
+      OSS_SMTP_USERNAME: test
     ports:
       - '3000:3000'
+      - '1080:1080'
     volumes:
       - .:/opt/application/current:cached
 
