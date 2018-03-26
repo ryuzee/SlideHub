@@ -23,7 +23,7 @@ gem 'activerecord-session_store'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use mysql
-gem 'mysql2'
+gem 'mysql2', '0.4.10'
 # Use SQLServer
 gem 'activerecord-sqlserver-adapter'
 gem 'tiny_tds'
