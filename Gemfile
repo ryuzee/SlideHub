@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1.5'
+gem 'rails', '5.1.6'
 # See https://qiita.com/shinichinomura/items/41e03d7e4fa56841e654
 gem 'json', '~> 1.8.6'
 # Use SCSS for stylesheets
@@ -134,7 +134,7 @@ group :development do
   # Finding code smell
   gem 'reek'
   # Static Analysis
-  gem 'rubocop', '~> 0.53.0'
+  gem 'rubocop', '~> 0.54.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   # Include template path
