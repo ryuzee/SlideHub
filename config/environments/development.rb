@@ -90,6 +90,6 @@ Rails.application.configure do
   BetterErrors::Middleware.allow_ip! '192.168.0.0/16'
 
   # config.logger = Logger.new(config.paths['log'].first)
-  config.logger = ActiveSupport::Logger.new(config.paths['log'].first)
+  config.logger = ActiveSupport::Logger.new(config.paths['log'].first, 5, 10 * 1024 * 1024)
   config.logger.formatter = ::Logger::Formatter.new
 end
