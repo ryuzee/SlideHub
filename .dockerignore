@@ -20,7 +20,7 @@ docker-images
 docker-compose*.yml
 dockerfile*
 docs
-log/*.log
+log/*.log*
 rocro.yml
 tmp/cache/*
 tmp/pids/*

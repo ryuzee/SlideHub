@@ -12,7 +12,7 @@ module SlideHub
 
       def logger
         @logger ||= begin
-          logger = ActiveSupport::Logger.new(Rails.root.join('log', "batch_#{Rails.env}.log"), 'monthly')
+          logger = ActiveSupport::Logger.new(Rails.root.join('log', "batch_#{Rails.env}.log"), 5, 10 * 1024 * 1024)
           logger.formatter = Logger::Formatter.new
           logger.datetime_format = '%Y-%m-%d %H:%M:%S'
 
