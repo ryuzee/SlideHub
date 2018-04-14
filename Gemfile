@@ -38,7 +38,7 @@ gem 'execjs'
 gem 'twitter-bootstrap-rails', '~> 4.0'
 # Paginate
 gem 'will_paginate'
-gem 'will_paginate-bootstrap'
+gem 'bootstrap-will_paginate'
 # Authentication
 gem 'devise', '4.4.3'
 gem 'devise-bootstrap-views', '0.0.11'

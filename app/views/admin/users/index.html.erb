@@ -117,5 +117,5 @@
 </div>
 
 <div>
-  <%= will_paginate @users, :renderer => BootstrapPagination::Rails %>
+  <%= will_paginate @users, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
 </div>
