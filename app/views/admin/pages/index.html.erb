@@ -33,5 +33,5 @@
 </div>
 
 <div>
-  <%= will_paginate @pages, :renderer => BootstrapPagination::Rails %>
+  <%= will_paginate @pages, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
 </div>
