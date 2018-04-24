@@ -16,7 +16,7 @@ namespace :slidehub do
 
   desc 'Update the page count for each slides'
   task :update_number_of_pages => :environment do
-    @slides = Slide.published
+    @slides = Slide.where('convert_status = ?', Slide.convert_statuses[:converted])
     @slides.each do |s|
       page_list = s.page_list
       count = if page_list.instance_of?(Array)

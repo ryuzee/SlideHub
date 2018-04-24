@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180316051335) do
+ActiveRecord::Schema.define(version: 20180424135528) do
 
-  create_table "categories", id: :integer, force: :cascade do |t|
-    t.string "name", limit: 255, null: false
+  create_table "categories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "comments", id: :integer, force: :cascade do |t|
+  create_table "comments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id", null: false
     t.integer "slide_id", null: false
     t.text "comment", null: false
@@ -30,29 +30,29 @@ ActiveRecord::Schema.define(version: 20180316051335) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "custom_files", force: :cascade do |t|
-    t.string "path", limit: 255, null: false
-    t.string "description", limit: 255
+  create_table "custom_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "path", null: false
+    t.string "description"
     t.index ["path"], name: "idx_custom_files_ukey", unique: true
   end
 
-  create_table "featured_slides", id: :integer, force: :cascade do |t|
+  create_table "featured_slides", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "slide_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slide_id"], name: "idx_featured_slides_ukey", unique: true
   end
 
-  create_table "pages", force: :cascade do |t|
+  create_table "pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "path", limit: 30, null: false
-    t.string "title", limit: 255, null: false
-    t.text "content"
+    t.string "title", null: false
+    t.text "content", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["path"], name: "idx_pages_ukey", unique: true
   end
 
-  create_table "sessions", force: :cascade do |t|
+  create_table "sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "session_id", null: false
     t.text "data"
     t.datetime "created_at", null: false
@@ -61,23 +61,23 @@ ActiveRecord::Schema.define(version: 20180316051335) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "settings", id: :integer, force: :cascade do |t|
+  create_table "settings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "var", null: false
-    t.text "value"
+    t.text "value", limit: 4294967295, collation: "utf8_bin"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["var"], name: "idx_settings_key"
   end
 
-  create_table "slides", id: :integer, force: :cascade do |t|
+  create_table "slides", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id", null: false
-    t.string "name", limit: 255, null: false
+    t.string "name", null: false
     t.text "description", null: false
     t.boolean "downloadable", default: false, null: false
     t.integer "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at"
-    t.string "object_key", limit: 255, default: ""
+    t.string "object_key", default: ""
     t.string "extension", limit: 10, default: "", null: false
     t.integer "convert_status", default: 0
     t.integer "total_view", default: 0, null: false
@@ -86,13 +86,14 @@ ActiveRecord::Schema.define(version: 20180316051335) do
     t.integer "embedded_view", default: 0, null: false
     t.integer "num_of_pages", default: 0
     t.integer "comments_count", default: 0, null: false
+    t.boolean "private", default: false, null: false
     t.index ["category_id"], name: "idx_slides_category_id_key"
     t.index ["object_key"], name: "index_slides_on_object_key", unique: true
     t.index ["page_view"], name: "idx_slides_page_view_key"
     t.index ["user_id"], name: "idx_slides_user_id_key"
   end
 
-  create_table "taggings", id: :integer, force: :cascade do |t|
+  create_table "taggings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "tag_id"
     t.string "taggable_type"
     t.integer "taggable_id"
@@ -104,16 +105,16 @@ ActiveRecord::Schema.define(version: 20180316051335) do
     t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
   end
 
-  create_table "tags", id: :integer, force: :cascade do |t|
-    t.string "name"
+  create_table "tags", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "users", id: :integer, force: :cascade do |t|
+  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "email", limit: 32, null: false
     t.string "display_name", limit: 128, null: false
-    t.string "password", limit: 255, default: "", null: false
+    t.string "password", default: "", null: false
     t.boolean "admin", default: false, null: false
     t.boolean "disabled", default: false
     t.datetime "created_at", null: false
@@ -139,6 +140,7 @@ ActiveRecord::Schema.define(version: 20180316051335) do
     t.string "token"
     t.string "twitter_account", limit: 15
     t.index ["email"], name: "idx_username_ukey", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 

@@ -16,13 +16,14 @@ require 'securerandom'
 #  updated_at     :datetime
 #  object_key     :string(255)      default("")
 #  extension      :string(10)       default(""), not null
-#  convert_status :integer          default(0)
+#  convert_status :integer          default("not_converted")
 #  total_view     :integer          default(0), not null
 #  page_view      :integer          default(0)
 #  download_count :integer          default(0), not null
 #  embedded_view  :integer          default(0), not null
 #  num_of_pages   :integer          default(0)
 #  comments_count :integer          default(0), not null
+#  private        :boolean          default(FALSE), not null
 #
 
 class Slide < ApplicationRecord
@@ -48,7 +49,7 @@ class Slide < ApplicationRecord
 
   enum convert_status: { not_converted: 0, converted: 100, convert_error: -1 }
 
-  scope :published, -> { where('convert_status = ?', convert_statuses[:converted]) }
+  scope :published, -> { where('convert_status = ? and private != 1', convert_statuses[:converted]) }
   scope :failed, -> { where('convert_status != ?', convert_statuses[:converted]) }
   scope :latest, -> { order('created_at desc') }
   scope :popular, -> { order('total_view desc') }

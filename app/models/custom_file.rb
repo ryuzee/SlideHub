@@ -2,7 +2,7 @@
 #
 # Table name: custom_files
 #
-#  id          :integer          not null, primary key
+#  id          :bigint(8)        not null, primary key
 #  path        :string(255)      not null
 #  description :string(255)
 #

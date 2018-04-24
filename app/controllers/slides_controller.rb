@@ -59,7 +59,7 @@ class SlidesController < ApplicationController
 
   def create
     key = params[:slide][:object_key]
-    slide_params = params.require(:slide).permit(:name, :description, :object_key, :downloadable, :category_id, :tag_list)
+    slide_params = params.require(:slide).permit(:name, :description, :object_key, :downloadable, :category_id, :tag_list, :private)
     @slide = Slide.new(slide_params)
     @slide.user_id = current_user.id
     if @slide.save
@@ -76,7 +76,7 @@ class SlidesController < ApplicationController
   end
 
   def update
-    slide_params = params.require(:slide).permit(:name, :description, :object_key, :downloadable, :category_id, :tag_list, :convert_status)
+    slide_params = params.require(:slide).permit(:name, :description, :object_key, :downloadable, :category_id, :tag_list, :convert_status, :private)
 
     @slide.assign_attributes(slide_params)
     if @slide.update_attributes(slide_params)

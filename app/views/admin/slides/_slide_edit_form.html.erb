@@ -150,6 +150,15 @@ $(function(){
     </div>
     <%= f.error_span(:tag_list) %>
   </div>
+  <div class="control-group">
+    <%= f.label :private, :class => 'control-label' %>
+    <div class="controls checkbox">
+      <label>
+        <%= f.check_box :private %><%= t('activerecord.attributes.slide.private') %>
+      </label>
+    </div>
+    <%= f.error_span(:private) %>
+  </div>
   <br clear="all" />
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
