@@ -12,13 +12,14 @@
 #  updated_at     :datetime
 #  object_key     :string(255)      default("")
 #  extension      :string(10)       default(""), not null
-#  convert_status :integer          default(0)
+#  convert_status :integer          default("not_converted")
 #  total_view     :integer          default(0), not null
 #  page_view      :integer          default(0)
 #  download_count :integer          default(0), not null
 #  embedded_view  :integer          default(0), not null
 #  num_of_pages   :integer          default(0)
 #  comments_count :integer          default(0), not null
+#  private        :boolean          default(FALSE), not null
 #
 
 require 'rails_helper'

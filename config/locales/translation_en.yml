@@ -93,6 +93,7 @@ en:
         user: :activerecord.models.user
         user_id: "User ID"
         num_of_pages: "Pages"
+        private: "Private mode"
 
       tag:
         name: "Name"
