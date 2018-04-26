@@ -25,10 +25,12 @@ jobs:
 
     steps:
       - checkout
+      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS/rspec
       - run: sudo npm install -g bower
-      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-      - run: sudo rm -rf /home/travis
-      - run: sudo ln -s /home/ubuntu /home/travis
+      - run: sudo apt-get install -y libmagic-dev
+      - run: cd /tmp && wget --tries 3 -O freetds-1.00.15.tar.gz "ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.00.15.tar.gz" && tar -xzvf freetds-1.00.15.tar.gz && cd freetds-1.00.15 && ./configure && make && sudo make install
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run: chmod +x ./cc-test-reporter
 
       - restore_cache:
           keys:
@@ -38,12 +40,7 @@ jobs:
           - v1-dep-master-
           - v1-dep-
 
-      - run: sudo apt-get install -y libmagic-dev
-      - run: cd /tmp && wget --tries 3 -O freetds-1.00.15.tar.gz "ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.00.15.tar.gz" && tar -xzvf freetds-1.00.15.tar.gz && cd freetds-1.00.15 && ./configure && make && sudo make install
-      - run: echo -e "export RAILS_ENV=test\nexport RACK_ENV=test" >> $BASH_ENV
       - run: 'bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3 '
-      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-      - run: chmod +x ./cc-test-reporter
 
       - save_cache:
           key: v1-dep-{{ .Branch }}-{{ epoch }}
@@ -62,7 +59,7 @@ jobs:
       - run: bundle exec rake db:create db:migrate
       - run: ./cc-test-reporter before-build
       - run: bower install
-      - run: mkdir -p $CIRCLE_TEST_REPORTS/rspec
+
       - run:
           command: bundle exec rspec --color --require spec_helper --format documentation --format RspecJunitFormatter --out $CIRCLE_TEST_REPORTS/rspec/rspec.xml --format progress spec
           environment:
@@ -73,8 +70,8 @@ jobs:
       - run: ./cc-test-reporter upload-coverage
 
       - store_test_results:
-          path: /tmp/circleci-test-results
+          path: $CIRCLE_TEST_REPORTS
       - store_artifacts:
-          path: /tmp/circleci-artifacts
+          path: $CIRCLE_ARTIFACTS
       - store_artifacts:
-          path: /tmp/circleci-test-results
+          path: $CIRCLE_TEST_REPORTS
