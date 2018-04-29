@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1.6'
+gem 'rails', '5.2'
 # See https://qiita.com/shinichinomura/items/41e03d7e4fa56841e654
 gem 'json', '~> 1.8.6'
 # Use SCSS for stylesheets
@@ -24,9 +24,12 @@ gem 'activerecord-session_store'
 gem 'sqlite3'
 # Use mysql
 gem 'mysql2', '0.4.10'
+
+# Commented out because gem for rails 5.2 is not released yet...
 # Use SQLServer
-gem 'activerecord-sqlserver-adapter'
-gem 'tiny_tds'
+# gem 'activerecord-sqlserver-adapter'
+# gem 'tiny_tds'
+
 # Apply bootstrap
 # gem 'less-rails'
 # See https://github.com/metaskills/less-rails/issues/122
