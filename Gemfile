@@ -56,7 +56,8 @@ gem 'omniauth-twitter'
 gem 'php-serialization'
 # Manage Tags
 # https://github.com/mbleigh/acts-as-taggable-on/issues/808
-gem 'acts-as-taggable-on', git: 'https://github.com/mbleigh/acts-as-taggable-on.git'
+# gem 'acts-as-taggable-on', git: 'https://github.com/mbleigh/acts-as-taggable-on.git'
+gem 'acts-as-taggable-on', git: 'https://github.com/Fodoj/acts-as-taggable-on', branch: 'rails-5.2'
 # Complicated Search
 gem 'ransack'
 # Manage Title and meta tags

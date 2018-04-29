@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/Fodoj/acts-as-taggable-on
+  revision: 3160a13506bcb93fde95c9b77424c32afbcb6385
+  branch: rails-5.2
+  specs:
+    acts-as-taggable-on (5.0.0)
+      activerecord (>= 5.0)
+      rake
+
+GIT
   remote: https://github.com/MustafaZain/less-rails.git
   revision: 946213803a5b274260dad17526eb201230e4a761
   specs:
@@ -7,13 +16,6 @@ GIT
       less (~> 2.6.0)
       sprockets (> 2, < 4)
       tilt
-
-GIT
-  remote: https://github.com/mbleigh/acts-as-taggable-on.git
-  revision: 4d9a10c25e106bd2467662baea58510a17809ca2
-  specs:
-    acts-as-taggable-on (5.0.0)
-      activerecord (>= 4.2.8)
 
 GIT
   remote: https://github.com/ryuzee/azure-contrib.git

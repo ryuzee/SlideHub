@@ -31,6 +31,8 @@ module SlideHub
     config.assets.digest = true
     config.public_file_server.enabled
 
+    config.active_record.sqlite3.represent_boolean_as_integer = true
+
     # Do not swallow errors in after_commit/after_rollback callbacks.
     # config.active_record.raise_in_transactional_callbacks = true
 
