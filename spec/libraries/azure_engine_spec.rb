@@ -75,11 +75,13 @@ module Azure
     end
   end
 
-  module Contrib
-    module Auth
-      class DummySharedAccessSignature
-        def sign
-          'https://signed.example.com'
+  module Storage
+    module Core
+      module Auth
+        class DummySharedAccessSignature
+          def signed_uri(a, b, c)
+            'https://signed.example.com'
+          end
         end
       end
     end
@@ -151,7 +153,7 @@ describe 'SlideHub::Cloud::Engine::Azure' do
   describe 'Blob Storage' do
     before do
       allow(Azure::Blob::BlobService).to receive(:new).and_return(Azure::Blob::DummyBlobService.new)
-      allow(Azure::Contrib::Auth::SharedAccessSignature).to receive(:new).and_return(Azure::Contrib::Auth::DummySharedAccessSignature.new)
+      allow(Azure::Storage::Core::Auth::SharedAccessSignature).to receive(:new).and_return(Azure::Storage::Core::Auth::DummySharedAccessSignature.new)
     end
 
     it 'succeeds to upload files' do
