@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.2'
-# See https://qiita.com/shinichinomura/items/41e03d7e4fa56841e654
-gem 'json', '~> 1.8.6'
+gem 'json'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.7'
 # Use Uglifier as compressor for JavaScript assets
