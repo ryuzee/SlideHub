@@ -79,7 +79,7 @@ module Azure
     module Core
       module Auth
         class DummySharedAccessSignature
-          def signed_uri(a, b, c)
+          def signed_uri(uri, flag, service)
             'https://signed.example.com'
           end
         end
