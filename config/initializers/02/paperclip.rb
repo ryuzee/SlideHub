@@ -22,7 +22,7 @@ if CloudConfig.service_name == 'azure'
   Paperclip::Attachment.default_options[:path] = ':class/:attachment/:id/:style/:filename'
   Paperclip::Attachment.default_options[:azure_credentials] = {
     storage_account_name: SlideHub::Cloud::Engine::Azure.config.azure_storage_account_name,
-    access_key:           SlideHub::Cloud::Engine::Azure.config.azure_storage_access_key,
+    storage_access_key:   SlideHub::Cloud::Engine::Azure.config.azure_storage_access_key,
     container:            SlideHub::Cloud::Engine::Azure.config.image_bucket_name,
   }
 end

@@ -846,10 +846,11 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
-    paperclip-azure (0.3.0)
-      addressable
-      azure
-      hashie
+    paperclip-azure (1.0.4)
+      addressable (~> 2.5)
+      azure (~> 0.7)
+      azure-storage (~> 0.12)
+      hashie (~> 3.5)
     parallel (1.12.1)
     parser (2.5.1.0)
       ast (~> 2.4.0)
