@@ -1074,6 +1074,7 @@ DEPENDENCIES
   acts-as-taggable-on!
   annotate
   aws-sdk (~> 3)
+  aws-sdk-s3
   azure
   azure-storage
   better_errors

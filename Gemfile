@@ -63,16 +63,12 @@ gem 'ransack'
 # Manage Title and meta tags
 gem 'meta-tags'
 gem 'sitemap_generator'
-# AWS!!
-# gem 'aws-sdk', '~> 2.6'
-# gem 'aws-sdk-core'
-# gem 'aws-sdk-resources'
-
+# AWS
 gem 'aws-sdk', '~> 3'
-# gem "aws-sdk-s3", require: false
+gem 'aws-sdk-s3'
 # Azure
 gem 'azure'
-gem "azure-storage"
+gem 'azure-storage'
 # Find file type
 gem 'ruby-filemagic'
 # Handle images
