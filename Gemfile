@@ -81,7 +81,7 @@ gem 'counter_culture'
 gem 'unicorn'
 # Datetime Picker for Bootstrap3
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
-gem 'momentjs-rails', '~> 2.17.1'
+gem 'momentjs-rails'
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
 # Upload images to Cloud

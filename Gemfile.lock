@@ -1108,7 +1108,7 @@ DEPENDENCIES
   launchy
   less-rails!
   meta-tags
-  momentjs-rails (~> 2.17.1)
+  momentjs-rails
   mysql2 (= 0.4.10)
   non-stupid-digest-assets
   omniauth
