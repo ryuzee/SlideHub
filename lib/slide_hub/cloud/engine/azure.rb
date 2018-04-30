@@ -1,6 +1,8 @@
 require 'azure'
-require 'azure-contrib'
+# require 'azure-contrib'
 require 'json'
+require "azure/storage"
+require "azure/storage/core/auth/shared_access_signature"
 
 module SlideHub
   module Cloud
@@ -153,14 +155,18 @@ module SlideHub
           uri = bs.generate_uri Addressable::URI.escape("#{@config.bucket_name}/#{blob_name}"), {}
           uri.scheme = 'https'
 
-          signer = ::Azure::Contrib::Auth::SharedAccessSignature.new(uri, {
-            resource:    'b',
+          signer = ::Azure::Storage::Core::Auth::SharedAccessSignature.new(
+            @config.azure_storage_account_name,
+            @config.azure_storage_access_key)
+
+          url = signer.signed_uri(
+            uri,
+            false,
+            service:    'b',
             permissions: permissions,
             start:       start_time.utc.iso8601,
             expiry:      expiration_time.utc.iso8601,
-          }, ::Azure.config.storage_account_name)
-
-          url = signer.sign
+          ).to_s
           url
         end
       end

@@ -57,7 +57,7 @@ gem 'php-serialization'
 # Manage Tags
 # https://github.com/mbleigh/acts-as-taggable-on/issues/808
 # gem 'acts-as-taggable-on', git: 'https://github.com/mbleigh/acts-as-taggable-on.git'
-gem 'acts-as-taggable-on', git: 'https://github.com/Fodoj/acts-as-taggable-on', branch: 'rails-5.2'
+gem 'acts-as-taggable-on', git: 'https://github.com/Fodoj/acts-as-taggable-on' #, branch: 'rails-5.2'
 # Complicated Search
 gem 'ransack'
 # Manage Title and meta tags
@@ -69,12 +69,10 @@ gem 'sitemap_generator'
 # gem 'aws-sdk-resources'
 
 gem 'aws-sdk', '~> 3'
+# gem "aws-sdk-s3", require: false
 # Azure
-gem 'azure', '= 0.7.6'
-# gem 'azure-contrib', git: 'https://github.com/dmichael/azure-contrib.git'
-gem 'azure-contrib', git: 'https://github.com/ryuzee/azure-contrib.git', ref: 'b74076c'
-gem 'azure-core', '= 0.1.5'
-# gem 'azure-storage', '~> 0.12.0'
+gem 'azure'
+gem "azure-storage"
 # Find file type
 gem 'ruby-filemagic'
 # Handle images
@@ -99,9 +97,6 @@ gem 'reserved_word'
 gem 'yaml_db'
 # i18n for enum
 gem 'enum_help'
-
-#gem "aws-sdk-s3", require: false
-#gem "azure-storage", require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,11 +1,9 @@
 GIT
   remote: https://github.com/Fodoj/acts-as-taggable-on
-  revision: 3160a13506bcb93fde95c9b77424c32afbcb6385
-  branch: rails-5.2
+  revision: 4d9a10c25e106bd2467662baea58510a17809ca2
   specs:
     acts-as-taggable-on (5.0.0)
-      activerecord (>= 5.0)
-      rake
+      activerecord (>= 4.2.8)
 
 GIT
   remote: https://github.com/MustafaZain/less-rails.git
@@ -16,17 +14,6 @@ GIT
       less (~> 2.6.0)
       sprockets (> 2, < 4)
       tilt
-
-GIT
-  remote: https://github.com/ryuzee/azure-contrib.git
-  revision: b74076c225868854edc45b591f993859c21c4c33
-  ref: b74076c
-  specs:
-    azure-contrib (0.1.0)
-      addressable
-      azure
-      celluloid (~> 0.17.3)
-      hashie
 
 GEM
   remote: https://rubygems.org/
@@ -663,6 +650,11 @@ GEM
       faraday (~> 0.9)
       faraday_middleware (~> 0.10)
       nokogiri (~> 1.6)
+    azure-storage (0.15.0.preview)
+      azure-core (~> 0.1)
+      faraday (~> 0.9)
+      faraday_middleware (~> 0.10)
+      nokogiri (~> 1.6, >= 1.6.8)
     bcrypt (3.1.11)
     better_errors (2.4.0)
       coderay (>= 1.0.0)
@@ -688,23 +680,6 @@ GEM
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
       xpath (~> 3.1)
-    celluloid (0.17.3)
-      celluloid-essentials
-      celluloid-extras
-      celluloid-fsm
-      celluloid-pool
-      celluloid-supervision
-      timers (>= 4.1.1)
-    celluloid-essentials (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-extras (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-fsm (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-pool (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-supervision (0.20.6)
-      timers (>= 4.1.1)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     choice (0.2.0)
@@ -785,7 +760,6 @@ GEM
     hashery (2.1.2)
     hashie (3.5.7)
     hirb (0.7.3)
-    hitimes (1.2.6)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     i18n_generators (2.2.0)
@@ -1046,8 +1020,6 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    timers (4.1.2)
-      hitimes
     ttfunk (1.5.1)
     turbolinks (5.1.1)
       turbolinks-source (~> 5.1)
@@ -1102,9 +1074,8 @@ DEPENDENCIES
   acts-as-taggable-on!
   annotate
   aws-sdk (~> 3)
-  azure (= 0.7.6)
-  azure-contrib!
-  azure-core (= 0.1.5)
+  azure
+  azure-storage
   better_errors
   binding_of_caller
   bootstrap-will_paginate
