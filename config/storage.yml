@@ -1,0 +1,13 @@
+amazon:
+  service: S3
+  access_key_id: <%= ENV['OSS_AWS_ACCESS_ID'] ||= '' %>
+  secret_access_key: <%= ENV['OSS_AWS_SECRET_KEY'] ||= '' %>
+  region: <%= ENV['OSS_REGION'] ||= '' %>
+  bucket: <%= ENV['OSS_IMAGE_BUCKET_NAME'] ||= '' %>
+
+azure:
+  service: AzureStorage
+  path: ""
+  storage_account_name: <%= ENV['OSS_AZURE_STORAGE_ACCOUNT_NAME'] ||= '' %>
+  storage_access_key: <%= ENV['OSS_AZURE_STORAGE_ACCESS_KEY'] ||= '' %>
+  container: <%= ENV['OSS_AZURE_IMAGE_CONTAINER_NAME'] ||= '' %>
