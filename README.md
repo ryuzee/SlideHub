@@ -220,7 +220,7 @@ OSS_DB_NAME=[DB name for Prod] # Set openslideshare if using installer
 OSS_DB_USERNAME=[DB Username for Prod] # Set root if using installer
 OSS_DB_PASSWORD=[DB Password for Prod] # Set passw0rd if using installer
 OSS_DB_URL=[DB URL for Prod] # Set localhost if using installer
-OSS_DB_ENGINE=[DB Engine] # Default 'mysql'. You can set 'mysql' or 'sqlserver'
+OSS_DB_ENGINE=[DB Engine] # Default 'mysql2'. You can set 'mysql2' or 'sqlserver' (NOT 'mysql')
 OSS_DB_PORT=[DB Port] # Default 3306
 OSS_DB_USE_AZURE=[false|true] # If you are using Azure SQL Database, set true
 
