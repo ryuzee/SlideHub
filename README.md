@@ -157,6 +157,7 @@ $CONTAINER_ID=/usr/bin/docker run -d \
   --env OSS_SMTP_AUTH_METHOD=$OSS_SMTP_AUTH_METHOD \
   --env OSS_PRODUCTION_HOST=$OSS_PRODUCTION_HOST \
   --env OSS_ROOT_URL=$OSS_ROOT_URL \
+  --env RAILS_LOG_TO_STDOUT=1 \
 -P --name slidehub ryuzee/slidehub:latest`
 ```
 
@@ -201,6 +202,10 @@ OSS_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
 #### General Settings
 
 ```
+# Rails
+RAILS_ENV=[production|development]
+RAILS_LOG_TO_STDOUT=[1] # set the variable if you want the standard output
+
 # Mandatory
 OSS_SECRET_KEY_BASE=[Your Secret Key Base]
 
