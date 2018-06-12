@@ -31,7 +31,7 @@ after_fork do |_server, _worker|
 end
 
 # ログの出力
-unless ENV.has_key?('RAILS_LOG_TO_STDOUT')
+unless ENV.key?('RAILS_LOG_TO_STDOUT')
   stderr_path File.expand_path('log/unicorn.log', ENV['RAILS_ROOT'])
   stdout_path File.expand_path('log/unicorn.log', ENV['RAILS_ROOT'])
 end
