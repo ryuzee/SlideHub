@@ -28,16 +28,10 @@ namespace :docker do
 
   task :build do
     Dir.chdir("#{File.dirname(__FILE__)}/../../") do
-      cmd = "docker build --no-cache -q -t ryuzee/slidehub:latest . 2>/dev/null | awk '/Successfully built/{print $NF}'"
+      cmd = "docker build -q -t ryuzee/slidehub:#{SlideHub::VERSION} -t ryuzee/slidehub:latest . 2>/dev/null | awk '/Successfully built/{print $NF}'"
       o, e, _s = Open3.capture3(cmd)
       if o.chomp! == '' || e != ''
         raise 'Failed to build Docker image...'
-      end
-
-      cmd = "docker tag ryuzee/slidehub:latest ryuzee/slidehub:#{SlideHub::VERSION}"
-      o, e, _s = Open3.capture3(cmd)
-      if o.chomp! == '' || e != ''
-        raise 'Failed to add version tag to Docker image...'
       end
     end
   end
