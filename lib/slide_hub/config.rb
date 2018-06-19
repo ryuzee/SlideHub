@@ -8,7 +8,7 @@ module SlideHub
     attr_accessor :azure_storage_access_key, :azure_storage_account_name
 
     attr_accessor :facebook_app_id, :facebook_app_secret
-    attr_accessor :twitter_consumer_key, :twitter_consumer_secret
+    attr_accessor :twitter_consumer_key, :twitter_consumer_secret, :twitter_callback_url
 
     attr_accessor :from_email
     attr_accessor :smtp_server, :smtp_port, :smtp_auth_method, :smtp_username, :smtp_password
