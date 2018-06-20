@@ -273,6 +273,7 @@ Devise.setup do |config|
     config.omniauth(:twitter,
                     Rails.application.config.slidehub.twitter_consumer_key,
                     Rails.application.config.slidehub.twitter_consumer_secret,
+                    callback_url: Rails.application.config.slidehub.twitter_callback_url,
                     display: 'popup')
   end
 end

@@ -23,6 +23,7 @@ module SlideHub
     config.slidehub.facebook_app_secret = ENV['OSS_FACEBOOK_APP_SECRET']
     config.slidehub.twitter_consumer_key = ENV['OSS_TWITTER_CONSUMER_KEY']
     config.slidehub.twitter_consumer_secret = ENV['OSS_TWITTER_CONSUMER_SECRET']
+    config.slidehub.twitter_callback_url = ENV['OSS_TWITTER_CALLBACK_URL']
 
     # mail
     config.slidehub.from_email = ENV['OSS_FROM_EMAIL']
