@@ -23,7 +23,7 @@ module SlideHub
     end
 
     def twitter?
-      twitter_consumer_key.present? && twitter_consumer_secret.present?
+      twitter_consumer_key.present? && twitter_consumer_secret.present? && twitter_callback_url.present?
     end
 
     def mail_sender
