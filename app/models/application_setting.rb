@@ -17,19 +17,19 @@ class ApplicationSetting
               end
 
   @keys = [
-    "site.display_login_link",
-    "site.only_admin_can_upload",
-    "site.signup_enabled",
-    "site.name",
-    "site.header_inverse",
-    "custom_content.center_top",
-    "custom_content.center_bottom",
-    "custom_content.right_top",
-    "custom_content.header_menus",
-    "custom_content.css",
-    "site.favicon",
-    "site.footer",
-    "site.theme",
+    'site.display_login_link',
+    'site.only_admin_can_upload',
+    'site.signup_enabled',
+    'site.name',
+    'site.header_inverse',
+    'custom_content.center_top',
+    'custom_content.center_bottom',
+    'custom_content.right_top',
+    'custom_content.header_menus',
+    'custom_content.css',
+    'site.favicon',
+    'site.footer',
+    'site.theme'
   ]
 
   class << self
@@ -83,12 +83,11 @@ class ApplicationSetting
 
     def save_default
       @keys.each do |key|
-        unless Setting.exists?(var: key)
-          s = Setting.new
-          s.var = key
-          s.value = self[key]
-          s.save
-        end
+        next if Setting.exists?(var: key)
+        s = Setting.new
+        s.var = key
+        s.value = self[key]
+        s.save
       end
     end
   end
