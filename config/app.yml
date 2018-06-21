@@ -11,6 +11,7 @@ defaults: &defaults
     center_bottom: ""
     right_top: ""
     header_menus: "[]"
+    css: ""
 
 development:
   <<: *defaults
