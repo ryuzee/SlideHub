@@ -22,6 +22,10 @@ module SlideHub
               region: @config.region,
               credentials: Aws::Credentials.new(@config.aws_access_id, @config.aws_secret_key),
             })
+          else
+            Aws.config.update({
+              region: @config.region,
+            })
           end
         end
 
