@@ -11,7 +11,8 @@
 FactoryBot.define do
   factory :default_category, class: Category do
     id 1
-    name 'Category1'
-    initialize_with { Category.find_or_create_by(name: name) }
+    name_en 'Category1'
+    name_ja 'Category1'
+    initialize_with { Category.find_or_create_by(name_en: name_en) }
   end
 end
