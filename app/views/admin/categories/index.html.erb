@@ -1,4 +1,4 @@
-<h3><%= t(:categories) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<h3><%= t(:category) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
 
 <div class="panel panel-default">
   <!-- Table -->
@@ -6,9 +6,9 @@
     <thead>
       <tr>
         <th class="col-md-1"><%= t(:id) %></th>
-        <th class="col-md-4"><%= t(:name_en) %></th>
-        <th class="col-md-4"><%= t(:name_ja) %></th>
-        <th class="col-md-2"><%= t(:slide_count) %></th>
+        <th class="col-md-4"><%= t(:category_name_en) %></th>
+        <th class="col-md-4"><%= t(:category_name_ja) %></th>
+        <th class="col-md-2"><%= t(:number_of_slides) %></th>
         <th class="col-md-2"><%= t('command') %></th>
       </tr>
     </thead>

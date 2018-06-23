@@ -22,6 +22,8 @@ ja:
     attributes:
       category:
         name: "名"
+        name_en: "カテゴリ名(英語)"
+        name_ja: "カテゴリ名(日本語)"
 
       comment:
         comment: "コメント"
