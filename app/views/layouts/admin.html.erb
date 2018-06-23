@@ -104,6 +104,7 @@
             <li class="<%= 'active' if controller.controller_name == 'users' %>"><a href="<%= admin_users_path %>"><i class="fa fa-user"></i> <span><%= t(:user_list) %></span></a></li>
             <li class="<%= 'active' if controller.controller_name == 'site_settings' %>"><a href="<%= admin_site_settings_path %>"><i class="fa fa-cog"></i> <span><%= t(:site_settings) %></span></a></li>
             <li class="<%= 'active' if controller.controller_name == 'custom_contents' %>"><a href="<%= admin_custom_contents_path %>"><i class="fa fa-code"></i> <span><%= t(:custom_contents_settings) %></span></a></li>
+            <li class="<%= 'active' if controller.controller_name == 'categories' %>"><a href="<%= admin_categories_path %>"><i class="fa fa-code"></i> <span><%= t(:category_settings) %></span></a></li>
             <li class="<%= 'active' if controller.controller_name == 'pages' %>"><a href="<%= admin_pages_path %>"><i class="fa fa-file-text"></i> <span><%= t(:page_list) %></span></a></li>
             <li class="<%= 'active' if controller.controller_name == 'logs' %>"><a href="<%= admin_logs_index_path %>"><i class="fa fa-list"></i> <span><%= t(:logs) %></span></a></li>
             <li class="<%= 'active' if controller.controller_name == 'custom_files' %>"><a href="<%= admin_custom_files_path %>"><i class="fa fa-upload"></i> <span><%= t(:custom_files) %></span></a></li>
