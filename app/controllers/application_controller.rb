@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
 
     # :reek:FeatureEnvy { enabled: false }
     def set_locale
+      require Rails.root.join('lib', 'slide_hub', 'locale_util')
       I18n.locale = SlideHub::LocaleUtil.locale(request)
     end
 
