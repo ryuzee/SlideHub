@@ -4,7 +4,7 @@
   <% if @user.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
-        <h3 class="panel-title"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h3>
+        <h3 class="panel-title"><%= t('error_save_user', errors: @user.errors.count) %></h3>
       </div>
       <div class="panel-body">
         <ul>

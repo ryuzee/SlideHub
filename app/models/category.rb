@@ -11,7 +11,7 @@
 class Category < ApplicationRecord
   validates :name_en, presence: true, length: { maximum: 32 }
   validates :name_ja, presence: true, length: { maximum: 32 }
-  has_many :slides
+  has_many :slides, dependent: false
   def name
     if I18n.locale.to_s == 'ja'
       name_ja

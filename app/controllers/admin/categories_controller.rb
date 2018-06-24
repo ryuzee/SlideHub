@@ -10,7 +10,7 @@ module Admin
 
     def update
       @category.assign_attributes(category_params)
-      if @category.update_attributes(category_params)
+      if @category.update(category_params)
         redirect_to admin_categories_path, notice: t(:category_was_updated)
       else
         render :edit
