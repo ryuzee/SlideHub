@@ -18,9 +18,9 @@ describe 'Category' do
   describe 'appropriate name' do
     it 'can be returned' do
       category = create(:default_category)
-      expect(category.name).to eq("Category1")
+      expect(category.name).to eq('Category1')
       I18n.locale = :ja
-      expect(category.name).to eq("Category1_ja")
+      expect(category.name).to eq('Category1_ja')
     end
   end
 end
