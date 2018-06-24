@@ -26,6 +26,19 @@ module Admin
       end
     end
 
+    def new
+      @category = Category.new
+    end
+
+    def create
+      @category = Category.new(category_params)
+      if @category.save
+        redirect_to admin_categories_path, notice: t(:category_was_created)
+      else
+        render :new
+      end
+    end
+
     private
 
       def set_category
