@@ -1,6 +1,7 @@
 module Admin
   class CategoriesController < Admin::BaseController
     before_action :set_category, only: [:edit, :update, :destroy]
+    after_action :clear_cache
 
     def index
       @categories = Category.all.order(:id).includes(:slides)
@@ -47,6 +48,10 @@ module Admin
 
       def category_params
         params.require(:category).permit(:id, :name_en, :name_ja)
+      end
+
+      def clear_cache
+        Rails.cache.clear
       end
   end
 end
