@@ -1,0 +1,42 @@
+<h3><%= t(:edit_category) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+
+<%= form_for @category, :html => { :class => "form-horizontal category" }, :url => admin_categories_path do |f| %>
+  <% if @category.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= t('error_save_category', errors: @category.errors.count) %></h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+          <% @category.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name_en, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name_en, :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:name_en) %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :name_ja, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name_ja, :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:name_ja) %>
+  </div>
+
+  <br clear="all" />
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t("helpers.links.cancel"), admin_categories_path, :class => 'btn btn-default' %>
+
+<% end %>
+
+

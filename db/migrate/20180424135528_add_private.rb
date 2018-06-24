@@ -4,6 +4,6 @@ class AddPrivate < ActiveRecord::Migration[5.1]
   end
 
   def down
-    drop_column :slides, :private
+    remove_column :slides, :private
   end
 end

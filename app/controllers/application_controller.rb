@@ -15,16 +15,8 @@ class ApplicationController < ActionController::Base
 
     # :reek:FeatureEnvy { enabled: false }
     def set_locale
-      locale = locale_from_accept_language
-      I18n.locale = (I18n.available_locales.include?(locale.to_sym) ? locale.to_sym : I18n.default_locale)
-    end
-
-    def locale_from_accept_language
-      if request.env.key?('HTTP_ACCEPT_LANGUAGE')
-        request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
-      else
-        I18n.default_locale
-      end
+      require Rails.root.join('lib', 'slide_hub', 'locale_util')
+      I18n.locale = SlideHub::LocaleUtil.locale(request)
     end
 
     def set_category_data
