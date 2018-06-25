@@ -115,10 +115,8 @@
             <li class="treeview">
             <a href="#"><i class="fa fa-filter"></i> <span><%= t('activerecord.models.category') %></span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <% cache 'admin_categories', expires_in: 10.minutes, skip_digest: true do %>
                 <% @categories.each do |cat| %>
                   <li><%= link_to cat.name, category_path(cat.id) %></li>
-                <% end %>
                 <% end %>
               </ul>
             </li>
