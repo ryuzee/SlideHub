@@ -6,7 +6,7 @@ module SettingsHelper
     end
 
     if %w[site.theme].include?(var)
-      return form.select :value, [%w[default default], %w[dark dark], %w[white white]], {}, { class: 'form-control' }
+      return form.select :value, [%w[default default], %w[dark dark], %w[white white], %w[gray gray]], {}, { class: 'form-control' }
     end
 
     if %w[site.name site.favicon site.footer].include?(var)
