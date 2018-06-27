@@ -1,8 +1,11 @@
 <script type="text/javascript">
   $(document).ready(function(){
-    new Clipboard('#copy-to-clipboard');
+    var clipboard = new Clipboard('#copy-to-clipboard');
     $("#show_embedded").click(function(){
       $('.embedded_dialog').modal('show');
+    });
+    clipboard.on('success', function(e) {
+      e.clearSelection();
     });
   });
 </script>
