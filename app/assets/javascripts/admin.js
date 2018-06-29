@@ -16,4 +16,5 @@
 //= require admin-lte/dist/js/app.js
 //= require moment
 //= require moment/ja
+//= require clipboard/dist/clipboard.min
 //= require bootstrap-datetimepicker
