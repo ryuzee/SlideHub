@@ -1,4 +1,4 @@
-<h3><%= t(:edit_category) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<h3><%= t(:new_category) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
 
 <%= form_for @category, :html => { :class => "form-horizontal category" }, :url => admin_categories_path do |f| %>
   <% if @category.errors.any? %>

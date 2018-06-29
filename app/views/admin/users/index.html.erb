@@ -1,4 +1,4 @@
-<h3><%= t(:user_list) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<h3><%= t('activerecord.models.user') %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
 
 <%= search_form_for @search, url: admin_users_path, :html => { :class => "form-horizontal slide" } do |f| %>
 
@@ -73,8 +73,7 @@
 <%= render 'shared/reset' %>
 <%= render 'shared/datetimepicker' %>
 
-
-<div class="panel panel-default">
+<div class="box box-info">
   <!-- Table -->
   <table class="table table-striped table-bordered small">
     <thead>

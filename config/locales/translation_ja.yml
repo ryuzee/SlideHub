@@ -17,7 +17,7 @@ ja:
       rails_settings/settings: "設定/設定をレール"
       slide: "スライド"
       tag: "タグ"
-      user: "ユーザ"
+      user: "ユーザー"
 
     attributes:
       category:
