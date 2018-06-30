@@ -1,5 +1,9 @@
-<h3><%= t(:custom_contents) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<section class="content-header">
+<h1><%= t(:custom_contents) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h1>
+</section>
 
+<section class="content">
+<%= bootstrap_flash %>
 <%= form_tag update_admin_custom_contents_path, method: :post, class: 'form-horizontal slide' do %>
   <div class="box box-warning">
 
@@ -28,3 +32,4 @@
 
   <%= submit_tag t(:save_settings), class: 'btn btn-primary' %>
 <% end %>
+</section>

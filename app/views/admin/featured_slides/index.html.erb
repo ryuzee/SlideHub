@@ -1,6 +1,10 @@
-<h3><%= t(:featured_slides) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
-
+<section class="content-header">
+<h1><%= t(:featured_slides) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h1>
 <small><%= link_to t(:set_featured_slide), new_admin_featured_slide_path %></small>
+</section>
+
+<section class="content">
+<%= bootstrap_flash %>
 
 <div class="box box-info">
   <!-- Table -->
@@ -32,3 +36,4 @@
     </tbody>
   </table>
 </div>
+</section>

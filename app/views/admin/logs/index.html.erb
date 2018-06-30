@@ -1,4 +1,9 @@
-<h3><%= t(:logs) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<section class="content-header">
+<h1><%= t(:logs) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h1>
+</section>
+
+<section class="content">
+<%= bootstrap_flash %>
 
 <div class="box box-danger">
   <!-- Table -->
@@ -17,3 +22,4 @@
     </tbody>
   </table>
 </div>
+</section>

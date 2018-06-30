@@ -1,4 +1,10 @@
-<h3><%= t(:custom_pages) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<section class="content-header">
+<h1><%= t(:custom_pages) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h1>
+</section>
+
+
+<section class="content">
+<%= bootstrap_flash %>
 
 <%= form_for @custom_file, :multipart => true, :html => { :class => "form-horizontal slide" }, :url => "/admin/custom_files"  do |f| %>
 
@@ -17,3 +23,4 @@
   <%= f.submit t('add'), :class => 'btn btn-primary' %>
 
 <% end %>
+</section>

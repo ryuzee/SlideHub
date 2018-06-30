@@ -1,4 +1,9 @@
-<h3><%= t('activerecord.models.user') %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<section class="content-header">
+<h1><%= t('activerecord.models.user') %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h1>
+</section>
+
+<section class="content">
+<%= bootstrap_flash %>
 
 <%= search_form_for @search, url: admin_users_path, :html => { :class => "form-horizontal slide" } do |f| %>
 
@@ -118,3 +123,4 @@
 <div>
   <%= will_paginate @users, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
 </div>
+</section>

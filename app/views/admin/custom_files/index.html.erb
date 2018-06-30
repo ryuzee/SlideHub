@@ -1,7 +1,10 @@
-<h3><%= t(:custom_files) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
-
+<section class="content-header">
+<h1><%= t(:custom_files) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h1>
 <small><%= link_to t(:new_custom_file), new_admin_custom_file_path %></small>
+</section>
 
+<section class="content">
+<%= bootstrap_flash %>
 <div class="box box-warning">
 
   <!-- Table -->
@@ -35,6 +38,7 @@
     </tbody>
   </table>
 </div>
+</section>
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -44,3 +48,4 @@
     });
   });
 </script>
+

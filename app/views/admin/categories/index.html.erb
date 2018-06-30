@@ -1,6 +1,13 @@
-<h3><%= t('activerecord.models.category') %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<section class="content-header">
+<h1><%= t('activerecord.models.category') %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h1>
 
 <small><%= link_to t(:new_category), new_admin_category_path %></small>
+</section>
+
+<!-- Main content -->
+<section class="content">
+<!-- Your Page Content Here -->
+<%= bootstrap_flash %>
 
 <div class="box box-warning">
   <!-- Table -->
@@ -29,3 +36,4 @@
     </tbody>
   </table>
 </div>
+</section>

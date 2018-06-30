@@ -1,4 +1,9 @@
-<h3><%= t('custom_pages') %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<section class="content-header">
+<h1><%= t('custom_pages') %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h1>
+</section>
+
+<section class="content">
+<%= bootstrap_flash %>
 
 <small><%= link_to t(:new_page), new_admin_page_path %></small>
 
@@ -35,3 +40,5 @@
 <div>
   <%= will_paginate @pages, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
 </div>
+
+</section>
