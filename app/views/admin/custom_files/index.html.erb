@@ -1,10 +1,16 @@
 <section class="content-header">
-<h1><%= t(:custom_files) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h1>
-<small><%= link_to t(:new_custom_file), new_admin_custom_file_path %></small>
+<h1><%= t(:custom_files) %><small></small></h1>
+<ol class="breadcrumb">
+  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+  <li class="active"><%= link_to t(:custom_files), admin_custom_files_path %></li>
+</ol>
 </section>
 
 <section class="content">
 <%= bootstrap_flash %>
+
+<small><%= link_to t(:new_custom_file), new_admin_custom_file_path %></small>
+
 <div class="box box-warning">
 
   <!-- Table -->

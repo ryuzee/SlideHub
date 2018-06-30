@@ -1,13 +1,17 @@
 <section class="content-header">
-<h1><%= t('activerecord.models.category') %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h1>
-
-<small><%= link_to t(:new_category), new_admin_category_path %></small>
+<h1><%= t('activerecord.models.category') %><small></small></h1>
+<ol class="breadcrumb">
+  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+  <li class="active"><%= link_to t('activerecord.models.category'), admin_categories_path %></li>
+</ol>
 </section>
 
 <!-- Main content -->
 <section class="content">
 <!-- Your Page Content Here -->
 <%= bootstrap_flash %>
+
+<small><%= link_to t(:new_category), new_admin_category_path %></small>
 
 <div class="box box-warning">
   <!-- Table -->
