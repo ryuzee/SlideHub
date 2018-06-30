@@ -11,9 +11,18 @@
 <!-- Your Page Content Here -->
 <%= bootstrap_flash %>
 
-<small><%= link_to t(:new_category), new_admin_category_path %></small>
-
 <div class="box box-warning">
+  <div class="box-header">
+    <h3 class="box-title">&nbsp;</h3>
+    <div class="box-tools">
+      <div class="input-group input-group-sm text-right">
+        <div class="input-group-btn">
+          <%= link_to t(:new_category), new_admin_category_path, class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box-body">
   <!-- Table -->
   <table class="table table-striped table-bordered small">
     <thead>
@@ -39,5 +48,6 @@
       <% end %>
     </tbody>
   </table>
+  </div>
 </div>
 </section>
