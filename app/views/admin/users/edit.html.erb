@@ -1,4 +1,13 @@
-<h3><%= t(:edit_user) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<section class="content-header">
+<h1><%= t(:edit_user) %><small></small></h1>
+<ol class="breadcrumb">
+  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+  <li class="active"><%= link_to t('activerecord.models.user'), admin_users_path %></li>
+</ol>
+</section>
+
+<section class="content">
+<%= bootstrap_flash %>
 
 <%= form_for @user, :html => { :class => "form-horizontal user" }, :url => admin_user_path(@user.id) do |f| %>
   <% if @user.errors.any? %>
@@ -74,4 +83,4 @@
 
 <% end %>
 
-
+</section>

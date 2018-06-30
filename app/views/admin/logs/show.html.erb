@@ -1,9 +1,19 @@
-<h3><%= @path %>&nbsp;<%= t(:last_lines) %>&nbsp;&nbsp;<small><%= link_to(t(:download), admin_logs_download_path + "?path=#{@path}")%>&nbsp;&nbsp;<%= link_to t(:back_to_list), admin_logs_index_path %></small></h3>
+<section class="content-header">
+<h1><%= @path %>&nbsp;<%= t(:last_lines) %><small><%= link_to(t(:download), admin_logs_download_path + "?path=#{@path}")%></small></h1>
+<ol class="breadcrumb">
+  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+  <li class="active"><%= link_to t(:logs), admin_logs_index_path %></li>
+</ol>
+</section>
 
-<div class="panel panel-default">
+<section class="content">
+<%= bootstrap_flash %>
+
+<div class="box box-danger">
   <div class="panel-body">
     <% @result.each do |line| %>
     <%= raw line %><br />
     <% end %>
   </div>
 </div>
+</section>

@@ -1,4 +1,14 @@
-<h3><%= t(:edit_category) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<section class="content-header">
+<h1><%= t(:new_category) %><small></small></h1>
+<ol class="breadcrumb">
+  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+  <li class="active"><%= link_to t('activerecord.models.category'), admin_categories_path %></li>
+</ol>
+</section>
+
+<section class="content">
+
+<%= bootstrap_flash %>
 
 <%= form_for @category, :html => { :class => "form-horizontal category" }, :url => admin_categories_path do |f| %>
   <% if @category.errors.any? %>
@@ -39,4 +49,4 @@
 
 <% end %>
 
-
+</section>

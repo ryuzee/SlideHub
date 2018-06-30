@@ -1,4 +1,13 @@
-<h3><%= t(:featured_slides) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<section class="content-header">
+<h1><%= t(:featured_slides) %><small></small></h1>
+<ol class="breadcrumb">
+  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+  <li class="active"><%= link_to t(:featured_slides), admin_featured_slides_path %></li>
+</ol>
+</section>
+
+<section class="content">
+<%= bootstrap_flash %>
 
 <%= form_for @featured_slide, :html => { :class => "form-horizontal slide" }, :url => admin_featured_slides_path  do |f| %>
 
@@ -15,3 +24,4 @@
   <%= f.submit t('add'), :class => 'btn btn-primary' %>
 
 <% end %>
+</section>

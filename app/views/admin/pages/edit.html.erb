@@ -1,4 +1,13 @@
-<h3><%= t(:page) %>&nbsp;&nbsp;<small><%= link_to t(:back_to_dashboard), admin_dashboard_path %></small></h3>
+<section class="content-header">
+<h1><%= t(:page) %><small></small></h1>
+<ol class="breadcrumb">
+  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+  <li class="active"><%= link_to t(:custom_pages), admin_pages_path %></li>
+</ol>
+</section>
+
+<section class="content">
+<%= bootstrap_flash %>
 
 <%= form_for @page, :html => { :class => "form-horizontal page" }, :url => admin_page_path(@page.id) do |f| %>
 
@@ -40,3 +49,5 @@
   <%= f.submit t('update'), :class => 'btn btn-primary' %>
 
 <% end %>
+
+</section>
