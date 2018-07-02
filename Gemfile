@@ -93,7 +93,7 @@ gem 'activerecord-nulldb-adapter'
 # reserved words for username
 gem 'reserved_word'
 # dump database
-gem 'yaml_db', '~> 0.6.0'
+gem 'yaml_db'
 # i18n for enum
 gem 'enum_help'
 
