@@ -74,8 +74,6 @@ GEM
       activemodel (= 5.1.6)
       activesupport (= 5.1.6)
       arel (~> 8.0)
-    activerecord-nulldb-adapter (0.3.8)
-      activerecord (>= 2.0.0)
     activerecord-session_store (1.1.1)
       actionpack (>= 4.0)
       activerecord (>= 4.0)
@@ -484,7 +482,7 @@ GEM
       builder (~> 3.0)
     spring (2.0.2)
       activesupport (>= 4.2)
-    sprockets (3.7.1)
+    sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.2.1)
@@ -552,7 +550,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-nulldb-adapter
   activerecord-session_store
   activerecord-sqlserver-adapter
   acts-as-taggable-on!
@@ -623,7 +620,7 @@ DEPENDENCIES
   simplecov
   sitemap_generator
   spring
-  sprockets (= 3.7.1)
+  sprockets (= 3.7.2)
   sqlite3
   therubyracer (~> 0.12.3)
   tiny_tds

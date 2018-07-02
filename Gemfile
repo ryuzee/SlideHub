@@ -33,7 +33,7 @@ gem 'tiny_tds'
 # See https://qiita.com/Jey/items/f69e93755be8ec959124
 # twitter-bootstrap-rails depends on less-rails ~> 2.8. However this issue was resolved in 3.0...
 gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails.git'
-gem 'sprockets', '3.7.1'
+gem 'sprockets', '3.7.2'
 gem 'execjs'
 gem 'twitter-bootstrap-rails', '~> 4.0'
 # Paginate
@@ -88,8 +88,6 @@ gem 'non-stupid-digest-assets'
 # gem 'paperclip'
 gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git', ref: '915c904d9a1382f53f4dcc822878ebb7c2024bb6'
 gem 'paperclip-azure', '~> 0.3.0'
-# see http://blog.zeit.io/use-a-fake-db-adapter-to-play-nice-with-rails-assets-precompilation/
-gem 'activerecord-nulldb-adapter'
 # reserved words for username
 gem 'reserved_word'
 # dump database
