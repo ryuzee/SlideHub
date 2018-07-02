@@ -5,7 +5,14 @@ module Admin
     def index
       slide_search = SlideSearch.new(params[:q])
       @search = slide_search.search
-      @slides = slide_search.slides.latest.paginate(page: params[:page], per_page: 20)
+      respond_to do |format|
+        format.html do
+          @slides = slide_search.slides.latest.paginate(page: params[:page], per_page: 20)
+        end
+        format.csv do
+          @slides = slide_search.slides.latest
+        end
+      end
     end
 
     def edit; end

@@ -74,6 +74,9 @@
     <br clear="all" />
     <%= f.submit :class => 'btn btn-primary' %>&nbsp;&nbsp;
     <%= f.button t(:reset), :class => 'btn btn-default', :id => 'reset' %>
+    <span class="pull-right">
+      <a href="<%= admin_slides_path %>.csv?<%= request.query_string %>" class="btn btn-default">CSV</a>
+    </span>
   </div>
 </div>
 
