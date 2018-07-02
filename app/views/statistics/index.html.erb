@@ -1,6 +1,10 @@
 <% content_for :title, t(:my_statistics) %>
 
-<h3><%= t(:my_statistics) %></h3>
+<h3><%= t(:my_statistics) %>
+   <span class="pull-right">
+     <a href="<%= statistics_path %>.csv" class="btn btn-xs btn-default">CSV</a>
+   </span>
+</h3>
 
 <div class="panel panel-default">
   <!-- Table -->
