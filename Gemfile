@@ -33,7 +33,7 @@ gem 'tiny_tds'
 # See https://qiita.com/Jey/items/f69e93755be8ec959124
 # twitter-bootstrap-rails depends on less-rails ~> 2.8. However this issue was resolved in 3.0...
 gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails.git'
-gem 'sprockets', '3.7.1'
+gem 'sprockets', '3.7.2'
 gem 'execjs'
 gem 'twitter-bootstrap-rails', '~> 4.0'
 # Paginate
