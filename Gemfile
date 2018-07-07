@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '5.2'
-gem 'json'
+gem 'json', '~> 1.8'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.7'
 # Use Uglifier as compressor for JavaScript assets
@@ -54,8 +54,9 @@ gem 'omniauth-twitter'
 gem 'php-serialization'
 # Manage Tags
 # https://github.com/mbleigh/acts-as-taggable-on/issues/808
-# gem 'acts-as-taggable-on', git: 'https://github.com/mbleigh/acts-as-taggable-on.git'
-gem 'acts-as-taggable-on', git: 'https://github.com/Fodoj/acts-as-taggable-on' #, branch: 'rails-5.2'
+# gem 'acts-as-taggable-on', git: 'https://github.com/Fodoj/acts-as-taggable-on', branch: 'rails-5.2'
+gem 'acts-as-taggable-on', git: 'https://github.com/mbleigh/acts-as-taggable-on.git'
+
 # Complicated Search
 gem 'ransack'
 # Manage Title and meta tags
