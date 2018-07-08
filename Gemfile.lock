@@ -9,6 +9,17 @@ GIT
       tilt
 
 GIT
+  remote: https://github.com/kinkade/paperclip-azure
+  revision: baa18e615a038cf665623bbf68d500c402075695
+  branch: api_update_azure_storage
+  specs:
+    paperclip-azure (1.0.3.20170815092451)
+      addressable (~> 2.5)
+      azure (~> 0.7)
+      azure-storage (~> 0.12)
+      hashie (~> 3.5)
+
+GIT
   remote: https://github.com/matthewdunbar/activerecord-sqlserver-adapter.git
   revision: 551cedd84f2c4d1154e24d1457a59d68abe805ee
   specs:
@@ -854,11 +865,6 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
-    paperclip-azure (1.0.4)
-      addressable (~> 2.5)
-      azure (~> 0.7)
-      azure-storage (~> 0.12)
-      hashie (~> 3.5)
     parallel (1.12.1)
     parser (2.5.1.0)
       ast (~> 2.4.0)
@@ -1125,7 +1131,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-twitter
   paperclip
-  paperclip-azure
+  paperclip-azure!
   pdf-reader
   php-serialization
   rack-dev-mark
