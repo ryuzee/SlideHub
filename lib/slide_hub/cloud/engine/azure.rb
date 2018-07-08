@@ -1,6 +1,8 @@
 require 'azure'
-require 'azure-contrib'
+# require 'azure-contrib'
 require 'json'
+require 'azure/storage'
+require 'azure/storage/core/auth/shared_access_signature'
 
 module SlideHub
   module Cloud
@@ -82,12 +84,11 @@ module SlideHub
         def self.upload_files(container, files, prefix)
           bs = ::Azure::Blob::BlobService.new
           files.each do |f|
-            if File.exist?(f)
-              content = File.open(f, 'rb', &:read)
-              require 'mime/types'
-              content_type = MIME::Types.type_for(File.extname(f))[0].to_s
-              bs.create_block_blob(container, "#{prefix}/#{File.basename(f)}", content, { content_type: content_type })
-            end
+            next unless File.exist?(f)
+            content = File.open(f, 'rb', &:read)
+            require 'mime/types'
+            content_type = MIME::Types.type_for(File.extname(f))[0].to_s
+            bs.create_block_blob(container, "#{prefix}/#{File.basename(f)}", content, { content_type: content_type })
           end
         end
 
@@ -106,7 +107,7 @@ module SlideHub
           _blob, content = bs.get_blob(container, key)
           File.open(destination, 'wb') { |f| f.write(content) }
           true
-        rescue
+        rescue StandardError
           false
         end
 
@@ -153,14 +154,19 @@ module SlideHub
           uri = bs.generate_uri Addressable::URI.escape("#{@config.bucket_name}/#{blob_name}"), {}
           uri.scheme = 'https'
 
-          signer = ::Azure::Contrib::Auth::SharedAccessSignature.new(uri, {
-            resource:    'b',
+          signer = ::Azure::Storage::Core::Auth::SharedAccessSignature.new(
+            @config.azure_storage_account_name,
+            @config.azure_storage_access_key,
+          )
+
+          url = signer.signed_uri(
+            uri,
+            false,
+            service:    'b',
             permissions: permissions,
             start:       start_time.utc.iso8601,
             expiry:      expiration_time.utc.iso8601,
-          }, ::Azure.config.storage_account_name)
-
-          url = signer.sign
+          ).to_s
           url
         end
       end

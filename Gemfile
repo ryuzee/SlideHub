@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1.6'
-# See https://qiita.com/shinichinomura/items/41e03d7e4fa56841e654
-gem 'json', '~> 1.8.6'
+gem 'rails', '5.2'
+gem 'json', '~> 1.8'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.7'
 # Use Uglifier as compressor for JavaScript assets
@@ -24,9 +22,13 @@ gem 'activerecord-session_store'
 gem 'sqlite3'
 # Use mysql
 gem 'mysql2', '0.4.10'
+
+# Commented out because gem for rails 5.2 is not released yet...
 # Use SQLServer
-gem 'activerecord-sqlserver-adapter'
-gem 'tiny_tds'
+# gem 'activerecord-sqlserver-adapter'
+gem 'activerecord-sqlserver-adapter', git: 'https://github.com/matthewdunbar/activerecord-sqlserver-adapter.git'
+# gem 'tiny_tds'
+
 # Apply bootstrap
 # gem 'less-rails'
 # See https://github.com/metaskills/less-rails/issues/122
@@ -53,22 +55,20 @@ gem 'omniauth-twitter'
 gem 'php-serialization'
 # Manage Tags
 # https://github.com/mbleigh/acts-as-taggable-on/issues/808
+# gem 'acts-as-taggable-on', git: 'https://github.com/Fodoj/acts-as-taggable-on', branch: 'rails-5.2'
 gem 'acts-as-taggable-on', git: 'https://github.com/mbleigh/acts-as-taggable-on.git'
+
 # Complicated Search
 gem 'ransack'
 # Manage Title and meta tags
 gem 'meta-tags'
 gem 'sitemap_generator'
-# AWS!!
-gem 'aws-sdk', '~> 2.6'
-gem 'aws-sdk-core'
-gem 'aws-sdk-resources'
+# AWS
+gem 'aws-sdk', '~> 3'
+gem 'aws-sdk-s3'
 # Azure
-gem 'azure', '= 0.7.6'
-# gem 'azure-contrib', git: 'https://github.com/dmichael/azure-contrib.git'
-gem 'azure-contrib', git: 'https://github.com/ryuzee/azure-contrib.git', ref: 'b74076c'
-gem 'azure-core', '= 0.1.5'
-# gem 'azure-storage', '~> 0.12.0'
+gem 'azure'
+gem 'azure-storage'
 # Find file type
 gem 'ruby-filemagic'
 # Handle images
@@ -81,13 +81,15 @@ gem 'counter_culture'
 gem 'unicorn'
 # Datetime Picker for Bootstrap3
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
-gem 'momentjs-rails', '~> 2.17.1'
+gem 'momentjs-rails'
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
 # Upload images to Cloud
-# gem 'paperclip'
-gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git', ref: '915c904d9a1382f53f4dcc822878ebb7c2024bb6'
-gem 'paperclip-azure', '~> 0.3.0'
+gem 'paperclip'
+# https://github.com/supportify/paperclip-azure/pull/15
+# gem 'paperclip-azure'
+gem 'paperclip-azure', git: 'https://github.com/kinkade/paperclip-azure', branch: 'api_update_azure_storage'
+
 # reserved words for username
 gem 'reserved_word'
 # dump database
