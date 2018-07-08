@@ -86,8 +86,9 @@ gem 'momentjs-rails'
 gem 'non-stupid-digest-assets'
 # Upload images to Cloud
 gem 'paperclip'
+# https://github.com/supportify/paperclip-azure/pull/15
 # gem 'paperclip-azure'
-gem 'paperclip-azure', git: "https://github.com/kinkade/paperclip-azure", branch: "api_update_azure_storage"
+gem 'paperclip-azure', git: 'https://github.com/kinkade/paperclip-azure', branch: 'api_update_azure_storage'
 
 # reserved words for username
 gem 'reserved_word'
