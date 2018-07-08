@@ -9,6 +9,14 @@ GIT
       tilt
 
 GIT
+  remote: https://github.com/matthewdunbar/activerecord-sqlserver-adapter.git
+  revision: 551cedd84f2c4d1154e24d1457a59d68abe805ee
+  specs:
+    activerecord-sqlserver-adapter (5.2.0)
+      activerecord (~> 5.2.0)
+      tiny_tds
+
+GIT
   remote: https://github.com/mbleigh/acts-as-taggable-on.git
   revision: f6c4646c4fa1de70fc383bb752b7249f0adc8687
   specs:
@@ -1021,6 +1029,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    tiny_tds (2.1.2)
     ttfunk (1.5.1)
     turbolinks (5.1.1)
       turbolinks-source (~> 5.1)
@@ -1072,6 +1081,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-session_store
+  activerecord-sqlserver-adapter!
   acts-as-taggable-on!
   annotate
   aws-sdk (~> 3)

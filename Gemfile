@@ -26,6 +26,7 @@ gem 'mysql2', '0.4.10'
 # Commented out because gem for rails 5.2 is not released yet...
 # Use SQLServer
 # gem 'activerecord-sqlserver-adapter'
+gem 'activerecord-sqlserver-adapter', git: 'https://github.com/matthewdunbar/activerecord-sqlserver-adapter.git'
 # gem 'tiny_tds'
 
 # Apply bootstrap
