@@ -53,7 +53,7 @@ module SlideHub
         current_page = i + 1
         cmd = "cd #{dir} && pdftotext #{file} -f #{current_page} -l #{current_page} - > #{dir}/#{current_page}.txt"
         result = system(cmd)
-        if result && File.exists?("#{dir}/#{current_page}.txt")
+        if result && File.exist?("#{dir}/#{current_page}.txt")
           str = File.read("#{dir}/#{current_page}.txt")
           str.gsub!(/([\r|\n|\t| |　|\u{2028}]+)/, ' ')
         else
