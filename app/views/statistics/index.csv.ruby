@@ -1,6 +1,7 @@
 require 'csv'
-CSV.generate do |csv|
-  csv_column_names = [
+
+def csv_column_names
+  names = [
     t('activerecord.attributes.slide.id'),
     t('activerecord.attributes.slide.name'),
     'URL',
@@ -12,6 +13,10 @@ CSV.generate do |csv|
     t('activerecord.attributes.slide.created_at'),
     t('activerecord.attributes.slide.updated_at'),
   ]
+  names
+end
+
+CSV.generate do |csv|
   csv << csv_column_names
   @slides.each do |slide|
     csv_column_values = [

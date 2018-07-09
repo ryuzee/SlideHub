@@ -1,6 +1,6 @@
 module SlideHub
   class LogUtil
-    def self.escape_to_html(data)
+    def self.colors
       { 1 => :nothing,
         2 => :nothing,
         4 => :nothing,
@@ -20,7 +20,11 @@ module SlideHub
         44 => :nothing,
         45 => :nothing,
         46 => :nothing,
-        47 => :nothing }.each do |key, value|
+        47 => :nothing }
+    end
+
+    def self.escape_to_html(data)
+      self.colors.each do |key, value|
         if value != :nothing
           data.gsub!(/\e\[#{key}m/, "<span style=\"color:#{value}; font-weight:bold\">")
         else

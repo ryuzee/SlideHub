@@ -29,7 +29,7 @@ class ApplicationSetting
     'custom_content.css',
     'site.favicon',
     'site.footer',
-    'site.theme'
+    'site.theme',
   ]
 
   class << self

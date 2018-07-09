@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 namespace :develop do
   root = "#{File.dirname(__FILE__)}/../../"
 
@@ -18,5 +17,3 @@ namespace :develop do
     end
   end
 end
-
-# vim: filetype=ruby

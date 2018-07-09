@@ -48,8 +48,8 @@ class UsersController < ApplicationController
             owner(user_id).
             tag_counts_on(:tags).order('count DESC')
     respond_to do |format|
-      format.html{}
-      format.rss{}
+      format.html {}
+      format.rss {}
     end
   end
 
