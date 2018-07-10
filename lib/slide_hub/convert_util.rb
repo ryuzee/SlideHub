@@ -103,8 +103,8 @@ module SlideHub
         Open3.popen3(cmd) do |_i, o, e, w|
           out = o.read
           err = e.read
-          logger.info out if out.length > 0
-          logger.error err if err.length > 0
+          logger.info out unless out.empty?
+          logger.error err unless err.empty?
           return w.value.exitstatus.zero?
         end
       rescue StandardError => e
