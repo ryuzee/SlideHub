@@ -1,3 +1,5 @@
+require 'open3'
+
 module SlideHub
   class ConvertUtil
     attr_reader :logger
@@ -8,29 +10,25 @@ module SlideHub
 
     def rename_to_pdf(dir, file)
       cmd = "cd #{dir} && mv #{file} #{file}.pdf"
-      logger.info(cmd)
-      result = system(cmd)
+      result = exec_command(cmd)
       result
     end
 
     def pdf_to_ppm(dir, file)
       cmd = "cd #{dir} && pdftoppm #{file} slide"
-      logger.info(cmd)
-      result = system(cmd)
+      result = exec_command(cmd)
       result
     end
 
     def ppt_to_pdf(dir, file)
       cmd = "cd #{dir} && unoconv -f pdf -o #{file}.pdf #{file}"
-      logger.info(cmd)
-      result = system(cmd)
+      result = exec_command(cmd)
       result
     end
 
     def ppm_to_jpg(dir)
       cmd = "cd #{dir} && mogrify -format jpg slide*.ppm"
-      logger.info(cmd)
-      result = system(cmd)
+      result = exec_command(cmd)
       if result
         list = self.get_local_file_list(dir, '.jpg')
         list
@@ -62,8 +60,7 @@ module SlideHub
       page_count.times do |i|
         current_page = i + 1
         cmd = "cd #{dir} && pdftotext #{file} -f #{current_page} -l #{current_page} - > #{dir}/#{current_page}.txt"
-        logger.info(cmd)
-        result = system(cmd)
+        result = exec_command(cmd)
         if result && File.exist?("#{dir}/#{current_page}.txt")
           str = File.read("#{dir}/#{current_page}.txt")
           str.gsub!(/([\r|\n|\t| |　|\u{2028}]+)/, ' ')
@@ -98,5 +95,21 @@ module SlideHub
       end
       list.sort
     end
+
+    private
+
+      def exec_command(cmd)
+        logger.info(cmd)
+        Open3.popen3(cmd) do |_i, o, e, w|
+          out = o.read
+          err = e.read
+          logger.info out if out.length > 0
+          logger.error err if err.length > 0
+          return w.value.exitstatus.zero?
+        end
+      rescue StandardError => e
+        logger.error(e.to_s)
+        false
+      end
   end
 end
