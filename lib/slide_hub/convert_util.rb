@@ -1,25 +1,35 @@
 module SlideHub
   class ConvertUtil
+    attr_reader :logger
+
+    def initialize(current_logger)
+      @logger = current_logger
+    end
+
     def rename_to_pdf(dir, file)
       cmd = "cd #{dir} && mv #{file} #{file}.pdf"
+      logger.info(cmd)
       result = system(cmd)
       result
     end
 
     def pdf_to_ppm(dir, file)
       cmd = "cd #{dir} && pdftoppm #{file} slide"
+      logger.info(cmd)
       result = system(cmd)
       result
     end
 
     def ppt_to_pdf(dir, file)
       cmd = "cd #{dir} && unoconv -f pdf -o #{file}.pdf #{file}"
+      logger.info(cmd)
       result = system(cmd)
       result
     end
 
     def ppm_to_jpg(dir)
       cmd = "cd #{dir} && mogrify -format jpg slide*.ppm"
+      logger.info(cmd)
       result = system(cmd)
       if result
         list = self.get_local_file_list(dir, '.jpg')
@@ -52,6 +62,7 @@ module SlideHub
       page_count.times do |i|
         current_page = i + 1
         cmd = "cd #{dir} && pdftotext #{file} -f #{current_page} -l #{current_page} - > #{dir}/#{current_page}.txt"
+        logger.info(cmd)
         result = system(cmd)
         if result && File.exist?("#{dir}/#{current_page}.txt")
           str = File.read("#{dir}/#{current_page}.txt")
