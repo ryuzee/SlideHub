@@ -13,6 +13,7 @@ class ConvertProcedure
     @file_type = ''
     @slide_image_list = []
     @upload_file_list = []
+    @convert_util = SlideHub::ConvertUtil.new(logger)
   end
 
   def run
@@ -37,10 +38,11 @@ class ConvertProcedure
     attr_reader :work_dir
     attr_reader :object_key
     attr_reader :work_file
+    attr_reader :convert_util
 
     def save_file
       return false unless CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, object_key, "#{work_dir}/#{work_file}")
-      @file_type = SlideHub::ConvertUtil.new.get_slide_file_type("#{work_dir}/#{work_file}")
+      @file_type = convert_util.get_slide_file_type("#{work_dir}/#{work_file}")
       true
     end
 
@@ -49,17 +51,17 @@ class ConvertProcedure
       case @file_type
       when 'pdf'
         logger.info('Rename to PDF')
-        SlideHub::ConvertUtil.new.rename_to_pdf(work_dir, work_file)
+        convert_util.rename_to_pdf(work_dir, work_file)
         logger.info('Start converting from PDF to PPM')
-        SlideHub::ConvertUtil.new.pdf_to_ppm(work_dir, "#{work_file}.pdf")
+        convert_util.pdf_to_ppm(work_dir, "#{work_file}.pdf")
         true
       when 'ppt', 'pptx'
         logger.info('Start converting from PPT to PDF')
-        SlideHub::ConvertUtil.new.ppt_to_pdf(work_dir, work_file)
-        logger.info(SlideHub::ConvertUtil.new.get_local_file_list(work_dir, '').inspect)
+        convert_util.ppt_to_pdf(work_dir, work_file)
+        logger.info(convert_util.get_local_file_list(work_dir, '').inspect)
         logger.info('Start converting from PDF to PPM')
-        SlideHub::ConvertUtil.new.pdf_to_ppm(work_dir, "#{work_file}.pdf")
-        logger.info(SlideHub::ConvertUtil.new.get_local_file_list(work_dir, '').inspect)
+        convert_util.pdf_to_ppm(work_dir, "#{work_file}.pdf")
+        logger.info(convert_util.get_local_file_list(work_dir, '').inspect)
         true
       else
         false
@@ -68,22 +70,22 @@ class ConvertProcedure
 
     def convert_to_jpg
       logger.info('Start converting from PPM to JPG')
-      @slide_image_list = SlideHub::ConvertUtil.new.ppm_to_jpg(work_dir)
-      logger.info(SlideHub::ConvertUtil.new.get_local_file_list(work_dir, '').inspect)
+      @slide_image_list = convert_util.ppm_to_jpg(work_dir)
+      logger.info(convert_util.get_local_file_list(work_dir, '').inspect)
       @upload_file_list = @slide_image_list.dup
     end
 
     def convert_to_thumbnail
       logger.info('Generating thumbnails')
       logger.info(@slide_image_list.inspect)
-      thumbnail_list = SlideHub::ConvertUtil.new.jpg_to_thumbnail(@slide_image_list)
+      thumbnail_list = convert_util.jpg_to_thumbnail(@slide_image_list)
       thumbnail_list.each do |tm|
         @upload_file_list.push(tm)
       end if thumbnail_list.instance_of?(Array)
     end
 
     def convert_to_transcript
-      transcript = SlideHub::ConvertUtil.new.pdf_to_transcript(work_dir, "#{work_file}.pdf")
+      transcript = convert_util.pdf_to_transcript(work_dir, "#{work_file}.pdf")
       @upload_file_list.push(transcript) if transcript
     end
 
