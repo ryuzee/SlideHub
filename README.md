@@ -23,6 +23,7 @@ You can see other screenshot [here](docs/images/capture2.png).
 - RSS
 - Statistics
 - Transcript
+- API
 - Admin Dashboard to overview statistics and edit slides
 
 ## Requirements
