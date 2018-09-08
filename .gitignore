@@ -31,4 +31,4 @@ sitemap.xml.gz
 /public/assets
 docker-compose*prod.yml
 docker-compose*production.yml
-.idea/
+.idea
