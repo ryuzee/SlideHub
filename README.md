@@ -309,6 +309,19 @@ docker-compose run app bash -l -c 'bin/rails runner -e development "require \"./
 Default account is `admin@example.com` and the password is `passw0rd`.
 *You need to change this account's password after the first login.*
 
+## Run rubocop or other tools on Mac OS
+
+When running some commands in your MacOS, you need to install some dependencies for installing gem files.
+
+```
+brew install freetds
+brew install imagemagick@6
+brew link --force imagemagick@6
+brew install pkg-config
+brew install libmagic
+bundle
+```
+
 ## Contributing
 
 1. Fork the repository on Github
