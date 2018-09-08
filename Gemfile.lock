@@ -760,6 +760,9 @@ GEM
       safe_yaml (~> 1.0.0)
     crass (1.0.4)
     database_cleaner (1.7.0)
+    debase (0.2.2)
+      debase-ruby_core_source (>= 0.10.2)
+    debase-ruby_core_source (0.10.3)
     debug_inspector (0.0.3)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -1019,6 +1022,8 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-debug-ide (0.6.1)
+      rake (>= 0.8.1)
     ruby-filemagic (0.7.2)
     ruby-graphviz (1.2.3)
     ruby-progressbar (1.9.0)
@@ -1142,6 +1147,7 @@ DEPENDENCIES
   coffee-rails
   counter_culture
   database_cleaner
+  debase
   devise (= 4.4.3)
   devise-bootstrap-views (= 0.0.11)
   devise-i18n (~> 1.6)
@@ -1183,6 +1189,7 @@ DEPENDENCIES
   rspec-rails
   rspec_junit_formatter
   rubocop (~> 0.58)
+  ruby-debug-ide
   ruby-filemagic
   sass-rails (~> 5.0.7)
   sdoc
@@ -1205,4 +1212,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   1.16.1
+   1.16.3
