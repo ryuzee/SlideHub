@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2'
+gem 'rails', '5.2.1'
 gem 'json', '~> 1.8'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.7'
@@ -137,6 +137,7 @@ group :development do
   gem 'reek'
   # Static Analysis
   gem 'rubocop', '~> 0.58'
+  gem 'rubocop-rspec'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   # Include template path
