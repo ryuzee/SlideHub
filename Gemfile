@@ -42,7 +42,7 @@ gem 'twitter-bootstrap-rails', '~> 4.0'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 # Authentication
-gem 'devise', '4.4.3'
+gem 'devise', '4.5.0'
 gem 'devise-bootstrap-views', '0.0.11'
 gem 'devise-i18n', '~> 1.6'
 gem 'devise-i18n-views', '0.3.7'
