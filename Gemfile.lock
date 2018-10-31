@@ -1197,7 +1197,7 @@ DEPENDENCIES
   rmagick
   rspec-rails
   rspec_junit_formatter
-  rubocop (~> 0.59)
+  rubocop (~> 0.60)
   rubocop-rspec
   ruby-debug-ide
   ruby-filemagic
