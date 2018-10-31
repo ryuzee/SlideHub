@@ -957,7 +957,7 @@ GEM
       ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
-    rails_best_practices (1.19.3)
+    rails_best_practices (1.19.4)
       activesupport
       code_analyzer (>= 0.4.8)
       erubis
