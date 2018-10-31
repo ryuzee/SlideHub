@@ -781,7 +781,7 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    devise-bootstrap-views (0.0.11)
+    devise-bootstrap-views (1.1.0)
     devise-i18n (1.6.5)
       devise (>= 4.4)
     devise-i18n-views (0.3.7)
@@ -1158,7 +1158,7 @@ DEPENDENCIES
   database_cleaner
   debase
   devise (= 4.5.0)
-  devise-bootstrap-views (= 0.0.11)
+  devise-bootstrap-views (= 1.1.0)
   devise-i18n (~> 1.6)
   devise-i18n-views (= 0.3.7)
   enum_help
