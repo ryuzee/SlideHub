@@ -777,7 +777,7 @@ GEM
       responders
       warden (~> 1.2.3)
     devise-bootstrap-views (0.0.11)
-    devise-i18n (1.6.4)
+    devise-i18n (1.6.5)
       devise (>= 4.4)
     devise-i18n-views (0.3.7)
     diff-lcs (1.3)
