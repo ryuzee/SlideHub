@@ -7,7 +7,7 @@ amazon:
 
 azure:
   service: AzureStorage
-  path: ""
   storage_account_name: <%= ENV['OSS_AZURE_STORAGE_ACCOUNT_NAME'] ||= '' %>
   storage_access_key: <%= ENV['OSS_AZURE_STORAGE_ACCESS_KEY'] ||= '' %>
   container: <%= ENV['OSS_AZURE_IMAGE_CONTAINER_NAME'] ||= '' %>
+

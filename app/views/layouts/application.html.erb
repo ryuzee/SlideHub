@@ -64,7 +64,14 @@
           <% if user_signed_in? %>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="avatar20" aria-hidden="true"><%= image_tag(current_user.avatar.url(:thumb)) %></span>&nbsp;<%= current_user.email %><span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+              <span class="avatar20" aria-hidden="true">
+                <% if current_user.avatar.attached? %>
+                <%= image_tag(current_user.avatar.variant(resize: "32x32")) %>
+                <% else %>
+                <%= image_tag('avatar/thumb/missing.png') %>
+                <% end %>
+              </span>&nbsp;<%= current_user.email %><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <% if (ApplicationSetting['site.only_admin_can_upload']).to_i == 0 || current_user.admin == true %>
               <li><a href="<%= new_slide_path %>"><i class="fa fa-pencil"></i>&nbsp;<%= t 'upload' %>!!</a></li>

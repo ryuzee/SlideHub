@@ -1,7 +1,11 @@
 <div class="panel panel-default profile-sidebar">
   <div class="panel-body">
     <div class="profile-userpic">
-      <%= image_tag(user.avatar.url(:medium), class: 'img-responsive') %>
+      <% if user.avatar.attached?  %>
+      <%= image_tag(url_for(user.avatar), class: 'img-responsive') %>
+      <% else %>
+      <%= image_tag('avatar/medium/missing.png', class: 'img-responsive') %>
+      <% end %>
     </div>
     <div class="profile-usertitle">
       <div class="profile-usertitle-name">

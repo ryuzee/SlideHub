@@ -111,4 +111,28 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       end
     end
   end
+
+  describe '#update' do
+    let!(:default_user) { create(:default_user) }
+    before :each do
+      request.env['devise.mapping'] = Devise.mappings[:user]
+      sign_in default_user
+    end
+
+    it 'changes user attributes' do
+      put :update, params: { user: {email: 'user01new@example.com', biography: 'test', current_password: default_user.password } }
+      subject.current_user.reload
+      expect(assigns[:user]).not_to eq(be_new_record)
+      expect(subject.current_user.email).to eq 'user01new@example.com'
+      expect(subject.current_user.biography).to eq 'test'
+    end
+
+    it 'does not change user attributes because of lack of current_password' do
+      put :update, params: { user: {email: 'user01new@example.com', biography: 'test'} }
+      subject.current_user.reload
+      expect(assigns[:user]).not_to eq(be_new_record)
+      expect(subject.current_user.email).to eq 'user01@example.com'
+      expect(subject.current_user.biography).to eq 'Bio'
+    end
+  end
 end

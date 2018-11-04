@@ -168,6 +168,7 @@ describe 'User' do
     it 'is valid with email, username, password, display_name, biography' do
       user = User.new(success_data)
       expect(user.valid?).to eq(true)
+      expect(user.save).to eq(true)
     end
 
     it 'is invalid without email' do
