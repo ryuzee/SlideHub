@@ -7,6 +7,7 @@ if Rails.application.config.slidehub.azure?
     config.azure_storage_access_key = Rails.application.config.slidehub.azure_storage_access_key
     config.azure_storage_account_name = Rails.application.config.slidehub.azure_storage_account_name
   end
+  Rails.application.config.active_storage.service = :azure
 else
   SlideHub::Cloud::Engine::AWS.configure do |config|
     config.region = Rails.application.config.slidehub.region
@@ -18,6 +19,7 @@ else
     config.use_s3_static_hosting = Rails.application.config.slidehub.use_s3_static_hosting
     config.cdn_base_url = Rails.application.config.slidehub.cdn_base_url
   end
+  Rails.application.config.active_storage.service = :amazon
 end
 
 module CloudConfig

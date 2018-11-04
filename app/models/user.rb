@@ -34,6 +34,7 @@
 
 class User < ApplicationRecord
   attr_accessor :skip_password_validation
+  attr_accessor :current_password
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :omniauthable,
@@ -58,21 +59,22 @@ class User < ApplicationRecord
                               format: { with: VALID_TWITTER_ACCOUNT_REGEX }
 
   has_many :slides, dependent: :destroy
-  has_attached_file :avatar, styles: { medium: '192x192>', thumb: '100x100#' }, default_url: 'avatar/:style/missing.png'
-  validates_attachment_content_type :avatar, content_type: %r{\Aimage/.*\Z}
+  has_one_attached :avatar
 
   def password_required?
     return false if skip_password_validation
-    return true if provider.blank?
-    super && provider.blank?
+    return false unless provider.blank?
+    super
   end
 
   def update_with_password(params, *options)
-    if !password_required?
-      update_attributes(params, *options)
-    else
-      super
-    end
+    avatar.attach(params[:avatar]) if params.has_key?(:avatar)
+    super
+  end
+
+  def update_without_password(params, *options)
+    avatar.attach(params[:avatar]) if params.has_key?(:avatar)
+    super
   end
 
   def self.username_to_id(username)

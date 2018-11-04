@@ -12,7 +12,7 @@
         <%= f.label :email %>
         <%= f.email_field :email, autofocus: true, class: "form-control" %>
       </div>
-<% if f.object.password_required? %>
+<% if f.object.provider.blank? %>
       <div class="form-group">
         <%= f.label :password %> <i>(<%= t('.leave_blank_if_you_don_t_want_to_change_it', :default => "leave blank if you don't want to change it") %>)</i><br />
         <%= f.password_field :password, :autocomplete => "off", class: "form-control" %>
@@ -47,7 +47,11 @@
         <%= f.label :avatar %>
         <div class="row">
           <div class="col-md-1">
-            <%= image_tag(current_user.avatar.url(:thumb), :class => 'img-responsive') %>
+            <% if current_user.avatar.attached?  %>
+            <%= image_tag(url_for(current_user.avatar), :class => 'img-responsive') %>
+            <% else  %>
+            <%= image_tag('avatar/medium/missing.png', :class => 'img-responsive') %>
+            <% end %>
           </div>
           <div class="col-md-11">
             <%= f.file_field :avatar, class: 'form-control' %>
