@@ -12,6 +12,7 @@ module SettingsHelper
     if %w[site.name site.favicon site.footer].include?(var)
       return form.text_field :value, class: 'form-control'
     end
+
     form.text_area :value, class: 'form-control', size: '30x5'
   end
 end

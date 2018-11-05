@@ -21,6 +21,7 @@ module Admin
     def download
       path = params[:path]
       return redirect_to admin_logs_index_path, notice: t(:no_logs) unless @files.include?(path)
+
       stat = File.stat(path)
       send_file(path, filename: File.basename(path), length: stat.size)
     end

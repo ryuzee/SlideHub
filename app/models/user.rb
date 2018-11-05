@@ -45,14 +45,14 @@ class User < ApplicationRecord
   validates :biography, presence: true
   validates :biography, length: { maximum: 1024 }
 
-  VALID_USERNAME_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,30}[a-zA-Z0-9]\z/
+  VALID_USERNAME_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,30}[a-zA-Z0-9]\z/.freeze
   validates :username, uniqueness: true,
                        length: { minimum: 3, maximum: 32 },
                        format: { with: VALID_USERNAME_REGEX },
                        exclusion: { in: ReservedWord.list }
 
   # current twitter account length must be greater than 5...
-  VALID_TWITTER_ACCOUNT_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,15}[a-zA-Z0-9]\z/
+  VALID_TWITTER_ACCOUNT_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,15}[a-zA-Z0-9]\z/.freeze
   validates :twitter_account, allow_nil: true,
                               allow_blank: true,
                               length: { minimum: 1, maximum: 15 },
@@ -64,16 +64,17 @@ class User < ApplicationRecord
   def password_required?
     return false if skip_password_validation
     return false unless provider.blank?
+
     super
   end
 
   def update_with_password(params, *options)
-    avatar.attach(params[:avatar]) if params.has_key?(:avatar)
+    avatar.attach(params[:avatar]) if params.key?(:avatar)
     super
   end
 
   def update_without_password(params, *options)
-    avatar.attach(params[:avatar]) if params.has_key?(:avatar)
+    avatar.attach(params[:avatar]) if params.key?(:avatar)
     super
   end
 
@@ -94,13 +95,13 @@ class User < ApplicationRecord
 
   def self.find_for_facebook_oauth(auth)
     user = User.find_by(provider: auth.provider, uid: auth.uid)
-    user ||= User.create(username:     auth.extra.raw_info.username,
+    user ||= User.create(username: auth.extra.raw_info.username,
                          display_name: auth.extra.raw_info.name,
                          biography: '',
                          provider: auth.provider,
-                         uid:      auth.uid,
-                         email:    auth.info.email,
-                         token:    auth.credentials.token,
+                         uid: auth.uid,
+                         email: auth.info.email,
+                         token: auth.credentials.token,
                          twitter_account: '',
                          password: Devise.friendly_token[0, 20])
     user
@@ -108,12 +109,12 @@ class User < ApplicationRecord
 
   def self.find_for_twitter_oauth(auth)
     user = User.find_by(provider: auth.provider, uid: auth.uid)
-    user ||= User.create(username:     auth.info.nickname,
+    user ||= User.create(username: auth.info.nickname,
                          display_name: auth.info.name,
                          biography: auth.info.description,
                          provider: auth.provider,
-                         uid:      auth.uid,
-                         email:    '',
+                         uid: auth.uid,
+                         email: '',
                          twitter_account: auth.info.nickname,
                          password: Devise.friendly_token[0, 20])
     user
