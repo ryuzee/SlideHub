@@ -12,6 +12,15 @@
 </div>
 <% end %>
 
+<div class="row" id="latest">
+  <div class="col-md-12">
+    <%- model_class = Slide -%>
+    <h3><%=t :latest_slides %>&nbsp;&nbsp;<small><a href="<%= latest_index_path %>"><%= t :more_slides %></a></small></h3>
+    <% cache 'latest_slides', expires_in: 1.minutes, skip_digest: true do %>
+      <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.latest_slides %>
+    <% end %>
+  </div>
+</div>
 
 <div class="row" id="popular">
   <div class="col-md-12">
@@ -23,14 +32,6 @@
   </div>
 </div>
 
-<div class="row" id="latest">
-  <div class="col-md-12">
-    <%- model_class = Slide -%>
-    <h3><%=t :latest_slides %>&nbsp;&nbsp;<small><a href="<%= latest_index_path %>"><%= t :more_slides %></a></small></h3>
-    <% cache 'latest_slides', expires_in: 1.minutes, skip_digest: true do %>
-    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.latest_slides %>
-    <% end %>
-  </div>
-</div>
+
 
 <br />
