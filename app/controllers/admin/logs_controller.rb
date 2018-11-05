@@ -11,7 +11,7 @@ module Admin
 
       require 'io'
       require 'log_util'
-      open(@path) do |io|
+      File.open(@path) do |io|
         io.tail(300).each do |line|
           @result.push SlideHub::LogUtil.escape_to_html(line)
         end
