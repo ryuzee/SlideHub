@@ -84,6 +84,7 @@ class ApplicationSetting
     def save_default
       @keys.each do |key|
         next if Setting.exists?(var: key)
+
         s = Setting.new
         s.var = key
         s.value = self[key]

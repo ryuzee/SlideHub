@@ -22,7 +22,7 @@ module WebResource
         response = result.dup.force_encoding('utf-8')
         require 'php_serialization/unserializer'
         return PhpSerialization::Unserializer.new.run(response)
-      rescue
+      rescue StandardError
         return []
       end
     else
@@ -33,6 +33,7 @@ module WebResource
   # :reek:FeatureEnvy { enabled: false }
   def get_contents(location, limit = 10)
     raise ArgumentError, 'too many HTTP redirects' if limit.zero?
+
     uri = URI.parse(location)
     begin
       response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
@@ -48,7 +49,7 @@ module WebResource
       else
         false
       end
-    rescue
+    rescue StandardError
       false
     end
   end
