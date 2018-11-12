@@ -44,7 +44,7 @@ gem 'bootstrap-will_paginate'
 # Authentication
 gem 'devise', '4.5.0'
 gem 'devise-bootstrap-views', '0.0.11'
-gem 'devise-i18n', '~> 1.6'
+gem 'devise-i18n', '~> 1.7'
 gem 'devise-i18n-views', '0.3.7'
 gem 'omniauth'
 gem 'omniauth-facebook'
