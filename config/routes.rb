@@ -88,10 +88,6 @@ Rails.application.routes.draw do
     get 'override' => 'css#show'
   end
 
-  if Rails.env.production?
-    get '*unmatched_route', to: redirect('/'), via: :all
-  end
-
   # config/routes.rb
   Rails.application.routes.draw do
     root 'slides#index'
