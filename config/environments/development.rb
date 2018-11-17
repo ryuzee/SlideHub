@@ -9,9 +9,6 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
-  # Show full error reports.
-  config.consider_all_requests_local = true
-
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
@@ -83,8 +80,9 @@ Rails.application.configure do
 
   config.rack_dev_mark.enable = true
 
-  config.web_console.whitelisted_ips = %w[10.0.2.2 192.168.0.0/16 127.0.0.1]
+  # Show full error reports.
   config.consider_all_requests_local = true
+  config.web_console.whitelisted_ips = %w[10.0.2.2 192.168.0.0/16 127.0.0.1]
   BetterErrors::Middleware.allow_ip! '10.0.2.2'
   BetterErrors::Middleware.allow_ip! '127.0.0.1'
   BetterErrors::Middleware.allow_ip! '192.168.0.0/16'
