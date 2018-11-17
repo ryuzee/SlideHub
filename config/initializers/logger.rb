@@ -1,10 +1,10 @@
 # suppresses routing errors
 if Rails.env.production?
   class ActionDispatch::DebugExceptions
-    alias_method :old_log_error, :log_error
+    alias old_log_error log_error
     def log_error(env, wrapper)
-      if wrapper.exception.is_a?  ActionController::RoutingError
-        return
+      if wrapper.exception.is_a? ActionController::RoutingError
+        nil
       else
         old_log_error env, wrapper
       end
