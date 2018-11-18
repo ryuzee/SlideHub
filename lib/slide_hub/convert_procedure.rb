@@ -106,13 +106,17 @@ class ConvertProcedure
     end
 
     def update_database
-      tenants = Tenant.pluck(:name)
-      tenants.each do | tenant |
-        Apartment::Tenant.switch(tenant) do
+      if ENV.fetch('OSS_MULTI_TENANT') { false }
+        tenants = Tenant.pluck(:name)
+        tenants.each do | tenant |
+          Apartment::Tenant.switch(tenant) do
+            update_slide
+          end
+        end
+        Apartment::Tenant.reset do
           update_slide
         end
-      end
-      Apartment::Tenant.reset do
+      else
         update_slide
       end
     end

@@ -1,0 +1,45 @@
+<section class="content-header">
+<h1><%= t(:tenant) %><small></small></h1>
+<ol class="breadcrumb">
+  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+  <li class="active"><%= link_to t(:tenants), admin_tenants_path %></li>
+</ol>
+</section>
+
+<section class="content">
+<%= bootstrap_flash %>
+
+<%= form_for @tenant, :html => { :class => "form-horizontal tenant" }, :url => "/admin/tenants" do |f| %>
+
+    <% if @tenant.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= t('error_save_tenant', errors: @tenant.errors.count) %></h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @tenant.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+
+    <%= f.label t('activerecord.attributes.tenant.name'), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+
+    <%= f.error_span(:tenant_id) %>
+  </div>
+
+  <br clear="all" />
+
+  <%= f.submit t('add'), :class => 'btn btn-primary' %>
+
+<% end %>
+
+</section>
