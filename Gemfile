@@ -92,6 +92,8 @@ gem 'reserved_word'
 gem 'yaml_db'
 # i18n for enum
 gem 'enum_help'
+# Multi Tenant
+gem 'apartment'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

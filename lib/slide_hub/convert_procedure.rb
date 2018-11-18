@@ -106,10 +106,24 @@ class ConvertProcedure
     end
 
     def update_database
+      tenants = Tenant.pluck(:name)
+      tenants.each do | tenant |
+        Apartment::Tenant.switch(tenant) do
+          update_slide
+        end
+      end
+      Apartment::Tenant.reset do
+        update_slide
+      end
+    end
+
+    def update_slide
       slide = Slide.where('slides.object_key = ?', object_key).first
-      slide.converted!
-      slide.extension = ".#{@file_type}"
-      slide.num_of_pages = @slide_image_list.count
-      slide.save
+      if slide
+        slide.converted!
+        slide.extension = ".#{@file_type}"
+        slide.num_of_pages = @slide_image_list.count
+        slide.save
+      end
     end
 end
