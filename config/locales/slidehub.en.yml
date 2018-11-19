@@ -50,6 +50,7 @@ en:
   error_save_page: "%{errors} errors prohibited this page from being saved:"
   error_save_category: "%{errors} errors prohibited this category from being saved:"
   error_save_user: "%{errors} errors prohibited this user from being saved:"
+  error_save_tenant: "%{errors} errors prohibited this tenant from being saved:"
   featured_slides: "Featured Slides"
   featured_slide_was_deleted: "Featured Slide was successfully deleted"
   featured_slide_was_added: "Featured Slide was successfully added"

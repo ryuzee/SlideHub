@@ -50,6 +50,7 @@ ja:
   error_save_slide: "エラーが%{errors}個あるためスライドを保存できません。"
   error_save_page: "エラーが%{errors}個あるためページを保存できません。"
   error_save_user: "エラーが%{errors}個あるためユーザーを保存できません。"
+  error_save_tenant: "エラーが%{errors}個あるためテナントを保存できません。"
   featured_slides: "注目のスライド"
   featured_slide_was_deleted: "注目のスライドを削除しました"
   featured_slide_was_added: "注目のスライドを設定しました"
