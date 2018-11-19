@@ -111,8 +111,13 @@ end
 
 # Rails.application.config.middleware.use Apartment::Elevators::Domain
 # Rails.application.config.middleware.use Apartment::Elevators::Subdomain
-$LOAD_PATH << "#{Rails.root}/lib/ext"
-Apartment::Elevators::Subdomain.excluded_subdomains = ['www', 'admin', 'slide', 'slidehub', 'main']
+excluded_subdomains = ['www', 'admin', 'slide', 'slidehub', 'main']
+additional_str_subdomains = ENV.fetch('OSS_MULTI_TENANT_EXCLUDED_SUBDOMAINS') {''}
+additional_subdomains = additional_str_subdomains.split(',')
+additional_subdomains.each do |s|
+  excluded_subdomains.push(s) unless s.blank?
+end
+Apartment::Elevators::Subdomain.excluded_subdomains = excluded_subdomains
 Rails.application.config.middleware.insert_before Warden::Manager, Apartment::Elevators::Subdomain
 # Rails.application.config.middleware.use Apartment::Elevators::FirstSubdomain
 # Rails.application.config.middleware.use Apartment::Elevators::Host
