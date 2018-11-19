@@ -111,6 +111,7 @@ end
 
 # Rails.application.config.middleware.use Apartment::Elevators::Domain
 # Rails.application.config.middleware.use Apartment::Elevators::Subdomain
+$LOAD_PATH << "#{Rails.root}/lib/ext"
 Apartment::Elevators::Subdomain.excluded_subdomains = ['www', 'admin', 'slide', 'slidehub', 'main']
 Rails.application.config.middleware.insert_before Warden::Manager, Apartment::Elevators::Subdomain
 # Rails.application.config.middleware.use Apartment::Elevators::FirstSubdomain
