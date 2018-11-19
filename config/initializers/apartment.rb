@@ -1,4 +1,6 @@
-if ENV.fetch('OSS_MULTI_TENANT'){ false } then
+return unless ENV.fetch('OSS_MULTI_TENANT'){ '0' } == '1'
+return unless Rails.application.config.database_configuration[Rails.env]['adapter'] == 'mysql2'
+
 # You can have Apartment route to the appropriate Tenant by adding some Rack middleware.
 # Apartment can support many different "Elevators" that can take care of this routing to your data.
 # Require whichever Elevator you're using below or none if you have a custom one.
@@ -54,7 +56,7 @@ Apartment.configure do |config|
   # db:migrate の対象となるテナント
   config.tenant_names = lambda { Tenant.pluck :name }
   # テナント作成後に db:seed を実行する
-  config.seed_after_create = true unless Rails.env.test?
+  config.seed_after_create = true
 
   # PostgreSQL:
   #   Specifies whether to use PostgreSQL schemas or create a new database per Tenant.
@@ -64,7 +66,7 @@ Apartment.configure do |config|
   #
   # The default behaviour is true.
   #
-  # config.use_schemas = true
+  config.use_schemas = true
 
   #
   # ==> PostgreSQL only options
@@ -111,14 +113,7 @@ end
 
 # Rails.application.config.middleware.use Apartment::Elevators::Domain
 # Rails.application.config.middleware.use Apartment::Elevators::Subdomain
-excluded_subdomains = ['www', 'admin', 'slide', 'slidehub', 'main']
-additional_str_subdomains = ENV.fetch('OSS_MULTI_TENANT_EXCLUDED_SUBDOMAINS') {''}
-additional_subdomains = additional_str_subdomains.split(',')
-additional_subdomains.each do |s|
-  excluded_subdomains.push(s) unless s.blank?
-end
-Apartment::Elevators::Subdomain.excluded_subdomains = excluded_subdomains
+Apartment::Elevators::Subdomain.excluded_subdomains = Subdomain.list
 Rails.application.config.middleware.insert_before Warden::Manager, Apartment::Elevators::Subdomain
 # Rails.application.config.middleware.use Apartment::Elevators::FirstSubdomain
 # Rails.application.config.middleware.use Apartment::Elevators::Host
-end
