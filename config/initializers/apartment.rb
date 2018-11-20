@@ -117,3 +117,12 @@ Apartment::Elevators::Subdomain.excluded_subdomains = Subdomain.list
 Rails.application.config.middleware.insert_before Warden::Manager, Apartment::Elevators::Subdomain
 # Rails.application.config.middleware.use Apartment::Elevators::FirstSubdomain
 # Rails.application.config.middleware.use Apartment::Elevators::Host
+
+module ApartmentCache
+  private
+
+  def normalize_key(key, options)
+    "#{Apartment::Tenant.current}/#{super}"
+  end
+end
+ActiveSupport::Cache::Store.send :prepend, ApartmentCache
