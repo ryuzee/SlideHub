@@ -1,4 +1,4 @@
-return unless ENV.fetch('OSS_MULTI_TENANT'){ '0' } == '1'
+return unless ENV.fetch('OSS_MULTI_TENANT') { '0' } == '1'
 return unless Rails.application.config.database_configuration[Rails.env]['adapter'] == 'mysql2'
 
 # You can have Apartment route to the appropriate Tenant by adding some Rack middleware.
@@ -15,7 +15,6 @@ require 'apartment/elevators/subdomain'
 # Apartment Configuration
 #
 Apartment.configure do |config|
-
   # Add any models that you do not want to be multi-tenanted, but remain in the global (public) namespace.
   # A typical example would be a Customer or Tenant model that stores each Tenant's information.
   #
@@ -52,7 +51,7 @@ Apartment.configure do |config|
   # end
   #
   # 全てのテナントが共有するテーブル
-  config.excluded_models = %w{Tenant ActiveRecord::SessionStore::Session}
+  config.excluded_models = %w[Tenant ActiveRecord::SessionStore::Session]
   # db:migrate の対象となるテナント
   config.tenant_names = lambda { Tenant.pluck :name }
   # テナント作成後に db:seed を実行する
@@ -121,8 +120,8 @@ Rails.application.config.middleware.insert_before Warden::Manager, Apartment::El
 module ApartmentCache
   private
 
-  def normalize_key(key, options)
-    "#{Apartment::Tenant.current}/#{super}"
-  end
+    def normalize_key(key, options)
+      "#{Apartment::Tenant.current}/#{super}"
+    end
 end
 ActiveSupport::Cache::Store.send :prepend, ApartmentCache

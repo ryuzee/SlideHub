@@ -34,7 +34,7 @@ module Admin
     def destroy
       begin
         Apartment::Tenant.drop(@tenant.name)
-      rescue => e
+      rescue StandardError => e
         logger.warn(e)
       end
       @tenant.destroy
@@ -56,6 +56,7 @@ module Admin
         unless Rails.application.config.database_configuration[Rails.env]['adapter'] == 'mysql2'
           return redirect_to admin_dashboard_path, notice: t(:cannot_access_to_tenant)
         end
+
         current = Tenant.connection.current_database
         unless Tenant.find_by(name: current).nil?
           redirect_to admin_dashboard_path, notice: t(:cannot_access_to_tenant)
