@@ -28,11 +28,11 @@ namespace :docker do
 
   task :build do
     Dir.chdir("#{File.dirname(__FILE__)}/../../") do
-      if ENV.fetch('experiment'){ 0 } == 0
-        cmd = "docker build -q -t ryuzee/slidehub:#{SlideHub::VERSION} . 2>/dev/null | awk '/Successfully built/{print $NF}'"
-      else
-        cmd = "docker build -q -t ryuzee/slidehub:#{SlideHub::VERSION} -t ryuzee/slidehub:latest . 2>/dev/null | awk '/Successfully built/{print $NF}'"
-      end
+      cmd = if ENV.fetch('experiment') { 0 }.to_i.zero?
+              "docker build -q -t ryuzee/slidehub:#{SlideHub::VERSION} . 2>/dev/null | awk '/Successfully built/{print $NF}'"
+            else
+              "docker build -q -t ryuzee/slidehub:#{SlideHub::VERSION} -t ryuzee/slidehub:latest . 2>/dev/null | awk '/Successfully built/{print $NF}'"
+            end
       o, e, _s = Open3.capture3(cmd)
       if o.chomp! == '' || e != ''
         raise 'Failed to build Docker image...'
@@ -42,7 +42,7 @@ namespace :docker do
 
   task :push do
     Dir.chdir("#{File.dirname(__FILE__)}/../../") do
-      if ENV.fetch('experiment'){ 0 } == 0
+      if ENV.fetch('experiment') { 0 }.to_i.zero?
         cmd = 'docker push ryuzee/slidehub:latest'
         sh cmd
       end

@@ -21,6 +21,7 @@ class ConvertProcedure
       @work_dir = dir
       logger.info("Current directory is #{work_dir}")
       return false unless save_file
+
       convert_to_ppm
       convert_to_jpg
       generate_json
@@ -42,6 +43,7 @@ class ConvertProcedure
 
     def save_file
       return false unless CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, object_key, "#{work_dir}/#{work_file}")
+
       @file_type = convert_util.get_slide_file_type("#{work_dir}/#{work_file}")
       true
     end
@@ -108,7 +110,7 @@ class ConvertProcedure
     def update_database
       if ENV.fetch('OSS_MULTI_TENANT') { false }
         tenants = Tenant.pluck(:name)
-        tenants.each do | tenant |
+        tenants.each do |tenant|
           Apartment::Tenant.switch(tenant) do
             update_slide
           end

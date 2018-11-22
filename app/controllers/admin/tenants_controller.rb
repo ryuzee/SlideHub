@@ -24,7 +24,7 @@ module Admin
     def edit; end
 
     def update
-      if @tenant.update_attributes(tenant_params)
+      if @tenant.update(tenant_params)
         redirect_to admin_tenants_path, notice: t(:tenant_was_updated)
       else
         render 'edit'
