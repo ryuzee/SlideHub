@@ -3,5 +3,5 @@ class Tenant < ApplicationRecord
   validates :name, uniqueness: true,
                    length: { minimum: 3, maximum: 32 },
                    format: { with: VALID_TENANTNAME_REGEX },
-                   exclusion: { in: (ReservedWord.list | Subdomain.list) }
+                   exclusion: { in: (ReservedWord.list | SlideHub::Subdomain.list) }
 end
