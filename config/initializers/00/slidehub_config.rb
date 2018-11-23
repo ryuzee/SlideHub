@@ -46,7 +46,3 @@ Rails.application.config.action_mailer.smtp_settings = {
   user_name: Rails.application.config.slidehub.smtp_username,
   password: Rails.application.config.slidehub.smtp_password,
 }
-
-if Rails.env.production?
-  Rails.application.config.action_mailer.default_url_options = { host: Rails.application.config.slidehub.root_url }
-end
