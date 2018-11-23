@@ -15,7 +15,7 @@ module Admin
     def create
       save_tmp_file(custom_file_params[:file])
 
-      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, [@output_path], 'custom-files')
+      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, [@output_path], CustomFile.custom_files_directory)
 
       filename = custom_file_params[:file].original_filename
       description = custom_file_params[:description]
@@ -36,7 +36,7 @@ module Admin
       @custom_file.destroy
       CloudConfig::SERVICE.delete_files(
         CloudConfig::SERVICE.config.image_bucket_name,
-        [{ key: "custom-files/#{@custom_file.path}" }],
+        [{ key: "#{CustomFile.custom_files_directory}/#{@custom_file.path}" }],
       )
       redirect_to admin_custom_files_path, notice: t(:custom_files_were_deleted)
     end

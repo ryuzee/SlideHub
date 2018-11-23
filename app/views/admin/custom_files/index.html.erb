@@ -36,7 +36,7 @@
           <% @custom_files.each do |custom_file| %>
             <tr>
               <td><%= custom_file.path %></td>
-              <td><span id="<%= "file-#{index}" %>"><%= "#{CloudConfig::SERVICE.resource_endpoint}/custom-files/#{custom_file.path}" %></span></td>
+              <td><span id="<%= "file-#{index}" %>"><%= "#{CloudConfig::SERVICE.resource_endpoint}/#{CustomFile.custom_files_directory}/#{custom_file.path}" %></span></td>
               <td><%= custom_file.description %></td>
               <td class="text-center">
                 <form class="form-horizontal">

@@ -56,8 +56,7 @@ module Admin
           return redirect_to admin_dashboard_path, notice: t(:cannot_access_to_tenant)
         end
 
-        current = Tenant.connection.current_database
-        unless Tenant.find_by(name: current).nil?
+        unless Tenant.primary?
           redirect_to admin_dashboard_path, notice: t(:cannot_access_to_tenant)
         end
       end

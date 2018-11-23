@@ -11,4 +11,13 @@ class CustomFile < ApplicationRecord
   validates :path, presence: true
   validates :path, length: { maximum: 255 }
   validates :description, length: { maximum: 255 }
+
+  def self.custom_files_directory
+    t = Tenant.identifier
+    if t == ''
+      'custom-files'
+    else
+      "custom-files/#{t}"
+    end
+  end
 end
