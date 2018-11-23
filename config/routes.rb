@@ -60,6 +60,7 @@ Rails.application.routes.draw do
     resources :categories, only: [:index, :new, :create, :edit, :update, :destroy]
     resources :custom_files, only: [:index, :new, :create, :destroy]
     resources :pages, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :tenants, only: [:index, :new, :create, :edit, :update, :destroy]
 
     resources :custom_contents do
       get 'index', on: :collection

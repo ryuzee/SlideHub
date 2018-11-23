@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :set_category_data
   before_action :set_uploadable
   before_action :signup_enabled?, if: :devise_controller?
+  before_action :set_host
 
   include ActsAsTaggableOn::TagsHelper
 
@@ -39,5 +40,11 @@ class ApplicationController < ActionController::Base
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up,        keys: [:display_name, :biography, :avatar, :username, :twitter_account])
       devise_parameter_sanitizer.permit(:account_update, keys: [:display_name, :biography, :avatar, :username, :twitter_account])
+    end
+
+    def set_host
+      if Rails.env.production?
+        Rails.application.routes.default_url_options[:host] = request.host_with_port || Rails.application.config.slidehub.root_url
+      end
     end
 end

@@ -11,7 +11,7 @@
 development:
   adapter: <%= ENV['OSS_DB_ENGINE_DEV']  ||= 'mysql2' %>
   encoding: utf8
-  reconnect: false
+  reconnect: true
   database: <%= ENV['OSS_DB_NAME_DEV']  ||= 'slidehub' %>
   pool: 5
   username: <%= ENV['OSS_DB_USERNAME_DEV'] %>
@@ -26,7 +26,7 @@ development:
 test:
   adapter: <%= ENV['OSS_DB_ENGINE_TEST']  ||= 'mysql2' %>
   encoding: utf8
-  reconnect: false
+  reconnect: true
   database: <%= ENV['OSS_DB_NAME_TEST']  ||= 'test_slidehub' %>
   pool: 5
   username: <%= ENV['OSS_DB_USERNAME_TEST'] %>
@@ -38,7 +38,7 @@ test:
 production:
   adapter: <%= ENV['OSS_DB_ENGINE']  ||= 'mysql2' %>
   encoding: utf8
-  reconnect: false
+  reconnect: true
   database: <%= ENV['OSS_DB_NAME']  ||= 'slidehub' %>
   pool: 5
   username: <%= ENV['OSS_DB_USERNAME'] %>

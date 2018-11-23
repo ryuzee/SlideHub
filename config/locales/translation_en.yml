@@ -123,3 +123,8 @@ en:
         avatar: "Avatar"
         username: "Username"
         twitter_account: "Twitter account"
+
+      tenant:
+        name: "Name"
+        created_at: "Created Date"
+        updated_at: "Modified Date"

@@ -34,3 +34,8 @@ if User.where(admin: true).count.zero?
   )
   admin.save(validate: false)
 end
+
+# For multi tenant
+if Setting.count.zero?
+  ApplicationSetting.save_default
+end

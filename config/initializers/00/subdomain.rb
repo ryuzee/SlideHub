@@ -1,0 +1,1 @@
+SlideHub::Subdomain.load

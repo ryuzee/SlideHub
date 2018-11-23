@@ -53,6 +53,7 @@ services:
       OSS_SMTP_PASSWORD: test
       OSS_SMTP_USERNAME: test
       RAILS_LOG_TO_STDOUT: 'yes'
+      OSS_MULTI_TENANT: 0
     ports:
       - '3000:3000'
       - '1080:1080'
