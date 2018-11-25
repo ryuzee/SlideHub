@@ -50,6 +50,6 @@ class ApplicationController < ActionController::Base
     end
 
     def clear_session
-      ActiveRecord::SessionStore::Session.where(["updated_at < ?", Devise.remember_for.ago]).delete_all
+      ActiveRecord::SessionStore::Session.where(['updated_at < ?', Devise.remember_for.ago]).delete_all
     end
 end
