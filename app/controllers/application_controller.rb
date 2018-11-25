@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :set_uploadable
   before_action :signup_enabled?, if: :devise_controller?
   before_action :set_host
+  before_action :clear_session
 
   include ActsAsTaggableOn::TagsHelper
 
@@ -46,5 +47,9 @@ class ApplicationController < ActionController::Base
       if Rails.env.production?
         Rails.application.routes.default_url_options[:host] = request.host_with_port || Rails.application.config.slidehub.root_url
       end
+    end
+
+    def clear_session
+      ActiveRecord::SessionStore::Session.where(['updated_at < ?', Devise.remember_for.ago]).delete_all
     end
 end
