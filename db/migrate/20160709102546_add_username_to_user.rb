@@ -1,8 +1,10 @@
 class AddUsernameToUser < ActiveRecord::Migration[4.2]
   def self.up
     add_column :users, :username, :string
-    User.find_each do |user|
-      self.update_username(user)
+    say_with_time('Update username') do
+      User.find_each do |user|
+        self.update_username(user)
+      end
     end
     change_column_null :users, :username, false, ''
     add_index :users, :username, unique: true
