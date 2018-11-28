@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'users/view/:id' => 'users#show'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations' }
   get 'users/:id/embedded' => 'users#embedded'
-  resources :users
+  resources :users, only: [:index, :show, :edit, :update, :destroy]
 
   # route to slide
   get 'slides/latest' => 'latest#index'
