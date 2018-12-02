@@ -1,10 +1,20 @@
 class InitialDb < ActiveRecord::Migration[4.2]
   def self.up
-    self.create_categories
-    self.create_comments
-    self.create_slides
-    self.create_tags
-    self.create_users
+    say_with_time('Create categories') do
+      self.create_categories
+    end
+    say_with_time('Create comments') do
+      self.create_comments
+    end
+    say_with_time('Create slides') do
+      self.create_slides
+    end
+    say_with_time('Create tags') do
+      self.create_tags
+    end
+    say_with_time('Create users') do
+      self.create_users
+    end
   end
 
   def self.create_categories

@@ -1,8 +1,12 @@
 # This migration comes from acts_as_taggable_on_engine (originally 1)
 class ActsAsTaggableOnMigration < ActiveRecord::Migration[4.2]
   def self.up
-    self.create_tags
-    self.create_taggings
+    say_with_time('Create tags') do
+      self.create_tags
+    end
+    say_with_time('Create taggings') do
+      self.create_taggings
+    end
   end
 
   def self.create_tags

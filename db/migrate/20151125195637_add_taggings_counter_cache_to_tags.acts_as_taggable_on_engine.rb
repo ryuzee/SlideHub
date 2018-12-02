@@ -3,9 +3,13 @@ class AddTaggingsCounterCacheToTags < ActiveRecord::Migration[4.2]
   def self.up
     add_column :tags, :taggings_count, :integer, default: 0
 
-    ActsAsTaggableOn::Tag.reset_column_information
-    ActsAsTaggableOn::Tag.find_each do |tag|
-      ActsAsTaggableOn::Tag.reset_counters(tag.id, :taggings)
+    say_with_time('Reset column information') do
+      ActsAsTaggableOn::Tag.reset_column_information
+    end
+    say_with_time('Reset counters') do
+      ActsAsTaggableOn::Tag.find_each do |tag|
+        ActsAsTaggableOn::Tag.reset_counters(tag.id, :taggings)
+      end
     end
   end
 

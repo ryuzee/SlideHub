@@ -1,34 +1,30 @@
 Rails.application.routes.draw do
+  # route to user
+  get 'users/view/:id' => 'users#show'
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations' }
+  get 'users/:id/embedded' => 'users#embedded'
+  resources :users, only: [:index, :show, :edit, :update, :destroy]
 
-  # backward compatibility
+  # route to slide
   get 'slides/latest' => 'latest#index'
   get 'slides/popular' => 'popular#index'
   get 'slides/view/:id' => 'slides#show'
-  get 'users/view/:id' => 'users#show'
-  get 'download/:id' => 'slide_download#show'
-  get 'slides/:id/download' => 'slide_download#show'
+  get 'slides/index' => 'slides#index'
   get 'slides/download/:id' => 'slide_download#show'
-
-  # route to player
-  get 'player/:id' => 'player#show', as: :player
-  get 'player/:id/:page' => 'player#show'
+  get 'slides/:id/download' => 'slide_download#show'
   get 'slides/embedded/:id' => 'player#show'
   get 'slides/embedded/:id/:page' => 'player#show'
   get 'slides/:id/embedded' => 'player#show'
   get 'slides/:id/embedded/:page' => 'player#show'
-
-  # route to user
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations' }
-  get 'users/:id/embedded' => 'users#embedded'
-  resources :users do
-    get 'index', on: :collection
-  end
-
-  # route to slide
-  resources :slides do
-    get 'index', on: :collection
-  end
+  resources :slides
   get 'slides/:id/:page' => 'slides#show'
+
+  # route to player
+  get 'player/:id' => 'player#show', as: :player
+  get 'player/:id/:page' => 'player#show'
+
+  # route to download
+  get 'download/:id' => 'slide_download#show'
 
   resources :comments, only: [:create, :destroy]
   resources :categories, only: [:show]

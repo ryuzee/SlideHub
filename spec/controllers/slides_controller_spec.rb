@@ -201,7 +201,7 @@ RSpec.describe SlidesController, type: :controller do
       login_by_user default_user
       delete :destroy, params: { id: data.id }
       expect(response.status).to eq(302)
-      expect(response).to redirect_to '/slides/index'
+      expect(response).to redirect_to '/slides'
       expect(Slide.exists?(data.id)).to eq(false)
     end
   end
