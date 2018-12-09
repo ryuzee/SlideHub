@@ -3,7 +3,7 @@ class StatisticsController < ApplicationController
 
   def index
     ransack_params = params[:q]
-    @search = Slide.search(ransack_params)
+    @search = Slide.ransack(ransack_params)
     @slides = @search.result(distinct: true).
               owner(current_user.id).
               latest
