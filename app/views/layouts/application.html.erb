@@ -32,7 +32,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:latest_slides) %>)" href="<%= latest_index_path(format: "rss") %>" />
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:popular_slides) %>)" href="<%= popular_index_path(format: "rss") %>" />
   </head>
-  <body class="slidehub_body">
+  <body class="slidehub_body" oncontextmenu="return false;">
 
     <%
       inverse = ApplicationSetting['site.header_inverse']
