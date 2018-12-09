@@ -8,7 +8,7 @@ class SlideSearch
     ransack_params.delete('tag_search') if ransack_params.present?
 
     table = tag_search ? Slide.tagged_with(tag_search, any: true) : Slide
-    @search = table.search(ransack_params)
+    @search = table.ransack(ransack_params)
     @slides = @search.result(distinct: true)
   end
 end
