@@ -110,14 +110,16 @@ class ConvertProcedure
     def update_database
       if ENV.fetch('OSS_MULTI_TENANT') { false }
         tenants = Tenant.pluck(:name)
+        logger.info("all tenants are #{tenants.to_s}")
         tenants.each do |tenant|
           Apartment::Tenant.switch(tenant) do
+            logger.info("tenant is #{tenant}")
             update_slide
           end
         end
-        Apartment::Tenant.reset do
-          update_slide
-        end
+        logger.info('then check master database...')
+        Apartment::Tenant.reset
+        update_slide
       else
         update_slide
       end
@@ -130,6 +132,8 @@ class ConvertProcedure
         slide.extension = ".#{@file_type}"
         slide.num_of_pages = @slide_image_list.count
         slide.save
+      else
+        logger.info('There is no slide in this database...')
       end
     end
 end
