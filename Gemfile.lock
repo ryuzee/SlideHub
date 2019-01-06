@@ -80,6 +80,7 @@ GEM
     after_commit_action (1.1.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
+    anbt-sql-formatter (0.0.7)
     annotate (2.7.4)
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 13.0)
@@ -90,6 +91,7 @@ GEM
       rack (>= 1.3.6)
     arel (9.0.0)
     ast (2.4.0)
+    awesome_print (1.8.0)
     aws-eventstream (1.0.1)
     aws-partitions (1.122.0)
     aws-sdk (3.0.1)
@@ -1000,6 +1002,10 @@ GEM
       activesupport (>= 3.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
+    rails-flog (1.5.0)
+      anbt-sql-formatter (>= 0.0.7)
+      awesome_print
+      rails (>= 4.2.0)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
     rails_best_practices (1.19.4)
@@ -1230,6 +1236,7 @@ DEPENDENCIES
   rails (= 5.2.2)
   rails-controller-testing
   rails-erd
+  rails-flog
   rails_best_practices
   ransack
   reek

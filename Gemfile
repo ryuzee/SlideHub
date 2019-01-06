@@ -102,6 +102,7 @@ group :development, :test do
   gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
+  gem 'rails-flog', require: 'flog'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
   gem 'ruby-debug-ide'
