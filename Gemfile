@@ -124,6 +124,7 @@ group :development do
   # Visualize Rails Console
   gem 'hirb'
   gem 'i18n_generators'
+  gem 'meta_request'
   # Display the environment name
   # https://github.com/dtaniwaki/rack-dev-mark
   gem 'rack-dev-mark'
