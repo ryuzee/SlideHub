@@ -11,6 +11,7 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration[4.2]
 
   def self.create_tags
     return if ActiveRecord::Base.connection.table_exists?('tags')
+
     create_table :tags do |t|
       t.string :name
     end
@@ -18,6 +19,7 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration[4.2]
 
   def self.create_taggings
     return if ActiveRecord::Base.connection.table_exists?('taggings')
+
     create_table :taggings do |t|
       t.references :tag
 

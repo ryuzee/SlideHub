@@ -38,6 +38,7 @@ module SlideHub
           return false unless defined? @config.aws_secret_key
           return false if @config.aws_access_id.blank?
           return false if @config.aws_secret_key.blank?
+
           true
         end
 
@@ -148,7 +149,7 @@ module SlideHub
             key: key,
           )
           true
-        rescue
+        rescue StandardError
           false
         end
 
@@ -156,6 +157,7 @@ module SlideHub
           if key.empty?
             return false
           end
+
           files = self.get_file_list(@config.bucket_name, key)
           self.delete_files(@config.bucket_name, files)
           true
@@ -165,6 +167,7 @@ module SlideHub
           if key.empty?
             return false
           end
+
           files = self.get_file_list(@config.image_bucket_name, key)
           self.delete_files(@config.image_bucket_name, files)
           true

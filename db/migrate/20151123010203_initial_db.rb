@@ -19,6 +19,7 @@ class InitialDb < ActiveRecord::Migration[4.2]
 
   def self.create_categories
     return if ActiveRecord::Base.connection.table_exists?('categories')
+
     create_table 'categories' do |t|
       t.string 'name', limit: 255, null: false
     end
@@ -26,6 +27,7 @@ class InitialDb < ActiveRecord::Migration[4.2]
 
   def self.create_comments
     return if ActiveRecord::Base.connection.table_exists?('comments')
+
     create_table 'comments' do |t|
       t.integer  'user_id',  limit: 4,     null: false
       t.integer  'slide_id', limit: 4,     null: false
@@ -39,6 +41,7 @@ class InitialDb < ActiveRecord::Migration[4.2]
 
   def self.create_slides
     return if ActiveRecord::Base.connection.table_exists?('slides')
+
     create_table 'slides' do |t|
       t.integer  'user_id',        limit: 4,                     null: false
       t.string   'name',           limit: 255,                   null: false
@@ -62,6 +65,7 @@ class InitialDb < ActiveRecord::Migration[4.2]
 
   def self.create_tags
     return if ActiveRecord::Base.connection.table_exists?('tags')
+
     create_table 'tags' do |t|
       t.string   'identifier', limit: 30
       t.string   'name',       limit: 30,             null: false
@@ -75,6 +79,7 @@ class InitialDb < ActiveRecord::Migration[4.2]
 
   def self.create_users
     return if ActiveRecord::Base.connection.table_exists?('users')
+
     create_table 'users' do |t|
       t.string   'username',     limit: 32,                    null: false
       t.string   'display_name', limit: 128,                   null: false

@@ -85,6 +85,7 @@ module SlideHub
           bs = ::Azure::Blob::BlobService.new
           files.each do |f|
             next unless File.exist?(f)
+
             content = File.open(f, 'rb', &:read)
             require 'mime/types'
             content_type = MIME::Types.type_for(File.extname(f))[0].to_s
@@ -115,6 +116,7 @@ module SlideHub
           if key.empty?
             return false
           end
+
           files = self.get_file_list(@config.bucket_name, key)
           self.delete_files(@config.bucket_name, files)
           true
@@ -124,6 +126,7 @@ module SlideHub
           if key.empty?
             return false
           end
+
           files = self.get_file_list(@config.image_bucket_name, key)
           self.delete_files(@config.image_bucket_name, files)
           true
@@ -162,10 +165,10 @@ module SlideHub
           url = signer.signed_uri(
             uri,
             false,
-            service:    'b',
+            service: 'b',
             permissions: permissions,
-            start:       start_time.utc.iso8601,
-            expiry:      expiration_time.utc.iso8601,
+            start: start_time.utc.iso8601,
+            expiry: expiration_time.utc.iso8601,
           ).to_s
           url
         end

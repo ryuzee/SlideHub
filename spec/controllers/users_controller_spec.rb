@@ -120,7 +120,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
     end
 
     it 'changes user attributes' do
-      put :update, params: { user: {email: 'user01new@example.com', biography: 'test', current_password: default_user.password } }
+      put :update, params: { user: { email: 'user01new@example.com', biography: 'test', current_password: default_user.password } }
       subject.current_user.reload
       expect(assigns[:user]).not_to eq(be_new_record)
       expect(subject.current_user.email).to eq 'user01new@example.com'
@@ -128,7 +128,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
     end
 
     it 'does not change user attributes because of lack of current_password' do
-      put :update, params: { user: {email: 'user01new@example.com', biography: 'test'} }
+      put :update, params: { user: { email: 'user01new@example.com', biography: 'test' } }
       subject.current_user.reload
       expect(assigns[:user]).not_to eq(be_new_record)
       expect(subject.current_user.email).to eq 'user01@example.com'

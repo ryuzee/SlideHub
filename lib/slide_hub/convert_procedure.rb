@@ -96,7 +96,7 @@ class ConvertProcedure
       @slide_image_list.each do |item|
         save_list.push("#{object_key}/#{File.basename(item)}")
       end
-      open("#{work_dir}/list.json", 'w') do |io|
+      File.open("#{work_dir}/list.json", 'w') do |io|
         JSON.dump(save_list, io)
       end
       @upload_file_list.push("#{work_dir}/list.json")
@@ -110,7 +110,7 @@ class ConvertProcedure
     def update_database
       if ENV.fetch('OSS_MULTI_TENANT') { false }
         tenants = Tenant.pluck(:name)
-        logger.info("all tenants are #{tenants.to_s}")
+        logger.info("all tenants are #{tenants}")
         tenants.each do |tenant|
           Apartment::Tenant.switch(tenant) do
             logger.info("tenant is #{tenant}")
@@ -119,10 +119,8 @@ class ConvertProcedure
         end
         logger.info('then check master database...')
         Apartment::Tenant.reset
-        update_slide
-      else
-        update_slide
       end
+      update_slide
     end
 
     def update_slide
