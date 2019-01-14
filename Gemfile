@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '5.2.2'
-gem 'json', '~> 1.8'
+gem 'json', '~> 2.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.7'
 # Use Uglifier as compressor for JavaScript assets
@@ -44,7 +44,7 @@ gem 'bootstrap-will_paginate'
 # Authentication
 gem 'devise', '4.5.0'
 gem 'devise-bootstrap-views', '0.0.11'
-gem 'devise-i18n', '~> 1.6'
+gem 'devise-i18n', '~> 1.7'
 gem 'devise-i18n-views', '0.3.7'
 gem 'omniauth'
 gem 'omniauth-facebook'
