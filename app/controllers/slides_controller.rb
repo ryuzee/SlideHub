@@ -79,7 +79,7 @@ class SlidesController < ApplicationController
     slide_params = params.require(:slide).permit(:name, :description, :object_key, :downloadable, :category_id, :tag_list, :convert_status, :private)
 
     @slide.assign_attributes(slide_params)
-    if @slide.update_attributes(slide_params)
+    if @slide.update(slide_params)
       @slide.send_convert_request unless @slide.converted?
       redirect_to slide_path(@slide.id)
     else

@@ -1,1 +1,1 @@
-require "#{Rails.root}/lib/slide_hub/version"
+require Rails.root.join('lib', 'slide_hub', 'version')

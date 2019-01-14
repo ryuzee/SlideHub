@@ -14,7 +14,7 @@ module Admin
     def update
       @user.skip_password_validation = true
       @user.assign_attributes(user_params)
-      if @user.update_attributes(user_params)
+      if @user.update(user_params)
         redirect_to admin_users_path, notice: t(:user_was_updated)
       else
         render :edit

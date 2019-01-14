@@ -88,7 +88,7 @@ class Slide < ApplicationRecord
   end
 
   def self.update_after_convert(object_key, file_type, num_of_pages)
-    slide = Slide.where('slides.object_key = ?', object_key).first
+    slide = Slide.find_by(object_key: object_key)
     if slide
       slide.converted!
       slide.extension = ".#{file_type}"

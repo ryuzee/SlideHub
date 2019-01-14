@@ -34,7 +34,7 @@ module SlideHub
         end
 
         def self.resource_endpoint
-          return "#{@config.cdn_base_url}/#{@config.image_bucket_name}" unless @config.cdn_base_url.blank?
+          return "#{@config.cdn_base_url}/#{@config.image_bucket_name}" if @config.cdn_base_url.present?
 
           "https://#{@config.azure_storage_account_name}.blob.core.windows.net/#{@config.image_bucket_name}"
         end

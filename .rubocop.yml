@@ -9,6 +9,12 @@ AllCops:
     - "Vagrantfile"
   DisplayCopNames: true
 
+# Rails用
+Rails:
+  Enabled: true
+  Exclude:
+    - "db/migrate/*"
+
 ##################### Style ##################################
 
 # redirect_to xxx and return のイディオムを維持したい

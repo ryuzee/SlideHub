@@ -43,7 +43,7 @@ module SlideHub
         end
 
         def self.resource_endpoint
-          return @config.cdn_base_url unless @config.cdn_base_url.blank?
+          return @config.cdn_base_url if @config.cdn_base_url.present?
 
           url = if @config.use_s3_static_hosting == '1'
                   "http://#{@config.image_bucket_name}"
@@ -199,7 +199,7 @@ module SlideHub
         end
 
         def self.create_policy_proc(base_time)
-          if !@config.aws_access_id.blank? && !@config.aws_secret_key.blank?
+          if @config.aws_access_id.present? && @config.aws_secret_key.present?
             access_id = @config.aws_access_id
             secret_key = @config.aws_secret_key
             security_token = ''

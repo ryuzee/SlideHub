@@ -49,7 +49,7 @@ class ApplicationSetting
 
     # get value
     def [](var_name)
-      @settings = Rails.cache.fetch('settings', expires_in: 30.second) do
+      @settings = Rails.cache.fetch('settings', expires_in: 30.seconds) do
         load_settings
       end
       var_name = var_name.to_s

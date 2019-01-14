@@ -63,7 +63,7 @@ class User < ApplicationRecord
 
   def password_required?
     return false if skip_password_validation
-    return false unless provider.blank?
+    return false if provider.present?
 
     super
   end
@@ -79,7 +79,7 @@ class User < ApplicationRecord
   end
 
   def self.username_to_id(username)
-    User.where('username = ?', username).first.id
+    User.find_by(username: username).id
   end
 
   def self.new_with_session(params, session)
