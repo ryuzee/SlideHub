@@ -131,6 +131,17 @@ describe 'Slide' do
     end
   end
 
+  describe 'Method "update_after_convert"' do
+    it 'updates the convert status to "converted"' do
+      FactoryBot.create(:slide)
+      object_key = Slide.find(1).object_key
+      Slide.update_after_convert(object_key, 'pdf', 100)
+      expect(Slide.find(1).convert_status).to eq('converted')
+      expect(Slide.find(1).extension).to eq('.pdf')
+      expect(Slide.find(1).num_of_pages).to eq(100)
+    end
+  end
+
   describe 'Method "transcript_url"' do
     it 'returns valid url' do
       FactoryBot.create(:slide)

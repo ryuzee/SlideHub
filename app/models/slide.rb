@@ -87,6 +87,18 @@ class Slide < ApplicationRecord
     Slide.where('slides.object_key = ?', key).count > 0
   end
 
+  def self.update_after_convert(object_key, file_type, num_of_pages)
+    slide = Slide.where('slides.object_key = ?', object_key).first
+    if slide
+      slide.converted!
+      slide.extension = ".#{file_type}"
+      slide.num_of_pages = num_of_pages
+      slide.save
+    else
+      logger.info('There is no slide in this database...')
+    end
+  end
+
   def self.related_slides(category_id, slide_id, limit = 10)
     Slide.published.latest.
       where('category_id = ?', category_id).
