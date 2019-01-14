@@ -1,9 +1,7 @@
-<% transcripts = slide.transcript %>
-<% show_tran = slide.transcript_exist? %>
-<% if show_tran %>
+<% if slide.transcript.try(:exist?) %>
   <% page_count = 0 %>
   <div class="slide_description">
-    <% transcripts.each do |tran| %>
+    <% slide.transcript.lines.each do |tran| %>
       <% tran = clear_invisible_string(tran) %>
       <% page_count += 1 %>
       <% if not tran.blank? %>

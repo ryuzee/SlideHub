@@ -97,37 +97,37 @@ describe 'Slide' do
 
   describe 'Transcript' do
     it 'can be retrieved and put it into array' do
-      allow_any_instance_of(Slide).to receive(:transcript_url).and_return('http://www.example.com/transcript.txt')
+      allow_any_instance_of(Transcript).to receive(:url).and_return('http://www.example.com/transcript.txt')
       stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
         body: 'a:1:{i:0;s:4:"Test";}',
         status: 200,
       )
       FactoryBot.create(:slide)
       slide = Slide.find(1)
-      expect(slide.transcript).to eq(['Test'])
-      expect(slide.transcript_exist?).to eq(true)
+      expect(slide.transcript.lines).to eq(['Test'])
+      expect(slide.transcript.exist?).to eq(true)
     end
 
     it 'can not be ritrieved because of 404' do
-      allow_any_instance_of(Slide).to receive(:transcript_url).and_return('http://www.example.com/transcript.txt')
+      allow_any_instance_of(Transcript).to receive(:url).and_return('http://www.example.com/transcript.txt')
       stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
         status: 404,
       )
       FactoryBot.create(:slide)
       slide = Slide.find(1)
-      expect(slide.transcript).to eq([])
-      expect(slide.transcript_exist?).to eq(false)
+      expect(slide.transcript.lines).to eq([])
+      expect(slide.transcript.exist?).to eq(false)
     end
 
     it 'can be retrieved. however the result is empty' do
-      allow_any_instance_of(Slide).to receive(:transcript_url).and_return('http://www.example.com/transcript.txt')
+      allow_any_instance_of(Transcript).to receive(:url).and_return('http://www.example.com/transcript.txt')
       stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
         body: 'a:1:{i:0;s:0:"";}',
         status: 200,
       )
       FactoryBot.create(:slide)
       slide = Slide.find(1)
-      expect(slide.transcript_exist?).to eq(false)
+      expect(slide.transcript.exist?).to eq(false)
     end
   end
 
@@ -140,13 +140,18 @@ describe 'Slide' do
       expect(Slide.find(1).extension).to eq('.pdf')
       expect(Slide.find(1).num_of_pages).to eq(100)
     end
+
+    it 'does not do anything' do
+      status = Slide.update_after_convert('aaa', 'pdf', 100)
+      expect(status).to eq(false)
+    end
   end
 
   describe 'Method "transcript_url"' do
     it 'returns valid url' do
       FactoryBot.create(:slide)
       object_key = Slide.find(1).object_key
-      expect(Slide.find(1).transcript_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/transcript.txt")
+      expect(Slide.find(1).transcript.url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/transcript.txt")
     end
   end
 
@@ -208,7 +213,7 @@ describe 'Slide_on_Azure' do
     it 'returns valid url' do
       FactoryBot.create(:slide)
       object_key = Slide.find(1).object_key
-      expect(Slide.find(1).transcript_url).to eq("https://azure_test.blob.core.windows.net/my-image-bucket/#{object_key}/transcript.txt")
+      expect(Slide.find(1).transcript.url).to eq("https://azure_test.blob.core.windows.net/my-image-bucket/#{object_key}/transcript.txt")
     end
   end
 

@@ -96,6 +96,7 @@ class Slide < ApplicationRecord
       slide.save
     else
       logger.info('There is no slide in this database...')
+      false
     end
   end
 
@@ -120,10 +121,6 @@ class Slide < ApplicationRecord
     "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/thumbnail.jpg"
   end
 
-  def transcript_url
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/transcript.txt"
-  end
-
   def page_list_url
     "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/list.json"
   end
@@ -140,19 +137,6 @@ class Slide < ApplicationRecord
   end
 
   def transcript
-    @transcript ||= get_php_serialized_data(self.transcript_url)
-  end
-
-  def transcript_exist?
-    result = false
-    if transcript.instance_of?(Array)
-      transcript.each do |tran|
-        unless tran.empty?
-          result = true
-          break
-        end
-      end
-    end
-    result
+    @transcript ||= Transcript.new(object_key)
   end
 end
