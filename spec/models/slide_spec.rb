@@ -147,6 +147,28 @@ describe 'Slide' do
     end
   end
 
+  describe 'Method "record_access"' do
+    it 'increments page_view"' do
+      FactoryBot.create(:slide)
+      slide = Slide.find(1)
+      page_view = slide.page_view
+      total_view = slide.total_view
+      slide.record_access(:page_view)
+      expect(Slide.find(1).page_view).to eq(page_view + 1)
+      expect(Slide.find(1).total_view).to eq(total_view + 1)
+    end
+
+    it 'increments embedded_view' do
+      FactoryBot.create(:slide)
+      slide = Slide.find(1)
+      embedded_view = slide.embedded_view
+      total_view = slide.total_view
+      slide.record_access(:embedded_view)
+      expect(Slide.find(1).embedded_view).to eq(embedded_view + 1)
+      expect(Slide.find(1).total_view).to eq(total_view + 1)
+    end
+  end
+
   describe 'Method "transcript_url"' do
     it 'returns valid url' do
       FactoryBot.create(:slide)

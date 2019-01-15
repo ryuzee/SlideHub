@@ -15,6 +15,10 @@ Rails:
   Exclude:
     - "db/migrate/*"
 
+Rails/SkipsModelValidations:
+  Whitelist:
+    - "increment!"
+
 ##################### Style ##################################
 
 # redirect_to xxx and return のイディオムを維持したい

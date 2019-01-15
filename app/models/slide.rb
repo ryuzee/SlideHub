@@ -56,6 +56,11 @@ class Slide < ApplicationRecord
   scope :category, ->(category_id) { where('category_id = ?', category_id) }
   scope :owner, ->(user_id) { where('user_id = ?', user_id) }
 
+  def record_access(access_type)
+    increment!(:page_view).increment!(:total_view) if access_type == :page_view
+    increment!(:embedded_view).increment!(:total_view) if access_type == :embedded_view
+  end
+
   def self.latest_slides(limit = 10)
     self.published.latest.
       includes(:user).
