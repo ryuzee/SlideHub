@@ -151,8 +151,8 @@ module SlideHub
         def self.generate_sas_url(blob_name)
           permissions = 'rw'
 
-          start_time = Time.now - 10
-          expiration_time = Time.now + 1800
+          start_time = Time.zone.now - 10
+          expiration_time = Time.zone.now + 1800
           bs = ::Azure::Blob::BlobService.new
           uri = bs.generate_uri Addressable::URI.escape("#{@config.bucket_name}/#{blob_name}"), {}
           uri.scheme = 'https'
