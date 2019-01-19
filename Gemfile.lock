@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: https://github.com/matthewdunbar/activerecord-sqlserver-adapter.git
-  revision: 551cedd84f2c4d1154e24d1457a59d68abe805ee
+  revision: d325d77b164711b6d9031fad82d03d50fbaed220
   specs:
     activerecord-sqlserver-adapter (5.2.0)
       activerecord (~> 5.2.0)
