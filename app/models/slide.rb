@@ -126,22 +126,11 @@ class Slide < ApplicationRecord
     "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/thumbnail.jpg"
   end
 
-  def page_list_url
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/list.json"
-  end
-
-  # :reek:UncommunicativeVariableName { enabled: false }
-  def page_list
-    len = num_of_pages.abs.to_s.length
-    result = []
-    (1..num_of_pages).each do |i|
-      n = i.to_s.rjust(len, '0')
-      result.push("#{object_key}/slide-#{n}.jpg")
-    end
-    result
-  end
-
   def transcript
     @transcript ||= Transcript.new(object_key)
+  end
+
+  def pages
+    @pages ||= SlidePages.new(object_key, num_of_pages)
   end
 end

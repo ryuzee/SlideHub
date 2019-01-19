@@ -5,7 +5,7 @@ class SlidePageCountController < ApplicationController
     count = 0
     begin
       set_slide
-      resp = @slide.page_list
+      resp = @slide.pages.list
       count = if resp
                 resp.count
               else

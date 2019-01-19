@@ -5,7 +5,7 @@ RSpec.describe PlayerController, type: :controller do
 
   describe 'GET #show' do
     it 'succeeds to return encrypted JavaScript' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
+      allow_any_instance_of(SlidePages).to receive(:list).and_return(['a'])
       get :show, params: { id: slide.id }
       expect(response.status).to eq(200)
       updated_data = Slide.find(slide.id)
@@ -14,7 +14,7 @@ RSpec.describe PlayerController, type: :controller do
     end
 
     it 'succeeds to return encrypted JavaScript for inside' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
+      allow_any_instance_of(SlidePages).to receive(:list).and_return(['a'])
       get :show, params: { id: slide.id, inside: 1 }
       expect(response.status).to eq(200)
       updated_data = Slide.find(slide.id)

@@ -5,7 +5,7 @@ RSpec.describe HtmlPlayerController, type: :controller do
 
   describe 'GET #show' do
     it 'succeeds to return html for iFrame' do
-      allow_any_instance_of(Slide).to receive(:page_list).and_return(['a'])
+      allow_any_instance_of(SlidePages).to receive(:list).and_return(['a'])
       slide = create(:slide)
       get :show, params: { id: slide.id }
       expect(response.status).to eq(200)
