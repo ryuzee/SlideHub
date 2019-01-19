@@ -10,7 +10,7 @@ Rails.application.configure do
   config.eager_load = false
 
   # Enable/disable caching. By default caching is disabled.
-  if Rails.root.join('tmp/caching-dev.txt').exist?
+  if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
     # config.cache_store = :memory_store

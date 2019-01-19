@@ -1,6 +1,7 @@
 class CreateSettings < ActiveRecord::Migration[4.2]
   def self.up
     return if ActiveRecord::Base.connection.table_exists?('settings')
+
     create_table :settings do |t|
       t.string  :var,        null: false
       t.text    :value,      null: true

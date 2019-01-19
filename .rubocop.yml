@@ -9,6 +9,16 @@ AllCops:
     - "Vagrantfile"
   DisplayCopNames: true
 
+# Rails用
+Rails:
+  Enabled: true
+  Exclude:
+    - "db/migrate/*"
+
+Rails/SkipsModelValidations:
+  Whitelist:
+    - "increment!"
+
 ##################### Style ##################################
 
 # redirect_to xxx and return のイディオムを維持したい
@@ -214,9 +224,11 @@ Metrics/BlockLength:
   Max: 20
   Exclude:
     - "config/environments/*.rb"
-    - "spec/**/*.rb"
+    - "config/routes.rb"
+    - "config/initializers/devise.rb"
     - "lib/tasks/**/*.rb"
     - "lib/tasks/**/*.rake"
+    - "spec/**/*.rb"
 
 # 6 は強すぎるので緩める
 Metrics/CyclomaticComplexity:
@@ -239,3 +251,12 @@ Metrics/MethodLength:
 # 分岐の数。ガード句を多用しているとデフォルト 7 だと厳しい
 Metrics/PerceivedComplexity:
   Max: 8
+
+# 引数の数
+Metrics/ParameterLists:
+  Max: 6
+
+# includeを許可しない
+Style/MixinUsage:
+  Include:
+    - app/**/*.rb

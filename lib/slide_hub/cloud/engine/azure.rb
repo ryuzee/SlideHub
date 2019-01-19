@@ -34,7 +34,7 @@ module SlideHub
         end
 
         def self.resource_endpoint
-          return "#{@config.cdn_base_url}/#{@config.image_bucket_name}" unless @config.cdn_base_url.blank?
+          return "#{@config.cdn_base_url}/#{@config.image_bucket_name}" if @config.cdn_base_url.present?
 
           "https://#{@config.azure_storage_account_name}.blob.core.windows.net/#{@config.image_bucket_name}"
         end
@@ -85,6 +85,7 @@ module SlideHub
           bs = ::Azure::Blob::BlobService.new
           files.each do |f|
             next unless File.exist?(f)
+
             content = File.open(f, 'rb', &:read)
             require 'mime/types'
             content_type = MIME::Types.type_for(File.extname(f))[0].to_s
@@ -115,6 +116,7 @@ module SlideHub
           if key.empty?
             return false
           end
+
           files = self.get_file_list(@config.bucket_name, key)
           self.delete_files(@config.bucket_name, files)
           true
@@ -124,6 +126,7 @@ module SlideHub
           if key.empty?
             return false
           end
+
           files = self.get_file_list(@config.image_bucket_name, key)
           self.delete_files(@config.image_bucket_name, files)
           true
@@ -148,8 +151,8 @@ module SlideHub
         def self.generate_sas_url(blob_name)
           permissions = 'rw'
 
-          start_time = Time.now - 10
-          expiration_time = Time.now + 1800
+          start_time = Time.zone.now - 10
+          expiration_time = Time.zone.now + 1800
           bs = ::Azure::Blob::BlobService.new
           uri = bs.generate_uri Addressable::URI.escape("#{@config.bucket_name}/#{blob_name}"), {}
           uri.scheme = 'https'
@@ -162,10 +165,10 @@ module SlideHub
           url = signer.signed_uri(
             uri,
             false,
-            service:    'b',
+            service: 'b',
             permissions: permissions,
-            start:       start_time.utc.iso8601,
-            expiry:      expiration_time.utc.iso8601,
+            start: start_time.utc.iso8601,
+            expiry: expiration_time.utc.iso8601,
           ).to_s
           url
         end

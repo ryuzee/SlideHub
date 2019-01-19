@@ -19,7 +19,7 @@ module Admin
 
     def update
       params.permit! # It's OK because of admin
-      if @slide.update_attributes(params[:slide])
+      if @slide.update(params[:slide])
         redirect_to "/admin/slides/#{@slide.id}/edit", notice: t(:slide_was_updated)
       else
         render :edit

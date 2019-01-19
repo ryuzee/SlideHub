@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.2'
 gem 'json', '~> 2.1'
+gem 'rails', '5.2.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.7'
 # Use Uglifier as compressor for JavaScript assets
@@ -34,13 +34,13 @@ gem 'activerecord-sqlserver-adapter', git: 'https://github.com/matthewdunbar/act
 # See https://github.com/metaskills/less-rails/issues/122
 # See https://qiita.com/Jey/items/f69e93755be8ec959124
 # twitter-bootstrap-rails depends on less-rails ~> 2.8. However this issue was resolved in 3.0...
+gem 'execjs'
 gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails.git'
 gem 'sprockets', '3.7.2'
-gem 'execjs'
 gem 'twitter-bootstrap-rails', '~> 4.0'
 # Paginate
-gem 'will_paginate'
 gem 'bootstrap-will_paginate'
+gem 'will_paginate'
 # Authentication
 gem 'devise', '4.5.0'
 gem 'devise-bootstrap-views', '0.0.11'
@@ -72,8 +72,8 @@ gem 'azure-storage'
 # Find file type
 gem 'ruby-filemagic'
 # Handle images
-gem 'rmagick'
 gem 'mini_magick'
+gem 'rmagick'
 # retrieve page count of pdf
 gem 'pdf-reader'
 # counter cache transaction

@@ -6,7 +6,7 @@ describe 'Class IO' do
 
   describe 'tail' do
     it 'works' do
-      open(path) do |io|
+      File.open(path) do |io|
         io.tail(1).each do |line|
           expect(line).to eq("DUMMY005\n")
         end
@@ -15,7 +15,7 @@ describe 'Class IO' do
 
     it 'gets all lines' do
       lines = ''
-      open(path) do |io|
+      File.open(path) do |io|
         lines = io.tail(6)
       end
       expect(lines).to eq(%W[DUMMY001\n DUMMY002\n DUMMY003\n DUMMY004\n DUMMY005\n])
@@ -24,7 +24,7 @@ describe 'Class IO' do
 
   describe 'head' do
     it 'works' do
-      open(path) do |io|
+      File.open(path) do |io|
         io.head(1).each do |line|
           expect(line).to eq("DUMMY001\n")
         end
@@ -33,7 +33,7 @@ describe 'Class IO' do
 
     it 'gets all lines' do
       lines = ''
-      open(path) do |io|
+      File.open(path) do |io|
         lines = io.head(6)
       end
       expect(lines).to eq(%W[DUMMY001\n DUMMY002\n DUMMY003\n DUMMY004\n DUMMY005\n])

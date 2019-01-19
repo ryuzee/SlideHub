@@ -95,75 +95,41 @@ describe 'Slide' do
     end
   end
 
-  describe 'Transcript' do
-    it 'can be retrieved and put it into array' do
-      allow_any_instance_of(Slide).to receive(:transcript_url).and_return('http://www.example.com/transcript.txt')
-      stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
-        body: 'a:1:{i:0;s:4:"Test";}',
-        status: 200,
-      )
+  describe 'Method "update_after_convert"' do
+    it 'updates the convert status to "converted"' do
       FactoryBot.create(:slide)
-      slide = Slide.find(1)
-      expect(slide.transcript).to eq(['Test'])
-      expect(slide.transcript_exist?).to eq(true)
+      object_key = Slide.find(1).object_key
+      Slide.update_after_convert(object_key, 'pdf', 100)
+      expect(Slide.find(1).convert_status).to eq('converted')
+      expect(Slide.find(1).extension).to eq('.pdf')
+      expect(Slide.find(1).num_of_pages).to eq(100)
     end
 
-    it 'can not be ritrieved because of 404' do
-      allow_any_instance_of(Slide).to receive(:transcript_url).and_return('http://www.example.com/transcript.txt')
-      stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
-        status: 404,
-      )
-      FactoryBot.create(:slide)
-      slide = Slide.find(1)
-      expect(slide.transcript).to eq([])
-      expect(slide.transcript_exist?).to eq(false)
-    end
-
-    it 'can be retrieved. however the result is empty' do
-      allow_any_instance_of(Slide).to receive(:transcript_url).and_return('http://www.example.com/transcript.txt')
-      stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
-        body: 'a:1:{i:0;s:0:"";}',
-        status: 200,
-      )
-      FactoryBot.create(:slide)
-      slide = Slide.find(1)
-      expect(slide.transcript_exist?).to eq(false)
+    it 'does not do anything' do
+      status = Slide.update_after_convert('aaa', 'pdf', 100)
+      expect(status).to eq(false)
     end
   end
 
-  describe 'Method "transcript_url"' do
-    it 'returns valid url' do
+  describe 'Method "record_access"' do
+    it 'increments page_view"' do
       FactoryBot.create(:slide)
-      object_key = Slide.find(1).object_key
-      expect(Slide.find(1).transcript_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/transcript.txt")
-    end
-  end
-
-  describe 'Method "page_list_url"' do
-    it 'returns valid url' do
-      FactoryBot.create(:slide)
-      object_key = Slide.find(1).object_key
-      expect(Slide.find(1).page_list_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/list.json")
-    end
-  end
-
-  describe 'Method "page_list"' do
-    it 'returns page list (1 page)' do
-      FactoryBot.create(:slide)
-      object_key = Slide.find(1).object_key
-      expect(Slide.find(1).page_list).to eq(["#{object_key}/slide-1.jpg"])
+      slide = Slide.find(1)
+      page_view = slide.page_view
+      total_view = slide.total_view
+      slide.record_access(:page_view)
+      expect(Slide.find(1).page_view).to eq(page_view + 1)
+      expect(Slide.find(1).total_view).to eq(total_view + 1)
     end
 
-    it 'returns page list (10 page)' do
+    it 'increments embedded_view' do
       FactoryBot.create(:slide)
-      slide = Slide.where('slides.id = ?', 1).first
-      object_key = slide.object_key
-      slide.num_of_pages = 10
-      slide.save
-      expected = ["#{object_key}/slide-01.jpg", "#{object_key}/slide-02.jpg", "#{object_key}/slide-03.jpg",
-                  "#{object_key}/slide-04.jpg", "#{object_key}/slide-05.jpg", "#{object_key}/slide-06.jpg",
-                  "#{object_key}/slide-07.jpg", "#{object_key}/slide-08.jpg", "#{object_key}/slide-09.jpg", "#{object_key}/slide-10.jpg"]
-      expect(Slide.find(1).page_list).to eq(expected)
+      slide = Slide.find(1)
+      embedded_view = slide.embedded_view
+      total_view = slide.total_view
+      slide.record_access(:embedded_view)
+      expect(Slide.find(1).embedded_view).to eq(embedded_view + 1)
+      expect(Slide.find(1).total_view).to eq(total_view + 1)
     end
   end
 end
@@ -190,22 +156,6 @@ describe 'Slide_on_Azure' do
       FactoryBot.create(:slide)
       object_key = Slide.find(1).object_key
       expect(Slide.find(1).thumbnail_url).to eq("https://azure_test.blob.core.windows.net/my-image-bucket/#{object_key}/thumbnail.jpg")
-    end
-  end
-
-  describe 'Method "transcript_url"' do
-    it 'returns valid url' do
-      FactoryBot.create(:slide)
-      object_key = Slide.find(1).object_key
-      expect(Slide.find(1).transcript_url).to eq("https://azure_test.blob.core.windows.net/my-image-bucket/#{object_key}/transcript.txt")
-    end
-  end
-
-  describe 'Method "page_list_url"' do
-    it 'returns valid url' do
-      FactoryBot.create(:slide)
-      object_key = Slide.find(1).object_key
-      expect(Slide.find(1).page_list_url).to eq("https://azure_test.blob.core.windows.net/my-image-bucket/#{object_key}/list.json")
     end
   end
 end

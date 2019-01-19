@@ -5,7 +5,7 @@ module Api
       private
 
         def not_found
-          render json: { 'error' => 'No data found' }, status: 404
+          render json: { 'error' => 'No data found' }, status: :not_found
         end
     end
   end

@@ -49,7 +49,6 @@ class ConvertProcedure
     end
 
     def convert_to_ppm
-      logger.info("File Type is #{@file_type}")
       case @file_type
       when 'pdf'
         logger.info('Rename to PDF')
@@ -60,10 +59,8 @@ class ConvertProcedure
       when 'ppt', 'pptx'
         logger.info('Start converting from PPT to PDF')
         convert_util.ppt_to_pdf(work_dir, work_file)
-        logger.info(convert_util.get_local_file_list(work_dir, '').inspect)
         logger.info('Start converting from PDF to PPM')
         convert_util.pdf_to_ppm(work_dir, "#{work_file}.pdf")
-        logger.info(convert_util.get_local_file_list(work_dir, '').inspect)
         true
       else
         false
@@ -96,7 +93,7 @@ class ConvertProcedure
       @slide_image_list.each do |item|
         save_list.push("#{object_key}/#{File.basename(item)}")
       end
-      open("#{work_dir}/list.json", 'w') do |io|
+      File.open("#{work_dir}/list.json", 'w') do |io|
         JSON.dump(save_list, io)
       end
       @upload_file_list.push("#{work_dir}/list.json")
@@ -110,30 +107,14 @@ class ConvertProcedure
     def update_database
       if ENV.fetch('OSS_MULTI_TENANT') { false }
         tenants = Tenant.pluck(:name)
-        logger.info("all tenants are #{tenants.to_s}")
         tenants.each do |tenant|
           Apartment::Tenant.switch(tenant) do
             logger.info("tenant is #{tenant}")
             update_slide
           end
         end
-        logger.info('then check master database...')
         Apartment::Tenant.reset
-        update_slide
-      else
-        update_slide
       end
-    end
-
-    def update_slide
-      slide = Slide.where('slides.object_key = ?', object_key).first
-      if slide
-        slide.converted!
-        slide.extension = ".#{@file_type}"
-        slide.num_of_pages = @slide_image_list.count
-        slide.save
-      else
-        logger.info('There is no slide in this database...')
-      end
+      Slide.update_after_convert(object_key, @file_type, @slide_image_list.count)
     end
 end

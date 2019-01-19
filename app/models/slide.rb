@@ -56,6 +56,11 @@ class Slide < ApplicationRecord
   scope :category, ->(category_id) { where('category_id = ?', category_id) }
   scope :owner, ->(user_id) { where('user_id = ?', user_id) }
 
+  def record_access(access_type)
+    increment!(:page_view).increment!(:total_view) if access_type == :page_view
+    increment!(:embedded_view).increment!(:total_view) if access_type == :embedded_view
+  end
+
   def self.latest_slides(limit = 10)
     self.published.latest.
       includes(:user).
@@ -87,6 +92,19 @@ class Slide < ApplicationRecord
     Slide.where('slides.object_key = ?', key).count > 0
   end
 
+  def self.update_after_convert(object_key, file_type, num_of_pages)
+    slide = Slide.find_by(object_key: object_key)
+    if slide
+      slide.converted!
+      slide.extension = ".#{file_type}"
+      slide.num_of_pages = num_of_pages
+      slide.save
+    else
+      logger.info('There is no slide in this database...')
+      false
+    end
+  end
+
   def self.related_slides(category_id, slide_id, limit = 10)
     Slide.published.latest.
       where('category_id = ?', category_id).
@@ -108,39 +126,11 @@ class Slide < ApplicationRecord
     "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/thumbnail.jpg"
   end
 
-  def transcript_url
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/transcript.txt"
-  end
-
-  def page_list_url
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/list.json"
-  end
-
-  # :reek:UncommunicativeVariableName { enabled: false }
-  def page_list
-    len = num_of_pages.abs.to_s.length
-    result = []
-    (1..num_of_pages).each do |i|
-      n = i.to_s.rjust(len, '0')
-      result.push("#{object_key}/slide-#{n}.jpg")
-    end
-    result
-  end
-
   def transcript
-    @transcript ||= get_php_serialized_data(self.transcript_url)
+    @transcript ||= Transcript.new(object_key)
   end
 
-  def transcript_exist?
-    result = false
-    if transcript.instance_of?(Array)
-      transcript.each do |tran|
-        unless tran.empty?
-          result = true
-          break
-        end
-      end
-    end
-    result
+  def pages
+    @pages ||= SlidePages.new(object_key, num_of_pages)
   end
 end
