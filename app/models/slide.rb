@@ -122,15 +122,15 @@ class Slide < ApplicationRecord
     CloudConfig::SERVICE.delete_generated_files(object_key)
   end
 
-  def thumbnail_url
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/thumbnail.jpg"
+  def pages
+    @pages ||= SlidePages.new(object_key, num_of_pages)
   end
 
   def transcript
     @transcript ||= Transcript.new(object_key)
   end
 
-  def pages
-    @pages ||= SlidePages.new(object_key, num_of_pages)
+  def thumbnail
+    @thumbnail ||= Thumbnail.new(object_key)
   end
 end

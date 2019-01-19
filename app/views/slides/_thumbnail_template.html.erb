@@ -6,7 +6,7 @@
       <% elsif slide.converted? == false then %>
         <% image_url = image_path("converting_small.jpg") %>
       <% else %>
-        <% image_url = slide.thumbnail_url %>
+        <% image_url = slide.thumbnail.url %>
       <% end %>
 
       <div class="<%= column_class %>" style="padding:4px;">
