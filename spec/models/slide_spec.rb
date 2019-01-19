@@ -87,14 +87,6 @@ describe 'Slide' do
     end
   end
 
-  describe 'Method "thumbnail_url"' do
-    it 'is valid' do
-      FactoryBot.create(:slide)
-      object_key = Slide.find(1).object_key
-      expect(Slide.find(1).thumbnail_url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/#{object_key}/thumbnail.jpg")
-    end
-  end
-
   describe 'Method "update_after_convert"' do
     it 'updates the convert status to "converted"' do
       FactoryBot.create(:slide)
@@ -130,32 +122,6 @@ describe 'Slide' do
       slide.record_access(:embedded_view)
       expect(Slide.find(1).embedded_view).to eq(embedded_view + 1)
       expect(Slide.find(1).total_view).to eq(total_view + 1)
-    end
-  end
-end
-
-describe 'Slide_on_Azure' do
-  let!(:default_user) { create(:default_user) }
-  let!(:default_category) { create(:default_category) }
-
-  before do
-    CloudConfig.class_eval { remove_const(:SERVICE) }
-    CloudConfig::SERVICE = SlideHub::Cloud::Engine::Azure
-    SlideHub::Cloud::Engine::Azure.configure do |config|
-      config.bucket_name = 'my-bucket'
-      config.image_bucket_name = 'my-image-bucket'
-      config.cdn_base_url = ''
-      config.queue_name = 'my-queue'
-      config.azure_storage_account_name = 'azure_test'
-      config.azure_storage_access_key = 'azure_test_key'
-    end
-  end
-
-  describe 'Method "thumbnail_url"' do
-    it 'is valid' do
-      FactoryBot.create(:slide)
-      object_key = Slide.find(1).object_key
-      expect(Slide.find(1).thumbnail_url).to eq("https://azure_test.blob.core.windows.net/my-image-bucket/#{object_key}/thumbnail.jpg")
     end
   end
 end

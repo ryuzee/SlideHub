@@ -2,7 +2,7 @@
 
 page_list = slide.pages.list
 if page_list.instance_of?(Array) && page_list.count > 0
-  u = slide.thumbnail_url
+  u = slide.thumbnail.url
 else
   u = image_url("converting.jpg")
 end

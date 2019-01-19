@@ -1,6 +1,4 @@
 class SlidePages
-  include WebResource
-
   attr_accessor :object_key
   attr_accessor :num_of_pages
 
