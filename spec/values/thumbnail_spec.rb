@@ -19,7 +19,7 @@ describe 'Thumbnail' do
   describe 'Method "url"' do
     it 'returns valid url' do
       thumbnail = Thumbnail.new('an-object-key')
-      expect(thumbnail.url).to eq("https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/an-object-key/thumbnail.jpg")
+      expect(thumbnail.url).to eq('https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/an-object-key/thumbnail.jpg')
     end
   end
 end
@@ -41,7 +41,7 @@ describe 'Slide_on_Azure' do
   describe 'Method "url"' do
     it 'returns valid url' do
       thumbnail = Thumbnail.new('an-object-key')
-      expect(thumbnail.url).to eq("https://azure_test.blob.core.windows.net/my-image-bucket/an-object-key/thumbnail.jpg")
+      expect(thumbnail.url).to eq('https://azure_test.blob.core.windows.net/my-image-bucket/an-object-key/thumbnail.jpg')
     end
   end
 end
