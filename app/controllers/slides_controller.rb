@@ -90,7 +90,7 @@ class SlidesController < ApplicationController
   private
 
     def set_related_slides
-      @related_slides = Slide.related_slides(@slide.category_id, @slide.id)
+      @related_slides = SlidesFinder.related(@slide.category_id, @slide.id)
     end
 
     def owner?
