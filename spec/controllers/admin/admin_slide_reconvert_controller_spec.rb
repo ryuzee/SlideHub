@@ -9,7 +9,7 @@ RSpec.describe Admin::SlideReconvertController, type: :controller do
 
     describe 'GET /admin/slide_reconvert/1' do
       it 'works!' do
-        allow_any_instance_of(Slide).to receive(:send_convert_request).and_return(true)
+        allow_any_instance_of(SlideConvertService).to receive(:send_request).and_return(true)
         slide = create(:slide)
         get :show, params: { id: slide.id }
         expect(response.status).to eq(302)

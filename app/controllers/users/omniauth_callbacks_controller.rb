@@ -1,7 +1,7 @@
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def facebook
-      @user = User.find_for_facebook_oauth(request.env['omniauth.auth'])
+      @user = UserFinder.find_for_facebook_oauth(request.env['omniauth.auth'])
 
       if @user.persisted?
         set_flash_message(:notice, :success, kind: 'Facebook') if is_navigational_format?
@@ -13,7 +13,7 @@ module Users
     end
 
     def twitter
-      @user = User.find_for_twitter_oauth(request.env['omniauth.auth'])
+      @user = UserFinder.find_for_twitter_oauth(request.env['omniauth.auth'])
 
       if @user.persisted?
         set_flash_message(:notice, :success, kind: 'Twitter') if is_navigational_format?

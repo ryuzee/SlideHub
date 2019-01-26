@@ -83,15 +83,6 @@ class Slide < ApplicationRecord
     end
   end
 
-  def send_convert_request
-    CloudConfig::SERVICE.send_message({ id: id, object_key: object_key }.to_json)
-  end
-
-  def delete_uploaded_files
-    CloudConfig::SERVICE.delete_slide(object_key)
-    CloudConfig::SERVICE.delete_generated_files(object_key)
-  end
-
   def pages
     @pages ||= SlidePages.new(object_key, num_of_pages)
   end
