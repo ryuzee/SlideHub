@@ -1,7 +1,15 @@
 require 'rails_helper'
 
-describe 'User' do
+describe 'UserFinder' do
   let(:user) { build(:default_user) }
+
+  describe 'username_to_id' do
+    it 'returns user_id' do
+      default_user = FactoryBot.create(:default_user)
+      id = UserFinder.username_to_id(default_user.username)
+      expect(id).to eq(1)
+    end
+  end
 
   describe 'omniauth_with_Twitter' do
     auth_hash = OmniAuth::AuthHash.new({

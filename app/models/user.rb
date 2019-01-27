@@ -78,10 +78,6 @@ class User < ApplicationRecord
     super
   end
 
-  def self.username_to_id(username)
-    User.find_by(username: username).id
-  end
-
   def self.new_with_session(params, session)
     if session['devise.user_attributes']
       new(session['devise.user_attributes']) do |user|

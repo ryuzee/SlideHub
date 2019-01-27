@@ -1,18 +1,10 @@
     <div class="row" style="max-width:1024px; margin:0 auto;">
     <% slides.each do |slide| %>
       <% next if slide.nil? %>
-      <% if slide.convert_error? then %>
-        <% image_url = image_path("failed_to_convert_small.jpg") %>
-      <% elsif slide.converted? == false then %>
-        <% image_url = image_path("converting_small.jpg") %>
-      <% else %>
-        <% image_url = slide.thumbnail.url %>
-      <% end %>
-
       <div class="<%= column_class %>" style="padding:4px;">
         <div class="panel slidecard">
           <div class="slidecard-image">
-            <%= link_to image_tag(image_url, class: "img-responsive", style: "width:100%"), slide_path(slide.id) %>
+            <%= link_to image_tag(thumbnail_image_url(slide), class: "img-responsive", style: "width:100%"), slide_path(slide.id) %>
           </div>
           <div class="slidecard-content">
             <div class="slidecard-basic-info">

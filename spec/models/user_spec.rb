@@ -222,12 +222,4 @@ describe 'User' do
       expect(user.valid?).to eq(false)
     end
   end
-
-  describe 'username_to_id' do
-    it 'returns user_id' do
-      default_user = FactoryBot.create(:default_user)
-      id = User.username_to_id(default_user.username)
-      expect(id).to eq(1)
-    end
-  end
 end
