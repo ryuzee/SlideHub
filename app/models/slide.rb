@@ -61,28 +61,6 @@ class Slide < ApplicationRecord
     increment!(:embedded_view).increment!(:total_view) if access_type == :embedded_view
   end
 
-  def self.latest_slides(limit = 10)
-    self.published.latest.
-      includes(:user).
-      limit(limit)
-  end
-
-  def self.popular_slides(limit = 10)
-    self.published.popular.
-      includes(:user).
-      limit(limit)
-  end
-
-  # :reek:UncommunicativeVariableName { enabled: false }
-  def self.featured_slides(limit = 10)
-    ids = FeaturedSlide.order(created_at: 'desc').pluck(:slide_id)
-    slides = self.published.
-             includes(:user).
-             where(id: ids).
-             limit(limit)
-    ids.collect { |id| slides.detect { |x| x.id == id.to_i } }
-  end
-
   # :reek:UnusedParameters { enabled: false }
   def self.ransackable_attributes(auth_object = nil)
     (column_names + ['tag_search']) + _ransackers.keys
@@ -103,23 +81,6 @@ class Slide < ApplicationRecord
       logger.info('There is no slide in this database...')
       false
     end
-  end
-
-  def self.related_slides(category_id, slide_id, limit = 10)
-    Slide.published.latest.
-      where('category_id = ?', category_id).
-      where('id != ?', slide_id).
-      limit(limit).
-      includes(:user)
-  end
-
-  def send_convert_request
-    CloudConfig::SERVICE.send_message({ id: id, object_key: object_key }.to_json)
-  end
-
-  def delete_uploaded_files
-    CloudConfig::SERVICE.delete_slide(object_key)
-    CloudConfig::SERVICE.delete_generated_files(object_key)
   end
 
   def pages

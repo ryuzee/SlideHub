@@ -75,7 +75,7 @@ class UsersController < ApplicationController
 
     def username_to_id
       if params.key?(:username)
-        params[:id] = User.username_to_id(params[:username])
+        params[:id] = UserFinder.username_to_id(params[:username])
       end
     end
 end

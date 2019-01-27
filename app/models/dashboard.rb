@@ -41,10 +41,10 @@ class Dashboard
   end
 
   def latest_slides
-    Slide.latest_slides
+    SlidesFinder.latest
   end
 
   def popular_slides
-    Slide.popular_slides
+    SlidesFinder.popular
   end
 end

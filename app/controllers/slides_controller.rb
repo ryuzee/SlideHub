@@ -52,7 +52,7 @@ class SlidesController < ApplicationController
   end
 
   def destroy
-    @slide.delete_uploaded_files
+    SlideFileService.new(@slide).delete_files
     @slide.destroy
     redirect_to slides_path
   end
@@ -64,7 +64,7 @@ class SlidesController < ApplicationController
     @slide.user_id = current_user.id
     if @slide.save
       slide = Slide.where('slides.object_key = ?', key).first
-      slide.send_convert_request
+      SlideConvertService.new(slide).send_request
       redirect_to slide_path(slide.id)
     else
       render "slides/#{CloudConfig.service_name}/new"
@@ -80,7 +80,7 @@ class SlidesController < ApplicationController
 
     @slide.assign_attributes(slide_params)
     if @slide.update(slide_params)
-      @slide.send_convert_request unless @slide.converted?
+      SlideConvertService.new(@slide).send_request unless @slide.converted?
       redirect_to slide_path(@slide.id)
     else
       render "slides/#{CloudConfig.service_name}/edit"
@@ -90,7 +90,7 @@ class SlidesController < ApplicationController
   private
 
     def set_related_slides
-      @related_slides = Slide.related_slides(@slide.category_id, @slide.id)
+      @related_slides = SlidesFinder.related(@slide.category_id, @slide.id)
     end
 
     def owner?

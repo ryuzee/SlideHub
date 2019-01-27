@@ -71,6 +71,8 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :view
   config.include ControllerMacros, type: :controller
 
+  require 'support/cloud_helpers.rb'
+
   # DatabaseCleaner
   require 'database_cleaner'
   config.before(:suite) do
