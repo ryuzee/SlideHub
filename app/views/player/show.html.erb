@@ -1,17 +1,9 @@
 <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" %>
-<% page_list = @slide.pages.list %>
 <%
   if params.has_key?(:prefix) && !params[:prefix].empty?
     prefix = params[:prefix]
   else
     prefix = js_prefix
-  end
-%>
-<%
-  if page_list.instance_of?(Array)
-    page_count = page_list.count
-  else
-    page_count = 0
   end
 %>
 
@@ -20,23 +12,7 @@
 <% default_image = image_url("loading.jpg") %>
 <div>
   <ul style="display:none" id="<%= prefix %>slide_list">
-  <% if page_count > 0 %>
-    <% idx = 0 %>
-    <% page_list.each do |f| %>
-      <% u = "#{CloudConfig::SERVICE.resource_endpoint}/#{f}" %>
-      <% if idx == 0 %>
-        <% default_image = u %>
-      <% end %>
-      <li><img class="lazy" src="<%= image_url("spacer.png") %>" data-original="<%= u %>" /></li>
-      <% idx += 1 %>
-    <% end %>
-  <% elsif @slide.convert_error? %>
-    <% default_image = image_url("failed_to_convert.jpg") %>
-    <li><img class="lazy" data-original="<%= default_image %>" /></li>
-  <% else %>
-    <% default_image = image_url("converting.jpg") %>
-    <li><img class="lazy" data-original="<%= default_image %>" /></li>
-  <% end %>
+    <%= raw slide_page_image_list_tag(@slide) %>
   </ul>
 
   <div class="<%= prefix %>slidebox" id="<%= prefix %>slidebox" style="left:0px;margin:0px;padding:0px;">
