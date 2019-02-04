@@ -119,8 +119,8 @@
           <td><%= slide.embedded_view %></td>
           <td><%= slide.download_count %></td>
           <td><%= slide.comments_count %></td>
-          <td><a href="<%= slide.transcript.url %>" target="_blank"><i class="fa fa-file-text"></i></a></td>
-          <td><a href="<%= slide.pages.url %>" target="_blank"><i class="fa fa-jsfiddle"></i></a></td>
+          <td><a href="<%= slide.transcript.url %>" target="_blank" rel="noopener noreferrer"><i class="fa fa-file-text"></i></a></td>
+          <td><a href="<%= slide.pages.url %>" target="_blank" rel="noopener noreferrer"><i class="fa fa-jsfiddle"></i></a></td>
           <td><a href="<%= admin_slide_download_path(slide.id) %>"><i class="fa fa-cloud-download"></i></a></td>
           <td>
             <%= link_to admin_slide_reconvert_path(slide.id), :method => 'get', data: {:confirm => t(:confirm_to_send_reconvert_request)} do %>
