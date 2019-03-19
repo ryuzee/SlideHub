@@ -870,7 +870,7 @@ GEM
       responders
       warden (~> 1.2.3)
     devise-bootstrap-views (0.0.11)
-    devise-i18n (1.7.1)
+    devise-i18n (1.7.2)
       devise (>= 4.5)
     devise-i18n-views (0.3.7)
     diff-lcs (1.3)
