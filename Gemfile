@@ -136,7 +136,7 @@ group :development do
   # Finding code smell
   gem 'reek'
   # Static Analysis
-  gem 'rubocop', '~> 0.65'
+  gem 'rubocop', '~> 0.67'
   gem 'rubocop-rspec'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
