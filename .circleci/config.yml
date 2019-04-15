@@ -10,7 +10,7 @@ jobs:
     shell: /bin/bash --login
 
     docker:
-      - image: circleci/ruby:2.4.1-node-browsers
+      - image: circleci/ruby:2.5.0-node-browsers
         environment:
           CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
           CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
@@ -29,7 +29,7 @@ jobs:
       - run: sudo npm install -g bower
       - run: sudo apt-get update
       - run: sudo apt-get install -y libmagic-dev
-      - run: cd /tmp && wget --tries 3 -O freetds-1.00.15.tar.gz "ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.00.15.tar.gz" && tar -xzvf freetds-1.00.15.tar.gz && cd freetds-1.00.15 && ./configure && make && sudo make install
+      - run: cd /tmp && wget --tries 3 -O freetds-1.1.4.tar.gz "ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.1.4.tar.gz" && tar -xzvf freetds-1.1.4.tar.gz && cd freetds-1.1.4 && ./configure && make && sudo make install
       - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
       - run: chmod +x ./cc-test-reporter
 
