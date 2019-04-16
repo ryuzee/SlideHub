@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 MAINTAINER ryuzee
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get -y install wget curl zip unzip git sqlite3 libsqlite3-dev build-essential libssl-dev libreadline-dev libmagickcore-dev libmagic-dev libmagickwand-dev graphviz nginx language-pack-ja ntp libmysqlclient-dev supervisor imagemagick && update-locale LANGUAGE=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 LANG=ja_JP.UTF-8 && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+RUN apt-get update && apt-get -y install wget curl zip unzip git sqlite3 libsqlite3-dev build-essential libssl-dev libreadline-dev libmagickcore-dev libmagic-dev libmagickwand-dev graphviz nginx language-pack-ja ntp libmysqlclient-dev supervisor imagemagick freetds-dev && update-locale LANGUAGE=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 LANG=ja_JP.UTF-8 && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
 RUN git clone https://github.com/sstephenson/rbenv.git /root/.rbenv
 RUN echo "export PATH=/root/.rbenv/shims:/root/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /root/.bashrc
@@ -15,7 +15,7 @@ RUN bash -c "source /root/.bashrc && rbenv global 2.5.0"
 RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler"
 RUN bash -c "source /root/.bashrc && rbenv rehash"
 
-RUN cd /tmp && wget --tries 3 -O freetds-1.1.4.tar.gz "ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.1.4.tar.gz" && tar -xzvf freetds-1.1.4.tar.gz && cd freetds-1.1.4 && ./configure && make && make install
+#RUN cd /tmp && wget --tries 3 -O freetds-1.1.4.tar.gz "ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.1.4.tar.gz" && tar -xzvf freetds-1.1.4.tar.gz && cd freetds-1.1.4 && ./configure && make && make install
 
 COPY supervisor.conf /etc/supervisor.conf
 
