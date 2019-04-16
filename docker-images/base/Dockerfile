@@ -12,7 +12,7 @@ ENV PATH /root/.rbenv/bin:$PATH
 ENV RAILS_ROOT /opt/application/current
 RUN bash -c "source /root/.bashrc && rbenv install 2.5.0"
 RUN bash -c "source /root/.bashrc && rbenv global 2.5.0"
-RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler"
+RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler -v 1.16.1"
 RUN bash -c "source /root/.bashrc && rbenv rehash"
 
 #RUN cd /tmp && wget --tries 3 -O freetds-1.1.4.tar.gz "ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.1.4.tar.gz" && tar -xzvf freetds-1.1.4.tar.gz && cd freetds-1.1.4 && ./configure && make && make install
