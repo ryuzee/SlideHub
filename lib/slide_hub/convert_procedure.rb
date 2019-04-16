@@ -117,4 +117,14 @@ class ConvertProcedure
       end
       Slide.update_after_convert(object_key, @file_type, @slide_image_list.count)
     end
+
+    def update_slide
+      slide = Slide.where('slides.object_key = ?', object_key).first
+      if slide
+        slide.converted!
+        slide.extension = ".#{@file_type}"
+        slide.num_of_pages = @slide_image_list.count
+        slide.save
+      end
+    end
 end
