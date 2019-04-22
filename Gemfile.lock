@@ -1203,6 +1203,10 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
+    webdrivers (3.8.0)
+      nokogiri (~> 1.6)
+      rubyzip (~> 1.0)
+      selenium-webdriver (~> 3.0)
     webmock (3.5.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -1302,6 +1306,7 @@ DEPENDENCIES
   unicorn (~> 5.4.0)
   view_source_map
   web-console
+  webdrivers (~> 3.0)
   webmock
   will_paginate
   yaml_db

@@ -72,6 +72,7 @@ RSpec.configure do |config|
   config.include ControllerMacros, type: :controller
 
   require 'support/cloud_helpers.rb'
+  require 'support/capybara.rb'
 
   # DatabaseCleaner
   require 'database_cleaner'

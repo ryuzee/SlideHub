@@ -145,6 +145,7 @@ group :test do
   gem 'faker'
   gem 'launchy'
   gem 'selenium-webdriver'
+  gem 'webdrivers', '~> 3.0'
   gem 'webmock'
 end
 
