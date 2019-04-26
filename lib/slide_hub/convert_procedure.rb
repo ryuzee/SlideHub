@@ -105,6 +105,7 @@ class ConvertProcedure
     end
 
     def update_database
+      # If multi-tenanted, update all database which includes specified object_key
       if ENV.fetch('OSS_MULTI_TENANT') { false }
         tenants = Tenant.pluck(:name)
         tenants.each do |tenant|
@@ -114,8 +115,8 @@ class ConvertProcedure
           end
         end
         Apartment::Tenant.reset
-      else
-        Slide.update_after_convert(object_key, @file_type, @slide_image_list.count)
       end
+      # Update main database
+      Slide.update_after_convert(object_key, @file_type, @slide_image_list.count)
     end
 end
