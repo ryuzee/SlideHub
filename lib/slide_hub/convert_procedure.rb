@@ -114,7 +114,8 @@ class ConvertProcedure
           end
         end
         Apartment::Tenant.reset
+      else
+        Slide.update_after_convert(object_key, @file_type, @slide_image_list.count)
       end
-      Slide.update_after_convert(object_key, @file_type, @slide_image_list.count)
     end
 end
