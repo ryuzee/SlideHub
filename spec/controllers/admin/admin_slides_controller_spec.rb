@@ -8,14 +8,30 @@ RSpec.describe Admin::SlidesController, type: :controller do
     end
 
     describe 'GET /admin/slides/' do
-      it 'works!' do
+      render_views
+      it 'shows all slides regardless of the conversion status' do
+        slides = create_list(:slide, 3, convert_status: -1)
         get 'index'
         expect(response.status).to eq(200)
+        expect(assigns(:slides)).to eq(slides)
+        expect(response).to render_template :index
+        expect(response.content_type).to eq 'text/html'
+      end
+    end
+
+    describe 'GET /admin/slides/index.csv' do
+      it 'returns csv that includes all slides' do
+        slides = create_list(:slide, 3, convert_status: -1)
+        get 'index', { format: 'csv' }
+        expect(response.status).to eq(200)
+        expect(assigns(:slides)).to eq(slides)
+        expect(response).to render_template :index
+        expect(response.content_type).to eq 'text/csv'
       end
     end
 
     describe 'GET /admin/slides/edit/1' do
-      it 'works!' do
+      it 'shows the form to edit slide' do
         create(:slide)
         get 'edit', params: { id: '1' }
         expect(response.status).to eq(200)
@@ -23,7 +39,7 @@ RSpec.describe Admin::SlidesController, type: :controller do
     end
 
     describe 'POST /admin/slides/update' do
-      it 'works!' do
+      it 'succeeds to update slide if parameters are valid' do
         create(:slide)
         data = Slide.find(1)
         update_name = 'SushiKuitai'
@@ -36,7 +52,7 @@ RSpec.describe Admin::SlidesController, type: :controller do
     end
 
     describe 'POST /admin/slides/update' do
-      it 'move to edit screen' do
+      it 'failed to update slide and shows the form again if parameters are invalid' do
         create(:slide)
         data = Slide.find(1)
         update_name = '' # validation error
