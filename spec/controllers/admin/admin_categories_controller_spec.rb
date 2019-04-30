@@ -8,27 +8,27 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     end
 
     describe 'GET /admin/categories/' do
-      it 'works!' do
+      it 'shows the list of categories' do
         get 'index'
         expect(response.status).to eq(200)
       end
     end
 
     describe 'GET /admin/categories/new' do
-      it 'works!' do
+      it 'shows the form to create new category' do
         get 'new'
         expect(response.status).to eq(200)
       end
     end
 
     describe 'POST /admin/categories' do
-      it 'works!' do
+      it 'create a new category when name_en and name_ja fields are provided' do
         post 'create', params: { category: { name_en: 'en', name_ja: 'ja' } }
         expect(response.status).to eq(302)
         expect(response).to redirect_to admin_categories_path
       end
 
-      it 'render form' do
+      it 'can not create new category because of lack of category value, so render form again' do
         post 'create', params: { category: { name_en: 'en', name_ja: '' } }
         expect(response.status).to eq(200)
         expect(response).to render_template :new
@@ -36,7 +36,7 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     end
 
     describe 'GET /admin/categories/edit/1' do
-      it 'works!' do
+      it 'shows form to edit category' do
         target = create(:default_category)
         get 'edit', params: { id: target.id }
         expect(response.status).to eq(200)
@@ -44,7 +44,7 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     end
 
     describe 'POST /admin/categories/update' do
-      it 'works!' do
+      it 'updates the category when the name_en field is valid' do
         target = create(:default_category)
         data = Category.find(target.id)
         update_category = 'SushiKuitai'
@@ -62,7 +62,7 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     end
 
     describe 'POST /admin/categories/update' do
-      it 'move to edit screen' do
+      it 'can not update the category because the name is empty, thus go to edit screen' do
         target = create(:default_category)
         data = Category.find(target.id)
         update_category = '' # validation error
@@ -79,12 +79,20 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     end
 
     describe 'DELETE /admin/category' do
-      it 'works' do
+      it 'deletes the category when there is no slide in the category' do
         target = create(:default_category)
         delete :destroy, params: { id: target.id }
         expect(response.status).to eq(302)
         expect(response).to redirect_to admin_categories_path
         expect(Category.where(id: target.id).count).to eq(0)
+      end
+
+      it 'can not delete the category when one or more slides belong to the category' do
+        slide = create(:slide)
+        delete :destroy, params: { id: slide.category_id }
+        expect(response.status).to eq(302)
+        expect(response).to redirect_to admin_categories_path
+        expect(Category.where(id: slide.category_id).count).to eq(1)
       end
     end
   end
