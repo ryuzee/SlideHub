@@ -53,8 +53,7 @@ class User < ApplicationRecord
 
   # current twitter account length must be greater than 5...
   VALID_TWITTER_ACCOUNT_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,15}[a-zA-Z0-9]\z/.freeze
-  validates :twitter_account, allow_nil: true,
-                              allow_blank: true,
+  validates :twitter_account, allow_blank: true,
                               length: { minimum: 1, maximum: 15 },
                               format: { with: VALID_TWITTER_ACCOUNT_REGEX }
 
