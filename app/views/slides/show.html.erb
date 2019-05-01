@@ -63,15 +63,12 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $("#rightside").stick_in_parent();
-  });
-</script>
 
-<script type="text/javascript">
-  $(document).ready(function(){
     if (Cookies.get("SlideTab")) {
       $('a[data-toggle="tab"]').parent().removeClass('active');
       $('a[href="#' + Cookies.get("SlideTab") +'"]').click();
     }
+
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       var tabName = e.target.href;
       var items = tabName.split("#");

@@ -3,7 +3,6 @@
 <% if @slide_index.featured_slides.count > 0 %>
 <div class="row" id="featured">
   <div class="col-md-12">
-    <%- model_class = Slide -%>
     <h3><%=t :featured_slides %></h3>
     <% cache 'featured_slides', expires_in: 3.minutes, skip_digest: true do %>
     <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.featured_slides %>
@@ -14,7 +13,6 @@
 
 <div class="row" id="latest">
   <div class="col-md-12">
-    <%- model_class = Slide -%>
     <h3><%=t :latest_slides %>&nbsp;&nbsp;<small><a href="<%= latest_index_path %>"><%= t :more_slides %></a></small></h3>
     <% cache 'latest_slides', expires_in: 1.minutes, skip_digest: true do %>
       <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.latest_slides %>
@@ -24,14 +22,11 @@
 
 <div class="row" id="popular">
   <div class="col-md-12">
-    <%- model_class = Slide -%>
     <h3><%=t :popular_slides %>&nbsp;&nbsp;<small><a href="<%= popular_index_path %>"><%= t :more_slides %></a></small></h3>
     <% cache 'popular_slides', expires_in: 3.minutes, skip_digest: true do %>
     <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.popular_slides %>
     <% end %>
   </div>
 </div>
-
-
 
 <br />
