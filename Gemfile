@@ -22,13 +22,6 @@ gem 'activerecord-session_store'
 gem 'sqlite3'
 # Use mysql
 gem 'mysql2', '~> 0.5'
-
-# Commented out because gem for rails 5.2 is not released yet...
-# Use SQLServer
-# gem 'activerecord-sqlserver-adapter'
-gem 'activerecord-sqlserver-adapter', git: 'https://github.com/matthewdunbar/activerecord-sqlserver-adapter.git'
-# gem 'tiny_tds'
-
 # Apply bootstrap
 # gem 'less-rails'
 # See https://github.com/metaskills/less-rails/issues/122

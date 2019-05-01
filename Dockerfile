@@ -1,4 +1,4 @@
-FROM ryuzee/slidehub-base:20190416
+FROM ryuzee/slidehub-base:20190501
 MAINTAINER ryuzee
 
 RUN mkdir -p /opt/application/current/

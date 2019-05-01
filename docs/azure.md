@@ -31,8 +31,8 @@ export region='Japan West'
 # Storage Account Name
 export storageaccount=slidestorage$rand
 
-# SQL Database Server Endpoint Name
-export dbserver=slide-sqlserver-$rand
+# Azure Database for MySQL Endpoint Name
+export dbserver=slide-mysql-$rand
 
 # Database Name
 export dbname=slidehub
@@ -91,13 +91,13 @@ az storage cors add --methods PUT GET HEAD POST OPTIONS --origins "*" --exposed-
 az storage queue create --name "slide-queue-$rand" --account-name "$storageaccount"
 
 # Create SQL Database Server
-az sql server create --name "$dbserver" --resource-group "$resourcegroup" --location "$region" --admin-user "$dbuser" --admin-password "$dbpassword"
+az mysql server create --resource-group "$resourcegroup" --location "$region" --sku-name B_Gen5_1 --name "$dbserver" --admin-user "$dbuser" --admin-password "$dbpassword" --ssl-enforcement Disabled
 
 # Set firewall Policy for SQL Database
-az sql server firewall-rule create --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0 --name "$dbserver-rule" --resource-group "$resourcegroup" --server "$dbserver"
+az mysql server firewall-rule create --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0 --name "$dbserver-rule" --resource-group "$resourcegroup" --server "$dbserver"
 
 # Create Database
-az sql db create --resource-group "$resourcegroup" --server "$dbserver" --name "$dbname"
+az mysql db create --resource-group "$resourcegroup" --server "$dbserver" --name "$dbname" --charset "utf8" --collation "utf8_general_ci"
 
 # Create App Service Plan
 az appservice plan create --name "$appservice_plan" --resource-group "$resourcegroup" --sku "$appservice_instance" --is-linux
@@ -112,14 +112,15 @@ OSS_AZURE_IMAGE_CONTAINER_NAME="slide-images-$rand" \
 OSS_AZURE_QUEUE_NAME="slide-queue-$rand" \
 OSS_AZURE_STORAGE_ACCESS_KEY=$key \
 OSS_AZURE_STORAGE_ACCOUNT_NAME="$storageaccount" \
-OSS_DB_ENGINE=sqlserver \
+OSS_DB_ENGINE=mysql2 \
 OSS_DB_NAME="$dbname" \
 OSS_DB_PASSWORD="$dbpassword" \
-OSS_DB_PORT=1433 \
-OSS_DB_URL="$dbserver.database.windows.net" \
+OSS_DB_PORT=3306 \
+OSS_DB_URL="$dbserver.mysql.database.azure.com" \
 OSS_DB_USE_AZURE=true \
-OSS_DB_USERNAME="$dbuser" \
+OSS_DB_USERNAME="$dbuser@$dbserver" \
 OSS_SECRET_KEY_BASE="$secretkey" \
 OSS_USE_AZURE=1 \
+RAILS_LOG_TO_STDOUT=1 \
 PORT=3000
 ```
