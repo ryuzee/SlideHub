@@ -36,7 +36,7 @@ You can see other screenshot [here](docs/images/capture2.png).
 This application depends on following technologies.
 
 * Docker (Azure Virtual Machine or Amazon EC2 is NOT required)
-* MySQL or SQL Server or Azure SQL Database
+* MySQL
 * AWS or Azure
  * AWS: Amazon S3 / Amazon SQS
  * Azure: Blob Storage / Blob Queue
@@ -106,12 +106,12 @@ puts blob_service.get_service_properties.inspect
 
 ## Prepare Database Server
 
-SlideHub can use MySQL and SQLServer (including Azure SQL Database).
+SlideHub can use MySQL (including Azure Database for MySQL).
 There are several options to run a database server as follows.
 
 * Launch virtual machine and install database software by your own
 * Use Amazon Relational Database Services (RDS)
-* Use Azure SQLDatabase
+* Use Azure Database for MySQL
 
 You need to get these variables as follows.
 
@@ -233,7 +233,7 @@ OSS_DB_PASSWORD=[DB Password for Prod] # Set passw0rd if using installer
 OSS_DB_URL=[DB URL for Prod] # Set localhost if using installer
 OSS_DB_ENGINE=[DB Engine] # Default 'mysql2'. You can set 'mysql2' or 'sqlserver' (NOT 'mysql')
 OSS_DB_PORT=[DB Port] # Default 3306
-OSS_DB_USE_AZURE=[false|true] # If you are using Azure SQL Database, set true
+OSS_DB_USE_AZURE=[false|true] # If you are using Azure Database for MySQL, set true
 
 # For development
 OSS_DB_NAME_DEV=[DB name for Dev]
@@ -242,7 +242,7 @@ OSS_DB_PASSWORD_DEV=[DB Password for Dev]
 OSS_DB_URL_DEV=[DB URL for Dev]
 OSS_DB_ENGINE_DEV=[DB ENGINE for Dev]
 OSS_DB_PORT_DEV=[DB PORT for Dev]
-OSS_DB_USE_AZURE_DEV=[Use SQL Database for Dev]
+OSS_DB_USE_AZURE_DEV=[Use Azure Database for MySQL for Dev]
 
 # For test
 OSS_DB_NAME_TEST=[DB name for Test]
@@ -251,7 +251,7 @@ OSS_DB_PASSWORD_TEST=[DB Password for Test]
 OSS_DB_URL_TEST=[DB URL for Test]
 OSS_DB_ENGINE_TEST=[DB ENGINE for Test]
 OSS_DB_PORT_TEST=[DB PORT for Test]
-OSS_DB_USE_AZURE_TEST=[Use SQL Database for Test]
+OSS_DB_USE_AZURE_TEST=[Use Azure Database for MySQL for Test]
 ```
 
 ## For Development mode
