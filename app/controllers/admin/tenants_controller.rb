@@ -31,11 +31,12 @@ module Admin
       end
     end
 
+    # :reek:UncommunicativeVariableName
     def destroy
       begin
         Apartment::Tenant.drop(@tenant.name)
-      rescue StandardError => error
-        logger.warn(error)
+      rescue StandardError => e
+        logger.warn(e)
       end
       @tenant.destroy
       redirect_to admin_tenants_path, notice: t(:tenant_was_deleted)
