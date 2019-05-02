@@ -20,3 +20,4 @@ detectors:
 
 exclude_paths:
   - spec
+  - db/migrate
