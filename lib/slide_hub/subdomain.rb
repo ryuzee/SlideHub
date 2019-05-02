@@ -7,8 +7,8 @@ module SlideHub
     end
 
     def self.load
-      ENV.fetch('OSS_MULTI_TENANT_EXCLUDED_SUBDOMAINS') { '' }.split(',').each do |s|
-        @subdomains.push(s) if s.present?
+      ENV.fetch('OSS_MULTI_TENANT_EXCLUDED_SUBDOMAINS') { '' }.split(',').each do |domain|
+        @subdomains.push(domain) if domain.present?
       end
     end
   end

@@ -38,16 +38,16 @@ module SlideHub
     end
 
     def jpg_to_thumbnail(list)
-      i = SlideHub::Image.new
+      slidehub_image = SlideHub::Image.new
       thumbnail_list = []
 
       save_to = "#{File.dirname(list[0])}/thumbnail.jpg"
-      i.thumbnail(list[0], save_to)
+      slidehub_image.thumbnail(list[0], save_to)
       thumbnail_list.push(save_to)
 
-      list.each do |f|
-        save_to = "#{File.dirname(f)}/#{File.basename(f, '.jpg')}-small.jpg"
-        i.thumbnail(f, save_to)
+      list.each do |file|
+        save_to = "#{File.dirname(file)}/#{File.basename(file, '.jpg')}-small.jpg"
+        slidehub_image.thumbnail(file, save_to)
         thumbnail_list.push(save_to)
       end
       thumbnail_list
@@ -57,8 +57,8 @@ module SlideHub
       transcript = []
       reader = PDF::Reader.new("#{dir}/#{file}")
       page_count = reader.page_count.to_i
-      page_count.times do |i|
-        current_page = i + 1
+      page_count.times do |index|
+        current_page = index + 1
         cmd = "cd #{dir} && pdftotext #{file} -f #{current_page} -l #{current_page} - > #{dir}/#{current_page}.txt"
         result = exec_command(cmd)
         if result && File.exist?("#{dir}/#{current_page}.txt")
@@ -90,14 +90,15 @@ module SlideHub
 
     def get_local_file_list(dir, extension)
       list = []
-      Dir.glob("#{dir}/*#{extension}").each do |f|
-        list.push(f)
+      Dir.glob("#{dir}/*#{extension}").each do |file|
+        list.push(file)
       end
       list.sort
     end
 
     private
 
+      # :reek:UncommunicativeVariableName
       def exec_command(cmd)
         logger.info(cmd)
         Open3.popen3(cmd) do |_i, o, e, w|

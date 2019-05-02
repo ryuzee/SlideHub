@@ -115,17 +115,16 @@ module SlideHub
           result
         end
 
-        ## S3
-        #
+        # S3
         def self.upload_files(bucket, files, prefix)
-          files.each do |f|
+          files.each do |file|
             Aws::S3::Client.new(region: @config.region).put_object(
               bucket: bucket,
-              key: "#{prefix}/#{File.basename(f)}",
-              body: File.read(f),
+              key: "#{prefix}/#{File.basename(file)}",
+              body: File.read(file),
               acl: 'public-read',
               storage_class: 'REDUCED_REDUNDANCY',
-            ) if File.exist?(f)
+            ) if File.exist?(file)
           end
         end
 
@@ -136,8 +135,8 @@ module SlideHub
             prefix: prefix,
           })
           files = []
-          resp.contents.each do |f|
-            files.push({ key: f.key })
+          resp.contents.each do |file|
+            files.push({ key: file.key })
           end
           files
         end
@@ -198,6 +197,7 @@ module SlideHub
           self.create_policy_proc(base_time)
         end
 
+        # :reek:UncommunicativeVariableName
         def self.create_policy_proc(base_time)
           if @config.aws_access_id.present? && @config.aws_secret_key.present?
             access_id = @config.aws_access_id

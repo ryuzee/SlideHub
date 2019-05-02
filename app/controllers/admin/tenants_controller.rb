@@ -34,8 +34,8 @@ module Admin
     def destroy
       begin
         Apartment::Tenant.drop(@tenant.name)
-      rescue StandardError => e
-        logger.warn(e)
+      rescue StandardError => error
+        logger.warn(error)
       end
       @tenant.destroy
       redirect_to admin_tenants_path, notice: t(:tenant_was_deleted)
