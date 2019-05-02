@@ -4,14 +4,14 @@ require 'rmagick'
 module SlideHub
   class Image
     def thumbnail(src, dest)
-      w = 320
-      h = 240
+      width = 320
+      height = 240
 
       thumb = Magick::Image.from_blob(File.read(src)).shift
-      thumb_out = if thumb.columns < w || thumb.rows < h
-                    cover_white(thumb, w, h)
+      thumb_out = if thumb.columns < width || thumb.rows < height
+                    cover_white(thumb, width, height)
                   else
-                    shrink_to_fill(thumb, w, h)
+                    shrink_to_fill(thumb, width, height)
                   end
       thumb_out.write(dest)
     end
