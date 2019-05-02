@@ -5,12 +5,12 @@ module PageImagesHelper
 
     if slide.pages.list.try(:count) > 0
       idx = 0
-      slide.pages.list.each do |f|
-        u = "#{CloudConfig::SERVICE.resource_endpoint}/#{f}"
+      slide.pages.list.each do |page|
+        original_image = "#{CloudConfig::SERVICE.resource_endpoint}/#{page}"
         if idx.zero?
-          default_image = u
+          default_image = original_image
         end
-        result += "<li><img class=\"lazy\" src=\"#{image_url("spacer.png")}\" data-original=\"#{u}\" /></li>"
+        result += "<li><img class=\"lazy\" src=\"#{image_url("spacer.png")}\" data-original=\"#{original_image}\" /></li>"
         idx += 1
       end
     elsif slide.convert_error?

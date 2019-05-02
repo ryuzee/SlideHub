@@ -59,8 +59,8 @@ class ApplicationSetting
     # set value
     def []=(var_name, value)
       var_name = var_name.to_s
-      setting = Setting.find_or_create_by(var: var_name) do |s|
-        s.var = var_name
+      setting = Setting.find_or_create_by(var: var_name) do |record|
+        record.var = var_name
       end
       setting.value = value
       setting.save
@@ -85,10 +85,10 @@ class ApplicationSetting
       @keys.each do |key|
         next if Setting.exists?(var: key)
 
-        s = Setting.new
-        s.var = key
-        s.value = self[key]
-        s.save
+        setting = Setting.new
+        setting.var = key
+        setting.value = self[key]
+        setting.save
       end
     end
   end

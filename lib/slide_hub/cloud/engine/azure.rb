@@ -83,13 +83,13 @@ module SlideHub
         ## Blob
         def self.upload_files(container, files, prefix)
           bs = ::Azure::Blob::BlobService.new
-          files.each do |f|
-            next unless File.exist?(f)
+          files.each do |file|
+            next unless File.exist?(file)
 
-            content = File.open(f, 'rb', &:read)
+            content = File.open(file, 'rb', &:read)
             require 'mime/types'
-            content_type = MIME::Types.type_for(File.extname(f))[0].to_s
-            bs.create_block_blob(container, "#{prefix}/#{File.basename(f)}", content, { content_type: content_type })
+            content_type = MIME::Types.type_for(File.extname(file))[0].to_s
+            bs.create_block_blob(container, "#{prefix}/#{File.basename(file)}", content, { content_type: content_type })
           end
         end
 
@@ -106,7 +106,7 @@ module SlideHub
         def self.save_file(container, key, destination)
           bs = ::Azure::Blob::BlobService.new
           _blob, content = bs.get_blob(container, key)
-          File.open(destination, 'wb') { |f| f.write(content) }
+          File.open(destination, 'wb') { |file| file.write(content) }
           true
         rescue StandardError
           false
@@ -138,11 +138,13 @@ module SlideHub
 
         def self.delete_files(container, files)
           bs = ::Azure::Blob::BlobService.new
-          files.each do |f|
-            bs.delete_blob(container, f[:key])
+          files.each do |file|
+            bs.delete_blob(container, file[:key])
           end
         end
 
+        # `container` is only for duck typing
+        # :reek:UnusedParameters
         def self.get_download_url(container, key)
           url = self.generate_sas_url(key)
           url

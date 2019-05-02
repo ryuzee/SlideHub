@@ -31,6 +31,7 @@ module Admin
       end
     end
 
+    # :reek:UncommunicativeVariableName
     def destroy
       begin
         Apartment::Tenant.drop(@tenant.name)

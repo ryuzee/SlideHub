@@ -32,107 +32,53 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   let!(:default_user) { create(:default_user) }
 
-  describe 'When logged in' do
+  describe 'When the user has logged in' do
     before do
       login_by_user default_user
     end
 
     describe 'GET /users/index' do
-      it 'works!' do
+      it 'shows the page for the user' do
         get 'index'
         expect(response.status).to eq(200)
       end
     end
   end
 
-  describe 'No Login' do
+  describe 'When the user has not logged in' do
     describe 'GET /users/1' do
-      it 'works!' do
+      it 'shows the user public page via user_id' do
         get 'show', params: { id: '1' }
         expect(response.status).to eq(200)
       end
     end
 
     describe 'GET /users/user01' do
-      it 'works!' do
+      it 'shows the user public page via username' do
         get 'show', params: { username: 'user01' }
         expect(response.status).to eq(200)
       end
     end
 
     describe 'GET /users/1?sort_by=popularity' do
-      it 'works!' do
+      it 'shows the user public page and the slides are sorted by popularity' do
         get 'show', params: { id: '1', sort_by: 'popularity' }
         expect(response.status).to eq(200)
       end
     end
 
     describe 'GET /users/1/embedded' do
-      it 'works!' do
+      it 'returns javascript for embedding' do
         get 'embedded', params: { id: '1' }
         expect(response.status).to eq(200)
       end
     end
 
     describe 'GET /users/index' do
-      it 'redirect to login' do
+      it 'redirects to login page' do
         get 'index'
         expect(response.status).to eq(302)
       end
-    end
-  end
-end
-
-RSpec.describe Users::RegistrationsController, type: :controller do
-  describe '#new' do
-    before(:each) do
-      request.env['devise.mapping'] = Devise.mappings[:user]
-    end
-
-    context 'with sign_up enabled' do
-      render_views
-      it 'works' do
-        ApplicationSetting['site.signup_enabled'] = '1'
-        get :new
-        expect(response.status).to eq(200)
-        expect(response.body).to include('username', 'biography')
-      end
-    end
-
-    context 'with sign_up disabled' do
-      render_views
-      it 'can not be accessed' do
-        begin
-          ApplicationSetting['site.signup_enabled'] = '0'
-          expect { get :new }.to raise_error(ActionController::RoutingError, 'Not Found')
-        ensure
-          ApplicationSetting['site.signup_enabled'] = '1'
-        end
-      end
-    end
-  end
-
-  describe '#update' do
-    let!(:default_user) { create(:default_user) }
-    before :each do
-      request.env['devise.mapping'] = Devise.mappings[:user]
-      sign_in default_user
-    end
-
-    it 'changes user attributes' do
-      put :update, params: { user: { email: 'user01new@example.com', biography: 'test', current_password: default_user.password } }
-      subject.current_user.reload
-      expect(assigns[:user]).not_to eq(be_new_record)
-      expect(subject.current_user.email).to eq 'user01new@example.com'
-      expect(subject.current_user.biography).to eq 'test'
-    end
-
-    it 'does not change user attributes because of lack of current_password' do
-      put :update, params: { user: { email: 'user01new@example.com', biography: 'test' } }
-      subject.current_user.reload
-      expect(assigns[:user]).not_to eq(be_new_record)
-      expect(subject.current_user.email).to eq 'user01@example.com'
-      expect(subject.current_user.biography).to eq 'Bio'
     end
   end
 end
