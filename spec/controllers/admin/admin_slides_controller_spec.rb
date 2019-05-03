@@ -32,29 +32,29 @@ RSpec.describe Admin::SlidesController, type: :controller do
 
     describe 'GET /admin/slides/edit/1' do
       it 'shows the form to edit slide' do
-        create(:slide)
-        get 'edit', params: { id: '1' }
+        slide = create(:slide)
+        get 'edit', params: { id: slide.id }
         expect(response.status).to eq(200)
       end
     end
 
     describe 'POST /admin/slides/update' do
       it 'succeeds to update slide if parameters are valid' do
-        create(:slide)
-        data = Slide.find(1)
+        slide = create(:slide)
+        data = Slide.find(slide.id)
         update_name = 'SushiKuitai'
         data[:name] = update_name
         post :update, params: { id: data.id, slide: data.attributes }
         expect(response.status).to eq(302)
-        new_name = Slide.find(1).name
+        new_name = Slide.find(slide.id).name
         expect(update_name).to eq(new_name)
       end
     end
 
     describe 'POST /admin/slides/update' do
       it 'failed to update slide and shows the form again if parameters are invalid' do
-        create(:slide)
-        data = Slide.find(1)
+        slide = create(:slide)
+        data = Slide.find(slide.id)
         update_name = '' # validation error
         data[:name] = update_name
         post :update, params: { id: data.id, slide: data.attributes }

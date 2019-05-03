@@ -45,9 +45,8 @@ RSpec.describe Admin::FeaturedSlidesController, type: :controller do
 
     describe 'DELETE /admin/featured_slides/1' do
       it 'deletes a feature slide' do
-        slide = create(:slide)
-        create(:featured_slide)
-        delete :destroy, params: { id: slide.id }
+        f = create(:featured_slide)
+        delete :destroy, params: { id: f.id }
         expect(response.status).to eq(302)
         expect(response).to redirect_to '/admin/featured_slides'
         expect(flash[:notice]).to eq(I18n.t(:featured_slide_was_deleted))

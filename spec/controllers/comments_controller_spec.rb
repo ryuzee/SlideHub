@@ -53,8 +53,8 @@ RSpec.describe CommentsController, type: :controller do
         login_by_user another_user
         get :destroy, params: { id: c.id }
         expect(response.status).to eq(302)
-        expect(response).to redirect_to "/slides/#{data.id}"
-        slide = Slide.find(data.id)
+        expect(response).to redirect_to "/slides/#{c.slide_id}"
+        slide = Slide.find(c.slide_id)
         expect(slide.comments.count).to be == 0
       end
     end
@@ -65,7 +65,7 @@ RSpec.describe CommentsController, type: :controller do
         get :destroy, params: { id: c.id }
         expect(response.status).to eq(302)
         expect(response).to redirect_to '/users/sign_in'
-        slide = Slide.find(data.id)
+        slide = Slide.find(c.slide_id)
         expect(slide.comments.count).to be == 1
       end
     end
