@@ -12,9 +12,8 @@
 
 FactoryBot.define do
   factory :comment_for_slide, class: Comment do
-    id { 1 }
     association :user, factory: :another_user, strategy: :build
-    slide_id { 1 }
+    slide { FactoryBot.create :slide }
     comment { 'Sushi' }
   end
 end

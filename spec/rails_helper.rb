@@ -81,6 +81,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.start
   end
 

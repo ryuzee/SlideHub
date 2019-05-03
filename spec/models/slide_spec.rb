@@ -80,12 +80,12 @@ describe 'Slide' do
 
   describe 'Method "update_after_convert"' do
     it 'updates the convert status to "converted"' do
-      FactoryBot.create(:slide)
-      object_key = Slide.find(1).object_key
+      slide = FactoryBot.create(:slide)
+      object_key = Slide.find(slide.id).object_key
       Slide.update_after_convert(object_key, 'pdf', 100)
-      expect(Slide.find(1).convert_status).to eq('converted')
-      expect(Slide.find(1).extension).to eq('.pdf')
-      expect(Slide.find(1).num_of_pages).to eq(100)
+      expect(Slide.find(slide.id).convert_status).to eq('converted')
+      expect(Slide.find(slide.id).extension).to eq('.pdf')
+      expect(Slide.find(slide.id).num_of_pages).to eq(100)
     end
 
     it 'does not do anything' do
@@ -96,23 +96,21 @@ describe 'Slide' do
 
   describe 'Method "record_access"' do
     it 'increments page_view"' do
-      FactoryBot.create(:slide)
-      slide = Slide.find(1)
+      slide = FactoryBot.create(:slide)
       page_view = slide.page_view
       total_view = slide.total_view
       slide.record_access(:page_view)
-      expect(Slide.find(1).page_view).to eq(page_view + 1)
-      expect(Slide.find(1).total_view).to eq(total_view + 1)
+      expect(Slide.find(slide.id).page_view).to eq(page_view + 1)
+      expect(Slide.find(slide.id).total_view).to eq(total_view + 1)
     end
 
     it 'increments embedded_view' do
-      FactoryBot.create(:slide)
-      slide = Slide.find(1)
+      slide = FactoryBot.create(:slide)
       embedded_view = slide.embedded_view
       total_view = slide.total_view
       slide.record_access(:embedded_view)
-      expect(Slide.find(1).embedded_view).to eq(embedded_view + 1)
-      expect(Slide.find(1).total_view).to eq(total_view + 1)
+      expect(Slide.find(slide.id).embedded_view).to eq(embedded_view + 1)
+      expect(Slide.find(slide.id).total_view).to eq(total_view + 1)
     end
   end
 end

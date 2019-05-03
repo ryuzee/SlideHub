@@ -33,10 +33,10 @@ describe 'Slides' do
 
   describe 'GET /slides/1' do
     it 'works!' do
-      create_list(:slide, 2)
+      slides = create_list(:slide, 2)
       allow_any_instance_of(SlidePages).to receive(:list).and_return(['/aaa/1.jpg', '/aaa/2.jpg'])
       allow_any_instance_of(Transcript).to receive(:lines).and_return([])
-      get '/slides/1'
+      get "/slides/#{slides[0].id}"
       expect(response.status).to eq(200)
     end
   end
