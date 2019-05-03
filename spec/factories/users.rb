@@ -34,7 +34,6 @@
 
 FactoryBot.define do
   factory :default_user, class: User do
-    id { 1 }
     email { 'user01@example.com' }
     display_name { 'User01' }
     biography { 'Bio' }
@@ -42,11 +41,10 @@ FactoryBot.define do
     admin { false }
     username { 'user01' }
     reset_password_token { 'user01' }
-    initialize_with { User.find_or_create_by(id: id) }
+    initialize_with { User.find_or_create_by(email: email) }
   end
 
   factory :another_user, class: User do
-    id { 998 }
     email { 'general998@example.com' }
     display_name { 'Yoshi' }
     biography { 'Bio' }
@@ -54,11 +52,10 @@ FactoryBot.define do
     admin { false }
     username { 'general998' }
     reset_password_token { 'general998' }
-    initialize_with { User.find_or_create_by(id: id) }
+    initialize_with { User.find_or_create_by(email: email) }
   end
 
   factory :admin_user, class: User do
-    id { 999 }
     email { 'admin999@example.com' }
     display_name { 'Takashi' }
     biography { 'Bio' }
@@ -66,6 +63,6 @@ FactoryBot.define do
     admin { true }
     username { 'admin999' }
     reset_password_token { 'admin999' }
-    initialize_with { User.find_or_create_by(id: id) }
+    initialize_with { User.find_or_create_by(email: email) }
   end
 end

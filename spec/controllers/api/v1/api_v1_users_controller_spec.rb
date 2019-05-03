@@ -6,7 +6,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     describe 'GET /users/1' do
       it 'works!' do
-        get 'show', params: { id: '1' }, format: 'json'
+        get 'show', params: { id: default_user.id }, format: 'json'
         expect(response.status).to eq(200)
         json = JSON.parse(response.body);
         keys = %w[id username display_name biography slides_count]

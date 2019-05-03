@@ -46,16 +46,16 @@ describe 'Users' do
 
   describe 'GET /users/1' do
     it 'works!' do
-      create(:slide)
-      get '/users/1'
+      slide = create(:slide)
+      get "/users/#{slide.user_id}"
       expect(response.status).to eq(200)
     end
   end
 
   describe 'GET /users/view/1 (Backward Compatibility)' do
     it 'works!' do
-      create(:slide)
-      get '/users/view/1'
+      slide = create(:slide)
+      get "/users/view/#{slide.user_id}"
       expect(response.status).to eq(200)
     end
   end

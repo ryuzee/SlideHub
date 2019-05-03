@@ -7,7 +7,7 @@ describe 'UserFinder' do
     it 'returns user_id' do
       default_user = FactoryBot.create(:default_user)
       id = UserFinder.username_to_id(default_user.username)
-      expect(id).to eq(1)
+      expect(id).to eq(default_user.id)
     end
   end
 

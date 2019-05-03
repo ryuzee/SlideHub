@@ -48,28 +48,28 @@ RSpec.describe UsersController, type: :controller do
   describe 'When the user has not logged in' do
     describe 'GET /users/1' do
       it 'shows the user public page via user_id' do
-        get 'show', params: { id: '1' }
+        get 'show', params: { id: default_user.id }
         expect(response.status).to eq(200)
       end
     end
 
     describe 'GET /users/user01' do
       it 'shows the user public page via username' do
-        get 'show', params: { username: 'user01' }
+        get 'show', params: { username: default_user.username }
         expect(response.status).to eq(200)
       end
     end
 
     describe 'GET /users/1?sort_by=popularity' do
       it 'shows the user public page and the slides are sorted by popularity' do
-        get 'show', params: { id: '1', sort_by: 'popularity' }
+        get 'show', params: { id: default_user.id, sort_by: 'popularity' }
         expect(response.status).to eq(200)
       end
     end
 
     describe 'GET /users/1/embedded' do
       it 'returns javascript for embedding' do
-        get 'embedded', params: { id: '1' }
+        get 'embedded', params: { id: default_user.id }
         expect(response.status).to eq(200)
       end
     end
