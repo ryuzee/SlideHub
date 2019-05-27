@@ -1189,7 +1189,7 @@ GEM
       kgio (~> 2.6)
       raindrops (~> 0.7)
     uniform_notifier (1.12.1)
-    view_source_map (0.1.4)
+    view_source_map (0.1.5)
       rails (>= 3.2)
     virtus (1.0.5)
       axiom-types (~> 0.1)
