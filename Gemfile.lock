@@ -912,9 +912,8 @@ GEM
       railties (>= 3.0.0)
     ice_nine (0.11.2)
     jaro_winkler (1.5.2)
-    jbuilder (2.8.0)
+    jbuilder (2.9.1)
       activesupport (>= 4.2.0)
-      multi_json (>= 1.2)
     jmespath (1.4.0)
     jquery-rails (4.3.3)
       rails-dom-testing (>= 1, < 3)
@@ -1254,7 +1253,7 @@ DEPENDENCIES
   guard-rubocop
   hirb
   i18n_generators
-  jbuilder (~> 2.8.0)
+  jbuilder (~> 2.9.1)
   jquery-rails (~> 4.3.3)
   json (~> 2.2)
   launchy
