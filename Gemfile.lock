@@ -8,13 +8,6 @@ GIT
       sprockets (> 2, < 4)
       tilt
 
-GIT
-  remote: https://github.com/mbleigh/acts-as-taggable-on.git
-  revision: 69322267029b54fe42be9a05e248df9de289a65b
-  specs:
-    acts-as-taggable-on (6.0.1)
-      activerecord (~> 5.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -66,6 +59,8 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (6.0.0)
+      activerecord (~> 5.0)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
     afm (0.2.2)
@@ -1221,7 +1216,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-session_store
-  acts-as-taggable-on!
+  acts-as-taggable-on
   annotate
   apartment
   aws-sdk (~> 3)

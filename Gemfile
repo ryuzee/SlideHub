@@ -47,9 +47,7 @@ gem 'omniauth-twitter'
 # See https://github.com/divoxx/ruby-php-serialization
 gem 'php-serialization'
 # Manage Tags
-# https://github.com/mbleigh/acts-as-taggable-on/issues/808
-# gem 'acts-as-taggable-on', git: 'https://github.com/Fodoj/acts-as-taggable-on', branch: 'rails-5.2'
-gem 'acts-as-taggable-on', git: 'https://github.com/mbleigh/acts-as-taggable-on.git'
+gem 'acts-as-taggable-on'
 
 # Complicated Search
 gem 'ransack'
