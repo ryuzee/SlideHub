@@ -1,4 +1,5 @@
-require: rubocop-rails
+# Disable rubocop-rails for Sider
+# require: rubocop-rails
 # target_version:
 #   rubocop v0.71.0
 
