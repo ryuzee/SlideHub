@@ -1142,21 +1142,23 @@ GEM
     rspec-support (3.8.0)
     rspec_junit_formatter (0.4.1)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (0.67.2)
+    rubocop (0.71.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.5, != 2.5.1.1)
-      psych (>= 3.1.0)
+      parser (>= 2.6)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 1.6)
+      unicode-display_width (>= 1.4.0, < 1.7)
+    rubocop-rails (2.0.0)
+      rack (>= 2.0)
+      rubocop (>= 0.70.0)
     rubocop-rspec (1.33.0)
       rubocop (>= 0.60.0)
     ruby-debug-ide (0.6.1)
       rake (>= 0.8.1)
     ruby-filemagic (0.7.2)
     ruby-graphviz (1.2.4)
-    ruby-progressbar (1.10.0)
+    ruby-progressbar (1.10.1)
     ruby-rc4 (0.1.5)
     ruby_dep (1.5.0)
     rubyzip (1.2.3)
@@ -1218,7 +1220,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.5.0)
+    unicode-display_width (1.6.0)
     unicorn (5.5.1)
       kgio (~> 2.6)
       raindrops (~> 0.7)
@@ -1316,7 +1318,8 @@ DEPENDENCIES
   rmagick
   rspec-rails
   rspec_junit_formatter
-  rubocop (~> 0.67)
+  rubocop
+  rubocop-rails
   rubocop-rspec
   ruby-debug-ide
   ruby-filemagic
