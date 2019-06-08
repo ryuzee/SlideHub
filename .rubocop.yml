@@ -1,5 +1,7 @@
+# Disable rubocop-rails for Sider
+# require: rubocop-rails
 # target_version:
-#   rubocop v0.60.0
+#   rubocop v0.71.0
 
 # 自動生成されるものはチェック対象から除外する
 AllCops:
@@ -89,6 +91,10 @@ Layout/ExtraSpacing:
 Style/FormatString:
   EnforcedStyle: percent
 
+# 文字列のフリーズフラグの有無を気にしないようにする
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 # if 文の中に 3 行程度のブロックを書くぐらいは許容した方が現実的
 Style/GuardClause:
   MinBodyLength: 5
@@ -105,7 +111,8 @@ Style/IfUnlessModifier:
 
 # ({ と hash を開始した場合に ( の位置にインデントさせる
 # そもそも {} が必要ない可能性が高いが Style/BracesAroundHashParameters はチェックしないことにしたので
-Layout/IndentHash:
+# Layout/IndentHash:
+Layout/IndentFirstHashElement:
   EnforcedStyle: consistent
 
 # private/protected は一段深くインデントする
