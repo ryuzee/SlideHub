@@ -7,16 +7,17 @@
 </section>
 
 <section class="content">
-<%= bootstrap_flash %>
 
-<%= form_for @featured_slide, :html => { :class => "form-horizontal slide" }, :url => admin_featured_slides_path  do |f| %>
+<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
+
+<%= simple_form_for @featured_slide, :html => { :class => "form-horizontal slide" }, :url => admin_featured_slides_path  do |f| %>
 
   <div class="control-group">
     <%= f.label :slide_id, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :slide_id, :class => 'form-control' %>
     </div>
-    <%= f.error_span(:slide_id) %>
+    <%= f.full_error(:slide_id) %>
   </div>
 
   <br clear="all" />

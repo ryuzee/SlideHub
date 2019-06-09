@@ -11,11 +11,11 @@
     <!--[if lt IE 9]>
       <%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" %>
     <![endif]-->
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" %>
     <% ApplicationSetting['site.theme'] = 'default' unless %w[default white dark gray].include?(ApplicationSetting['site.theme']) %>
     <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/bootstrap.css" %>
     <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/custom.css" %>
-    <%= stylesheet_link_tag "application", :media => "all" %>
-    <%= stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" %>
     <%= stylesheet_link_tag "/custom/override.css" %>
 
   <% if ApplicationSetting['site.favicon'].blank? %>
@@ -106,7 +106,7 @@
     <a name="page_top"></a>
     <div class="container" id="main_container" role="main">
       <%= raw ApplicationSetting['custom_content.center_top'] %>
-      <%= bootstrap_flash %>
+      <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
       <%= yield %>
       <%= raw ApplicationSetting['custom_content.center_bottom'] %>

@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Admin::SiteSettingsController, type: :controller do
   describe 'SiteSettings' do
+    render_views
     let(:admin_user) { create(:admin_user) }
     before do
       login_by_admin_user admin_user

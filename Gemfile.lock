@@ -1,13 +1,3 @@
-GIT
-  remote: https://github.com/MustafaZain/less-rails.git
-  revision: 946213803a5b274260dad17526eb201230e4a761
-  specs:
-    less-rails (2.8.1)
-      actionpack (>= 4.0)
-      less (~> 2.6.0)
-      sprockets (> 2, < 4)
-      tilt
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -875,7 +865,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    commonjs (0.2.7)
     concurrent-ruby (1.1.5)
     counter_culture (2.2.2)
       activerecord (>= 4.2.0)
@@ -960,8 +949,6 @@ GEM
     kwalify (0.7.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    less (2.6.0)
-      commonjs (~> 0.2.7)
     libv8 (3.16.14.19)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -1183,6 +1170,9 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (4.0.1)
       activesupport (>= 4.2.0)
+    simple_form (4.1.0)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
     simplecov (0.16.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -1211,11 +1201,6 @@ GEM
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
-    twitter-bootstrap-rails (4.0.0)
-      actionpack (~> 5.0, >= 5.0.1)
-      execjs (~> 2.7)
-      less-rails (~> 2.8, >= 2.8.0)
-      railties (~> 5.0, >= 5.0.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.20)
@@ -1294,7 +1279,6 @@ DEPENDENCIES
   jquery-rails (~> 4.3.3)
   json (~> 2.2)
   launchy
-  less-rails!
   meta-tags
   meta_request
   mini_magick
@@ -1327,6 +1311,7 @@ DEPENDENCIES
   sdoc
   selenium-webdriver
   shoulda-matchers
+  simple_form
   simplecov
   sitemap_generator
   spring
@@ -1334,7 +1319,6 @@ DEPENDENCIES
   sqlite3
   therubyracer (~> 0.12.3)
   turbolinks
-  twitter-bootstrap-rails (~> 4.0)
   uglifier (~> 4.1)
   unicorn (~> 5.5.1)
   view_source_map

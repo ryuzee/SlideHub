@@ -7,9 +7,9 @@
 </section>
 
 <section class="content">
-<%= bootstrap_flash %>
+<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
-<%= form_for @page, :html => { :class => "form-horizontal page" }, :url => "/admin/pages" do |f| %>
+<%= simple_form_for @page, :html => { :class => "form-horizontal page" }, :url => "/admin/pages" do |f| %>
 
     <% if @page.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
@@ -42,7 +42,7 @@
     <div class="controls">
       <%= f.text_area :content, :cols => 70, :rows => 20, :class => 'form-control' %>
     </div>
-    <%= f.error_span(:page_id) %>
+    <%= f.full_error(:page_id) %>
   </div>
 
   <br clear="all" />

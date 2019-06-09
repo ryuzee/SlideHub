@@ -9,7 +9,7 @@
 <!-- Main content -->
 <section class="content">
 <!-- Your Page Content Here -->
-<%= bootstrap_flash %>
+<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <div class="box box-warning">
   <div class="box-header">

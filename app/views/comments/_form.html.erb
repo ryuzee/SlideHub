@@ -1,4 +1,4 @@
-<%= form_for comment, :html => { :class => "form-horizontal user" } do |f| %>
+<%= simple_form_for comment, :html => { :class => "form-horizontal user" } do |f| %>
 
   <% if comment.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
@@ -19,7 +19,7 @@
     <% #= f.label :comment, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :comment, :class => 'form-control' %>
-      <%= f.error_span(:comment) %>
+      <%= f.full_error(:comment) %>
     </div>
   </div>
   <%= f.hidden_field :slide_id, :value => comment.slide_id %>

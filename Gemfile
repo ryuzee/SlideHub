@@ -22,15 +22,8 @@ gem 'activerecord-session_store'
 gem 'sqlite3'
 # Use mysql
 gem 'mysql2', '~> 0.5'
-# Apply bootstrap
-# gem 'less-rails'
-# See https://github.com/metaskills/less-rails/issues/122
-# See https://qiita.com/Jey/items/f69e93755be8ec959124
-# twitter-bootstrap-rails depends on less-rails ~> 2.8. However this issue was resolved in 3.0...
 gem 'execjs'
-gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails.git'
 gem 'sprockets', '3.7.2'
-gem 'twitter-bootstrap-rails', '~> 4.0'
 # Paginate
 gem 'bootstrap-will_paginate'
 gem 'will_paginate'
@@ -85,6 +78,8 @@ gem 'yaml_db'
 gem 'enum_help'
 # Multi Tenant
 gem 'apartment'
+
+gem 'simple_form'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
