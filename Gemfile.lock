@@ -1154,7 +1154,7 @@ GEM
       rubocop (>= 0.70.0)
     rubocop-rspec (1.33.0)
       rubocop (>= 0.60.0)
-    ruby-debug-ide (0.6.1)
+    ruby-debug-ide (0.7.0)
       rake (>= 0.8.1)
     ruby-filemagic (0.7.2)
     ruby-graphviz (1.2.4)
