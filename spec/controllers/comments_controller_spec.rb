@@ -14,6 +14,7 @@ require 'rails_helper'
 
 RSpec.describe CommentsController, type: :controller do
   describe 'Comments' do
+    render_views
     let(:data) { create(:slide) }
     let(:another_user) { create(:another_user) }
 

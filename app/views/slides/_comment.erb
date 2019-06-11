@@ -2,7 +2,11 @@
   <% posted_comments.each do |c| %>
   <div class="panel-body media comment_post">
     <div class="pull-left avatar50" style="padding-right:0px !important">
-      <%= image_tag(c.user.avatar.url(:thumb), class: 'img-responsive') %>
+      <% if c.user.avatar.attached? %>
+      <%= image_tag(c.user.avatar.variant(resize: "32x32"), class: 'img-responsive') %>
+      <% else %>
+      <%= image_tag('avatar/thumb/missing.png') %>
+      <% end %>
     </div>
     <div class="media-body" style="padding-left:10px;">
       <div class="h6" style="margin-top:0px"><a href="<%= user_by_username_path(username: c.user.username) %>"><%= strip_tags c.user.display_name %></a></div>
