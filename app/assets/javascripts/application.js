@@ -19,7 +19,7 @@
 //= require clipboard/dist/clipboard.min
 //= require jquery-lazyload/jquery.lazyload
 //= require jquery.equalheights/jquery.equalheights.min
-//= require sticky-kit/jquery.sticky-kit.min
+//= require sticky-kit/dist/sticky-kit.min
 //= require js-cookie/src/js.cookie
 //= require mousetrap/mousetrap.min
 //= require_tree .
