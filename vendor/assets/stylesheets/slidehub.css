@@ -330,6 +330,10 @@ body.slidehub_body {
   margin-bottom:0px !important;
 }
 
+abbr {
+  display: none;
+}
+
 /* Narrow Window styles
 -------------------------------------------------- */
 @media only screen and (max-width: 760px) {
