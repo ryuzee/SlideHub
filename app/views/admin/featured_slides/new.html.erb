@@ -10,14 +10,14 @@
 
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
-<%= simple_form_for @featured_slide, :html => { :class => "form-horizontal slide" }, :url => admin_featured_slides_path  do |f| %>
+<%= form_for @featured_slide, :html => { :class => "form-horizontal slide" }, :url => admin_featured_slides_path  do |f| %>
 
   <div class="control-group">
     <%= f.label :slide_id, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :slide_id, :class => 'form-control' %>
     </div>
-    <%= f.full_error(:slide_id) %>
+    <%= errors(@featured_slide, :slide_id) %>
   </div>
 
   <br clear="all" />

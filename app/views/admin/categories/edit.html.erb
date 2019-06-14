@@ -10,7 +10,7 @@
 
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
-<%= simple_form_for @category, :html => { :class => "form-horizontal category" }, :url => admin_category_path(@category.id) do |f| %>
+<%= form_for @category, :html => { :class => "form-horizontal category" }, :url => admin_category_path(@category.id) do |f| %>
   <% if @category.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
@@ -38,7 +38,7 @@
     <div class="controls">
       <%= f.text_field :name_en, :class => 'form-control' %>
     </div>
-    <%= f.full_error(:name_en) %>
+    <%= errors(@category, :name_en) %>
   </div>
 
   <div class="control-group">
@@ -46,7 +46,7 @@
     <div class="controls">
       <%= f.text_field :name_ja, :class => 'form-control' %>
     </div>
-    <%= f.full_error(:name_ja) %>
+    <%= errors(@category, :name_ja) %>
   </div>
 
   <br clear="all" />
