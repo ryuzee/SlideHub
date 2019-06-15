@@ -7,7 +7,7 @@
 </section>
 
 <section class="content">
-<%= bootstrap_flash %>
+<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <%= form_for @user, :html => { :class => "form-horizontal user" }, :url => admin_user_path(@user.id) do |f| %>
   <% if @user.errors.any? %>
@@ -30,7 +30,7 @@
     <div class="controls">
       <%= f.text_field "_id", :value => @user[:id], :disabled => "disabled", :class => 'form-control' %>
     </div>
-    <%= f.error_span(:user_id) %>
+    <%= errors(@user, :user_id) %>
   </div>
 
   <div class="control-group">
@@ -38,7 +38,7 @@
     <div class="controls">
       <%= f.text_field :username, :class => 'form-control' %>
     </div>
-    <%= f.error_span(:username) %>
+    <%= errors(@user, :username) %>
   </div>
 
   <div class="control-group">
@@ -46,7 +46,7 @@
     <div class="controls">
       <%= f.text_field :display_name, :class => 'form-control' %>
     </div>
-    <%= f.error_span(:display_name) %>
+    <%= errors(@user, :display_name) %>
   </div>
 
   <div class="control-group">
@@ -54,7 +54,7 @@
     <div class="controls">
       <%= f.text_field :email, :class => 'form-control' %>
     </div>
-    <%= f.error_span(:email) %>
+    <%= errors(@user, :email) %>
   </div>
 
   <div class="control-group">
@@ -62,7 +62,7 @@
     <div class="controls">
       <%= f.text_field :biography, :class => 'form-control' %>
     </div>
-    <%= f.error_span(:biography) %>
+    <%= errors(@user, :biography) %>
   </div>
 
   <div class="control-group">
@@ -72,7 +72,7 @@
         <%= f.check_box :admin %><%= t('activerecord.attributes.user.admin') %>
       </label>
     </div>
-    <%= f.error_span(:admin) %>
+    <%= errors(@user, :admin) %>
   </div>
 
   <br clear="all" />

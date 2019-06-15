@@ -24,10 +24,10 @@
 require 'rails_helper'
 
 RSpec.describe SlidesController, type: :controller do
+  render_views
   let(:default_user) { create(:default_user) }
 
   describe 'GET #index' do
-    render_views
     it 'render index' do
       get :index
       expect(response.status).to eq(200)
@@ -67,6 +67,7 @@ RSpec.describe SlidesController, type: :controller do
       slide = create(:slide)
       login_by_user default_user
       get :show, params: { id: slide.id }
+      expect(response.status).to eq(200)
       expect(assigns(:comment)).to be_an_instance_of(Comment)
     end
   end

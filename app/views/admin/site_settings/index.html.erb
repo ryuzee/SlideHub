@@ -7,7 +7,7 @@
 </section>
 
 <section class="content">
-<%= bootstrap_flash %>
+<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <%= form_tag update_admin_site_settings_path, method: :post, class: 'form-horizontal slide' do %>
   <div class="box box-warning">

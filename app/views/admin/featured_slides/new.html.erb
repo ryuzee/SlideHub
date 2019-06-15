@@ -7,7 +7,8 @@
 </section>
 
 <section class="content">
-<%= bootstrap_flash %>
+
+<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <%= form_for @featured_slide, :html => { :class => "form-horizontal slide" }, :url => admin_featured_slides_path  do |f| %>
 
@@ -16,7 +17,7 @@
     <div class="controls">
       <%= f.text_field :slide_id, :class => 'form-control' %>
     </div>
-    <%= f.error_span(:slide_id) %>
+    <%= errors(@featured_slide, :slide_id) %>
   </div>
 
   <br clear="all" />

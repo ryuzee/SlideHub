@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::UsersController, type: :controller do
   describe 'API' do
+    render_views
     let!(:default_user) { create(:default_user) }
 
     describe 'GET /users/1' do

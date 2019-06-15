@@ -7,7 +7,7 @@
 </section>
 
 <section class="content">
-<%= bootstrap_flash %>
+<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <%= form_for @tenant, :html => { :class => "form-horizontal tenant" }, :url => admin_tenant_path(@tenant.id) do |f| %>
 
@@ -33,7 +33,7 @@
       <%= f.text_field :name, :class => 'form-control' %>
     </div>
 
-    <%= f.error_span(:tenant_id) %>
+    <%= errors(@tenant, :tenant_id) %>
   </div>
 
   <br clear="all" />

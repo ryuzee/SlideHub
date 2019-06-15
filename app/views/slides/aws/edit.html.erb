@@ -72,14 +72,14 @@
     <%= f.label :name, :class => 'control-label col-sm-2' %>
     <div class="col-sm-10">
       <%= f.text_field :name, :class => 'form-control' %>
-      <%= f.error_span(:name) %>
+      <%= errors(@slide, :name) %>
     </div>
   </div>
   <div class="form-group">
     <%= f.label :description, :class => 'control-label col-sm-2' %>
     <div class="col-sm-10">
       <%= f.text_area :description, :class => 'form-control' %>
-      <%= f.error_span(:description) %>
+      <%= errors(@slide, :description) %>
     </div>
   </div>
 
@@ -90,7 +90,7 @@
           <%= f.check_box :downloadable %><%= t('activerecord.attributes.slide.downloadable') %>
         </label>
       </div>
-      <%= f.error_span(:downloadable) %>
+      <%= errors(@slide, :downloadable) %>
     </div>
   </div>
 
@@ -98,7 +98,7 @@
     <%= f.label t('activerecord.models.category'), :class => 'control-label col-sm-2' %>
     <div class="col-sm-10">
       <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: 'form-control'} %>
-      <%= f.error_span(:category_id) %>
+      <%= errors(@slide, :category_id) %>
     </div>
   </div>
 
@@ -109,7 +109,7 @@
     <%= f.label t('activerecord.models.tag'), :class => 'control-label col-sm-2' %>
     <div class="col-sm-10">
       <%= f.text_field :tag_list, :value => @slide.tag_list.join(','), :class => 'form-control' %>
-      <%= f.error_span(:tag_list) %>
+      <%= errors(@slide, :tag_list) %>
     </div>
   </div>
 
@@ -120,7 +120,7 @@
           <%= f.check_box :private %><%= t('activerecord.attributes.slide.private') %>
         </label>
       </div>
-      <%= f.error_span(:private) %>
+      <%= errors(@slide, :private) %>
     </div>
   </div>
 

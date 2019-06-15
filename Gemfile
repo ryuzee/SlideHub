@@ -10,8 +10,6 @@ gem 'uglifier', '~> 4.1'
 gem 'coffee-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', '~> 0.12.3', platforms: :ruby
-# Use jquery as the JavaScript library
-gem 'jquery-rails', '~> 4.3.3'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -22,15 +20,8 @@ gem 'activerecord-session_store'
 gem 'sqlite3'
 # Use mysql
 gem 'mysql2', '~> 0.5'
-# Apply bootstrap
-# gem 'less-rails'
-# See https://github.com/metaskills/less-rails/issues/122
-# See https://qiita.com/Jey/items/f69e93755be8ec959124
-# twitter-bootstrap-rails depends on less-rails ~> 2.8. However this issue was resolved in 3.0...
 gem 'execjs'
-gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails.git'
 gem 'sprockets', '3.7.2'
-gem 'twitter-bootstrap-rails', '~> 4.0'
 # Paginate
 gem 'bootstrap-will_paginate'
 gem 'will_paginate'

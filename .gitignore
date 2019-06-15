@@ -32,3 +32,4 @@ sitemap.xml.gz
 docker-compose*prod.yml
 docker-compose*production.yml
 .idea
+node_modules
