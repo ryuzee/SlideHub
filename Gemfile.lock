@@ -950,7 +950,6 @@ GEM
     kwalify (0.7.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (3.16.14.19)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -1102,7 +1101,6 @@ GEM
       parser (>= 2.5.0.0, < 2.7, != 2.5.1.1)
       psych (~> 3.1.0)
       rainbow (>= 2.0, < 4.0)
-    ref (2.0.0)
     regexp_parser (1.5.1)
     require_all (2.0.0)
     reserved_word (0.0.2)
@@ -1188,9 +1186,6 @@ GEM
       sprockets (>= 3.0.0)
     sqlite3 (1.4.1)
     systemu (2.6.5)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.9)
@@ -1311,7 +1306,6 @@ DEPENDENCIES
   spring
   sprockets (= 3.7.2)
   sqlite3
-  therubyracer (~> 0.12.3)
   turbolinks
   uglifier (~> 4.1)
   unicorn (~> 5.5.1)
