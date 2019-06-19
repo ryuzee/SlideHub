@@ -61,7 +61,7 @@ GEM
     annotate (2.7.5)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 13.0)
-    apartment (2.2.0)
+    apartment (2.2.1)
       activerecord (>= 3.1.2, < 6.0)
       parallel (>= 0.7.1)
       public_suffix (>= 2)
