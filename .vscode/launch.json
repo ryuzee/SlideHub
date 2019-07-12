@@ -1,0 +1,18 @@
+{
+  // IntelliSense を使用して利用可能な属性を学べます。
+  // 既存の属性の説明をホバーして表示します。
+  // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "Docker Listen for rdebug-ide",
+          "type": "Ruby",
+          "request": "attach",
+          "cwd": "${workspaceRoot}",
+          "remoteHost": "0.0.0.0",
+          "remotePort": "1234",
+          "remoteWorkspaceRoot": "/opt/application/current"
+      },
+
+  ]
+}
