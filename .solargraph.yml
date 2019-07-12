@@ -1,0 +1,20 @@
+include:
+  - "app/**/*.rb"
+  - "config/**/*.rb"
+# Ruby on Rails のサポートを強化するための設定
+# 完全な入力補完が実現できるわけではないが、設定をしないよりは少し使えるようになる
+# 参照: https://github.com/castwide/solargraph/issues/87
+require: 
+  - actioncable
+  - actionmailer
+  - actionpack
+  - actionview
+  - activejob
+  - activemodel
+  - activerecord
+  - activestorage
+  - activesupport
+# lint の設定
+# ここでは rubocop を使用する想定の設定をしている
+reporters:
+- rubocop
