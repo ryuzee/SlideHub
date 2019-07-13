@@ -4,5 +4,6 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
-  }
+  },
+  "ruby.specCommand": "docker-compose exec app /root/.rbenv/shims/rspec"
 }
