@@ -5,5 +5,9 @@
     "**/.settings": true,
     "**/.factorypath": true
   },
-  "ruby.specCommand": "docker-compose exec app /root/.rbenv/shims/rspec"
+  "ruby.specCommand": "docker-compose exec app /root/.rbenv/shims/rspec",
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveTimeout": 5000,
+  "ruby.format": "rubocop",
+  "files.insertFinalNewline": false,
 }
