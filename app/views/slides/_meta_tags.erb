@@ -2,7 +2,7 @@
 
 page_list = slide.pages.list
 if page_list.instance_of?(Array) && page_list.count > 0
-  u = slide.thumbnail.url
+  u = "#{CloudConfig::SERVICE.resource_endpoint}/#{page_list[0]}"
 else
   u = image_url("converting.jpg")
 end
