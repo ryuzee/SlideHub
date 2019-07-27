@@ -16,6 +16,19 @@ module SlideHub
       thumb_out.write(dest)
     end
 
+    # Create Middle Sized Image
+    def shrink(src, dest)
+      width = 1200
+
+      thumb = Magick::Image.from_blob(File.read(src)).shift
+      thumb_out = if thumb.columns > width
+                    shrink_to_fill(thumb, width, thumb.rows * width / thumb.columns)
+                  else
+                    shrink_to_fill(thumb, thumb.columns, thumb.rows)
+                  end
+      thumb_out.write(dest)
+    end
+
     private
 
       def shrink_to_fill(image, width, height)

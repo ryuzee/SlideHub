@@ -2,6 +2,7 @@ require 'azure'
 # require 'azure-contrib'
 require 'json'
 require 'azure/storage'
+require 'azure/storage/blob'
 require 'azure/storage/core/auth/shared_access_signature'
 
 module SlideHub
@@ -82,7 +83,11 @@ module SlideHub
 
         ## Blob
         def self.upload_files(container, files, prefix)
-          bs = ::Azure::Blob::BlobService.new
+          bs = ::Azure::Storage::Blob::BlobService.create(
+            storage_account_name: @config.azure_storage_account_name,
+            storage_access_key: @config.azure_storage_access_key,
+          )
+
           files.each do |file|
             next unless File.exist?(file)
 

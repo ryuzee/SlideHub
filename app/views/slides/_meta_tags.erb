@@ -2,9 +2,11 @@
 
 page_list = slide.pages.list
 if page_list.instance_of?(Array) && page_list.count > 0
-  u = "#{CloudConfig::SERVICE.resource_endpoint}/#{page_list[0]}"
+  twitter_image_url = "#{CloudConfig::SERVICE.resource_endpoint}/#{page_list[0]}"
+  facebook_image_url = slide.thumbnail.url_middle
 else
-  u = image_url("converting.jpg")
+  twitter_image_url = image_url("converting.jpg")
+  facebook_image_url = image_url("converting.jpg")
 end
 
 keywords =  [slide.name]
@@ -22,13 +24,14 @@ set_meta_tags og: {
   title:    slide.name,
   type:     'article',
   url:      slide_url(slide.id),
-  image:    u
+  image:    facebook_image_url
 }
 
 unless slide.user_twitter_account.blank?
   set_meta_tags twitter: {
     card:    'summary_large_image',
-    site:    "@#{slide.user_twitter_account}"
+    site:    "@#{slide.user_twitter_account}",
+    image:   twitter_image_url
   }
 end
 
