@@ -15,8 +15,8 @@ gem 'activerecord-session_store'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use mysql
-gem 'mysql2', '~> 0.5'
 gem 'execjs'
+gem 'mysql2', '~> 0.5'
 gem 'sprockets', '3.7.2'
 # Paginate
 gem 'bootstrap-will_paginate'
@@ -47,6 +47,7 @@ gem 'aws-sdk-s3'
 # Azure
 gem 'azure'
 gem 'azure-storage'
+gem 'azure-storage-blob'
 # Find file type
 gem 'ruby-filemagic'
 # Handle images

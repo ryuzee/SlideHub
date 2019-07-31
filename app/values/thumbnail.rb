@@ -8,4 +8,8 @@ class Thumbnail
   def url
     "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/thumbnail.jpg"
   end
+
+  def url_middle
+    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/thumbnail-middle.jpg"
+  end
 end

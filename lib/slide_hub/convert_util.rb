@@ -45,6 +45,10 @@ module SlideHub
       slidehub_image.thumbnail(list[0], save_to)
       thumbnail_list.push(save_to)
 
+      save_to = "#{File.dirname(list[0])}/thumbnail-middle.jpg"
+      slidehub_image.shrink(list[0], save_to)
+      thumbnail_list.push(save_to)
+
       list.each do |file|
         save_to = "#{File.dirname(file)}/#{File.basename(file, '.jpg')}-small.jpg"
         slidehub_image.thumbnail(file, save_to)

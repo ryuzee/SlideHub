@@ -51,6 +51,10 @@ module Azure
     end
 
     class DummyBlobService
+      def self.create
+        self.new
+      end
+
       def create_block_blob(container, key, content, options = {})
         nil
       end
@@ -153,6 +157,7 @@ describe 'SlideHub::Cloud::Engine::Azure' do
   describe 'Blob Storage' do
     before do
       allow(Azure::Blob::BlobService).to receive(:new).and_return(Azure::Blob::DummyBlobService.new)
+      allow(Azure::Storage::Blob::BlobService).to receive(:create).and_return(Azure::Blob::DummyBlobService.create)
       allow(Azure::Storage::Core::Auth::SharedAccessSignature).to receive(:new).and_return(Azure::Storage::Core::Auth::DummySharedAccessSignature.new)
     end
 

@@ -833,6 +833,13 @@ GEM
       faraday (~> 0.9)
       faraday_middleware (~> 0.10)
       nokogiri (~> 1.6, >= 1.6.8)
+    azure-storage-blob (1.1.0)
+      azure-core (~> 0.1.13)
+      azure-storage-common (~> 1.0)
+      nokogiri (~> 1.6, >= 1.6.8)
+    azure-storage-common (1.1.0)
+      azure-core (~> 0.1.13)
+      nokogiri (~> 1.6, >= 1.6.8)
     bcrypt (3.1.13)
     better_errors (2.5.1)
       coderay (>= 1.0.0)
@@ -1242,6 +1249,7 @@ DEPENDENCIES
   aws-sdk-s3
   azure
   azure-storage
+  azure-storage-blob
   better_errors
   binding_of_caller
   bootstrap-will_paginate
@@ -1316,4 +1324,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   1.16.3
+   1.17.3
