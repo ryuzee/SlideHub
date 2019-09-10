@@ -22,7 +22,7 @@ gem 'sprockets', '3.7.2'
 gem 'bootstrap-will_paginate'
 gem 'will_paginate'
 # Authentication
-gem 'devise', '4.6.2'
+gem 'devise', '4.7.1'
 gem 'devise-bootstrap-views', '0.0.11'
 gem 'devise-i18n', '~> 1.8'
 gem 'devise-i18n-views', '0.3.7'
