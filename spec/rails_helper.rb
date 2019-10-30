@@ -99,3 +99,7 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+# In factory_bot 5, associations default to using the same build strategy as their parent object
+# See https://qiita.com/TunaGinger/items/ca08b1eaa5c1e321e302
+FactoryBot.use_parent_strategy = false
