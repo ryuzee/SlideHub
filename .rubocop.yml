@@ -1,7 +1,7 @@
 # Disable rubocop-rails for Sider
 # require: rubocop-rails
 # target_version:
-#   rubocop v0.71.0
+#   rubocop v0.76.0
 
 # 自動生成されるものはチェック対象から除外する
 AllCops:
@@ -12,14 +12,14 @@ AllCops:
   DisplayCopNames: true
 
 # Rails用
-Rails:
-  Enabled: true
-  Exclude:
-    - "db/migrate/*"
-
-Rails/SkipsModelValidations:
-  Whitelist:
-    - "increment!"
+# Rails:
+#   Enabled: true
+#   Exclude:
+#     - "db/migrate/*"
+#
+# Rails/SkipsModelValidations:
+#   Whitelist:
+#     - "increment!"
 
 ##################### Style ##################################
 
@@ -117,7 +117,7 @@ Layout/IndentFirstHashElement:
 
 # private/protected は一段深くインデントする
 Layout/IndentationConsistency:
-  EnforcedStyle: rails
+  EnforcedStyle: indented_internal_methods
 
 # scope 等は複数行でも lambda ではなく ->{} で揃えた方が見た目が綺麗
 Style/Lambda:
