@@ -13,8 +13,6 @@ COPY package.json /opt/application/current/
 COPY yarn.lock /opt/application/current/
 RUN yarn
 
-RUN apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
-
 COPY . /opt/application/current
 RUN chmod 755 /opt/application/current/script/*.sh
 COPY script/oss_docker_supervisor.conf /etc/supervisor.conf
