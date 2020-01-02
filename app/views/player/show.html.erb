@@ -28,11 +28,11 @@
           <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="<%= slide_download_url(@slide.id) %>"><i id="slide_control_download_link" class="fa fa-download"></i>&nbsp;</a>
         <% end %>
         <ul style="list-style-image:none; list-style-type:none">
-          <li><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(0);">&nbsp;<i class="fa fa-fast-backward"></i>&nbsp;</a></li>
-          <li><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex-1);">&nbsp<i class="fa fa-step-backward"></i>&nbsp;</a></li>
-          <li><div id="<%= prefix %>page_positions" style="padding-left:0px;"></div></li>
-          <li><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex+1);">&nbsp;<i class="fa fa-step-forward"></i>&nbsp;</a></li>
-          <li><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.slides.length-1);">&nbsp;<i class="fa fa-fast-forward"></i>&nbsp;</a></li>
+          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(0);">&nbsp;<i class="fa fa-fast-backward"></i>&nbsp;</a></li>
+          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex-1);">&nbsp<i class="fa fa-step-backward"></i>&nbsp;</a></li>
+          <li style="display:inline; margin:0 0px;"><div id="<%= prefix %>page_positions" style="padding-left:0px;"></div></li>
+          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex+1);">&nbsp;<i class="fa fa-step-forward"></i>&nbsp;</a></li>
+          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.slides.length-1);">&nbsp;<i class="fa fa-fast-forward"></i>&nbsp;</a></li>
         </ul>
         <span class="<%= prefix %>clearfix"></span>
       </div>
