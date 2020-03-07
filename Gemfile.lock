@@ -892,7 +892,7 @@ GEM
       will_paginate
     bootstrap3-datetimepicker-rails (4.17.47)
       momentjs-rails (>= 2.8.1)
-    brakeman (4.7.1)
+    brakeman (4.8.0)
     builder (3.2.3)
     bullet (6.0.2)
       activesupport (>= 3.0.0)
