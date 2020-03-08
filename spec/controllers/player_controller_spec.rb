@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PlayerController, type: :controller do
   let(:slide) { create(:slide) }
+  render_views
 
   describe 'GET #show' do
     it 'succeeds to return encrypted JavaScript' do

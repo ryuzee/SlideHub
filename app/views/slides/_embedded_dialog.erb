@@ -16,7 +16,12 @@
       <div class="modal-header"><%= t(:embedded_code) %></div>
       <div class="modal-body">
         <div class="form-group">
-          <input class="form-control" id="embedded_url" value="<%= javascript_include_tag(player_url(slide.id)).to_str %>" />
+          <% prefix = js_prefix %>
+<textarea rows="5" class="form-control" id="embedded_url">
+<div id='slidehub-<%= prefix %>'>
+<%= javascript_include_tag(player_v2_url(slide.id) + "?prefix=" + prefix,  async: 'async').to_str %>
+</div>
+</textarea>
         </div>
       </div>
       <div class="modal-footer">
