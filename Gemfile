@@ -86,8 +86,8 @@ group :development, :test do
   gem 'rspec_junit_formatter'
   gem 'ruby-debug-ide'
   gem 'shoulda-matchers', require: false
-  gem 'simplecov', '0.17.1'
-  gem 'simplecov-html', '0.10.2'
+  gem 'simplecov', '0.18.5'
+  gem 'simplecov-html', '0.12.2'
 end
 
 group :development do
