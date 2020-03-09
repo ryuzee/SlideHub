@@ -9,7 +9,7 @@ gem 'uglifier', '~> 4'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.9.1'
+gem 'jbuilder', '~> 2.10.0'
 # Store session to database
 gem 'activerecord-session_store'
 # Use sqlite3 as the database for Active Record
