@@ -276,4 +276,14 @@ Devise.setup do |config|
                     callback_url: Rails.application.config.slidehub.twitter_callback_url,
                     display: 'popup')
   end
+
+  if Rails.application.config.slidehub.saml?
+    config.omniauth(:saml,
+                    issuer: 'slidehub',
+                    assertion_consumer_service_url: "#{Rails.application.config.slidehub.root_url}/users/auth/saml/callback",
+                    idp_cert_fingerprint: Rails.application.config.slidehub.idp_cert_fingerprint,
+                    idp_sso_target_url: Rails.application.config.slidehub.idp_sso_target_url,
+                    name_identifier_format: 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+                    scope: 'email')
+  end
 end

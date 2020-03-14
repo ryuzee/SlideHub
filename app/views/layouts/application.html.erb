@@ -94,7 +94,9 @@
           <% else %>
           <% if ApplicationSetting['site.display_login_link'] == "1" %>
           <ul class="nav navbar-nav navbar-right">
+            <% if ApplicationSetting['site.signup_enabled'] == "1" %>
             <li><%= link_to t("signup"), new_user_registration_path %></li>
+            <% end %>
             <li><%= link_to t("signin"), new_user_session_path %></li>
           </ul>
           <% end %>

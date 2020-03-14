@@ -29,6 +29,7 @@ gem 'devise-i18n-views', '0.3.7'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
+gem 'omniauth-saml'
 
 # Compatibility with PHP version
 # See https://github.com/divoxx/ruby-php-serialization

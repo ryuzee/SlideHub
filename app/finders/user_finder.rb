@@ -31,4 +31,26 @@ class UserFinder
                          password: Devise.friendly_token[0, 20])
     user
   end
+
+  # auth.extra.raw_info
+  # In Keycloak, you need to set Mapper as follows (All items must be User Property)
+  # Property   Attribute
+  # ---------------------
+  # email      email
+  # firstName  first_name
+  # lastName   last_name
+  # username   username
+  #
+  def self.find_for_saml_oauth(auth)
+    user = User.find_by(provider: auth.provider, uid: auth.uid)
+    user ||= User.create(username: auth.extra.raw_info['username'],
+                         display_name: auth.extra.raw_info['last_name'] + ' ' + auth.extra.raw_info['first_name'],
+                         biography: '',
+                         provider: auth.provider,
+                         uid: auth.uid,
+                         email: auth.info.email,
+                         twitter_account: '',
+                         password: Devise.friendly_token[0, 20])
+    user
+  end
 end
