@@ -1,44 +1,18 @@
-<%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" %>
 <%
-  if params.has_key?(:prefix) && !params[:prefix].empty?
-    prefix = params[:prefix]
-  else
-    prefix = js_prefix
-  end
+def conv(str)
+  str.gsub!(/(\r\n|\r|\n)/,"")
+  str.gsub!(/\\/,"\\\\")
+  str.gsub!(/"/,"\\\\\"")
+  str.gsub!(/\s+/," ")
+  str.strip!
+  return "" if str == ""
+  "w(\"#{str}\");"
+end
+script = "function w(s){document.write(s+'\\n');}\n\n"
+str = "#{@body}\n\n<script type=\"text/javascript\">#{@script}</script>"
+str.each_line do |s|
+  script = script.concat(conv(s)) + "\n"
+end
 %>
-
-<%= render 'css', prefix: prefix %>
-
-<% default_image = image_url("loading.jpg") %>
-<div>
-  <ul style="display:none" id="<%= prefix %>slide_list">
-    <%= raw slide_page_image_list_tag(@slide) %>
-  </ul>
-
-  <div class="<%= prefix %>slidebox" id="<%= prefix %>slidebox" style="left:0px;margin:0px;padding:0px;">
-    <div id="<%= prefix %>slide_area"><img src="<%= default_image %>" /></div>
-    <div id="<%= prefix %>progress_area">
-      <div id="<%= prefix %>thumb">&nbsp;</div>
-    </div>
-    <div id="<%= prefix %>command_area">
-      <div id="<%= prefix %>command_inner">
-        <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="#" id="<%= prefix %>full_screen_icon"><i id="slide_control_fullscreen" class="fa fa-television"></i>&nbsp;</a>
-        <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="<%= slide_url(@slide.id) %>"><i id="slide_control_home_link" class="fa fa-link"></i>&nbsp;</a>
-        <% if @slide.downloadable %>
-          <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="<%= slide_download_url(@slide.id) %>"><i id="slide_control_download_link" class="fa fa-download"></i>&nbsp;</a>
-        <% end %>
-        <ul style="list-style-image:none; list-style-type:none">
-          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(0);">&nbsp;<i class="fa fa-fast-backward"></i>&nbsp;</a></li>
-          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex-1);">&nbsp<i class="fa fa-step-backward"></i>&nbsp;</a></li>
-          <li style="display:inline; margin:0 0px;"><div id="<%= prefix %>page_positions" style="padding-left:0px;"></div></li>
-          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex+1);">&nbsp;<i class="fa fa-step-forward"></i>&nbsp;</a></li>
-          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.slides.length-1);">&nbsp;<i class="fa fa-fast-forward"></i>&nbsp;</a></li>
-        </ul>
-        <span class="<%= prefix %>clearfix"></span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<% s = render 'javascript', prefix: prefix, start_position: @start_position %>
-<%= raw s.gsub('OSSJSPARTS', "OSSJSPARTS#{prefix}").gsub('PREFIX', prefix) %>
+<% require 'uglifier' %>
+<%= raw Uglifier.compile(script) %>

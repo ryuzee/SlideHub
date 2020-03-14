@@ -1,0 +1,9 @@
+(function() {
+    var elm = document.getElementById("slidehub-<%= @prefix %>");
+    elm.innerHTML = `<%= raw @body.gsub!(/\n/, '') %>`;
+    var s = document.createElement('script');
+    <% require 'uglifier'; sc = Uglifier.compile(@script) %>
+    s.innerText = `<%= raw sc %>`;
+    s.textContent = `<%= raw sc %>`;
+    elm.appendChild(s);
+})();

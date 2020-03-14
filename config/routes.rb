@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   get 'slides/:id/:page' => 'slides#show'
 
   # route to player
+  get 'player/v2/:id' => 'player#show_v2', as: :player_v2
+  get 'player/v2/:id/:page' => 'player#show_v2'
   get 'player/:id' => 'player#show', as: :player
   get 'player/:id/:page' => 'player#show'
 
