@@ -1165,6 +1165,9 @@ GEM
     omniauth-oauth2 (1.6.0)
       oauth2 (~> 1.1)
       omniauth (~> 1.9)
+    omniauth-saml (1.10.1)
+      omniauth (~> 1.3, >= 1.3.2)
+      ruby-saml (~> 1.7)
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
@@ -1306,6 +1309,8 @@ GEM
       rexml
     ruby-progressbar (1.10.1)
     ruby-rc4 (0.1.5)
+    ruby-saml (1.11.0)
+      nokogiri (>= 1.5.10)
     rubyzip (2.2.0)
     safe_yaml (1.0.5)
     sass (3.7.4)
@@ -1437,6 +1442,7 @@ DEPENDENCIES
   non-stupid-digest-assets
   omniauth
   omniauth-facebook
+  omniauth-saml
   omniauth-twitter
   pdf-reader
   php-serialization

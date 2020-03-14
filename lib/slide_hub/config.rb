@@ -9,6 +9,7 @@ module SlideHub
 
     attr_accessor :facebook_app_id, :facebook_app_secret
     attr_accessor :twitter_consumer_key, :twitter_consumer_secret, :twitter_callback_url
+    attr_accessor :idp_cert_fingerprint, :idp_sso_target_url
 
     attr_accessor :from_email
     attr_accessor :smtp_server, :smtp_port, :smtp_auth_method, :smtp_username, :smtp_password
@@ -24,6 +25,10 @@ module SlideHub
 
     def twitter?
       twitter_consumer_key.present? && twitter_consumer_secret.present? && twitter_callback_url.present?
+    end
+
+    def saml?
+      idp_cert_fingerprint.present? && idp_sso_target_url.present?
     end
 
     def mail_sender

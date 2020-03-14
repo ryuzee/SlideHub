@@ -41,14 +41,17 @@ services:
       OSS_TWITTER_CONSUMER_KEY: $OSS_TWITTER_CONSUMER_KEY
       OSS_TWITTER_CONSUMER_SECRET: $OSS_TWITTER_CONSUMER_SECRET
       OSS_TWITTER_CALLBACK_URL: 'http://localhost:3000/users/auth/twitter/callback'
+      OSS_IDP_CERT_FINGERPRINT: $OSS_IDP_CERT_FINGERPRINT
+      OSS_IDP_SSO_TERGET_URL: $OSS_IDP_SSO_TARGET_URL
       OSS_FROM_EMAIL: test@example.com
       OSS_SMTP_SERVER: localhost
       OSS_SMTP_PORT: 1025
       OSS_SMTP_AUTH_METHOD: plain
       OSS_SMTP_PASSWORD: test
       OSS_SMTP_USERNAME: test
-      RAILS_LOG_TO_STDOUT: 'yes'
       OSS_MULTI_TENANT: $OSS_MULTI_TENANT
+      OSS_ROOT_URL: http://localhost:3000
+      RAILS_LOG_TO_STDOUT: 'yes'
     ports:
       - '3000:3000'
       - '1080:1080'
