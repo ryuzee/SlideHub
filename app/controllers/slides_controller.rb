@@ -26,7 +26,11 @@ class SlidesController < ApplicationController
   include SlideUtil
   before_action :set_slide, only: [:edit, :update, :show, :destroy]
   before_action :set_related_slides, only: [:show]
-  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
+  if Rails.application.config.slidehub.login_required == '1'
+    before_action :authenticate_user!
+  else
+    before_action :authenticate_user!, only: [:edit, :update, :new, :create, :destroy]
+  end
   before_action :owner?, only: [:edit, :update, :destroy]
   before_action :uploadable?, only: [:new, :create]
   before_action :duplicate_key?, only: [:create]

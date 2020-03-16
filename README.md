@@ -225,6 +225,7 @@ OSS_FROM_EMAIL=[Email address that will be used sender]
 
 OSS_PRODUCTION_HOST=[hoge.example.com]
 OSS_ROOT_URL=[http://your_root_url]
+OSS_LOGIN_REQUIRED=[1] # set the variable if you would like to force users login to view any pages
 
 # For production (closely related to rails environment)
 OSS_DB_NAME=[DB name for Prod] # Set openslideshare if using installer
