@@ -14,6 +14,7 @@ module SlideHub
     attr_accessor :from_email
     attr_accessor :smtp_server, :smtp_port, :smtp_auth_method, :smtp_username, :smtp_password
     attr_accessor :root_url
+    attr_accessor :login_required
 
     def azure?
       use_azure.present? && use_azure.to_i == 1

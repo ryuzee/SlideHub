@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   before_action :signup_enabled?, if: :devise_controller?
   before_action :set_host
   before_action :clear_session
+  before_action :authenticate_user! if Rails.application.config.slidehub.login_required == '1'
 
   include ActsAsTaggableOn::TagsHelper
 

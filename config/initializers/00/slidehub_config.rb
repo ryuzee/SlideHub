@@ -37,6 +37,7 @@ module SlideHub
 
     # others
     config.slidehub.root_url = ENV['OSS_ROOT_URL']
+    config.slidehub.login_required = ENV['OSS_LOGIN_REQUIRED']
   end
 end
 

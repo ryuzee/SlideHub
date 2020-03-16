@@ -48,6 +48,7 @@ services:
       OSS_SMTP_PASSWORD: test
       OSS_SMTP_USERNAME: test
       OSS_ROOT_URL: http://localhost:3000
+      OSS_LOGIN_REQUIRED: $OSS_LOGIN_REQUIRED
       RAILS_LOG_TO_STDOUT: 'yes'
     ports:
       - '3000:3000'

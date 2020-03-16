@@ -5,6 +5,7 @@ ENV['OSS_TWITTER_CONSUMER_KEY'] ||= 'dummy'
 ENV['OSS_TWITTER_CONSUMER_SECRET'] ||= 'dummy'
 ENV['OSS_FACEBOOK_APP_ID'] ||= 'dummy'
 ENV['OSS_FACEBOOK_APP_SECRET'] ||= 'dummy'
+ENV['OSS_LOGIN_REQUIRED'] = '0'
 
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production

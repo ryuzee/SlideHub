@@ -51,6 +51,7 @@ services:
       RAILS_LOG_TO_STDOUT: 'yes'
       OSS_MULTI_TENANT: $OSS_MULTI_TENANT
       OSS_ROOT_URL: http://localhost:3000
+      OSS_LOGIN_REQUIRED: $OSS_LOGIN_REQUIRED
     ports:
       - '3000:3000'
       - '1080:1080'
