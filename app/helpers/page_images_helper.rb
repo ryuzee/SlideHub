@@ -3,7 +3,7 @@ module PageImagesHelper
     result = ''
     default_image = image_url('loading.jpg')
 
-    if slide.pages.list.try(:count) > 0
+    if slide.pages.list.try(:count).positive?
       idx = 0
       slide.pages.list.each do |page|
         original_image = "#{CloudConfig::SERVICE.resource_endpoint}/#{page}"

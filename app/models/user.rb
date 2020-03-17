@@ -38,7 +38,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :omniauthable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauth_providers => [:twitter, :facebook, :saml]
+         :recoverable, :rememberable, :trackable, :validatable, omniauth_providers: [:twitter, :facebook, :saml]
   self.table_name = 'users'
   validates :display_name, presence: true
   validates :display_name, length: { maximum: 32 }

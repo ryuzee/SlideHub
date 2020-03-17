@@ -21,9 +21,9 @@ module WebResource
       begin
         response = result.dup.force_encoding('utf-8')
         require 'php_serialization/unserializer'
-        return PhpSerialization::Unserializer.new.run(response)
+        PhpSerialization::Unserializer.new.run(response)
       rescue StandardError
-        return []
+        []
       end
     else
       []

@@ -56,11 +56,11 @@ class UsersController < ApplicationController
   def embedded
     @slides = user_slide_with_paginate(params[:id], 5)
 
-    if params.has_key?(:prefix) && !params[:prefix].empty?
-      @prefix = params[:prefix]
-    else
-      @prefix = view_context.js_prefix
-    end
+    @prefix = if params.key?(:prefix) && !params[:prefix].empty?
+                params[:prefix]
+              else
+                view_context.js_prefix
+              end
 
     @body = render_to_string partial: 'embedded', locals: { slides: @slides, prefix: @prefix }
     render layout: false, content_type: 'application/javascript'

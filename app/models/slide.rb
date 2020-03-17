@@ -67,7 +67,7 @@ class Slide < ApplicationRecord
   end
 
   def self.key_exist?(key)
-    Slide.where('slides.object_key = ?', key).count > 0
+    Slide.where('slides.object_key = ?', key).count.positive?
   end
 
   def self.update_after_convert(object_key, file_type, num_of_pages)

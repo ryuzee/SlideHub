@@ -28,8 +28,8 @@ gem 'devise-i18n', '~> 1.8'
 gem 'devise-i18n-views', '0.3.7'
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem 'omniauth-twitter'
 gem 'omniauth-saml'
+gem 'omniauth-twitter'
 
 # Compatibility with PHP version
 # See https://github.com/divoxx/ruby-php-serialization
@@ -120,6 +120,7 @@ group :development do
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'solargraph'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   # Include template path
