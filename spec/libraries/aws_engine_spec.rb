@@ -174,7 +174,7 @@ describe 'SlideHub::Cloud::Engine::AWS' do
       expect(value['signature']).to eq('af5e492d88ee5c6c50cd576552b8cbd6c0824281b9967df06c107422da930b6d')
       expect(value['date_ymd']).to eq('20160101')
       expect(value['date_gm']).to eq('20160101T235959Z')
-      expected_policy  = 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMlQwMTo1OTo1OVoiLCJjb25kaXRp'
+      expected_policy = 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMlQwMTo1OTo1OVoiLCJjb25kaXRp'
       expected_policy += 'b25zIjpbeyJidWNrZXQiOiJteS1idWNrZXQifSxbInN0YXJ0cy13aXRoIiwi'
       expected_policy += 'JGtleSIsIiJdLHsiYWNsIjoicHVibGljLXJlYWQifSx7InN1Y2Nlc3NfYWN0'
       expected_policy += 'aW9uX3N0YXR1cyI6IjIwMSJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1U'
@@ -276,7 +276,7 @@ describe 'SlideHub::Cloud::Engine::AWS without access_id and secret_key' do
       expect(value['signature']).to eq('2a6bee16e76dc0ff59eb057922a305b118ef89cff677507181e54ea65c779875')
       expect(value['date_ymd']).to eq('20160101')
       expect(value['date_gm']).to eq('20160101T235959Z')
-      expected_policy  = 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMlQwMTo1OTo1OVoiLCJjb25kaXRp'
+      expected_policy = 'eyJleHBpcmF0aW9uIjoiMjAxNi0wMS0wMlQwMTo1OTo1OVoiLCJjb25kaXRp'
       expected_policy += 'b25zIjpbeyJidWNrZXQiOiJteS1idWNrZXQifSxbInN0YXJ0cy13aXRoIiwi'
       expected_policy += 'JGtleSIsIiJdLHsiYWNsIjoicHVibGljLXJlYWQifSx7InN1Y2Nlc3NfYWN0'
       expected_policy += 'aW9uX3N0YXR1cyI6IjIwMSJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1U'

@@ -40,8 +40,8 @@ Style/BlockDelimiters:
     - "spec/**/*"
 
 # option 等、明示的にハッシュにした方が分かりやすい場合もある
-Style/BracesAroundHashParameters:
-  Enabled: false
+# Style/BracesAroundHashParameters:
+#   Enabled: false
 
 # Style/CollectionMethods 自体は無効になっているのだが、
 #   https://github.com/bbatsov/rubocop/issues/1084
@@ -112,7 +112,7 @@ Style/IfUnlessModifier:
 # ({ と hash を開始した場合に ( の位置にインデントさせる
 # そもそも {} が必要ない可能性が高いが Style/BracesAroundHashParameters はチェックしないことにしたので
 # Layout/IndentHash:
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
 # private/protected は一段深くインデントする
@@ -138,7 +138,7 @@ Style/PerlBackrefs:
 
 # has_ から始まるメソッドは許可する
 Naming/PredicateName:
-  NamePrefixBlacklist:
+  ForbiddenPrefixes:
     - "is_"
     - "have_"
   NamePrefix:
@@ -244,7 +244,7 @@ Metrics/CyclomaticComplexity:
 # * 警告 120文字
 # * 禁止 160文字
 # のイメージ
-Metrics/LineLength:
+Layout/LineLength:
   Max: 160
   Exclude:
     - "db/migrate/*.rb"
@@ -267,3 +267,15 @@ Metrics/ParameterLists:
 Style/MixinUsage:
   Include:
     - app/**/*.rb
+
+# For rubocop < 1.0.0
+Style/HashEachMethods:
+  Enabled: true
+
+# For rubocop < 1.0.0
+Style/HashTransformKeys:
+  Enabled: true
+
+# For rubocop < 1.0.0
+Style/HashTransformValues:
+  Enabled: true

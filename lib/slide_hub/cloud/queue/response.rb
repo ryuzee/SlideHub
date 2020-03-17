@@ -25,7 +25,7 @@ module SlideHub
         end
 
         def exist?
-          @messages.count > 0
+          @messages.count.positive?
         end
       end
     end

@@ -20,11 +20,11 @@ class PlayerController < ApplicationController
         @slide.record_access(:embedded_view)
       end
 
-      if params.has_key?(:prefix) && !params[:prefix].empty?
-        @prefix = params[:prefix]
-      else
-        @prefix = view_context.js_prefix
-      end
+      @prefix = if params.key?(:prefix) && !params[:prefix].empty?
+                  params[:prefix]
+                else
+                  view_context.js_prefix
+                end
 
       @start_position = slide_position
       @body = render_to_string partial: 'body', locals: { slide: @slide, prefix: @prefix }
@@ -34,8 +34,7 @@ class PlayerController < ApplicationController
 
     def slide_position
       position = 1
-      position = params[:page].to_i if params.key?(:page) && params[:page].to_i > 0
+      position = params[:page].to_i if params.key?(:page) && params[:page].to_i.positive?
       position
     end
-
 end

@@ -19,7 +19,7 @@ module Admin
     end
 
     def destroy
-      if @category.slides.count > 0
+      if @category.slides.count.positive?
         redirect_to admin_categories_path, notice: t(:category_can_not_be_deleted_because_of_existing_slides)
       else
         @category.destroy

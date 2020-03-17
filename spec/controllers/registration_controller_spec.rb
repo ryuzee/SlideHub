@@ -48,12 +48,10 @@ RSpec.describe Users::RegistrationsController, type: :controller do
     context 'with sign_up disabled' do
       render_views
       it 'does not show the signup form and shows 404 page' do
-        begin
-          ApplicationSetting['site.signup_enabled'] = '0'
-          expect { get :new }.to raise_error(ActionController::RoutingError, 'Not Found')
-        ensure
-          ApplicationSetting['site.signup_enabled'] = '1'
-        end
+        ApplicationSetting['site.signup_enabled'] = '0'
+        expect { get :new }.to raise_error(ActionController::RoutingError, 'Not Found')
+      ensure
+        ApplicationSetting['site.signup_enabled'] = '1'
       end
     end
   end
