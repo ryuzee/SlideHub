@@ -59,7 +59,7 @@ gem 'pdf-reader'
 # counter cache transaction
 gem 'counter_culture'
 # AP Server
-gem 'unicorn', '~> 5.5.1'
+gem 'unicorn', '~> 5.5.4'
 # Datetime Picker for Bootstrap3
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'momentjs-rails'
