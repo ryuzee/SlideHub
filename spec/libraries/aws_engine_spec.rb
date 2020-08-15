@@ -78,16 +78,21 @@ module Aws
   module EC2
     class DummyClient
       class DummyCredential
-        def access_key_id
-          'iam_access_key'
-        end
+        class DummyCredentialCredential
+          def access_key_id
+            'iam_access_key'
+          end
 
-        def secret_access_key
-          'iam_secret_access_key'
-        end
+          def secret_access_key
+            'iam_secret_access_key'
+          end
 
-        def session_token
-          'iam_session_token'
+          def session_token
+            'iam_session_token'
+          end
+        end
+        def credentials
+          DummyCredentialCredential.new
         end
       end
       def config
