@@ -262,9 +262,9 @@ OSS_DB_USE_AZURE_TEST=[Use Azure Database for MySQL for Test]
 - Docker (>= 17.06)
 - docker-compose (>= 1.12.0)
 - Ruby environment including bundler
-- [bower](https://bower.io/)
+- yarn
 
-After cloning the repository, you have to run `bower install` command to retrieve libraries.
+After cloning the repository, you have to run `yarn` command to retrieve libraries.
 
 
 ### Build images and run the app for testing

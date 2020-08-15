@@ -204,8 +204,8 @@ module SlideHub
             secret_key = @config.aws_secret_key
             security_token = ''
           else
-            ec2 = Aws::EC2::Client.new
-            credential = ec2.config[:credentials]
+            ec2 = Aws::EC2::Client.new(region: @config.region)
+            credential = ec2.config[:credentials].credentials
             access_id = credential.access_key_id
             secret_key = credential.secret_access_key
             security_token = credential.session_token
