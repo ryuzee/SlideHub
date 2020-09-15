@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   def index
     user_id = current_user.id
     @user = User.find(user_id)
-    @slides = user_slide_with_paginate(user_id)
+    @slides = user_slide_with_paginate(user_id, true)
     @tags = Slide.
             owner(user_id).
             tag_counts_on(:tags).order('count DESC')
@@ -68,12 +68,15 @@ class UsersController < ApplicationController
 
   private
 
-    def user_slide_with_paginate(user_id, slides_per_page = 30)
+    def user_slide_with_paginate(user_id, include_private_and_non_published = false, slides_per_page = 30)
       slides = if params[:sort_by] == 'popularity'
-                 Slide.published.popular
+                 Slide.popular
                else
-                 Slide.published.latest
+                 Slide.latest
                end
+      unless include_private_and_non_published
+        slides = slides.published
+      end
       slides = slides.owner(user_id).
                includes(:user).
                paginate(page: params[:page], per_page: slides_per_page)
