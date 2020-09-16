@@ -1,6 +1,6 @@
 <script type="text/javascript">
   $(document).ready(function(){
-    var clipboard = new Clipboard('#copy-to-clipboard');
+    var clipboard = new Clipboard('.copy-to-clipboard');
     $("#show_embedded").click(function(){
       $('.embedded_dialog').modal('show');
     });
@@ -15,20 +15,38 @@
     <div class="modal-content">
       <div class="modal-header"><%= t(:embedded_code) %></div>
       <div class="modal-body">
-        <div class="form-group">
-          <% prefix = js_prefix %>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#js" data-toggle="tab">Javascript</a></li>
+          <li><a href="#iframe" data-toggle="tab">iframe</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade active" id="js">
+            <div class="form-group">
+              <% prefix = js_prefix %>
 <textarea rows="5" class="form-control" id="embedded_url">
 <div id='slidehub-<%= prefix %>'>
 <%= javascript_include_tag(player_v2_url(slide.id) + "?prefix=" + prefix,  async: 'async').to_str %>
 </div>
 </textarea>
+            </div>
+            <button type="button" class="btn btn-default copy-to-clipboard" data-clipboard-target="#embedded_url"><%= t(:copy) %></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal"><%= t(:close) %></button>
+          </div>
+
+          <div role="tabpanel" class="tab-pane fade" id="iframe">
+            <div class="form-group">
+              <% prefix = js_prefix %>
+<textarea rows="5" class="form-control" id="iframe_url">
+<iframe scrolling="no" frameborder="no" width="500" height="400" src="<%= html_player_url(slide.id) + "?prefix=" + prefix %>"></iframe>
+</textarea>
+            </div>
+            <button type="button" class="btn btn-default copy-to-clipboard" data-clipboard-target="#iframe_url"><%= t(:copy) %></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal"><%= t(:close) %></button>
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="copy-to-clipboard" data-clipboard-target="#embedded_url"><%= t(:copy) %></button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal"><%= t(:close) %></button>
+
       </div>
     </div>
   </div>
 </div>
-
