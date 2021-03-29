@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'json', '~> 2.2'
 gem 'rails', '5.2.5'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0.7'
+gem 'sass-rails', '~> 6.0.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '~> 4'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
