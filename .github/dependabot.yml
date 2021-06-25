@@ -1,0 +1,30 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: aws-sdk-s3
+    versions:
+    - 1.87.0
+    - 1.88.0
+    - 1.88.1
+    - 1.88.2
+    - 1.89.0
+    - 1.90.0
+    - 1.91.0
+    - 1.92.0
+  - dependency-name: nokogiri
+    versions:
+    - 1.11.1
+    - 1.11.2
+  - dependency-name: sdoc
+    versions:
+    - 2.0.3
+    - 2.0.4
+  - dependency-name: devise-i18n
+    versions:
+    - 1.9.2
