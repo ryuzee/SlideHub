@@ -1283,7 +1283,7 @@ GEM
     reverse_markdown (1.4.0)
       nokogiri
     rexml (3.2.4)
-    rmagick (4.1.2)
+    rmagick (4.2.2)
     rspec-core (3.9.2)
       rspec-support (~> 3.9.3)
     rspec-expectations (3.9.2)
