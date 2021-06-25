@@ -88,8 +88,8 @@ group :development, :test do
   gem 'ruby-debug-ide'
   gem 'shoulda-matchers', require: false
   # use specified version for cc-test-reporter
-  gem 'simplecov', '0.17.1'
-  gem 'simplecov-html', '0.10.2'
+  gem 'simplecov', '0.21.2'
+  gem 'simplecov-html', '0.12.3'
 end
 
 group :development do
