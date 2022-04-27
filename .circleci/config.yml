@@ -10,7 +10,7 @@ jobs:
     shell: /bin/bash --login
 
     docker:
-      - image: circleci/ruby:2.5.0-node-browsers
+      - image: cimg/ruby:2.7.1-node
         environment:
           CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
           CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
@@ -28,8 +28,10 @@ jobs:
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS/rspec
       - run: sudo npm install -g bower
       - run: sudo apt-get update
-      - run: sudo apt-get install -y libmagic-dev
-      - run: yarn
+      - run: sudo chown -R circleci:circleci ~/.npm
+      - run: sudo chown -R circleci:circleci ~/.config
+      - run: sudo chmod -R 777 ~/.config
+      - run: sudo apt-get install -y libmagic-dev libmysqlclient-dev libsqlite3-dev pkg-config libmagickcore-dev libmagickwand-dev
       - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
       - run: chmod +x ./cc-test-reporter
 
@@ -41,6 +43,7 @@ jobs:
           - v1-dep-master-
           - v1-dep-
 
+      - run: gem install bundler:1.17.3
       - run: 'bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3 '
 
       - save_cache:
