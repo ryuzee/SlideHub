@@ -1,0 +1,25 @@
+[config]
+output = 
+log = 
+log-level = debug
+log-max = 0
+log-keep = 10
+log-mode = 0600
+dump-memory-profile = simple
+memory-dump-interval = 300
+no-act = False
+quiet = False
+verbose = False
+shell-library = 
+run = 
+tempdir = 
+env = 
+snapshot = False
+timings = False
+allow-missing-steps = False
+require-assumptions = False
+shell = /bin/sh
+shell-arg = -xeu
+cd-datadir = False
+stop-on-first-fail = False
+
