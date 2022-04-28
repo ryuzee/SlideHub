@@ -73,9 +73,9 @@ Rails.application.configure do
     # include paths with any of these substrings in the stack trace,
     # even if they are not in your main app
     # Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
-    Bullet.add_whitelist type: :n_plus_one_query, class_name: 'Slide', association: :tags
-    Bullet.add_whitelist type: :n_plus_one_query, class_name: 'Slide', association: :taggings
-    Bullet.add_whitelist type: :n_plus_one_query, class_name: 'Slide', association: :tag_taggings
+    Bullet.add_safelist type: :n_plus_one_query, class_name: 'Slide', association: :tags
+    Bullet.add_safelist type: :n_plus_one_query, class_name: 'Slide', association: :taggings
+    Bullet.add_safelist type: :n_plus_one_query, class_name: 'Slide', association: :tag_taggings
   end
 
   config.rack_dev_mark.enable = true
