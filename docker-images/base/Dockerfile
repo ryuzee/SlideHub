@@ -26,5 +26,7 @@ RUN apt-get update && apt-get install -y yarn
 
 RUN apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
+RUN sed -i -e 's/mesg n || true/tty -s \&\& mesg n/' /root/.profile
+
 EXPOSE 3000
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.conf"]

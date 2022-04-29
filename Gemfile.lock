@@ -1696,6 +1696,9 @@ GEM
     unicorn (5.6.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
+    unicorn-rails (2.2.1)
+      rack
+      unicorn
     uniform_notifier (1.16.0)
     view_source_map (0.3.0)
       rails (>= 5)
@@ -1807,6 +1810,7 @@ DEPENDENCIES
   turbolinks
   uglifier (~> 4)
   unicorn (~> 5)
+  unicorn-rails
   view_source_map
   web-console
   webmock

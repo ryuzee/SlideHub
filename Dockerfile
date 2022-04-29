@@ -1,4 +1,4 @@
-FROM ryuzee/slidehub-base:20191101
+FROM ryuzee/slidehub-base:20220429
 MAINTAINER ryuzee
 
 RUN mkdir -p /opt/application/current/
@@ -7,7 +7,7 @@ WORKDIR /opt/application/current/
 COPY Gemfile /opt/application/current/
 COPY Gemfile.lock /opt/application/current/
 
-RUN /bin/bash -lc 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bundle install --deployment --without development test'
+RUN /bin/bash -lc 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bundle install'
 
 COPY package.json /opt/application/current/
 COPY yarn.lock /opt/application/current/

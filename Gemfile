@@ -61,6 +61,7 @@ gem 'pdf-reader'
 gem 'counter_culture'
 # AP Server
 gem 'unicorn', '~> 5'
+gem 'unicorn-rails'
 # Datetime Picker for Bootstrap3
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'momentjs-rails'
