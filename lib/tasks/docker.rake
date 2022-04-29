@@ -1,7 +1,7 @@
 require "#{File.dirname(__FILE__)}/../../lib/slide_hub/version"
 require 'open3'
 
-BASE_CONTAINER_VERSION = '20191101'.freeze
+BASE_CONTAINER_VERSION = '20220429'.freeze
 
 namespace :docker do
   task :default => :build
