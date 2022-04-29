@@ -6,85 +6,91 @@ require 'tmpdir'
 require 'uri'
 
 module Azure
-  module Queue
-    class DummyQueueService
-      def create_message(queue_name, message)
-        nil
-      end
-
-      def list_messages(queue_name, timeout, options = {})
-        message = Entity::Queue::DummyMessage.new
-        [message]
-      end
-
-      def create_queue(queue_name)
-        nil
-      end
-
-      def delete_message(queue_name, message_object_id, message_object_pop_receipt)
-        nil
-      end
-    end
-  end
-
-  module Entity
+  module Storage
     module Queue
-      class DummyMessage
-        attr_accessor :id
-        attr_accessor :message_text
-        attr_accessor :pop_receipt
+      class DummyQueueService
+        def self.create
+          self.new
+        end
 
-        def initialize
-          @id = 1
-          @pop_receipt = ''
-          @message_text = ''
+        def create_message(queue_name, message)
+          nil
+        end
+
+        def list_messages(queue_name, timeout, options = {})
+          message = Entity::Queue::DummyMessage.new
+          [message]
+        end
+
+        def create_queue(queue_name)
+          nil
+        end
+
+        def delete_message(queue_name, message_object_id, message_object_pop_receipt)
+          nil
         end
       end
     end
-  end
 
-  module Blob
-    class DummyBlobObject
-      def name
-        'dummy'
+    module Entity
+      module Queue
+        class DummyMessage
+          attr_accessor :id
+          attr_accessor :message_text
+          attr_accessor :pop_receipt
+
+          def initialize
+            @id = 1
+            @pop_receipt = ''
+            @message_text = ''
+          end
+        end
       end
     end
 
-    class DummyBlobService
-      def self.create
-        self.new
+    module Blob
+      class DummyBlobObject
+        def name
+          'dummy'
+        end
       end
 
-      def create_block_blob(container, key, content, options = {})
-        nil
-      end
+      class DummyBlobService
+        def self.create
+          self.new
+        end
 
-      def list_blobs(container, options = {})
-        result = []
-        result.push(Azure::Blob::DummyBlobObject.new)
-        result
-      end
+        def create_block_blob(container, key, content, options = {})
+          nil
+        end
 
-      def get_blob(container, key)
-        return nil, 'hoge'
-      end
+        def list_blobs(container, options = {})
+          result = []
+          result.push(Azure::Storage::Blob::DummyBlobObject.new)
+          result
+        end
 
-      def delete_blob(container, key)
-        nil
-      end
+        def get_blob(container, key)
+          return nil, 'hoge'
+        end
 
-      def generate_uri(uri, options = {})
-        URI('http://www.example.com')
+        def delete_blob(container, key)
+          nil
+        end
+
+        def generate_uri(uri, options = {})
+          URI('http://www.example.com')
+        end
       end
     end
-  end
 
-  module Storage
-    module Core
-      module Auth
-        class DummySharedAccessSignature
-          def signed_uri(uri, flag, service)
-            'https://signed.example.com'
+    module Common
+      module Core
+        module Auth
+          class DummySharedAccessSignature
+            def signed_uri(uri, flag, service)
+              'https://signed.example.com'
+            end
           end
         end
       end
@@ -130,7 +136,8 @@ describe 'SlideHub::Cloud::Engine::Azure' do
 
   describe 'Blob Queue' do
     before do
-      allow_any_instance_of(Azure::ClientServices).to receive(:queues).and_return(Azure::Queue::DummyQueueService.new)
+      allow(Azure::Storage::Queue::QueueService).to receive(:new).and_return(Azure::Storage::Queue::DummyQueueService.new)
+      allow(Azure::Storage::Queue::QueueService).to receive(:create).and_return(Azure::Storage::Queue::DummyQueueService.create)
     end
 
     it 'succeeds to send message' do
@@ -156,9 +163,9 @@ describe 'SlideHub::Cloud::Engine::Azure' do
 
   describe 'Blob Storage' do
     before do
-      allow(Azure::Blob::BlobService).to receive(:new).and_return(Azure::Blob::DummyBlobService.new)
-      allow(Azure::Storage::Blob::BlobService).to receive(:create).and_return(Azure::Blob::DummyBlobService.create)
-      allow(Azure::Storage::Core::Auth::SharedAccessSignature).to receive(:new).and_return(Azure::Storage::Core::Auth::DummySharedAccessSignature.new)
+      allow(Azure::Storage::Blob::BlobService).to receive(:new).and_return(Azure::Storage::Blob::DummyBlobService.new)
+      allow(Azure::Storage::Blob::BlobService).to receive(:create).and_return(Azure::Storage::Blob::DummyBlobService.create)
+      allow(Azure::Storage::Common::Core::Auth::SharedAccessSignature).to receive(:new).and_return(Azure::Storage::Common::Core::Auth::DummySharedAccessSignature.new)
     end
 
     it 'succeeds to upload files' do

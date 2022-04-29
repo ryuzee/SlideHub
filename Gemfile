@@ -46,9 +46,10 @@ gem 'sitemap_generator'
 gem 'aws-sdk', '~> 3'
 gem 'aws-sdk-s3'
 # Azure
-gem 'azure'
-gem 'azure-storage'
 gem 'azure-storage-blob'
+gem 'azure-storage-queue'
+gem 'mime-types'
+gem 'addressable', require: 'addressable/uri'
 # Find file type
 gem 'ruby-filemagic'
 # Handle images

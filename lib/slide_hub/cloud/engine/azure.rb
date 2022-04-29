@@ -1,9 +1,7 @@
-require 'azure'
-# require 'azure-contrib'
 require 'json'
-require 'azure/storage'
 require 'azure/storage/blob'
-require 'azure/storage/core/auth/shared_access_signature'
+require 'azure/storage/queue'
+require 'azure/storage/common/core/auth/shared_access_signature'
 
 module SlideHub
   module Cloud
@@ -21,8 +19,8 @@ module SlideHub
 
         def self.configure(&block)
           yield config
-          ::Azure.config.storage_account_name = @config.azure_storage_account_name
-          ::Azure.config.storage_access_key = @config.azure_storage_access_key
+          #::Azure.config.storage_account_name = @config.azure_storage_account_name
+          #::Azure.config.storage_access_key = @config.azure_storage_access_key
         end
 
         def self.config
@@ -45,15 +43,24 @@ module SlideHub
           url
         end
 
+        def self.create_qs
+          qs = ::Azure::Storage::Queue::QueueService.create(
+            storage_account_name: @config.azure_storage_account_name,
+            storage_access_key: @config.azure_storage_access_key,
+          )
+          qs
+        end
+
+        # FIXME
         def self.send_message(message)
-          queues = ::Azure.queues
-          resp = queues.create_message(@config.queue_name, message)
+          qs = create_qs
+          resp = qs.create_message(@config.queue_name, message)
           resp
         end
 
         def self.receive_message(max_number = 10)
-          queues = ::Azure.queues
-          response = queues.list_messages(@config.queue_name, 600, { number_of_messages: max_number })
+          qs = create_qs
+          response = qs.list_messages(@config.queue_name, 600, { number_of_messages: max_number })
           # see http://www.rubydoc.info/github/Azure/azure-sdk-for-ruby/Azure%2FQueue%2FQueueService%3Alist_messages
           # it returns a list of Azure::Entity::Queue::Message instances
           # http://www.rubydoc.info/github/Azure/azure-sdk-for-ruby/Azure/Queue/Message
@@ -66,10 +73,11 @@ module SlideHub
           result
         end
 
+        # FIXME
         def self.delete_message(message_object)
-          queues = ::Azure.queues
-          queues.create_queue(@config.queue_name)
-          resp = queues.delete_message(@config.queue_name, message_object.id, message_object.handle)
+          qs = create_qs
+          qs.create_queue(@config.queue_name)
+          resp = qs.delete_message(@config.queue_name, message_object.id, message_object.handle)
           resp
         end
 
@@ -82,12 +90,16 @@ module SlideHub
         end
 
         ## Blob
-        def self.upload_files(container, files, prefix)
+        def self.create_bs
           bs = ::Azure::Storage::Blob::BlobService.create(
             storage_account_name: @config.azure_storage_account_name,
             storage_access_key: @config.azure_storage_access_key,
           )
+          bs
+        end
 
+        def self.upload_files(container, files, prefix)
+          bs = create_bs
           files.each do |file|
             next unless File.exist?(file)
 
@@ -99,7 +111,7 @@ module SlideHub
         end
 
         def self.get_file_list(container, prefix)
-          bs = ::Azure::Blob::BlobService.new
+          bs = create_bs
           resp = bs.list_blobs(container, { prefix: prefix, max_results: 1000 })
           files = []
           resp.each do |blob|
@@ -109,7 +121,7 @@ module SlideHub
         end
 
         def self.save_file(container, key, destination)
-          bs = ::Azure::Blob::BlobService.new
+          bs = create_bs
           _blob, content = bs.get_blob(container, key)
           File.open(destination, 'wb') { |file| file.write(content) }
           true
@@ -142,7 +154,7 @@ module SlideHub
         end
 
         def self.delete_files(container, files)
-          bs = ::Azure::Blob::BlobService.new
+          bs = create_bs
           files.each do |file|
             bs.delete_blob(container, file[:key])
           end
@@ -160,11 +172,11 @@ module SlideHub
 
           start_time = Time.zone.now - 10
           expiration_time = Time.zone.now + 1800
-          bs = ::Azure::Blob::BlobService.new
+          bs = create_bs
           uri = bs.generate_uri Addressable::URI.escape("#{@config.bucket_name}/#{blob_name}"), {}
           uri.scheme = 'https'
 
-          signer = ::Azure::Storage::Core::Auth::SharedAccessSignature.new(
+          signer = ::Azure::Storage::Common::Core::Auth::SharedAccessSignature.new(
             @config.azure_storage_account_name,
             @config.azure_storage_access_key,
           )
