@@ -77,6 +77,8 @@ gem 'enum_help'
 # Multi Tenant
 gem 'apartment'
 
+gem 'psych', '~> 3.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -90,8 +92,8 @@ group :development, :test do
   gem 'ruby-debug-ide'
   gem 'shoulda-matchers', require: false
   # use specified version for cc-test-reporter
-  gem 'simplecov', '0.17.1'
-  gem 'simplecov-html', '0.10.2'
+  gem 'simplecov'
+  gem 'simplecov-html'
 end
 
 group :development do
