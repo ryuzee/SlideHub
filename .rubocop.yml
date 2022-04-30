@@ -21,6 +21,60 @@ AllCops:
 #   Whitelist:
 #     - "increment!"
 
+##################### Gemspec ##################################
+Gemspec/DateAssignment: # new in 1.10
+  Enabled: true
+Gemspec/RequireMFA: # new in 1.23
+  Enabled: true
+
+##################### Layout ##################################
+
+# メソッドチェーンの改行は末尾に . を入れる
+# REPL に貼り付けた際の暴発を防ぐため
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+# 桁揃えが綺麗にならないことが多いので migration は除外
+Layout/ExtraSpacing:
+  Exclude:
+    - "db/migrate/*.rb"
+
+# ({ と hash を開始した場合に ( の位置にインデントさせる
+# そもそも {} が必要ない可能性が高いが Style/BracesAroundHashParameters はチェックしないことにしたので
+# Layout/IndentHash:
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+# private/protected は一段深くインデントする
+Layout/IndentationConsistency:
+  EnforcedStyle: indented_internal_methods
+
+# `||` も align に使うことがあるので追加する
+Layout/SpaceAroundOperators:
+  AllowForAlignment: true
+
+# * migrate
+# * jbuilder
+# * model の association
+# * controller の callback
+# 辺りの桁揃えで引っかかるので全体的にチェックしない
+Layout/SpaceBeforeFirstArg:
+  Enabled: false
+
+Layout/SpaceBeforeBrackets: # (new in 1.7)
+  Enabled: true
+
+# * 警告 120文字
+# * 禁止 160文字
+# のイメージ
+Layout/LineLength:
+  Max: 160
+  Exclude:
+    - "db/migrate/*.rb"
+
+Layout/LineEndStringConcatenationIndentation: # new in 1.18
+  Enabled: true
+
 ##################### Style ##################################
 
 # redirect_to xxx and return のイディオムを維持したい
@@ -73,19 +127,9 @@ Style/Documentation:
 Style/DoubleNegation:
   Enabled: false
 
-# メソッドチェーンの改行は末尾に . を入れる
-# REPL に貼り付けた際の暴発を防ぐため
-Layout/DotPosition:
-  EnforcedStyle: trailing
-
 # 明示的に else で nil を返すのは分かりやすいので許可する
 Style/EmptyElse:
   EnforcedStyle: empty
-
-# 桁揃えが綺麗にならないことが多いので migration は除外
-Layout/ExtraSpacing:
-  Exclude:
-    - "db/migrate/*.rb"
 
 # いずれかに揃えるのならば `sprintf` や `format` より String#% が好きです
 Style/FormatString:
@@ -109,16 +153,6 @@ Style/HashSyntax:
 Style/IfUnlessModifier:
   Enabled: false
 
-# ({ と hash を開始した場合に ( の位置にインデントさせる
-# そもそも {} が必要ない可能性が高いが Style/BracesAroundHashParameters はチェックしないことにしたので
-# Layout/IndentHash:
-Layout/FirstHashElementIndentation:
-  EnforcedStyle: consistent
-
-# private/protected は一段深くインデントする
-Layout/IndentationConsistency:
-  EnforcedStyle: indented_internal_methods
-
 # scope 等は複数行でも lambda ではなく ->{} で揃えた方が見た目が綺麗
 Style/Lambda:
   Enabled: false
@@ -135,15 +169,6 @@ Style/NumericLiterals:
 # 名前付きキャプチャを使って参照したいので auto-correct しない
 Style/PerlBackrefs:
   AutoCorrect: false
-
-# has_ から始まるメソッドは許可する
-Naming/PredicateName:
-  ForbiddenPrefixes:
-    - "is_"
-    - "have_"
-  NamePrefix:
-    - "is_"
-    - "have_"
 
 # 特に model 内において、ローカル変数とメソッド呼び出しの区別をつけた方が分かりやすい場合が多い
 Style/RedundantSelf:
@@ -162,10 +187,6 @@ Style/Semicolon:
 Style/SignalException:
   EnforcedStyle: only_raise
 
-# `||` も align に使うことがあるので追加する
-Layout/SpaceAroundOperators:
-  AllowForAlignment: true
-
 # * 式展開したい場合だけダブルクォートにする
 # * それ以外ではシングルクォートを強制
 Style/StringLiterals:
@@ -177,14 +198,6 @@ Style/StringLiteralsInInterpolation:
 
 # いくらなんでも inject { |a, e| } は短すぎるので分かりやすい名前をつけたい
 Style/SingleLineBlockParams:
-  Enabled: false
-
-# * migrate
-# * jbuilder
-# * model の association
-# * controller の callback
-# 辺りの桁揃えで引っかかるので全体的にチェックしない
-Layout/SpaceBeforeFirstArg:
   Enabled: false
 
 # 複数行の場合はケツカンマを入れる
@@ -208,6 +221,78 @@ Style/ClassAndModuleChildren:
 Style/SymbolArray:
   Enabled: false
 
+# includeを許可しない
+Style/MixinUsage:
+  Include:
+    - app/**/*.rb
+
+# For rubocop < 1.0.0
+Style/HashEachMethods:
+  Enabled: true
+
+# For rubocop < 1.0.0
+Style/HashTransformKeys:
+  Enabled: true
+
+# For rubocop < 1.0.0
+Style/HashTransformValues:
+  Enabled: true
+
+Style/ArgumentsForwarding: # (new in 1.1)
+  Enabled: true
+Style/CollectionCompact: # (new in 1.2)
+  Enabled: true
+Style/DocumentDynamicEvalDefinition: # (new in 1.1)
+  Enabled: true
+Style/HashExcept: # (new in 1.7)
+  Enabled: true
+Style/NegatedIfElseCondition: # (new in 1.2)
+  Enabled: true
+Style/NilLambda: # (new in 1.3)
+  Enabled: true
+Style/RedundantArgument: # (new in 1.4)
+  Enabled: true
+Style/SwapValues: # (new in 1.1)
+  Enabled: true
+Style/EndlessMethod: # new in 1.8
+  Enabled: true
+Style/FetchEnvVar: # new in 1.28
+  Enabled: true
+Style/FileRead: # new in 1.24
+  Enabled: true
+Style/FileWrite: # new in 1.24
+  Enabled: true
+Style/HashConversion: # new in 1.10
+  Enabled: true
+Style/IfWithBooleanLiteralBranches: # new in 1.9
+  Enabled: true
+Style/InPatternThen: # new in 1.16
+  Enabled: true
+Style/MapToHash: # new in 1.24
+  Enabled: true
+Style/MultilineInPatternThen: # new in 1.16
+  Enabled: true
+Style/NestedFileDirname: # new in 1.26
+  Enabled: true
+Style/NumberedParameters: # new in 1.22
+  Enabled: true
+Style/NumberedParametersLimit: # new in 1.22
+  Enabled: true
+Style/ObjectThen: # new in 1.28
+  Enabled: true
+Style/OpenStructUse: # new in 1.23
+  Enabled: true
+Style/QuotedSymbols: # new in 1.16
+  Enabled: true
+Style/RedundantInitialize: # new in 1.27
+  Enabled: true
+Style/RedundantSelfAssignmentBranch: # new in 1.19
+  Enabled: true
+Style/SelectByRegexp: # new in 1.22
+  Enabled: true
+Style/StringChars: # new in 1.12
+  Enabled: true
+
 ##################### Lint ##################################
 
 # * 同名のメソッドがある場合にローカル変数に `_` を付ける
@@ -219,6 +304,53 @@ Lint/UnderscorePrefixedVariableName:
 # 子クラスで実装させるつもりのメソッドで引っかかるので
 Lint/UnusedMethodArgument:
   Enabled: false
+
+Lint/AmbiguousAssignment: # (new in 1.7)
+  Enabled: true
+Lint/DuplicateBranch: # (new in 1.3)
+  Enabled: true
+Lint/DuplicateRegexpCharacterClassElement: # (new in 1.1)
+  Enabled: true
+Lint/EmptyBlock: # (new in 1.1)
+  Enabled: true
+Lint/EmptyClass: # (new in 1.3)
+  Enabled: true
+Lint/NoReturnInBeginEndBlocks: # (new in 1.2)
+  Enabled: true
+Lint/ToEnumArguments: # (new in 1.1)
+  Enabled: true
+Lint/UnexpectedBlockArity: # (new in 1.5)
+  Enabled: true
+Lint/UnmodifiedReduceAccumulator: # (new in 1.1)
+  Enabled: true
+Lint/AmbiguousOperatorPrecedence: # new in 1.21
+  Enabled: true
+Lint/AmbiguousRange: # new in 1.19
+  Enabled: true
+Lint/DeprecatedConstants: # new in 1.8
+  Enabled: true
+Lint/EmptyInPattern: # new in 1.16
+  Enabled: true
+Lint/IncompatibleIoSelectWithFiberScheduler: # new in 1.21
+  Enabled: true
+Lint/LambdaWithoutLiteralBlock: # new in 1.8
+  Enabled: true
+Lint/NumberedParameterAssignment: # new in 1.9
+  Enabled: true
+Lint/OrAssignmentToConstant: # new in 1.9
+  Enabled: true
+Lint/RedundantDirGlobSort: # new in 1.8
+  Enabled: true
+Lint/RefinementImportMethods: # new in 1.27
+  Enabled: true
+Lint/RequireRelativeSelfPath: # new in 1.22
+  Enabled: true
+Lint/SymbolConversion: # new in 1.9
+  Enabled: true
+Lint/TripleQuotes: # new in 1.9
+  Enabled: true
+Lint/UselessRuby2Keywords: # new in 1.23
+  Enabled: true
 
 ##################### Metrics ##################################
 
@@ -241,14 +373,6 @@ Metrics/BlockLength:
 Metrics/CyclomaticComplexity:
   Max: 10
 
-# * 警告 120文字
-# * 禁止 160文字
-# のイメージ
-Layout/LineLength:
-  Max: 160
-  Exclude:
-    - "db/migrate/*.rb"
-
 # 20 行超えるのは migration ファイル以外滅多に無い
 Metrics/MethodLength:
   Max: 20
@@ -263,19 +387,23 @@ Metrics/PerceivedComplexity:
 Metrics/ParameterLists:
   Max: 6
 
-# includeを許可しない
-Style/MixinUsage:
-  Include:
-    - app/**/*.rb
+##################### Naming ##################################
 
-# For rubocop < 1.0.0
-Style/HashEachMethods:
+# has_ から始まるメソッドは許可する
+Naming/PredicateName:
+  ForbiddenPrefixes:
+    - "is_"
+    - "have_"
+  NamePrefix:
+    - "is_"
+    - "have_"
+
+##################### Security ##################################
+
+Naming/BlockForwarding: # new in 1.24
   Enabled: true
 
-# For rubocop < 1.0.0
-Style/HashTransformKeys:
+Security/CompoundHash: # new in 1.28
   Enabled: true
-
-# For rubocop < 1.0.0
-Style/HashTransformValues:
+Security/IoMethods: # new in 1.22
   Enabled: true
