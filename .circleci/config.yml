@@ -10,7 +10,7 @@ jobs:
     shell: /bin/bash --login
 
     docker:
-      - image: cimg/ruby:2.7.1-node
+      - image: cimg/ruby:2.7.6-node
         environment:
           CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
           CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
@@ -28,9 +28,12 @@ jobs:
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS/rspec
       - run: sudo npm install -g bower
       - run: sudo apt-get update
-      - run: sudo chown -R circleci:circleci ~/.npm
+      - run: sudo mkdir -p ~/.config
       - run: sudo chown -R circleci:circleci ~/.config
       - run: sudo chmod -R 777 ~/.config
+      - run: sudo mkdir -p ~/.npm
+      - run: sudo chown -R circleci:circleci ~/.npm
+      - run: sudo chmod -R 777 ~/.npm
       - run: sudo apt-get install -y libmagic-dev libmysqlclient-dev libsqlite3-dev pkg-config libmagickcore-dev libmagickwand-dev
       - run: yarn
 
