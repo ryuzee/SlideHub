@@ -12,7 +12,7 @@
       <%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" %>
     <![endif]-->
     <%= stylesheet_link_tag "application", :media => "all" %>
-    <%= stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" %>
+    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" %>
     <% ApplicationSetting['site.theme'] = 'default' unless %w[default white dark gray].include?(ApplicationSetting['site.theme']) %>
     <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/bootstrap.css" %>
     <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/custom.css" %>
@@ -37,34 +37,33 @@
     <%
       inverse = ApplicationSetting['site.header_inverse']
       inverse = 0 if inverse.nil?
+      inverse = 1 if ApplicationSetting['site.theme'] == 'dark'
     %>
-    <div class="navbar <% if inverse == '1' %>navbar-inverse<% else %>navbar-default<% end %> navbar-fixed-top">
-      <div class="container">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
+    <nav class="navbar navbar-expand-lg  <% if inverse == '0' %>navbar-light bg-light<% else %>navbar-dark bg-primary<% end %> sticky-top">
         <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;<%= ApplicationSetting['site.name'] %></a>
-        <div class="navbar-collapse collapse navbar-responsive-collapse">
-          <ul class="nav navbar-nav">
-            <li class="<%= 'active' if controller.controller_name == 'popular' %>"><%= link_to t("popular"), popular_index_path  %></li>
-            <li class="<%= 'active' if controller.controller_name == 'latest' %>"><%= link_to t("latest"), latest_index_path  %></li>
-            <li class="dropdown<%= ' active' if controller.controller_name == 'categories' %>">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= t 'category' %><span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item <%= 'active' if controller.controller_name == 'popular' %>"><%= link_to t("popular"), popular_index_path, class: 'nav-link'  %></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'latest' %>"><%= link_to t("latest"), latest_index_path, class: 'nav-link'  %></li>
+            <li class="nav-item dropdown<%= ' active' if controller.controller_name == 'categories' %>">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true"><%= t 'category' %></a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <% @categories.each do |cat| %>
-                <li><%= link_to cat.name, category_path(cat.id) %></li>
+                <%= link_to cat.name, category_path(cat.id), class: 'dropdown-item' %>
                 <% end %>
-              </ul>
+              </div>
             </li>
-            <li class="<%= 'active' if controller.controller_name == 'search' %>"><%= link_to t("search"), search_index_path  %></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'search' %>"><%= link_to t("search"), search_index_path, class: 'nav-link'  %></li>
             <%= raw custom_links(controller) %>
           </ul>
           <% if user_signed_in? %>
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
               <span class="avatar20" aria-hidden="true">
                 <% if current_user.avatar.attached? %>
                 <%= image_tag(current_user.avatar.variant(resize: "32x32")) %>
@@ -72,38 +71,37 @@
                 <%= image_tag('avatar/thumb/missing.png') %>
                 <% end %>
               </span>&nbsp;<%= current_user.email %><span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <% if (ApplicationSetting['site.only_admin_can_upload']).to_i == 0 || current_user.admin == true %>
-              <li><a href="<%= new_slide_path %>"><i class="fa fa-pencil"></i>&nbsp;<%= t 'upload' %>!!</a></li>
+              <a class="dropdown-item" href="<%= new_slide_path %>"><i class="fa fa-pencil"></i>&nbsp;<%= t 'upload' %>!!</a>
               <% end %>
-              <li><a href="<%= users_path %>"><i class="fa fa-list-alt"></i>&nbsp;<%= t :my_slides %></a></li>
-              <li><a href="<%= statistics_path %>"><i class="fa fa-signal"></i>&nbsp;<%= t :my_statistics %></a></li>
-              <li><a href="<%= edit_user_registration_path %>"><i class="fa fa-user"></i>&nbsp;<%= t :my_account %></a></li>
+              <a class="dropdown-item" href="<%= users_path %>"><i class="fa fa-list-alt"></i>&nbsp;<%= t :my_slides %></a>
+              <a class="dropdown-item" href="<%= statistics_path %>"><i class="fa fa-signal"></i>&nbsp;<%= t :my_statistics %></a>
+              <a class="dropdown-item" href="<%= edit_user_registration_path %>"><i class="fa fa-user"></i>&nbsp;<%= t :my_account %></a>
               <% if current_user.admin %>
               <!-- admin -->
-              <li class="divider"></li>
-              <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-wrench"></i></span>&nbsp;<%= t :admin_dashboard %></a></li>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="<%= admin_dashboard_path %>"><i class="fa fa-wrench"></i></span>&nbsp;<%= t :admin_dashboard %></a>
               <!-- // admin -->
               <% end %>
-              <li class="divider"></li>
-              <li><%= link_to t(:logout), destroy_user_session_path, method: :delete %></li>
+              <div class="dropdown-divider"></div>
+              <%= link_to t(:logout), destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
 
-            </ul>
+            </div>
             </li>
           </ul>
           <% else %>
           <% if ApplicationSetting['site.display_login_link'] == "1" %>
           <ul class="nav navbar-nav navbar-right">
             <% if ApplicationSetting['site.signup_enabled'] == "1" %>
-            <li><%= link_to t("signup"), new_user_registration_path %></li>
+            <li class="nav-item"><%= link_to t("signup"), new_user_registration_path, class: 'nav-link' %></li>
             <% end %>
-            <li><%= link_to t("signin"), new_user_session_path %></li>
+            <li class="nav-item"><%= link_to t("signin"), new_user_session_path, class: 'nav-link' %></li>
           </ul>
           <% end %>
           <% end %>
         </div>
-      </div>
-    </div>
+    </nav>
 
     <a name="page_top"></a>
     <div class="container" id="main_container" role="main">
@@ -115,7 +113,7 @@
       <br clear="all" />
     </div> <!-- /container -->
 
-    <div class="footer">
+    <footer class="page-footer fixed-bottom custom-footer">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
@@ -126,6 +124,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   </body>
 </html>

@@ -1,9 +1,15 @@
-<section class="content-header">
-<h1><%= t(:featured_slides) %><small></small></h1>
-<ol class="breadcrumb">
-  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-  <li class="active"><%= link_to t(:featured_slides), admin_featured_slides_path %></li>
-</ol>
+<section class="content-header d-flex">
+  <div>
+    <h1><%= t(:featured_slides) %></h1>
+  </div>
+  <div class="ml-auto">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item active"><%= link_to t(:featured_slides), admin_featured_slides_path %></li>
+      </ol>
+    </nav>
+  </div>
 </section>
 
 <section class="content">

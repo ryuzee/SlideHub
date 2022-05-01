@@ -10,7 +10,7 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 40px;
 }
-.footer {
+.custom-footer {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -19,7 +19,7 @@ body {
   background-color: #515D6C;
 }
 
-.footer div {
+.custom-footer div {
   background-color: #515D6C;
 }
 
@@ -37,7 +37,7 @@ body > .container {
   font-size: 0.9em !important;
 }
 
-.footer > .container {
+.custom-footer > .container {
   padding-right: 15px;
   padding-left: 15px;
 }
@@ -47,13 +47,13 @@ code {
 }
 
 @media only screen and (min-width: 992px) {
-    .footer {
+    .custom-footer {
         height: auto;
     }
 }
 
 @media only screen and (max-width: 760px) {
-    .footer {
+    .custom-footer {
         height: auto;
     }
 }

@@ -1,10 +1,10 @@
-<div class="panel panel-default profile-sidebar">
-  <div class="panel-body">
+<div class="card profile-sidebar">
+  <div class="card-body">
     <div class="profile-userpic">
       <% if user.avatar.attached?  %>
-      <%= image_tag(url_for(user.avatar), class: 'img-responsive') %>
+      <%= image_tag(url_for(user.avatar), class: 'img-fluid d-block mx-auto') %>
       <% else %>
-      <%= image_tag('avatar/medium/missing.png', class: 'img-responsive') %>
+      <%= image_tag('avatar/medium/missing.png', class: 'img-fluid d-block mx-auto') %>
       <% end %>
     </div>
     <div class="profile-usertitle">

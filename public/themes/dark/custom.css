@@ -9,8 +9,9 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background-color: #222222 !important;
 }
-.footer {
+.custom-footer {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -19,7 +20,7 @@ body {
   background-color: #111;
 }
 
-.footer div {
+.custom-footer div {
   background-color: #111;
 }
 
@@ -35,7 +36,7 @@ body > .container {
   margin: 20px 0;
 }
 
-.footer > .container {
+.custom-footer > .container {
   padding-right: 15px;
   padding-left: 15px;
 }
@@ -45,13 +46,26 @@ code {
 }
 
 @media only screen and (min-width: 992px) {
-    .footer {
+    .custom-footer {
         height: auto;
     }
 }
 
 @media only screen and (max-width: 760px) {
-    .footer {
+    .custom-footer {
         height: auto;
     }
+}
+
+.card, .card-body {
+  background-color: #303030 !important;
+}
+
+.list-group-item {
+  background-color: #303030 !important;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+table td, table th {
+  color: #cccccc
 }

@@ -4,7 +4,7 @@
     <div style="padding:4px;">
       <div class="slidecard">
         <div class="slidecard-image">
-          <%= link_to image_tag(thumbnail_image_url(slide), class: "img-responsive", style: "width:100%"), slide_url(slide.id) %>
+          <%= link_to image_tag(thumbnail_image_url(slide), class: "img-fluid", style: "width:100%"), slide_url(slide.id) %>
         </div>
         <div class="slidecard-content">
           <div class="slidecard-basic-info">
@@ -59,7 +59,7 @@
   transform: scale(1.2);
 }
 
-.slidehub_body .slidecard .slidecard-image:hover img.img-responsive {
+.slidehub_body .slidecard .slidecard-image:hover img.img-fluid {
   display: block;
   max-width: 100%;
   height: auto;

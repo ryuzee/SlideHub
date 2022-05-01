@@ -10,9 +10,8 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require devise_bootstrap_views
- *= require bootstrap3/dist/css/bootstrap.min
- *= require bootstrap-datetimepicker
+ *= require bootstrap/dist/css/bootstrap.min
+ *= require @eonasdan/tempus-dominus/dist/css/tempus-dominus.min
  *= require slidehub
  *= require_self
  */

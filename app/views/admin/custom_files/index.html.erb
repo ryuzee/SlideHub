@@ -1,18 +1,24 @@
-<section class="content-header">
-  <h1><%= t(:custom_files) %><small></small></h1>
-  <ol class="breadcrumb">
-    <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-    <li class="active"><%= link_to t(:custom_files), admin_custom_files_path %></li>
-  </ol>
+<section class="content-header d-flex">
+  <div>
+    <h1><%= t(:custom_files) %></h1>
+  </div>
+  <div class="ml-auto">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item active"><%= link_to t(:custom_files), admin_custom_files_path %></li>
+      </ol>
+    </nav>
+  </div>
 </section>
 
 <section class="content">
   <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
-  <div class="box box-warning">
-    <div class="box-header">
-      <h3 class="box-title">&nbsp;</h3>
-      <div class="box-tools">
+  <div class="card card-warning card-outline">
+    <div class="card-header">
+      <h3 class="card-title">&nbsp;</h3>
+      <div class="card-tools">
         <div class="input-group input-group-sm text-right">
           <div class="input-group-btn">
             <%= link_to t(:new_custom_file), new_admin_custom_file_path, class: 'btn btn-primary' %>
@@ -20,9 +26,9 @@
         </div>
       </div>
     </div>
-    <div class="box-body">
+    <div class="card-body p-0">
       <!-- Table -->
-      <table class="table table-striped table-bordered small">
+      <table class="table table-striped small">
         <thead>
           <tr>
             <th class="col-md-2"><%= t(:path) %></th>
@@ -63,4 +69,3 @@
     });
   });
 </script>
-

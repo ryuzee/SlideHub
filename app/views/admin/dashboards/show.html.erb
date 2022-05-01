@@ -8,7 +8,7 @@
 <div class="row">
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
-      <span class="info-box-icon bg-aqua"><i class="fa fa-file-image-o"></i></span>
+      <span class="info-box-icon bg-success"><i class="fa fa-file"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"><%= t(:number_of_slides) %></span>
         <span class="info-box-number"><%= @dashboard.slide_count %></span>
@@ -17,7 +17,7 @@
   </div><!-- /.col -->
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
-      <span class="info-box-icon bg-red"><i class="fa fa-user"></i></span>
+      <span class="info-box-icon bg-primary"><i class="fa fa-user"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"><%= t(:number_of_users) %></span>
         <span class="info-box-number"><%= @dashboard.user_count %></span>
@@ -27,57 +27,75 @@
 
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
-      <span class="info-box-icon bg-green"><i class="fa fa-eye"></i></span>
+      <span class="info-box-icon bg-dark"><i class="fa fa-eye"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"><%= t(:number_of_page_view) %></span>
         <span class="info-box-number"><%= @dashboard.page_view %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
+
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
-      <span class="info-box-icon bg-yellow"><i class="fa fa-download"></i></span>
+      <span class="info-box-icon bg-yellow"><i class="fa fa-eye"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text"><%=t 'activerecord.attributes.slide.embedded_view' %></span>
+        <span class="info-box-number"><%= @dashboard.embedded_view %></span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box -->
+  </div><!-- /.col -->
+
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-red"><i class="fa fa-exclamation-circle"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text"><%= t(:number_of_conversion_failed) %></span>
+        <span class="info-box-number"><%= @dashboard.conversion_failed_count %></span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box -->
+  </div><!-- /.col -->
+
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-warning"><i class="fa fa-download"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"><%= t(:number_of_downloads) %></span>
         <span class="info-box-number"><%= @dashboard.download_count %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
-</div><!-- /.row -->
 
-<div class="box box-info">
-  <!-- Table -->
-  <table class="table table-striped table-bordered small">
-    <thead>
-      <tr>
-        <th class="col-md-1"><%= t(:number_of_conversion_failed) %></th>
-        <th class="col-md-1"><%= t(:number_of_comments) %></th>
-        <th class="col-md-1"><%= t 'activerecord.attributes.slide.embedded_view' %></th>
-    </thead>
-    <tbody>
-      <tr>
-        <td><%= @dashboard.conversion_failed_count %>&nbsp;</td>
-        <td><%= @dashboard.comment_count %>&nbsp;</td>
-        <td><%= @dashboard.embedded_view %>&nbsp;</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-info"><i class="fa fa-comments"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text"><%= t(:number_of_comments) %></span>
+        <span class="info-box-number"><%= @dashboard.comment_count %></span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box -->
+  </div><!-- /.col -->
+
+
+</div><!-- /.row -->
 
 <!-- TABLE: LATEST ORDERS -->
 <div class="row">
   <div class="col-md-6 col-sm-12 col-xs-24">
-    <div class="box box-info">
-      <div class="box-header with-border">
-        <h3 class="box-title"><%= t(:latest_published_slides) %></h3>
-        <div class="box-tools pull-right">
-          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    <div class="card card-primary card-outline">
+      <div class="card-header">
+        <h3 class="card-title"><%= t(:latest_published_slides) %></h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
       </div><!-- /.box-header -->
-      <div class="box-body">
+      <div class="card-body">
         <div class="table-responsive">
-          <table class="table no-margin">
+          <table class="table table-sm no-margin">
             <thead>
               <tr>
                 <th>ID</th>
@@ -99,23 +117,27 @@
           </table>
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
-      <div class="box-footer clearfix">
-        <%= link_to t(:view_all_slides), admin_slides_path, class: "btn btn-sm btn-default btn-flat pull-right" %>
+      <div class="card-footer clearfix">
+        <%= link_to t(:view_all_slides), admin_slides_path, class: "btn btn-sm btn-default btn-flat float-right" %>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
   <div class="col-md-6 col-sm-12 col-xs-24">
-    <div class="box box-info">
-      <div class="box-header with-border">
-        <h3 class="box-title"><%= t(:popular_slides) %></h3>
-        <div class="box-tools pull-right">
-          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    <div class="card card-primary card-outline">
+      <div class="card-header">
+        <h3 class="card-title"><%= t(:popular_slides) %></h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
       </div><!-- /.box-header -->
-      <div class="box-body">
+      <div class="card-body">
         <div class="table-responsive">
-          <table class="table no-margin">
+          <table class="table table-sm no-margin">
             <thead>
               <tr>
                 <th>ID</th>
@@ -137,8 +159,8 @@
           </table>
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
-      <div class="box-footer clearfix">
-        <%= link_to t(:view_all_slides), admin_slides_path, class: "btn btn-sm btn-default btn-flat pull-right" %>
+      <div class="card-footer clearfix">
+        <%= link_to t(:view_all_slides), admin_slides_path, class: "btn btn-sm btn-default btn-flat float-right" %>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->

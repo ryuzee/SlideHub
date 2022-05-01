@@ -1,3 +1,4 @@
+<div class="mb-4"></div>
 <% content_for :title, t('.sign_up') %>
 <div class="row">
   <div class="col-md-12">
@@ -6,8 +7,9 @@
     <%= render "devise/shared/signin_with_omniauth" %>
 
     <%= bootstrap_devise_error_messages! %>
-    <div class="panel panel-default">
-      <div class="panel-body">
+
+    <div class="card card-default mt-4">
+      <div class="card-body">
         <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { role: "form" }) do |f| %>
           <div class="form-group">
             <%= f.label :email %>

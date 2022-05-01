@@ -1,9 +1,15 @@
-<section class="content-header">
-<h1><%= t(:custom_files) %><small></small></h1>
-<ol class="breadcrumb">
-  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-  <li class="active"><%= link_to t(:custom_files), admin_custom_files_path %></li>
-</ol>
+<section class="content-header d-flex">
+  <div>
+    <h1><%= t(:custom_files) %></h1>
+  </div>
+  <div class="ml-auto">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item active"><%= link_to t(:custom_files), admin_custom_files_path %></li>
+      </ol>
+    </nav>
+  </div>
 </section>
 
 <section class="content">
@@ -12,7 +18,8 @@
 <%= form_for @custom_file, :multipart => true, :html => { :class => "form-horizontal slide" }, :url => "/admin/custom_files"  do |f| %>
 
   <div class="control-group">
-    <%= f.file_field :file %>
+    <%= f.file_field :file, class: "form-control" %>
+    <div class="mb-1"></div>
 
     <%= f.label t(:description), :class => 'control-label' %>
     <div class="controls">

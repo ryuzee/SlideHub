@@ -10,7 +10,6 @@
     <%= display_meta_tags %>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <%= stylesheet_link_tag "admin" %>
-    <%= stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" %>
     <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
     <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
     <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
@@ -26,124 +25,105 @@
     <div class="wrapper">
 
       <!-- Main Header -->
+      <!--
       <header class="main-header">
+      -->
 
-        <!-- Logo -->
-        <a href="<%= admin_dashboard_path %>" class="logo">
-          <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>M</b>C</span>
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b><%= raw ApplicationSetting['site.name'] %></b>MC</span>
-        </a>
+
 
         <!-- Header Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!--
         <nav class="navbar navbar-static-top" role="navigation">
+        -->
           <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
-          </a>
-          <!-- Navbar Right Menu -->
-          <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link bg-info rounded dropdown-toggle" href="#" id="navbarVersionDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%= current_user.display_name %>
+              </a>
+              <div class="dropdown-menu py-0" aria-labelledby="navbarVersionDropdown">
+                <%= link_to t(:my_statistics), statistics_index_path, class: 'dropdown-item' %>
+                <%= link_to t(:my_slides), user_by_username_path(username: current_user.username) , class: 'dropdown-item'%>
+                <div class="dropdown-divider"></div>
+                <%= link_to t(:my_account), edit_user_registration_path, :class => "dropdown-item" %>
+                <%= link_to t(:logout), destroy_user_session_path, method: :delete, :class => "dropdown-item" %>
+              </div>
+            </li>
+          </ul>
 
-              <!-- User Account Menu -->
-              <li class="dropdown user user-menu">
-                <!-- Menu Toggle Button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs"><%= current_user.display_name %></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <!-- Menu Body -->
-                  <li class="user-body">
-                    <div class="col-xs-6 text-center">
-                      <%= link_to t(:my_statistics), statistics_index_path %>
-                    </div>
-                    <div class="col-xs-6 text-center">
-                      <%= link_to t(:my_slides), user_by_username_path(username: current_user.username) %>
-                    </div>
-                  </li>
-                  <!-- Menu Footer-->
-                  <li class="user-footer">
-                    <div class="pull-left">
-                      <%= link_to t(:my_account), edit_user_registration_path, :class => "btn btn-default btn-flat" %>
-                    </div>
-                    <div class="pull-right">
-                      <%= link_to t(:logout), destroy_user_session_path, method: :delete, :class => "btn btn-default btn-flat" %>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+<!-- SEARCH FORM -->
+    <form action="<%= admin_slides_path %>" method="get" class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+        <input type="text" name="q[name_cont]" class="form-control form-control-navbar " placeholder="Search..." aria-label="Search">
+        <div class="input-group-append">
+          <button type="submit" name="search" id="search-btn" class="btn btn-navbar"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </form>
         </nav>
+      <!--
       </header>
+      -->
       <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar">
+      <aside class="main-sidebar sidebar-dark-primary">
+
+      <!-- Brand Logo -->
+      <a href="<%= admin_dashboard_path %>" class="brand-link">
+        <span class="brand-text font-weight-light"><b><%= raw ApplicationSetting['site.name'] %></b> Console</span>
+      </a>
 
         <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-
-          <!-- search form (Optional) -->
-          <form action="<%= admin_slides_path %>" method="get" class="sidebar-form">
-            <div class="input-group">
-              <input type="text" name="q[name_cont]" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
-            </div>
-          </form>
-          <!-- /.search form -->
+        <div class="sidebar">
 
           <!-- Sidebar Menu -->
-          <ul class="sidebar-menu">
-            <li class="header"><%= t(:admin_menu) %></li>
-            <li class="<%= 'active' if controller.controller_name == 'dashboards' %>"><a href="<%= admin_dashboard_path %>"><i class="fa fa-home"></i> <span><%= t :admin_dashboard %></span></a></li>
-            <li class="<%= 'active' if controller.controller_name == 'slides' %>"><a href="<%= admin_slides_path %>"><i class="fa fa-file"></i> <span><%= t('activerecord.models.slide') %></span></a></li>
-            <li class="<%= 'active' if controller.controller_name == 'featured_slides' %>"><a href="<%= admin_featured_slides_path %>"><i class="fa fa-eye"></i> <span><%= t(:featured_slides) %></span></a></li>
-            <li class="<%= 'active' if controller.controller_name == 'users' %>"><a href="<%= admin_users_path %>"><i class="fa fa-user"></i> <span><%= t('activerecord.models.user') %></span></a></li>
-            <li class="<%= 'active' if controller.controller_name == 'categories' %>"><a href="<%= admin_categories_path %>"><i class="fa fa-book"></i> <span><%= t('activerecord.models.category') %></span></a></li>
-            <li class="<%= 'active' if controller.controller_name == 'custom_contents' %>"><a href="<%= admin_custom_contents_path %>"><i class="fa fa-code"></i> <span><%= t(:custom_contents) %></span></a></li>
-            <li class="<%= 'active' if controller.controller_name == 'pages' %>"><a href="<%= admin_pages_path %>"><i class="fa fa-file-text"></i> <span><%= t('custom_pages') %></span></a></li>
-            <li class="<%= 'active' if controller.controller_name == 'custom_files' %>"><a href="<%= admin_custom_files_path %>"><i class="fa fa-upload"></i> <span><%= t(:custom_files) %></span></a></li>
-            <li class="<%= 'active' if controller.controller_name == 'logs' %>"><a href="<%= admin_logs_index_path %>"><i class="fa fa-list"></i> <span><%= t(:logs) %></span></a></li>
-            <li class="<%= 'active' if controller.controller_name == 'site_settings' %>"><a href="<%= admin_site_settings_path %>"><i class="fa fa-cog"></i> <span><%= t(:site_settings) %></span></a></li>
+          <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+            <li class="nav-header"><%= t(:admin_menu) %></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'dashboards' %>"><a class="nav-link" href="<%= admin_dashboard_path %>"><i class="nav-icon fa fa-home"></i> <span><%= t :admin_dashboard %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'slides' %>"><a class="nav-link" href="<%= admin_slides_path %>"><i class="nav-icon fa fa-file"></i> <span><%= t('activerecord.models.slide') %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'featured_slides' %>"><a class="nav-link" href="<%= admin_featured_slides_path %>"><i class="nav-icon fa fa-eye"></i> <span><%= t(:featured_slides) %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'users' %>"><a class="nav-link" href="<%= admin_users_path %>"><i class="nav-icon fa fa-user"></i> <span><%= t('activerecord.models.user') %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'categories' %>"><a class="nav-link" href="<%= admin_categories_path %>"><i class="nav-icon fa fa-book"></i> <span><%= t('activerecord.models.category') %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'custom_contents' %>"><a class="nav-link" href="<%= admin_custom_contents_path %>"><i class="nav-icon fa fa-code"></i> <span><%= t(:custom_contents) %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'pages' %>"><a class="nav-link" href="<%= admin_pages_path %>"><i class="nav-icon fa fa-file-text"></i> <span><%= t('custom_pages') %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'custom_files' %>"><a class="nav-link" href="<%= admin_custom_files_path %>"><i class="nav-icon fa fa-upload"></i> <span><%= t(:custom_files) %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'logs' %>"><a class="nav-link" href="<%= admin_logs_index_path %>"><i class="nav-icon fa fa-list"></i> <span><%= t(:logs) %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'site_settings' %>"><a class="nav-link" href="<%= admin_site_settings_path %>"><i class="nav-icon fa fa-cog"></i> <span><%= t(:site_settings) %></span></a></li>
             <% if Tenant.primary? %>
-            <li class="<%= 'active' if controller.controller_name == 'tenants' %>"><a href="<%= admin_tenants_path %>"><i class="fa fa-building"></i> <span><%= t(:tenant) %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'tenants' %>"><a class="nav-link" href="<%= admin_tenants_path %>"><i class="nav-icon fa fa-building"></i> <span><%= t(:tenant) %></span></a></li>
             <% end %>
-            <li class="header"><%= t(:public_site) %></li>
-            <li><a href="<%= slides_path %>"><i class="fa fa-file"></i> <span><%= t('activerecord.models.slide') %></span></a></li>
-            <li><a href="<%= popular_index_path %>"><i class="fa fa-star"></i> <span><%= t(:popular_slides) %></span></a></li>
-            <li><a href="<%= latest_index_path %>"><i class="fa fa-calendar"></i> <span><%= t(:latest_slides) %></span></a></li>
-            <li class="treeview">
-            <a href="#"><i class="fa fa-filter"></i> <span><%= t('activerecord.models.category') %></span> <i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-                <% @categories.each do |cat| %>
-                  <li><%= link_to cat.name, category_path(cat.id) %></li>
-                <% end %>
-              </ul>
-            </li>
+            <li class="nav-header"><%= t(:public_site) %></li>
+            <li class="nav-item"><a class="nav-link" href="<%= slides_path %>"><i class="nav-icon fa fa-file"></i> <span><%= t('activerecord.models.slide') %></span></a></li>
+            <li class="nav-item"><a class="nav-link" href="<%= popular_index_path %>"><i class="nav-icon fa fa-star"></i> <span><%= t(:popular_slides) %></span></a></li>
+            <li class="nav-item"><a class="nav-link" href="<%= latest_index_path %>"><i class="nav-icon fa fa-calendar"></i> <span><%= t(:latest_slides) %></span></a></li>
+
+            <li class="nav-header"><%= t(:public_site) %> by <%= t('activerecord.models.category') %></li>
+            <% @categories.each do |cat| %>
+              <li class="nav-item">
+              <a class="nav-link" href="<%= category_path(cat.id) %>"><i class="fa fa-circle nav-icon"></i> <span><%= cat.name %></span></a>
+              </li>
+            <% end %>
           </ul><!-- /.sidebar-menu -->
-        </section>
+          </nav>
+        </div>
         <!-- /.sidebar -->
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
+      <div class="content-wrapper px-4 py-2">
         <%= yield %>
       </div><!-- /.content-wrapper -->
 
       <!-- Main Footer -->
       <footer class="main-footer">
+        <%= raw ApplicationSetting['site.footer'] %>
         <!-- To the right -->
-        <div class="pull-right hidden-xs">
+        <div class="float-right d-none d-sm-inline-block">
           Powered by <%= link_to "SlideHub", "https://github.com/ryuzee/SlideHub", target: "_blank",  rel: "noopener noreferrer" %> <%= SlideHub::VERSION %>
         </div>
-        <!-- Default to the left -->
-        <%= raw ApplicationSetting['site.footer'] %>
       </footer>
     </div><!-- ./wrapper -->
-
-
   </body>
 </html>

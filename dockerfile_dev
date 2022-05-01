@@ -9,6 +9,8 @@ COPY Gemfile.lock /opt/application/current/
 
 RUN /bin/bash -lc 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bundle install'
 
+RUN bash -l -c 'gem install mailcatcher'
+
 COPY package.json /opt/application/current/
 COPY yarn.lock /opt/application/current/
 RUN yarn
@@ -18,8 +20,6 @@ RUN chmod 755 /opt/application/current/script/*.sh
 COPY script/oss_docker_supervisor_dev.conf /etc/supervisor.conf
 
 RUN bash -l -c 'OSS_SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rake assets:precompile'
-
-RUN bash -l -c 'gem install mailcatcher'
 
 EXPOSE 3000 1080
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.conf"]

@@ -1,7 +1,11 @@
+<% if flash.count > 0 %>
+
 <% flash.each do |name, msg| %>
   <% name = 'info' if name == 'notice' %>
   <% name = 'warning' if name == 'alert' %>
   <div class="alert alert-<%= name %>">
     <%= msg.html_safe %>
   </div>
+<% end %>
+<div class="mb-4"></div>
 <% end %>

@@ -1,9 +1,15 @@
-<section class="content-header">
-<h1><%= t(:edit_user) %><small></small></h1>
-<ol class="breadcrumb">
-  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-  <li class="active"><%= link_to t('activerecord.models.user'), admin_users_path %></li>
-</ol>
+<section class="content-header d-flex">
+  <div>
+    <h1><%= t(:edit_user) %></h1>
+  </div>
+  <div class="ml-auto">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item active"><%= link_to t('activerecord.models.user'), admin_users_path %></li>
+      </ol>
+    </nav>
+  </div>
 </section>
 
 <section class="content">
@@ -11,11 +17,11 @@
 
 <%= form_for @user, :html => { :class => "form-horizontal user" }, :url => admin_user_path(@user.id) do |f| %>
   <% if @user.errors.any? %>
-    <div id="error_expl" class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= t('error_save_user', errors: @user.errors.count) %></h3>
+    <div id="error_expl" class="card card-danger">
+      <div class="card-heading">
+        <h3 class="card-title"><%= t('error_save_user', errors: @user.errors.count) %></h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <ul>
           <% @user.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
@@ -25,51 +31,51 @@
     </div>
   <% end %>
 
-  <div class="control-group">
-    <%= f.label :id, :class => 'control-label' %>
-    <div class="controls">
+  <div class="form-group row">
+    <%= f.label :id, :class => 'col-sm-2 col-form-label' %>
+    <div class="col-sm-10">
       <%= f.text_field "_id", :value => @user[:id], :disabled => "disabled", :class => 'form-control' %>
     </div>
     <%= errors(@user, :user_id) %>
   </div>
 
-  <div class="control-group">
-    <%= f.label :username, :class => 'control-label' %>
-    <div class="controls">
+  <div class="form-group row">
+    <%= f.label :username, :class => 'col-sm-2 col-form-label' %>
+    <div class="col-sm-10">
       <%= f.text_field :username, :class => 'form-control' %>
     </div>
     <%= errors(@user, :username) %>
   </div>
 
-  <div class="control-group">
-    <%= f.label :display_name, :class => 'control-label' %>
-    <div class="controls">
+  <div class="form-group row">
+    <%= f.label :display_name, :class => 'col-sm-2 col-form-label' %>
+    <div class="col-sm-10">
       <%= f.text_field :display_name, :class => 'form-control' %>
     </div>
     <%= errors(@user, :display_name) %>
   </div>
 
-  <div class="control-group">
-    <%= f.label :email, :class => 'control-label' %>
-    <div class="controls">
+  <div class="form-group row">
+    <%= f.label :email, :class => 'col-sm-2 col-form-label' %>
+    <div class="col-sm-10">
       <%= f.text_field :email, :class => 'form-control' %>
     </div>
     <%= errors(@user, :email) %>
   </div>
 
-  <div class="control-group">
-    <%= f.label :biography, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :biography, :class => 'form-control' %>
+  <div class="form-group row">
+    <%= f.label :biography, :class => 'col-sm-2 col-form-label' %>
+    <div class="col-sm-10">
+      <%= f.text_area :biography, :rows => 10, :class => 'form-control' %>
     </div>
     <%= errors(@user, :biography) %>
   </div>
 
-  <div class="control-group">
-    <%= f.label :admin, :class => 'control-label' %>
-    <div class="controls checkbox">
+  <div class="form-group row">
+    <%= f.label :admin, :class => 'col-sm-2 col-form-label' %>
+    <div class="col-sm-10 checkbox">
       <label>
-        <%= f.check_box :admin %><%= t('activerecord.attributes.user.admin') %>
+        <%= f.check_box :admin %>&nbsp;<%= t('activerecord.attributes.user.admin') %>
       </label>
     </div>
     <%= errors(@user, :admin) %>
@@ -79,7 +85,7 @@
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t("helpers.links.cancel"), admin_users_path, :class => 'btn btn-default' %>
-  <%= link_to t(:delete_user), admin_user_path(@user[:id]), :method => 'delete', :class => 'btn btn-danger pull-right', data: {:confirm => t(:confirm_to_delete_user)} %>
+  <%= link_to t(:delete_user), admin_user_path(@user[:id]), :method => 'delete', :class => 'btn btn-danger float-right', data: {:confirm => t(:confirm_to_delete_user)} %>
 
 <% end %>
 

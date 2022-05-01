@@ -1,15 +1,16 @@
+<div class="mb-4"></div>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= "#{strip_tags(@user.display_name)}'s Slides" %>)" href="<%= user_by_username_path(username: @user.username, format: "rss") %>" />
 
 <% content_for :title, t(:slides_by_user, user: @user.display_name) %>
 <div class="row">
   <div class="col-md-9">
     <h3><%= t :slides_by_user, user: @user.display_name %></h3>
-    <div class="btn-group btn-toggle" style="margin-bottom:10px;">
+    <div style="margin-bottom:10px;">
       <% if params['sort_by'] != 'popularity' %>
         <a class="btn btn-primary active" style="color:#fff;"><%= t :order_by_uploaded_date %></a>
-        <a href="?sort_by=popularity" class="btn btn-default"><%= t :order_by_popularity %></a>
+        <a href="?sort_by=popularity" class="btn btn-secondary"><%= t :order_by_popularity %></a>
       <% else %>
-        <a href="?sort_by=date" class="btn btn-default"><%= t :order_by_uploaded_date %></a>
+        <a href="?sort_by=date" class="btn btn-secondary"><%= t :order_by_uploaded_date %></a>
         <a class="btn btn-primary active" style="color:#fff;"><%= t :order_by_popularity %></a>
       <% end %>
     </div>
@@ -29,9 +30,9 @@
     <%= render 'users/right_side_bar', user: @user %>
     <br clear="all" />
 
-    <div class="panel panel-default">
-      <div class="panel-heading"><%= t :popular_tags %></div>
-      <div class="panel-body">
+    <div class="card">
+      <div class="card-header"><%= t :popular_tags %></div>
+      <div class="card-body">
         <% tag_cloud(@tags, %w(tag1 tag2 tag3 tag4)) do |tag, css_class| %>
           <%= link_to tag.name, "#{search_index_path}?q%5Btag_search%5D=#{tag.name}", :class => css_class %>
         <% end %>
@@ -39,3 +40,5 @@
     </div>
   </div>
 </div>
+
+<div class="mb-4"></div>

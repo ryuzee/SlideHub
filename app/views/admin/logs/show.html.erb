@@ -1,16 +1,22 @@
-<section class="content-header">
-<h1><%= @path %>&nbsp;<%= t(:last_lines) %><small><%= link_to(t(:download), admin_logs_download_path + "?path=#{@path}")%></small></h1>
-<ol class="breadcrumb">
-  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-  <li class="active"><%= link_to t(:logs), admin_logs_index_path %></li>
-</ol>
+<section class="content-header d-flex">
+  <div>
+    <h1><%= @path %>&nbsp;<%= t(:last_lines) %>&nbsp;&nbsp;<small><%= link_to(t(:download), admin_logs_download_path + "?path=#{@path}")%></small></h1>
+  </div>
+  <div class="ml-auto">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item active"><%= link_to t(:logs), admin_logs_index_path %></li>
+      </ol>
+    </nav>
+  </div>
 </section>
 
 <section class="content">
 <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
-<div class="box box-danger">
-  <div class="panel-body">
+<div class="card card-danger card-outline">
+  <div class="card-body small">
     <% @result.each do |line| %>
     <%= raw line %><br />
     <% end %>
