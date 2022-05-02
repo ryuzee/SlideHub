@@ -7,7 +7,7 @@
     <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slides %>
 
     <br clear="all" />
-    <%= will_paginate @slides, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+    <%= will_paginate @slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
   </div>
 </div>
 

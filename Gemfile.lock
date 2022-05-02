@@ -1321,8 +1321,6 @@ GEM
     bindex (0.8.1)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
-    bootstrap-will_paginate (1.0.0)
-      will_paginate
     brakeman (5.2.2)
     builder (3.2.4)
     bullet (7.0.1)
@@ -1751,6 +1749,8 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     will_paginate (3.3.1)
+    will_paginate-bootstrap-style (0.2.4)
+      will_paginate (~> 3.0, >= 3.0.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yaml_db (0.7.0)
@@ -1774,7 +1774,6 @@ DEPENDENCIES
   azure-storage-queue
   better_errors
   binding_of_caller
-  bootstrap-will_paginate
   brakeman
   bullet
   byebug
@@ -1848,6 +1847,7 @@ DEPENDENCIES
   web-console
   webmock
   will_paginate
+  will_paginate-bootstrap-style
   yaml_db
 
 BUNDLED WITH

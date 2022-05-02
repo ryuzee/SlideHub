@@ -20,8 +20,8 @@ gem 'execjs'
 gem 'mysql2', '~> 0.5'
 gem 'sprockets', '3.7.2'
 # Paginate
-gem 'bootstrap-will_paginate'
 gem 'will_paginate'
+gem 'will_paginate-bootstrap-style'
 # Authentication
 gem 'devise'
 gem 'devise-i18n'
