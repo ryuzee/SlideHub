@@ -7,7 +7,7 @@ describe 'authentication' do
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:facebook]
   end
 
-  subject { get '/users/auth/facebook' }
+  subject { post '/users/auth/facebook' }
 
   it 'Callback from Facebook' do
     expect(subject).to redirect_to '/users/auth/facebook/callback'

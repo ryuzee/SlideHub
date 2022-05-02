@@ -8,9 +8,9 @@ module CustomLinksHelper
       json.each do |elm|
         active_class = ''
         if elm['url'].start_with?("#{root_url}pages/", '/pages/') && controller.controller_name == 'pages'
-          active_class = ' class="active"'
+          active_class = ' active'
         end
-        result += "<li#{active_class}>#{link_to elm['label'], elm['url']}</li>"
+        result += '<li class="nav-item' +  active_class + '">' + link_to(elm['label'], elm['url'], class: 'nav-link') + "</li>"
       end
     rescue StandardError
       result = ''

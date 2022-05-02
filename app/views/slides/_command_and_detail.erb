@@ -1,11 +1,11 @@
-  <div class="panel panel-default h6">
-    <ul class="list-group">
-      <li class="list-group-item"><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;<%= t(:published) %><span class="pull-right"><%= slide.created_at %></span></li>
-      <li class="list-group-item"><i class="fa fa-th"></i>&nbsp;&nbsp;<%= t(:category) %><span class="pull-right"><a href="<%= category_path slide.category_id %>"><%= slide.category_name %></a></span></li>
-      <li class="list-group-item"><i class="fa fa-eye"></i>&nbsp;&nbsp;<%= t(:total_view) %><span class="pull-right"><%= slide.total_view %></span></li>
-      <li class="list-group-item"><i class="fa fa-desktop"></i>&nbsp;&nbsp;<%= t(:embedded_view) %><span class="pull-right"><%= slide.embedded_view %></span></li>
+  <div class="card" style="font-size:0.9em;">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;<%= t(:published) %><span class="float-right"><%= slide.created_at %></span></li>
+      <li class="list-group-item"><i class="fa fa-th"></i>&nbsp;&nbsp;<%= t(:category) %><span class="float-right"><a href="<%= category_path slide.category_id %>"><%= slide.category_name %></a></span></li>
+      <li class="list-group-item"><i class="fa fa-eye"></i>&nbsp;&nbsp;<%= t(:total_view) %><span class="float-right"><%= slide.total_view %></span></li>
+      <li class="list-group-item"><i class="fa fa-desktop"></i>&nbsp;&nbsp;<%= t(:embedded_view) %><span class="float-right"><%= slide.embedded_view %></span></li>
       <% if slide.downloadable %>
-        <li class="list-group-item"><i class="fa fa-cart-arrow-down"></i>&nbsp;&nbsp;<%= t(:downloads) %><span class="pull-right"><%= slide.download_count %></span></li>
+        <li class="list-group-item"><i class="fa fa-cart-arrow-down"></i>&nbsp;&nbsp;<%= t(:downloads) %><span class="float-right"><%= slide.download_count %></span></li>
       <% end %>
 
       <% if params[:vertical] == "1" %>
@@ -22,11 +22,10 @@
         <li class="list-group-item"><i class="fa fa-trash"></i>&nbsp;&nbsp;<%= link_to t(:delete_slide), slide_path(slide.id), :method => :delete, data: { confirm: "Are you sure you want to delete?"} %></li>
       <% end %>
       <% if slide.tags.count > 0 %>
-        <li class="list-group-item clearfix"><span class="pull-right"><% slide.tags.each do |t| %>
+        <li class="list-group-item clearfix"><span class="float-right"><% slide.tags.each do |t| %>
             <a href="<%= search_index_path %>?q%5Btag_search%5D=<%= t %>"><span class="label label-default"><%= t %></span></a>&nbsp;<% end %>
         </li>
       <% end %>
       <li class="list-group-item"><%= render 'slides/share_buttons' %></li>
     </ul>
   </div>
-

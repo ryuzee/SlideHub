@@ -47,7 +47,7 @@ RSpec.describe CustomLinksHelper, type: :helper do
           {"label": "test1", "url": "http://test1.example.com/"},
           {"label": "test2", "url": "https://test2.example.com/"}
         ]'
-      expect(helper.custom_links(controller)).to include('<li><a href="https://test2.example.com/">test2</a></li>')
+      expect(helper.custom_links(controller)).to include('<li class="nav-item"><a class="nav-link" href="https://test2.example.com/">test2</a></li>')
     ensure
       ApplicationSetting['custom_content.header_menus'] = '[]'
     end
@@ -56,7 +56,7 @@ RSpec.describe CustomLinksHelper, type: :helper do
       ApplicationSetting['custom_content.header_menus'] = '[
           {"label": "test", "url": "/pages/test"}
         ]'
-      expect(helper.custom_links(controller)).to include('<li class="active"><a href="/pages/test">test</a></li>')
+      expect(helper.custom_links(controller)).to include('<li class="nav-item active"><a class="nav-link" href="/pages/test">test</a></li>')
     ensure
       ApplicationSetting['custom_content.header_menus'] = '[]'
     end

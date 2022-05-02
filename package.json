@@ -1,13 +1,17 @@
 {
   "dependencies": {
-    "admin-lte": "2.3.11",
-    "bootstrap3": "^3.3.5",
+    "@eonasdan/tempus-dominus": "^6.0.0-beta5.1",
+    "@fortawesome/fontawesome-free": "^6.1.1",
+    "@popperjs/core": "2",
+    "admin-lte": "^3",
+    "bootstrap": "4.3.1",
     "clipboard": "1.7.1",
     "jquery": "3.5.0",
     "jquery-lazyload": "1.9.7",
     "jquery.equalheights": "1.5.3",
     "js-cookie": "2.0.4",
     "mousetrap": "1.6.0",
+    "popper.js": "^1.16.1",
     "sticky-kit": "1.1.2"
   }
 }

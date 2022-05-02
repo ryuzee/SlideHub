@@ -15,13 +15,13 @@
     <div class="modal-content">
       <div class="modal-header"><%= t(:embedded_code) %></div>
       <div class="modal-body">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#js" data-toggle="tab">Javascript</a></li>
-          <li><a href="#iframe" data-toggle="tab">iframe</a></li>
+        <ul class="nav nav-tabs nav-pills">
+          <li class="nav-item active"><a class="nav-link active" href="#js" data-toggle="tab">Javascript</a></li>
+          <li class="nav-item"><a class="nav-link" href="#iframe" data-toggle="tab">iframe</a></li>
         </ul>
 
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane fade active" id="js">
+          <div role="tabpanel" class="tab-pane active" id="js">
             <div class="form-group">
               <% prefix = js_prefix %>
 <textarea rows="5" class="form-control" id="embedded_url">
@@ -30,19 +30,19 @@
 </div>
 </textarea>
             </div>
-            <button type="button" class="btn btn-default copy-to-clipboard" data-clipboard-target="#embedded_url"><%= t(:copy) %></button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal"><%= t(:close) %></button>
+            <button type="button" class="btn btn-primary copy-to-clipboard" data-clipboard-target="#embedded_url"><%= t(:copy) %></button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t(:close) %></button>
           </div>
 
-          <div role="tabpanel" class="tab-pane fade" id="iframe">
+          <div role="tabpanel" class="tab-pane" id="iframe">
             <div class="form-group">
               <% prefix = js_prefix %>
 <textarea rows="5" class="form-control" id="iframe_url">
 <iframe scrolling="no" frameborder="no" width="500" height="400" src="<%= html_player_url(slide.id) + "?prefix=" + prefix %>"></iframe>
 </textarea>
             </div>
-            <button type="button" class="btn btn-default copy-to-clipboard" data-clipboard-target="#iframe_url"><%= t(:copy) %></button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal"><%= t(:close) %></button>
+            <button type="button" class="btn btn-primary copy-to-clipboard" data-clipboard-target="#iframe_url"><%= t(:copy) %></button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t(:close) %></button>
           </div>
         </div>
 

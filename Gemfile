@@ -5,7 +5,8 @@ gem 'rails', '5.2.7.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.7'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '~> 4'
+# https://github.com/lautis/uglifier/issues/173#issuecomment-857616825
+gem 'uglifier', '= 4.1.0'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -22,14 +23,14 @@ gem 'sprockets', '3.7.2'
 gem 'bootstrap-will_paginate'
 gem 'will_paginate'
 # Authentication
-gem 'devise', '4.7.1'
-gem 'devise-bootstrap-views', '0.0.11'
-gem 'devise-i18n', '~> 1.8'
-gem 'devise-i18n-views', '0.3.7'
+gem 'devise'
+gem 'devise-i18n'
+gem 'devise-i18n-views'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-saml'
 gem 'omniauth-twitter'
+gem 'omniauth-rails_csrf_protection'
 
 # Compatibility with PHP version
 # See https://github.com/divoxx/ruby-php-serialization
@@ -63,7 +64,7 @@ gem 'counter_culture'
 gem 'unicorn', '~> 5'
 gem 'unicorn-rails'
 # Datetime Picker for Bootstrap3
-gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
+# gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'momentjs-rails'
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'

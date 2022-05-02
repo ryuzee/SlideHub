@@ -1,9 +1,9 @@
 <% if not posted_comments.empty? %>
   <% posted_comments.each do |c| %>
-  <div class="panel-body media comment_post">
+  <div class="card-body media comment_post">
     <div class="pull-left avatar50" style="padding-right:0px !important">
       <% if c.user.avatar.attached? %>
-      <%= image_tag(c.user.avatar.variant(resize: "32x32"), class: 'img-responsive') %>
+      <%= image_tag(c.user.avatar.variant(resize: "32x32"), class: 'img-fluid') %>
       <% else %>
       <%= image_tag('avatar/thumb/missing.png') %>
       <% end %>
@@ -29,4 +29,3 @@
     <%= render :partial => 'comments/form', :locals => { :comment => comment } %>
   </div>
 <% end %>
-

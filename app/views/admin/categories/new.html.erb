@@ -1,9 +1,15 @@
-<section class="content-header">
-<h1><%= t(:new_category) %><small></small></h1>
-<ol class="breadcrumb">
-  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-  <li class="active"><%= link_to t('activerecord.models.category'), admin_categories_path %></li>
-</ol>
+<section class="content-header d-flex">
+  <div>
+    <h1><%= t(:new_category) %></h1>
+  </div>
+  <div class="ml-auto">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item active"><%= link_to t('activerecord.models.category'), admin_categories_path %></li>
+      </ol>
+    </nav>
+  </div>
 </section>
 
 <section class="content">
@@ -12,11 +18,11 @@
 
 <%= form_for @category, :html => { :class => "form-horizontal category" }, :url => admin_categories_path do |f| %>
   <% if @category.errors.any? %>
-    <div id="error_expl" class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= t('error_save_category', errors: @category.errors.count) %></h3>
+    <div id="error_expl" class="card card-danger">
+      <div class="card-heading">
+        <h3 class="card-title"><%= t('error_save_category', errors: @category.errors.count) %></h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <ul>
           <% @category.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>

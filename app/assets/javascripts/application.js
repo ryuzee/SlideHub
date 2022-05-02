@@ -10,16 +10,19 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery/dist/jquery.js
+//= require @popperjs/core/dist/umd/popper.min
+//= require bootstrap/dist/js/bootstrap.min
 //= require moment
 //= require moment/ja
-//= require jquery/dist/jquery.js
 //= require rails-ujs
-//= require bootstrap3/dist/js/bootstrap.min
-//= require bootstrap-datetimepicker
 //= require clipboard/dist/clipboard.min
 //= require jquery-lazyload/jquery.lazyload
 //= require jquery.equalheights/jquery.equalheights.min
 //= require sticky-kit/dist/sticky-kit.min
 //= require js-cookie/src/js.cookie
 //= require mousetrap/mousetrap.min
+//= require @eonasdan/tempus-dominus/dist/js/tempus-dominus.min
+//= require @fortawesome/fontawesome-free/js/fontawesome.min
+//= require @fortawesome/fontawesome-free/js/solid.min
 //= require_tree .

@@ -1,3 +1,4 @@
+<div class="mb-4"></div>
 <% content_for :title, @slide.name %>
 <% prefix = js_prefix %>
 <%= render 'slides/meta_tags', slide: @slide %>
@@ -15,32 +16,37 @@
     </div>
     <% end %>
 
-    <div class="panel panel-default" style="margin-top:20px">
+    <div class="card" style="margin-top:20px">
       <!--name and description-->
-      <div class="panel-heading">
-        <h2 class="h4"><%= strip_tags @slide.name %></h2>
-        <div class="h5"><%= simple_format(h(@slide.description)) %></div>
+      <div class="card-body">
+        <h2 class="h4 card-title"><%= strip_tags @slide.name %></h2>
+        <div class="h6 card-text"><%= simple_format(h(@slide.description)) %></div>
       </div>
       <!--/name and description-->
 
       <!--tab-->
-      <div class="panel-body">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab1" data-toggle="tab"><%= t :transcripts %></a></li>
-          <li><a href="#tab2" data-toggle="tab"><%= t 'activerecord.models.comment' %></a></li>
+      <div class="card-body">
+
+        <ul class="nav nav-tabs nav-pills">
+          <li class="nav-item">
+            <a href="#tab1" class="nav-link active" data-toggle="tab"><%= t :transcripts %></a>
+          </li>
+          <li class="nav-item">
+            <a href="#tab2" class="nav-link" data-toggle="tab"><%= t 'activerecord.models.comment' %></a>
+          </li>
         </ul>
 
-        <div id="myTabContent" class="tab-content">
-          <!-- Transcript -->
-          <div class="tab-pane fade in active" id="tab1">
+        <div class="tab-content">
+          <div id="tab1" class="tab-pane active">
+            <!-- Transcript -->
             <%= render 'slides/transcript', slide: @slide, prefix: prefix %>
           </div>
-
-          <!-- Comment -->
-          <div class="tab-pane fade" id="tab2">
+          <div id="tab2" class="tab-pane">
+            <!-- Comment -->
             <%= render 'slides/comment', comment: @comment, posted_comments: @posted_comments %>
           </div>
         </div>
+
       </div>
       <!--/tab-->
     </div>
@@ -51,7 +57,9 @@
   <div class="col-md-4" id="rightside">
     <%= raw ApplicationSetting['custom_content.right_top'] %>
     <%= render 'users/right_side_bar', user: @slide.user %>
+    <div class="mb-4"></div>
     <%= render 'slides/command_and_detail', slide: @slide %>
+    <div class="mb-4"></div>
     <%= render 'slides/related_slides', related_slides: @related_slides %>
   </div>
   <!--/right sidebar -->

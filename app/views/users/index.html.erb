@@ -1,14 +1,15 @@
+<div class="mb-4"></div>
 <% content_for :title, t(:my_slides) %>
 <div class="row">
   <div class="col-md-9">
 
     <h3><%= t :my_slides %></h3>
-    <div class="btn-group btn-toggle" style="margin-bottom:10px;">
+    <div style="margin-bottom:10px;">
       <% if params['sort_by'] != 'popularity' %>
         <a class="btn btn-primary active" style="color:#fff;"><%= t :order_by_uploaded_date %></a>
-        <a href="?sort_by=popularity" class="btn btn-default"><%= t :order_by_popularity %></a>
+        <a href="?sort_by=popularity" class="btn btn-secondary"><%= t :order_by_popularity %></a>
       <% else %>
-        <a href="?sort_by=date" class="btn btn-default"><%= t :order_by_uploaded_date %></a>
+        <a href="?sort_by=date" class="btn btn-secondary"><%= t :order_by_uploaded_date %></a>
         <a class="btn btn-primary active" style="color:#fff;"><%= t :order_by_popularity %></a>
       <% end %>
     </div>
@@ -22,9 +23,9 @@
     <%= render 'users/right_side_bar', user: @user %>
     <br clear="all" />
 
-    <div class="panel panel-default">
-      <div class="panel-heading"><%= t :popular_tags %></div>
-      <div class="panel-body">
+    <div class="card card-default">
+      <div class="card-heading"><%= t :popular_tags %></div>
+      <div class="card-body">
         <% tag_cloud(@tags, %w(tag1 tag2 tag3 tag4)) do |tag, css_class| %>
           <%= link_to tag.name, "/search?q%5Btag_search%5D=#{tag.name}", :class => css_class %>
         <% end %>

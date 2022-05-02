@@ -1,9 +1,15 @@
-<section class="content-header">
-<h1><%= t('activerecord.models.user') %><small></small></h1>
-<ol class="breadcrumb">
-  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-  <li class="active"><%= link_to t('activerecord.models.user'), admin_users_path %></li>
-</ol>
+<section class="content-header d-flex">
+  <div>
+    <h1><%= t('activerecord.models.user') %></h1>
+  </div>
+  <div class="ml-auto">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item active"><%= link_to t('activerecord.models.user'), admin_users_path %></li>
+      </ol>
+    </nav>
+  </div>
 </section>
 
 <section class="content">
@@ -13,49 +19,55 @@
 
 <div class="row">
   <div class="col-md-3">
-    <div class="control-group">
+    <div class="form-group">
     <%= f.label :email_cont, t('activerecord.attributes.user.email') %>
     <%= f.search_field :email_cont, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="col-md-3">
-    <div class="control-group">
+    <div class="form-group">
     <%= f.label :username_cont, t('activerecord.attributes.user.username') %>
     <%= f.search_field :username_cont, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="col-md-3">
-    <div class="control-group">
+    <div class="form-group">
     <%= f.label :display_name_cont, t('activerecord.attributes.user.display_name') %>
     <%= f.search_field :display_name_cont, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="col-md-3">
-    <div class="control-group">
+    <div class="form-group">
     <%= f.label :provider_cont, t('activerecord.attributes.user.provider') %>
     <%= f.search_field :provider_cont, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="col-md-3">
-    <div class="control-group" style="position: relative">
+    <div class="form-group" style="position: relative">
       <%= f.label :created_at_gteq ,t('registered_date_from') %>
-      <div class="input-group datetimepicker">
-        <%= f.text_field :created_at_gteq, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
-        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      <div class="input-group datetimepicker" id="datetimepicker1">
+        <% v = (request.query_parameters.has_key?(:q) and request.query_parameters[:q].has_key?(:created_at_gteq)) ? request.query_parameters[:q][:created_at_gteq] : "" %>
+        <%= f.text_field :created_at_gteq, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm', value: v %>
+        <div class="input-group-append input-group-addon">
+          <span class="input-group-text" id="date1"><i class="fa fa-calendar"></i></span>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="col-md-3">
-    <div class="control-group" style="position: relative">
+    <div class="form-group" style="position: relative">
       <%= f.label :created_at_lteq ,t('registered_date_to') %>
-      <div class="input-group datetimepicker">
-        <%= f.text_field :created_at_lteq, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' %>
-        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      <div class="input-group datetimepicker" id="datetimepicker2">
+        <% v = (request.query_parameters.has_key?(:q) and request.query_parameters[:q].has_key?(:created_at_lteq)) ? request.query_parameters[:q][:created_at_lteq] : "" %>
+        <%= f.text_field :created_at_lteq, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm', value: v %>
+        <div class="input-group-append input-group-addon">
+          <span class="input-group-text" id="date2"><i class="fa fa-calendar"></i></span>
+        </div>
       </div>
     </div>
   </div>
@@ -64,7 +76,7 @@
     <%= f.label :admin, :class => 'control-label' %>
     <div class="controls checkbox">
       <label>
-        <%= f.check_box :admin_true, {}, 1, nil %><%= t('activerecord.attributes.user.admin') %>
+        <%= f.check_box :admin_true, {}, 1, nil %>&nbsp;<%= t('activerecord.attributes.user.admin') %>
       </label>
     </div>
   </div>
@@ -128,3 +140,27 @@
   <%= will_paginate @users, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
 </div>
 </section>
+
+<script type="text/javascript">
+$(function(){
+  var td1 = new tempusDominus.TempusDominus(
+    document.getElementById('datetimepicker1'),
+    {
+      localization: {locale: 'ja'},
+      display: {sideBySide: true, components: {useTwentyfourHour:true}},
+    }
+  ) ;
+  td1.dates.formatInput = function(date) { {return moment(date).format('YYYY/MM/DD HH:mm') } }
+  td1.dates.parseInput = function(value) {  {return moment(value, 'YYYY/MM/DD HH:mm').toDate(); }}
+
+  var td2 = new tempusDominus.TempusDominus(
+    document.getElementById('datetimepicker2'),
+    {
+      localization: {locale: 'ja'},
+      display: {sideBySide: true, components: {useTwentyfourHour:true}},
+    }
+  ) ;
+  td2.dates.formatInput = function(date) { {return moment(date).format('YYYY/MM/DD HH:mm') } }
+  td2.dates.parseInput = function(value) {  {return moment(value, 'YYYY/MM/DD HH:mm').toDate(); }}
+});
+</script>

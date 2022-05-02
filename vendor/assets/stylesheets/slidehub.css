@@ -100,7 +100,7 @@ body.slidehub_body {
   -ms-transform-style: preserve-3d;
   -o-transform-style: preserve-3d;
   transform-style: preserve-3d;
-  border-bottom: 1px solid #ccc;
+  /** border-bottom: 1px solid #ccc; **/
 }
 
 .slidehub_body .slidecard .slidecard-image img{

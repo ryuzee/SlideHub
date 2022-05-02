@@ -1,3 +1,4 @@
+<div class="mb-4"></div>
 <% content_for :title, t('.title', :resource => resource_class.model_name.human , :default => "Edit #{resource_name.to_s.humanize}") %>
 
 <div class="row">
@@ -5,8 +6,8 @@
     <h3><%= t('.title', :resource => resource_class.model_name.human , :default => "Edit #{resource_name.to_s.humanize}") %></h3>
 
 <%= bootstrap_devise_error_messages! %>
-<div class="panel panel-default">
-  <div class="panel-body">
+<div class="card card-default mt-4">
+  <div class="card-body">
     <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
       <div class="form-group">
         <%= f.label :email %>
@@ -48,13 +49,13 @@
         <div class="row">
           <div class="col-md-1">
             <% if current_user.avatar.attached?  %>
-            <%= image_tag(url_for(current_user.avatar), :class => 'img-responsive') %>
+            <%= image_tag(url_for(current_user.avatar), :class => 'img-fluid') %>
             <% else  %>
-            <%= image_tag('avatar/medium/missing.png', :class => 'img-responsive') %>
+            <%= image_tag('avatar/medium/missing.png', :class => 'img-fluid') %>
             <% end %>
           </div>
           <div class="col-md-11">
-            <%= f.file_field :avatar, class: 'form-control' %>
+            <%= f.file_field :avatar, class: 'form-control-file' %>
           </div>
         </div>
       </div>
@@ -63,6 +64,8 @@
     <% end %>
   </div>
 </div>
+
+<div class="mb-4"></div>
 
 <p><%= t('.unhappy', :default => 'Unhappy') %>? <%= link_to t('.cancel_my_account', :default => "Cancel my account"), registration_path(resource_name), :data => { :confirm => t('.are_you_sure', :default => "Are you sure?") }, :method => :delete %>.</p>
 

@@ -1,9 +1,15 @@
-<section class="content-header">
-<h1><%= t(:page) %><small></small></h1>
-<ol class="breadcrumb">
-  <li><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-  <li class="active"><%= link_to t(:custom_pages), admin_pages_path %></li>
-</ol>
+<section class="content-header d-flex">
+  <div>
+    <h1><%= t(:page) %><small></small></h1>
+  </div>
+  <div class="ml-auto">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item active"><%= link_to t(:custom_pages), admin_pages_path %></li>
+      </ol>
+    </nav>
+  </div>
 </section>
 
 <section class="content">
@@ -12,11 +18,11 @@
 <%= form_for @page, :html => { :class => "form-horizontal page" }, :url => "/admin/pages" do |f| %>
 
     <% if @page.errors.any? %>
-    <div id="error_expl" class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= t('error_save_page', errors: @page.errors.count) %></h3>
+    <div id="error_expl" class="card card-danger">
+      <div class="card-heading">
+        <h3 class="card-title"><%= t('error_save_page', errors: @page.errors.count) %></h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <ul>
         <% @page.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>

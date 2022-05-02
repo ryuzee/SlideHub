@@ -2,9 +2,9 @@
     <% slides.each do |slide| %>
       <% next if slide.nil? %>
       <div class="<%= column_class %>" style="padding:4px;">
-        <div class="panel slidecard">
+        <div class="card slidecard">
           <div class="slidecard-image">
-            <%= link_to image_tag(thumbnail_image_url(slide), class: "img-responsive", style: "width:100%"), slide_path(slide.id) %>
+            <%= link_to image_tag(thumbnail_image_url(slide), class: "img-fluid", style: "width:100%"), slide_path(slide.id) %>
           </div>
           <div class="slidecard-content">
             <div class="slidecard-basic-info">
@@ -14,7 +14,7 @@
               <div class="slidecard-description"><%= strip_tags(slide.description).truncate(80) %></div>
             </div>
             <div class="slidecard-information">
-              <div class="h5" style="margin-top:2px;margin-bottom:2px;">
+              <div class="h6" style="margin-top:2px;margin-bottom:2px;">
                 by <a href="<%= user_by_username_path(username: slide.user_username) %>">
                   <%= strip_tags slide.user_display_name %></a> <% if slide.private %>(private)<% end %></div>
               <%= slide.created_at.to_s(:default) %> | <%= slide.num_of_pages %> pages | <%= slide.total_view %> views
