@@ -61,7 +61,7 @@ gem 'pdf-reader'
 # counter cache transaction
 gem 'counter_culture'
 # AP Server
-gem 'unicorn', '~> 5'
+gem 'unicorn', '~> 6'
 gem 'unicorn-rails'
 gem 'momentjs-rails'
 # https://github.com/alexspeller/non-stupid-digest-assets
