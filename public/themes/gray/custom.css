@@ -6,10 +6,12 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   /* Margin bottom by footer height */
   margin-bottom: 40px;
 }
+
 .custom-footer {
   position: absolute;
   bottom: 0;
@@ -17,12 +19,12 @@ body {
   /* Set the fixed height of the footer here */
   height: 40px;
   background-color: #515D6C;
+  margin-top: auto;
 }
 
 .custom-footer div {
   background-color: #515D6C;
 }
-
 
 /* Custom page CSS
 -------------------------------------------------- */
