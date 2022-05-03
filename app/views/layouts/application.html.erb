@@ -14,8 +14,8 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" %>
     <% ApplicationSetting['site.theme'] = 'default' unless %w[default white dark gray].include?(ApplicationSetting['site.theme']) %>
-    <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/bootstrap.css" %>
-    <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/custom.css" %>
+    <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/bootstrap.css?20220501" %>
+    <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/custom.css?20220501" %>
     <%= stylesheet_link_tag "/custom/override.css" %>
 
   <% if ApplicationSetting['site.favicon'].blank? %>
@@ -122,7 +122,7 @@
       <br clear="all" />
     </div> <!-- /container -->
 
-    <footer class="page-footer fixed-bottom custom-footer">
+    <footer class="custom-footer">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
