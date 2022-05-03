@@ -16,7 +16,7 @@
     </div>
     <%= render 'slides/thumbnail_template', column_class: 'col-md-4 col-sm-8', slides: @slides %>
     <div>
-      <%= will_paginate @slides, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+      <%= will_paginate @slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
     </div>
 
     <script type="text/javascript">

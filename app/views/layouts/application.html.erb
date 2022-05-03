@@ -40,6 +40,7 @@
       inverse = 1 if ApplicationSetting['site.theme'] == 'dark'
     %>
     <nav class="navbar navbar-expand-lg  <% if inverse == '0' %>navbar-light bg-light<% else %>navbar-dark bg-primary<% end %> sticky-top">
+      <div class="container d-flex justify-content-between">
         <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;<%= ApplicationSetting['site.name'] %></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -101,6 +102,7 @@
           <% end %>
           <% end %>
         </div>
+      </div>
     </nav>
 
     <a name="page_top"></a>

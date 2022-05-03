@@ -20,8 +20,8 @@ gem 'execjs'
 gem 'mysql2', '~> 0.5'
 gem 'sprockets', '3.7.2'
 # Paginate
-gem 'bootstrap-will_paginate'
 gem 'will_paginate'
+gem 'will_paginate-bootstrap-style'
 # Authentication
 gem 'devise'
 gem 'devise-i18n'
@@ -63,8 +63,6 @@ gem 'counter_culture'
 # AP Server
 gem 'unicorn', '~> 5'
 gem 'unicorn-rails'
-# Datetime Picker for Bootstrap3
-# gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'momentjs-rails'
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
@@ -92,7 +90,6 @@ group :development, :test do
   gem 'rspec_junit_formatter'
   gem 'ruby-debug-ide'
   gem 'shoulda-matchers', require: false
-  # use specified version for cc-test-reporter
   gem 'simplecov'
   gem 'simplecov-html'
 end
