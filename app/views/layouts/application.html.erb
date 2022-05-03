@@ -37,9 +37,16 @@
     <%
       inverse = ApplicationSetting['site.header_inverse']
       inverse = 0 if inverse.nil?
-      inverse = 1 if ApplicationSetting['site.theme'] == 'dark'
+      if inverse == 0
+        css_class = "navbar-light bg-secondary"
+      else
+        css_class = "navbar-dark bg-primary"
+      end
+      if ApplicationSetting['site.theme'] == 'dark'
+        css_class = "navbar-dark bg-secondary"
+      end
     %>
-    <nav class="navbar navbar-expand-lg  <% if inverse == '0' %>navbar-light bg-light<% else %>navbar-dark bg-primary<% end %> sticky-top">
+    <nav class="navbar navbar-expand-lg  <%= css_class %> sticky-top">
       <div class="container d-flex justify-content-between">
         <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;<%= ApplicationSetting['site.name'] %></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
