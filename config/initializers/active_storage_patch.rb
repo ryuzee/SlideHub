@@ -18,7 +18,8 @@ module ActiveStorage
         handle_errors do
           content_disposition = content_disposition_with(filename: filename, type: disposition) if disposition && filename
 
-          client.create_block_blob(container, key, IO.try_convert(io) || io, content_md5: checksum, content_type: content_type, content_disposition: content_disposition)
+          client.create_block_blob(container, key, IO.try_convert(io) || io, content_md5: checksum, content_type: content_type,
+                                                                             content_disposition: content_disposition)
         end
       end
     end
@@ -51,7 +52,7 @@ module ActiveStorage
       instrument :delete, key: key do
         client.delete_blob(container, key)
       rescue Azure::Core::Http::HTTPError => e
-        raise unless e.type == "BlobNotFound"
+        raise unless e.type == 'BlobNotFound'
         # Ignore files already deleted
       end
     end
@@ -84,8 +85,8 @@ module ActiveStorage
       instrument :url, key: key do |payload|
         generated_url = signer.signed_uri(
           uri_for(key), false,
-          service: "b",
-          permissions: "rw",
+          service: 'b',
+          permissions: 'rw',
           expiry: format_expiry(expires_in)
         ).to_s
 
@@ -98,15 +99,16 @@ module ActiveStorage
     def headers_for_direct_upload(key, content_type:, checksum:, filename: nil, disposition: nil, **)
       content_disposition = content_disposition_with(type: disposition, filename: filename) if filename
 
-      { "Content-Type" => content_type, "Content-MD5" => checksum, "x-ms-blob-content-disposition" => content_disposition, "x-ms-blob-type" => "BlockBlob" }
+      { 'Content-Type' => content_type, 'Content-MD5' => checksum, 'x-ms-blob-content-disposition' => content_disposition, 'x-ms-blob-type' => 'BlockBlob' }
     end
 
     private
+
       def private_url(key, expires_in:, filename:, disposition:, content_type:, **)
         signer.signed_uri(
           uri_for(key), false,
-          service: "b",
-          permissions: "r",
+          service: 'b',
+          permissions: 'r',
           expiry: format_expiry(expires_in),
           content_disposition: content_disposition_with(type: disposition, filename: filename),
           content_type: content_type
@@ -116,7 +118,6 @@ module ActiveStorage
       def public_url(key, **)
         uri_for(key).to_s
       end
-
 
       def uri_for(key)
         client.generate_uri("#{container}/#{key}")
@@ -152,9 +153,9 @@ module ActiveStorage
         yield
       rescue Azure::Core::Http::HTTPError => e
         case e.type
-        when "BlobNotFound"
+        when 'BlobNotFound'
           raise ActiveStorage::FileNotFoundError
-        when "Md5Mismatch"
+        when 'Md5Mismatch'
           raise ActiveStorage::IntegrityError
         else
           raise

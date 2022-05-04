@@ -221,7 +221,9 @@ Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
 # クラスやモジュールのネスト定義
+# 動作に影響があるので無効にする
 Style/ClassAndModuleChildren:
+  Enabled: false
   EnforcedStyle: nested
   SupportedStyles:
     - nested
