@@ -7,7 +7,7 @@ class SlidePages
   end
 
   def url
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/list.json"
+    "#{CloudConfig::PROVIDER_ENGINE.resource_endpoint}/#{object_key}/list.json"
   end
 
   def list

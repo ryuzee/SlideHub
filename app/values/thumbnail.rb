@@ -6,10 +6,10 @@ class Thumbnail
   end
 
   def url
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/thumbnail.jpg"
+    "#{CloudConfig::PROVIDER_ENGINE.resource_endpoint}/#{object_key}/thumbnail.jpg"
   end
 
   def url_middle
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/thumbnail-middle.jpg"
+    "#{CloudConfig::PROVIDER_ENGINE.resource_endpoint}/#{object_key}/thumbnail-middle.jpg"
   end
 end

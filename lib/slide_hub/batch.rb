@@ -7,7 +7,7 @@ class Batch
     logger = SlideHub::BatchLogger
 
     logger.info('Start convert process')
-    resp = CloudConfig::SERVICE.receive_message(5)
+    resp = CloudConfig::PROVIDER_ENGINE.receive_message(5)
     unless resp.exist?
       logger.info('No Queue message found')
       return true
@@ -19,7 +19,7 @@ class Batch
       result = ConvertProcedure.new(object_key: obj['object_key'], logger: SlideHub::BatchLogger).run
       if result
         logger.info("Delete message from Queue. id=#{obj['id']} object_key=#{obj['object_key']}")
-        CloudConfig::SERVICE.delete_message(msg)
+        CloudConfig::PROVIDER_ENGINE.delete_message(msg)
       else
         logger.error("Slide conversion failed. id=#{obj['id']} object_key=#{obj['object_key']}")
       end

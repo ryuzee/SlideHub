@@ -101,7 +101,7 @@ $(document).ready(function() {
         buffer = reader.result;
         var segments = segmentation(buffer, 4 * 1024 * 1024);
 
-        var url = "<%= raw CloudConfig::SERVICE.generate_sas_url(rand_name) %>";
+        var url = "<%= raw CloudConfig::PROVIDER_ENGINE.generate_sas_url(rand_name) %>";
 
         var functions = [];
         $.each(segments,function(i, val) {

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe ThumbnailImageHelper, type: :helper do
   before do
-    CloudConfig.class_eval { remove_const(:SERVICE) }
-    CloudConfig::SERVICE = SlideHub::Cloud::Engine::AWS
+    CloudConfig.class_eval { remove_const(:PROVIDER_ENGINE) }
+    CloudConfig::PROVIDER_ENGINE = SlideHub::Cloud::Engine::AWS
     CloudHelpers.switch_to_aws
   end
 
