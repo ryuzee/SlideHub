@@ -10,7 +10,7 @@ module CustomLinksHelper
         if elm['url'].start_with?("#{root_url}pages/", '/pages/') && controller.controller_name == 'pages'
           active_class = ' active'
         end
-        result += '<li class="nav-item' +  active_class + '">' + link_to(elm['label'], elm['url'], class: 'nav-link') + "</li>"
+        result += '<li class="nav-item' + active_class + '">' + link_to(elm['label'], elm['url'], class: 'nav-link') + '</li>'
       end
     rescue StandardError
       result = ''

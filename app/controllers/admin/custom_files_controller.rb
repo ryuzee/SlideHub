@@ -58,9 +58,7 @@ module Admin
       def save_tmp_file(uploaded_file)
         FileUtils.mkdir_p(Rails.root.join('tmp')) unless FileTest.exist?(Rails.root.join('tmp'))
         @output_path = Rails.root.join('tmp', uploaded_file.original_filename)
-        File.open(@output_path, 'w+b') do |fp|
-          fp.write  uploaded_file.read
-        end
+        File.binwrite(@output_path, uploaded_file.read)
       end
 
       def delete_tmp_file

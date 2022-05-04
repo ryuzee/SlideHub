@@ -1,7 +1,7 @@
 require 'csv'
 
 def csv_column_names
-  names = [
+  [
     t('activerecord.attributes.slide.id'),
     t('activerecord.attributes.slide.name'),
     'URL',
@@ -13,7 +13,6 @@ def csv_column_names
     t('activerecord.attributes.slide.created_at'),
     t('activerecord.attributes.slide.updated_at'),
   ]
-  names
 end
 
 CSV.generate do |csv|

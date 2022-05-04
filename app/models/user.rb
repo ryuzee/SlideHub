@@ -33,8 +33,8 @@
 #
 
 class User < ApplicationRecord
-  attr_accessor :skip_password_validation
-  attr_accessor :current_password
+  attr_accessor :skip_password_validation, :current_password
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :omniauthable,

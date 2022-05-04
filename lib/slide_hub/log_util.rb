@@ -25,10 +25,10 @@ module SlideHub
 
     def self.escape_to_html(data)
       self.colors.each do |key, value|
-        if value != :nothing
-          data.gsub!(/\e\[#{key}m/, "<span style=\"color:#{value}; font-weight:bold\">")
-        else
+        if value == :nothing
           data.gsub!(/\e\[#{key}m/, '<span>')
+        else
+          data.gsub!(/\e\[#{key}m/, "<span style=\"color:#{value}; font-weight:bold\">")
         end
       end
       data.gsub!(/\e\[0m/, '</span>')

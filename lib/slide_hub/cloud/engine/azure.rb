@@ -19,8 +19,8 @@ module SlideHub
 
         def self.configure(&block)
           yield config
-          #::Azure.config.storage_account_name = @config.azure_storage_account_name
-          #::Azure.config.storage_access_key = @config.azure_storage_access_key
+          # ::Azure.config.storage_account_name = @config.azure_storage_account_name
+          # ::Azure.config.storage_access_key = @config.azure_storage_access_key
         end
 
         def self.config
@@ -28,8 +28,7 @@ module SlideHub
         end
 
         def self.queue_endpoint
-          url = "https://#{@config.azure_storage_account_name}.queue.core.windows.net/"
-          url
+          "https://#{@config.azure_storage_account_name}.queue.core.windows.net/"
         end
 
         def self.resource_endpoint
@@ -39,23 +38,20 @@ module SlideHub
         end
 
         def self.upload_endpoint
-          url = "https://#{@config.azure_storage_account_name}.blob.core.windows.net/#{@config.bucket_name}"
-          url
+          "https://#{@config.azure_storage_account_name}.blob.core.windows.net/#{@config.bucket_name}"
         end
 
         def self.create_qs
-          qs = ::Azure::Storage::Queue::QueueService.create(
+          ::Azure::Storage::Queue::QueueService.create(
             storage_account_name: @config.azure_storage_account_name,
             storage_access_key: @config.azure_storage_access_key,
           )
-          qs
         end
 
         # FIXME
         def self.send_message(message)
           qs = create_qs
-          resp = qs.create_message(@config.queue_name, message)
-          resp
+          qs.create_message(@config.queue_name, message)
         end
 
         def self.receive_message(max_number = 10)
@@ -77,8 +73,7 @@ module SlideHub
         def self.delete_message(message_object)
           qs = create_qs
           qs.create_queue(@config.queue_name)
-          resp = qs.delete_message(@config.queue_name, message_object.id, message_object.handle)
-          resp
+          qs.delete_message(@config.queue_name, message_object.id, message_object.handle)
         end
 
         def self.batch_delete(entries)
@@ -91,11 +86,10 @@ module SlideHub
 
         ## Blob
         def self.create_bs
-          bs = ::Azure::Storage::Blob::BlobService.create(
+          ::Azure::Storage::Blob::BlobService.create(
             storage_account_name: @config.azure_storage_account_name,
             storage_access_key: @config.azure_storage_access_key,
           )
-          bs
         end
 
         def self.upload_files(container, files, prefix)
@@ -103,7 +97,7 @@ module SlideHub
           files.each do |file|
             next unless File.exist?(file)
 
-            content = File.open(file, 'rb', &:read)
+            content = File.binread(file)
             require 'mime/types'
             content_type = MIME::Types.type_for(File.extname(file))[0].to_s
             bs.create_block_blob(container, "#{prefix}/#{File.basename(file)}", content, { content_type: content_type })
@@ -123,7 +117,7 @@ module SlideHub
         def self.save_file(container, key, destination)
           bs = create_bs
           _blob, content = bs.get_blob(container, key)
-          File.open(destination, 'wb') { |file| file.write(content) }
+          File.binwrite(destination, content)
           true
         rescue StandardError
           false
@@ -163,8 +157,7 @@ module SlideHub
         # `container` is only for duck typing
         # :reek:UnusedParameters
         def self.get_download_url(container, key)
-          url = self.generate_sas_url(key)
-          url
+          self.generate_sas_url(key)
         end
 
         def self.generate_sas_url(blob_name)
@@ -181,7 +174,7 @@ module SlideHub
             @config.azure_storage_access_key,
           )
 
-          url = signer.signed_uri(
+          signer.signed_uri(
             uri,
             false,
             service: 'b',
@@ -189,7 +182,6 @@ module SlideHub
             start: start_time.utc.iso8601,
             expiry: expiration_time.utc.iso8601,
           ).to_s
-          url
         end
       end
     end

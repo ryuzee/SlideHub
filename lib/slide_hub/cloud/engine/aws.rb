@@ -45,32 +45,29 @@ module SlideHub
         def self.resource_endpoint
           return @config.cdn_base_url if @config.cdn_base_url.present?
 
-          url = if @config.use_s3_static_hosting == '1'
-                  "http://#{@config.image_bucket_name}"
-                elsif @config.region == 'us-east-1'
-                  "https://#{@config.image_bucket_name}.s3.amazonaws.com"
-                else
-                  "https://#{@config.image_bucket_name}.s3-#{@config.region}.amazonaws.com"
-                end
-          url
+          if @config.use_s3_static_hosting == '1'
+            "http://#{@config.image_bucket_name}"
+          elsif @config.region == 'us-east-1'
+            "https://#{@config.image_bucket_name}.s3.amazonaws.com"
+          else
+            "https://#{@config.image_bucket_name}.s3-#{@config.region}.amazonaws.com"
+          end
         end
 
         def self.upload_endpoint
-          url = if @config.region == 'us-east-1'
-                  "https://#{@config.bucket_name}.s3.amazonaws.com"
-                else
-                  "https://#{@config.bucket_name}.s3-#{@config.region}.amazonaws.com"
-                end
-          url
+          if @config.region == 'us-east-1'
+            "https://#{@config.bucket_name}.s3.amazonaws.com"
+          else
+            "https://#{@config.bucket_name}.s3-#{@config.region}.amazonaws.com"
+          end
         end
 
         def self.s3_host_name
-          s3_host_name = if @config.region == 'us-east-1'
-                           's3.amazonaws.com'
-                         else
-                           "s3-#{@config.region}.amazonaws.com"
-                         end
-          s3_host_name
+          if @config.region == 'us-east-1'
+            's3.amazonaws.com'
+          else
+            "s3-#{@config.region}.amazonaws.com"
+          end
         end
 
         ## SQS
@@ -79,11 +76,10 @@ module SlideHub
         end
 
         def self.send_message(message)
-          resp = self.sqs.send_message({
+          self.sqs.send_message({
             queue_url: @config.sqs_url,
             message_body: message,
           })
-          resp
         end
 
         def self.receive_message(max_number = 10)
@@ -99,11 +95,10 @@ module SlideHub
         end
 
         def self.delete_message(message_object)
-          resp = self.sqs.delete_message({
+          self.sqs.delete_message({
             queue_url: @config.sqs_url,
             receipt_handle: message_object.handle,
           })
-          resp
         end
 
         def self.batch_delete(entries)
@@ -188,8 +183,7 @@ module SlideHub
 
         def self.get_download_url(bucket, key)
           signer = Aws::S3::Presigner.new(client: Aws::S3::Client.new(region: @config.region))
-          url = signer.presigned_url(:get_object, bucket: bucket, key: key)
-          url
+          signer.presigned_url(:get_object, bucket: bucket, key: key)
         end
 
         def self.create_policy
@@ -220,7 +214,7 @@ module SlideHub
           date_ymd = base_time.gmtime.strftime('%Y%m%d')
           date_gm = base_time.gmtime.strftime('%Y%m%dT%H%M%SZ')
           acl = 'public-read'
-          exp = base_time + 60 * 120
+          exp = base_time + (60 * 120)
           expires = exp.gmtime.strftime('%Y-%m-%dT%H:%M:%SZ')
 
           #---------------------------------------------
@@ -261,7 +255,7 @@ module SlideHub
           signinkey = self.get_signing_key(date_ymd, region, 's3', secret_key)
           signature = OpenSSL::HMAC.hexdigest('sha256', signinkey, base64_policy)
 
-          result = {
+          {
             'access_id' => access_id,
             'base64_policy' => base64_policy,
             'date_ymd' => date_ymd,
@@ -271,7 +265,6 @@ module SlideHub
             'signature' => signature,
             'success_action_status' => '201',
           }
-          result
         end
 
         # get several key for AWS API.
@@ -284,9 +277,7 @@ module SlideHub
           datekey = OpenSSL::HMAC.digest('sha256', "AWS4#{secretkey}", shortdate)
           regionkey = OpenSSL::HMAC.digest('sha256', datekey, region)
           servicekey = OpenSSL::HMAC.digest('sha256', regionkey, service)
-          signinkey = OpenSSL::HMAC.digest('sha256', servicekey, 'aws4_request')
-
-          signinkey
+          OpenSSL::HMAC.digest('sha256', servicekey, 'aws4_request')
         end
       end
     end

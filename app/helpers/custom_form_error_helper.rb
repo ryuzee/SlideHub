@@ -12,8 +12,6 @@ module CustomFormErrorHelper
     result = <<~HTML
       <small class="help-block">#{error_messages.first}</small>
     HTML
-    # rubocop:disable Rails/OutputSafety
     raw result
-    # rubocop:enable Rails/OutputSafety
   end
 end

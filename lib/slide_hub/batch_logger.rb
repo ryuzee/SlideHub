@@ -16,7 +16,7 @@ module SlideHub
           logger.formatter = Logger::Formatter.new
           logger.datetime_format = '%Y-%m-%d %H:%M:%S'
 
-          stdout_logger = ActiveSupport::Logger.new(STDOUT)
+          stdout_logger = ActiveSupport::Logger.new($stdout)
           stdout_logger.formatter = Logger::Formatter.new
           stdout_logger.datetime_format = '%Y-%m-%d %H:%M:%S'
           multiple_loggers =

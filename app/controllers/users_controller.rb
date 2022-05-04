@@ -77,10 +77,9 @@ class UsersController < ApplicationController
       unless include_private_and_non_published
         slides = slides.published
       end
-      slides = slides.owner(user_id).
-               includes(:user).
-               paginate(page: params[:page], per_page: slides_per_page)
-      slides
+      slides.owner(user_id).
+        includes(:user).
+        paginate(page: params[:page], per_page: slides_per_page)
     end
 
     def username_to_id
