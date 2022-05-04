@@ -1,6 +1,4 @@
 class UserFinder
-  def initialize; end
-
   def self.username_to_id(username)
     User.find_by(username: username).id
   end
@@ -44,7 +42,7 @@ class UserFinder
   def self.find_for_saml_oauth(auth)
     user = User.find_by(provider: auth.provider, uid: auth.uid)
     user ||= User.create(username: auth.extra.raw_info['username'],
-                         display_name: auth.extra.raw_info['last_name'] + ' ' + auth.extra.raw_info['first_name'],
+                         display_name: "#{auth.extra.raw_info['last_name']} #{auth.extra.raw_info['first_name']}",
                          biography: '',
                          provider: auth.provider,
                          uid: auth.uid,

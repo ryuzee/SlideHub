@@ -71,11 +71,17 @@ Layout/LineLength:
   Max: 160
   Exclude:
     - "db/migrate/*.rb"
+    - "spec/**/*"
 
 Layout/LineEndStringConcatenationIndentation: # new in 1.18
   Enabled: true
 
 ##################### Style ##################################
+
+# Accessorを1つの記述にまとめるかどうか
+# まとめるとコメントが付けにくく見通しが悪くなるので無効にする
+Style/AccessorGrouping:
+  Enabled: false
 
 # redirect_to xxx and return のイディオムを維持したい
 Style/AndOr:
@@ -130,6 +136,10 @@ Style/DoubleNegation:
 # 明示的に else で nil を返すのは分かりやすいので許可する
 Style/EmptyElse:
   EnforcedStyle: empty
+
+# 改行コードを明示
+Style/EndOfLine: 
+  EnforcedStyle: lf
 
 # いずれかに揃えるのならば `sprintf` や `format` より String#% が好きです
 Style/FormatString:
@@ -368,6 +378,7 @@ Metrics/BlockLength:
     - "lib/tasks/**/*.rb"
     - "lib/tasks/**/*.rake"
     - "spec/**/*.rb"
+    - "Gemfile"
 
 # 6 は強すぎるので緩める
 Metrics/CyclomaticComplexity:
