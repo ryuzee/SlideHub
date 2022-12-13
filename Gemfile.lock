@@ -1528,7 +1528,8 @@ GEM
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    psych (3.3.2)
+    psych (5.0.1)
+      stringio
     public_suffix (4.0.7)
     racc (1.6.0)
     rack (2.2.3)
@@ -1712,6 +1713,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
+    stringio (3.0.4)
     thor (1.2.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -1810,7 +1812,7 @@ DEPENDENCIES
   omniauth-twitter
   pdf-reader
   php-serialization
-  psych (~> 3.1)
+  psych (~> 5.0)
   rack-dev-mark
   rails (= 5.2.7.1)
   rails-controller-testing
