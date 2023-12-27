@@ -1,20 +1,20 @@
 class ApplicationSetting
   @defaults = begin
-                content = File.open(Rails.root.join('config', 'app.yml')).read
-                hash = content.empty? ? {} : YAML.safe_load(ERB.new(content).result, [], [], true).to_hash
-                hash = hash[Rails.env] || {}
-                hash
-              end
+    content = File.read(Rails.root.join('config', 'app.yml'))
+    hash = content.empty? ? {} : YAML.safe_load(ERB.new(content).result, [], [], true).to_hash
+    hash = hash[Rails.env] || {}
+    hash
+  end
 
   @settings = begin
-                arr = {}
-                Setting.uncached do
-                  Setting.all.reload.each do |res|
-                    arr.store res.var.to_s, res.value
-                  end
-                end
-                arr
-              end
+    arr = {}
+    Setting.uncached do
+      Setting.all.reload.each do |res|
+        arr.store res.var.to_s, res.value
+      end
+    end
+    arr
+  end
 
   @keys = [
     'site.display_login_link',

@@ -124,4 +124,4 @@ module ApartmentCache
       "#{Apartment::Tenant.current}/#{super}"
     end
 end
-ActiveSupport::Cache::Store.send :prepend, ApartmentCache
+ActiveSupport::Cache::Store.prepend ApartmentCache

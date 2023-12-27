@@ -29,8 +29,8 @@ describe 'Slide' do
   let!(:default_category) { create(:default_category) }
 
   before do
-    CloudConfig.class_eval { remove_const(:SERVICE) }
-    CloudConfig::SERVICE = SlideHub::Cloud::Engine::AWS
+    CloudConfig.class_eval { remove_const(:PROVIDER_ENGINE) }
+    CloudConfig::PROVIDER_ENGINE = SlideHub::Cloud::Engine::AWS
     CloudHelpers.switch_to_aws
   end
 

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'Slide' do
   before do
-    CloudConfig.class_eval { remove_const(:SERVICE) }
-    CloudConfig::SERVICE = SlideHub::Cloud::Engine::AWS
+    CloudConfig.class_eval { remove_const(:PROVIDER_ENGINE) }
+    CloudConfig::PROVIDER_ENGINE = SlideHub::Cloud::Engine::AWS
     CloudHelpers.switch_to_aws
   end
 
@@ -32,8 +32,8 @@ end
 
 describe 'Slide_on_Azure' do
   before do
-    CloudConfig.class_eval { remove_const(:SERVICE) }
-    CloudConfig::SERVICE = SlideHub::Cloud::Engine::Azure
+    CloudConfig.class_eval { remove_const(:PROVIDER_ENGINE) }
+    CloudConfig::PROVIDER_ENGINE = SlideHub::Cloud::Engine::Azure
     CloudHelpers.switch_to_azure
   end
 

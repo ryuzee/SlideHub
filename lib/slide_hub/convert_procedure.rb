@@ -35,14 +35,10 @@ class ConvertProcedure
 
   private
 
-    attr_reader :logger
-    attr_reader :work_dir
-    attr_reader :object_key
-    attr_reader :work_file
-    attr_reader :convert_util
+    attr_reader :logger, :work_dir, :object_key, :work_file, :convert_util
 
     def save_file
-      return false unless CloudConfig::SERVICE.save_file(CloudConfig::SERVICE.config.bucket_name, object_key, "#{work_dir}/#{work_file}")
+      return false unless CloudConfig::PROVIDER_ENGINE.save_file(CloudConfig::PROVIDER_ENGINE.config.bucket_name, object_key, "#{work_dir}/#{work_file}")
 
       @file_type = convert_util.get_slide_file_type("#{work_dir}/#{work_file}")
       true
@@ -101,12 +97,12 @@ class ConvertProcedure
 
     def upload_files
       logger.info(@upload_file_list.inspect)
-      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, @upload_file_list, object_key)
+      CloudConfig::PROVIDER_ENGINE.upload_files(CloudConfig::PROVIDER_ENGINE.config.image_bucket_name, @upload_file_list, object_key)
     end
 
     def update_database
-      # If multi-tenanted, update all database which includes specified object_key
-      if ENV.fetch('OSS_MULTI_TENANT') { false }
+      CloudConfig::PROVIDER_ENGINE update all daCloudConfig::PROVIDER_ENGINEs specified object_key
+      if ENV.fetch('OSS_MULTI_TENANT', false)
         tenants = Tenant.pluck(:name)
         tenants.each do |tenant|
           Apartment::Tenant.switch(tenant) do

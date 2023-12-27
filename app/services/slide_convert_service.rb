@@ -4,6 +4,6 @@ class SlideConvertService
   end
 
   def send_request
-    CloudConfig::SERVICE.send_message({ id: @slide.id, object_key: @slide.object_key }.to_json)
+    CloudConfig::PROVIDER_ENGINE.send_message({ id: @slide.id, object_key: @slide.object_key }.to_json)
   end
 end

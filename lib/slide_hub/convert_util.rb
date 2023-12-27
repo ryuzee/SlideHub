@@ -10,28 +10,25 @@ module SlideHub
 
     def rename_to_pdf(dir, file)
       cmd = "cd #{dir} && mv #{file} #{file}.pdf"
-      result = exec_command(cmd)
-      result
+      exec_command(cmd)
     end
 
     def pdf_to_ppm(dir, file)
       cmd = "cd #{dir} && pdftoppm #{file} slide"
-      result = exec_command(cmd)
-      result
+      exec_command(cmd)
     end
 
     def ppt_to_pdf(dir, file)
       cmd = "cd #{dir} && unoconv -f pdf -o #{file}.pdf #{file}"
-      result = exec_command(cmd)
-      result
+      exec_command(cmd)
     end
 
     def ppm_to_jpg(dir)
       cmd = "cd #{dir} && mogrify -format jpg slide*.ppm"
       result = exec_command(cmd)
       if result
-        list = self.get_local_file_list(dir, '.jpg')
-        list
+        self.get_local_file_list(dir, '.jpg')
+
       else
         false
       end
@@ -67,7 +64,7 @@ module SlideHub
         result = exec_command(cmd)
         if result && File.exist?("#{dir}/#{current_page}.txt")
           str = File.read("#{dir}/#{current_page}.txt")
-          str.gsub!(/([\r|\n|\t| |　|\u{2028}]+)/, ' ')
+          str.gsub!(/([\r|\n\t 　\u{2028}]+)/, ' ')
         else
           str = ''
         end

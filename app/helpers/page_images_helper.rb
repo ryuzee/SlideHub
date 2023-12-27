@@ -6,7 +6,7 @@ module PageImagesHelper
     if slide.pages.list.try(:count).positive?
       idx = 0
       slide.pages.list.each do |page|
-        original_image = "#{CloudConfig::SERVICE.resource_endpoint}/#{page}"
+        original_image = "#{CloudConfig::PROVIDER_ENGINE.resource_endpoint}/#{page}"
         if idx.zero?
           default_image = original_image
         end

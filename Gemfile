@@ -28,9 +28,9 @@ gem 'devise-i18n'
 gem 'devise-i18n-views'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-saml'
 gem 'omniauth-twitter'
-gem 'omniauth-rails_csrf_protection'
 
 # Compatibility with PHP version
 # See https://github.com/divoxx/ruby-php-serialization
@@ -47,10 +47,10 @@ gem 'sitemap_generator'
 gem 'aws-sdk', '~> 3'
 gem 'aws-sdk-s3'
 # Azure
+gem 'addressable', require: 'addressable/uri'
 gem 'azure-storage-blob'
 gem 'azure-storage-queue'
 gem 'mime-types'
-gem 'addressable', require: 'addressable/uri'
 # Find file type
 gem 'ruby-filemagic'
 # Handle images
@@ -61,9 +61,9 @@ gem 'pdf-reader'
 # counter cache transaction
 gem 'counter_culture'
 # AP Server
+gem 'momentjs-rails'
 gem 'unicorn', '~> 5'
 gem 'unicorn-rails'
-gem 'momentjs-rails'
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
 
@@ -86,8 +86,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rails-flog', require: 'flog'
-  gem 'rspec-rails'
   gem 'rspec_junit_formatter'
+  gem 'rspec-rails'
   gem 'ruby-debug-ide'
   gem 'shoulda-matchers', require: false
   gem 'simplecov'

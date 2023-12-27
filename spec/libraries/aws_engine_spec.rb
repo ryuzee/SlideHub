@@ -45,7 +45,7 @@ module Aws
 
       def get_object(params = {})
         filename = params[:response_target]
-        File.open(filename, 'wb') { |f| f.write('hoge') }
+        File.binwrite(filename, 'hoge')
       end
 
       def delete_objects(params = {}); end
@@ -91,10 +91,12 @@ module Aws
             'iam_session_token'
           end
         end
+
         def credentials
           DummyCredentialCredential.new
         end
       end
+
       def config
         { credentials: DummyCredential.new }
       end

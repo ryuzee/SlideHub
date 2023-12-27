@@ -2,7 +2,7 @@
 
 page_list = slide.pages.list
 if page_list.instance_of?(Array) && page_list.count > 0
-  twitter_image_url = "#{CloudConfig::SERVICE.resource_endpoint}/#{page_list[0]}"
+  twitter_image_url = "#{CloudConfig::PROVIDER_ENGINE.resource_endpoint}/#{page_list[0]}"
   facebook_image_url = slide.thumbnail.url_middle
 else
   twitter_image_url = image_url("converting.jpg")

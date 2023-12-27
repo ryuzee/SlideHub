@@ -34,6 +34,10 @@ Gemspec/RequireMFA: # new in 1.23
 Layout/DotPosition:
   EnforcedStyle: trailing
 
+# 改行コードを明示
+Layout/EndOfLine: 
+  EnforcedStyle: lf
+
 # 桁揃えが綺麗にならないことが多いので migration は除外
 Layout/ExtraSpacing:
   Exclude:
@@ -71,11 +75,17 @@ Layout/LineLength:
   Max: 160
   Exclude:
     - "db/migrate/*.rb"
+    - "spec/**/*"
 
 Layout/LineEndStringConcatenationIndentation: # new in 1.18
   Enabled: true
 
 ##################### Style ##################################
+
+# Accessorを1つの記述にまとめるかどうか
+# まとめるとコメントが付けにくく見通しが悪くなるので無効にする
+Style/AccessorGrouping:
+  Enabled: false
 
 # redirect_to xxx and return のイディオムを維持したい
 Style/AndOr:
@@ -211,7 +221,9 @@ Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
 # クラスやモジュールのネスト定義
+# 動作に影響があるので無効にする
 Style/ClassAndModuleChildren:
+  Enabled: false
   EnforcedStyle: nested
   SupportedStyles:
     - nested
@@ -368,6 +380,7 @@ Metrics/BlockLength:
     - "lib/tasks/**/*.rb"
     - "lib/tasks/**/*.rake"
     - "spec/**/*.rb"
+    - "Gemfile"
 
 # 6 は強すぎるので緩める
 Metrics/CyclomaticComplexity:

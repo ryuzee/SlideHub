@@ -1,6 +1,4 @@
 class SlidesFinder
-  def initialize; end
-
   def self.latest(limit = 10)
     Slide.published.latest.
       includes(:user).

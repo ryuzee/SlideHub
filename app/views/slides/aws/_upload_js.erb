@@ -21,7 +21,7 @@ $(document).ready(function() {
     event.preventDefault();
 
     var formData = new FormData();
-    var url = "<%= CloudConfig::SERVICE.upload_endpoint %>";
+    var url = "<%= CloudConfig::PROVIDER_ENGINE.upload_endpoint %>";
 
     var form = $('#upload-form');
     $(form.serializeArray()).each(function(i, v) {

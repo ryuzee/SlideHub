@@ -1,6 +1,5 @@
 class SlidePages
-  attr_accessor :object_key
-  attr_accessor :num_of_pages
+  attr_accessor :object_key, :num_of_pages
 
   def initialize(object_key, num_of_pages)
     @object_key = object_key
@@ -8,7 +7,7 @@ class SlidePages
   end
 
   def url
-    "#{CloudConfig::SERVICE.resource_endpoint}/#{object_key}/list.json"
+    "#{CloudConfig::PROVIDER_ENGINE.resource_endpoint}/#{object_key}/list.json"
   end
 
   def list

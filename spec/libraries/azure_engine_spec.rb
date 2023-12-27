@@ -35,9 +35,7 @@ module Azure
     module Entity
       module Queue
         class DummyMessage
-          attr_accessor :id
-          attr_accessor :message_text
-          attr_accessor :pop_receipt
+          attr_accessor :id, :message_text, :pop_receipt
 
           def initialize
             @id = 1

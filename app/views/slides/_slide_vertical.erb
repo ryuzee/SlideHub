@@ -10,7 +10,7 @@ end
 <% count = 0 %>
 <% page_list.each do |f| %>
 <% count +=1 %>
-<% u = "#{CloudConfig::SERVICE.resource_endpoint}/#{f}" %>
+<% u = "#{CloudConfig::PROVIDER_ENGINE.resource_endpoint}/#{f}" %>
 <div class="vertical_slide_box">
   <a name="img-<%= count-1 %>"></a>
   <% if count <= 2 %>

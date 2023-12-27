@@ -2,9 +2,7 @@ module SlideHub
   module Cloud
     module Queue
       class Message
-        attr_accessor :id
-        attr_accessor :body
-        attr_accessor :handle
+        attr_accessor :id, :body, :handle
 
         def initialize(id, body, handle)
           @id = id
@@ -15,6 +13,7 @@ module SlideHub
 
       class Response
         attr_reader :messages
+
         def initialize
           @messages = []
         end

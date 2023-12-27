@@ -15,7 +15,7 @@ module Admin
     def create
       save_tmp_file(custom_file_params[:file])
 
-      CloudConfig::SERVICE.upload_files(CloudConfig::SERVICE.config.image_bucket_name, [@output_path], CustomFile.custom_files_directory)
+      CloudConfig::PROVIDER_ENGINE.upload_files(CloudConfig::PROVIDER_ENGINE.config.image_bucket_name, [@output_path], CustomFile.custom_files_directory)
 
       filename = custom_file_params[:file].original_filename
       description = custom_file_params[:description]
@@ -34,8 +34,8 @@ module Admin
 
     def destroy
       @custom_file.destroy
-      CloudConfig::SERVICE.delete_files(
-        CloudConfig::SERVICE.config.image_bucket_name,
+      CloudConfig::PROVIDER_ENGINE.delete_files(
+        CloudConfig::PROVIDER_ENGINE.config.image_bucket_name,
         [{ key: "#{CustomFile.custom_files_directory}/#{@custom_file.path}" }],
       )
       redirect_to admin_custom_files_path, notice: t(:custom_files_were_deleted)
@@ -58,9 +58,7 @@ module Admin
       def save_tmp_file(uploaded_file)
         FileUtils.mkdir_p(Rails.root.join('tmp')) unless FileTest.exist?(Rails.root.join('tmp'))
         @output_path = Rails.root.join('tmp', uploaded_file.original_filename)
-        File.open(@output_path, 'w+b') do |fp|
-          fp.write  uploaded_file.read
-        end
+        File.binwrite(@output_path, uploaded_file.read)
       end
 
       def delete_tmp_file
