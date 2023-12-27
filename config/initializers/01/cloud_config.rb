@@ -24,10 +24,10 @@ end
 
 module CloudConfig
   PROVIDER_ENGINE = if Rails.application.config.slidehub.azure?
-              SlideHub::Cloud::Engine::Azure
-            else
-              SlideHub::Cloud::Engine::AWS
-            end
+                      SlideHub::Cloud::Engine::Azure
+                    else
+                      SlideHub::Cloud::Engine::AWS
+                    end
 
   def self.service_name
     if Rails.application.config.slidehub.azure?

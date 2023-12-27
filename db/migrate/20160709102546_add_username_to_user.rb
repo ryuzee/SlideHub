@@ -20,7 +20,7 @@ class AddUsernameToUser < ActiveRecord::Migration[4.2]
         execute("update users set username = '#{username}' where id = #{user.id}")
         break
       else
-        username = username + '-' + Digest::MD5.hexdigest(SecureRandom.hex + Time.now.strftime('%Y%m%d%H%M%S'))
+        username = "#{username}-#{Digest::MD5.hexdigest(SecureRandom.hex + Time.now.strftime('%Y%m%d%H%M%S'))}"
       end
     end
     true
