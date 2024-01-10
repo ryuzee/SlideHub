@@ -101,7 +101,7 @@ class ConvertProcedure
     end
 
     def update_database
-      CloudConfig::PROVIDER_ENGINE update all daCloudConfig::PROVIDER_ENGINEs specified object_key
+      # If multi-tenanted, update all database which includes specified object_key
       if ENV.fetch('OSS_MULTI_TENANT', false)
         tenants = Tenant.pluck(:name)
         tenants.each do |tenant|
