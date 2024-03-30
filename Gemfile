@@ -62,7 +62,7 @@ gem 'pdf-reader'
 gem 'counter_culture'
 # AP Server
 gem 'momentjs-rails'
-gem 'unicorn', '~> 5'
+gem 'unicorn'
 gem 'unicorn-rails'
 # https://github.com/alexspeller/non-stupid-digest-assets
 gem 'non-stupid-digest-assets'
@@ -77,6 +77,8 @@ gem 'enum_help'
 gem 'apartment'
 
 gem 'psych', '~> 3.1'
+
+gem 'rb-fsevent', '0.11.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

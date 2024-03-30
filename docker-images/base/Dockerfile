@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM --platform=linux/amd64 ubuntu:18.04
 MAINTAINER ryuzee
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -10,15 +10,15 @@ RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
 RUN git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build
 ENV PATH /root/.rbenv/bin:$PATH
 ENV RAILS_ROOT /opt/application/current
-RUN bash -c "source /root/.bashrc && rbenv install 2.7.6"
-RUN bash -c "source /root/.bashrc && rbenv global 2.7.6"
+RUN bash -c "source /root/.bashrc && rbenv install 3.2.3"
+RUN bash -c "source /root/.bashrc && rbenv global 3.2.3"
 RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler -v 1.17.3"
 RUN bash -c "source /root/.bashrc && rbenv rehash"
 
 RUN curl -L git.io/nodebrew | perl - setup
 ENV PATH /root/.nodebrew/current/bin:$PATH
-RUN /root/.nodebrew/current/bin/nodebrew install v12.16.1
-RUN /root/.nodebrew/current/bin/nodebrew use v12.16.1
+RUN /root/.nodebrew/current/bin/nodebrew install v16.13
+RUN /root/.nodebrew/current/bin/nodebrew use v16.13
 RUN npm install --g yarn
 
 COPY supervisor.conf /etc/supervisor.conf

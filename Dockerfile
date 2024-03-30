@@ -1,4 +1,4 @@
-FROM ryuzee/slidehub-base:20220429
+FROM --platform=linux/amd64 ryuzee/slidehub-base:20240330
 MAINTAINER ryuzee
 
 RUN mkdir -p /opt/application/current/

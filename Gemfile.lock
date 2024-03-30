@@ -1531,7 +1531,7 @@ GEM
     psych (3.3.2)
     public_suffix (4.0.7)
     racc (1.6.0)
-    rack (2.2.3)
+    rack (2.2.9)
     rack-contrib (2.3.0)
       rack (~> 2.0)
     rack-dev-mark (0.7.9)
@@ -1586,13 +1586,13 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.19.0, < 2.0)
     rainbow (3.1.1)
-    raindrops (0.19.1)
+    raindrops (0.20.1)
     rake (13.0.6)
     ransack (2.5.0)
       activerecord (>= 5.2.4)
       activesupport (>= 5.2.4)
       i18n
-    rb-fsevent (0.11.1)
+    rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rdoc (6.3.3)
@@ -1724,7 +1724,7 @@ GEM
     uglifier (4.1.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (2.1.0)
-    unicorn (5.6.0)
+    unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     unicorn-rails (2.2.1)
@@ -1818,6 +1818,7 @@ DEPENDENCIES
   rails-flog
   rails_best_practices
   ransack
+  rb-fsevent (= 0.11.2)
   reek
   reserved_word
   rmagick
@@ -1841,7 +1842,7 @@ DEPENDENCIES
   sqlite3
   turbolinks
   uglifier (= 4.1.0)
-  unicorn (~> 5)
+  unicorn
   unicorn-rails
   view_source_map
   web-console
