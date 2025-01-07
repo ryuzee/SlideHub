@@ -23,8 +23,11 @@ module SlideHub
       exec_command(cmd)
     end
 
-    def ppm_to_jpg(dir)
-      cmd = "cd #{dir} && mogrify -format jpg slide*.ppm"
+    def pdf_to_jpg(dir, file)
+      # cmd = "cd #{dir} && mutool draw -o slide-%d.jpg -r 300 #{file}.pdf"
+      # 歴史的経緯で、過去のツールでは0埋め連番だったのを再現する
+      cmd = "cd #{dir} && mutool draw -o slide-%0#{Math.log10(`cd #{dir} && mutool info #{file}.pdf | grep Pages | awk '{print $2}'`.to_i).ceil}d.jpg -r 60 #{file}.pdf"
+      puts cmd
       result = exec_command(cmd)
       if result
         self.get_local_file_list(dir, '.jpg')

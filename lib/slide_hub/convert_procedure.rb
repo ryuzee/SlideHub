@@ -22,7 +22,6 @@ class ConvertProcedure
       logger.info("Current directory is #{work_dir}")
       return false unless save_file
 
-      convert_to_ppm
       convert_to_jpg
       generate_json
       convert_to_thumbnail
@@ -44,30 +43,22 @@ class ConvertProcedure
       true
     end
 
-    def convert_to_ppm
+    def convert_to_jpg
       case @file_type
       when 'pdf'
         logger.info('Rename to PDF')
         convert_util.rename_to_pdf(work_dir, work_file)
-        logger.info('Start converting from PDF to PPM')
-        convert_util.pdf_to_ppm(work_dir, "#{work_file}.pdf")
-        true
       when 'ppt', 'pptx'
         logger.info('Start converting from PPT to PDF')
         convert_util.ppt_to_pdf(work_dir, work_file)
-        logger.info('Start converting from PDF to PPM')
-        convert_util.pdf_to_ppm(work_dir, "#{work_file}.pdf")
-        true
       else
         false
       end
-    end
-
-    def convert_to_jpg
-      logger.info('Start converting from PPM to JPG')
-      @slide_image_list = convert_util.ppm_to_jpg(work_dir)
+      logger.info('Start converting from PDF to JPG')
+      @slide_image_list = convert_util.pdf_to_jpg(work_dir, "#{work_file}")
       logger.info(convert_util.get_local_file_list(work_dir, '').inspect)
       @upload_file_list = @slide_image_list.dup
+      true
     end
 
     def convert_to_thumbnail

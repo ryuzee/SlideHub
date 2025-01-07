@@ -1,6 +1,6 @@
 # From http://qiita.com/Salinger/items/5350b23f8b4e0dcdbe23
 worker_processes Integer(ENV.fetch('WEB_CONCURRENCY', nil) || 3)
-timeout Integer(ENV.fetch('WEB_TIMEOUT', nil) || 15)
+timeout Integer(ENV.fetch('WEB_TIMEOUT', nil) || 60)
 preload_app true
 
 listen '/tmp/unicorn.sock'
