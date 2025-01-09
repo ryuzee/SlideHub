@@ -1,55 +1,65 @@
 require "#{File.dirname(__FILE__)}/../../lib/slide_hub/version"
 require 'open3'
 
-BASE_CONTAINER_VERSION = '20250107'.freeze
-
 namespace :docker do
   task :default => :build
 
-  task :build_base do
-    Dir.chdir("#{File.dirname(__FILE__)}/../../docker-images/base") do
-      cmd = 'docker build --no-cache=true -t ryuzee/slidehub-base:latest .'
-      sh cmd
+  def execute_command(cmd)
+    o, e, s = Open3.capture3(cmd)
+    unless s.success?
+      raise "Command failed: #{cmd}\nError: #{e}"
     end
-
-    cmd = "docker tag ryuzee/slidehub-base:latest ryuzee/slidehub-base:#{BASE_CONTAINER_VERSION}"
-    o, e, _s = Open3.capture3(cmd)
-    if o.chomp! == '' || e != ''
-      raise 'Failed to add version tag to Docker image...'
-    end
+    o.strip
   end
 
-  task :push_base do
-    Dir.chdir("#{File.dirname(__FILE__)}/../../docker-images/base") do
-      cmd = "docker push ryuzee/slidehub-base:#{BASE_CONTAINER_VERSION}"
-      sh cmd
+  def buildx_instance
+    # buildxインスタンスが存在するか確認
+    output = execute_command('docker buildx ls')
+    active_builder = output.lines.find { |line| line.include?('*') } # 現在のビルダーを検出
+
+    if active_builder
+      builder_name = active_builder.split.first.strip
+      puts "Using existing buildx instance: #{builder_name}"
+    else
+      puts 'Creating a new unnamed buildx instance...'
+      execute_command('docker buildx create --use')
     end
   end
 
   task :build do
     Dir.chdir("#{File.dirname(__FILE__)}/../../") do
-      cmd = if ENV.fetch('experiment', 0).to_i.zero?
-              "docker build -q -t ryuzee/slidehub:#{SlideHub::VERSION} -t ryuzee/slidehub:latest . 2>/dev/null | awk '/Successfully built/{print $NF}'"
-            else
-              "docker build -q -t ryuzee/slidehub:#{SlideHub::VERSION} . 2>/dev/null | awk '/Successfully built/{print $NF}'"
-            end
-      o, e, _s = Open3.capture3(cmd)
-      if o.chomp! == '' || e != ''
-        raise 'Failed to build Docker image...'
+      # Buildxインスタンスの確認と作成
+      buildx_instance
+
+      tags = ["-t ryuzee/slidehub:#{SlideHub::VERSION}"]
+      tags << '-t ryuzee/slidehub:latest' if ENV.fetch('latest', 0).to_i == 1
+
+      cmd = "docker buildx build --platform linux/amd64 --load -q #{tags.join(' ')} ."
+      puts "Running build command: #{cmd}"
+
+      # awkを含むコマンドの実行
+      output, status = Open3.capture2(cmd)
+      unless status.success?
+        raise 'Failed to build Docker image: No output from build command.'
       end
+
+      puts "Build successful"
     end
   end
 
   task :push do
     Dir.chdir("#{File.dirname(__FILE__)}/../../") do
-      if ENV.fetch('experiment', 0).to_i.zero?
-        cmd = 'docker push ryuzee/slidehub:latest'
-        sh cmd
+      tags = ["ryuzee/slidehub:#{SlideHub::VERSION}"]
+      tags << 'ryuzee/slidehub:latest' if ENV.fetch('latest', 0).to_i == 1
+
+      tags.each do |tag|
+        cmd = "docker push #{tag}"
+        puts "Pushing image: #{tag}"
+        execute_command(cmd)
       end
-      cmd = "docker push ryuzee/slidehub:#{SlideHub::VERSION}"
-      sh cmd
     end
   end
 end
+
 
 # vim: filetype=ruby
