@@ -16,7 +16,11 @@ services:
   app:
     build:
       context: .
-      dockerfile: 'dockerfile_dev'
+      dockerfile: 'Dockerfile'
+      args:
+        INSTALL_MAILCATCHER: "true" # 開発環境用
+        SUPERVISOR_CONF: "script/oss_docker_supervisor_dev.conf"
+        EXPOSE_PORTS: "3000 1080"
     depends_on:
       - mysql
     environment:
