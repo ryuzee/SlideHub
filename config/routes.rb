@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   resources :html_player, only: [:show]
   resources :slide_download, only: [:show]
 
-  require 'username_url_constrainer'
+  # require 'username_url_constrainer'
   constraints(SlideHub::UsernameUrlConstrainer.new) do
     get ':username' => 'users#show', as: :user_by_username
     get ':username/statistics' => 'users#statistics', as: :statistics_by_username

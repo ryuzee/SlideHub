@@ -10,7 +10,7 @@ RSpec.describe Admin::SlideDownloadController, type: :controller do
 
     describe 'GET /admin/slide_download/1' do
       it 'works!' do
-        allow(SlideHub::Cloud::Engine::AWS).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
+        allow(SlideHub::Cloud::Engine::Aws).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
         allow(SlideHub::Cloud::Engine::Azure).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
         stub_request(:any, 'http://www.example.com/1.pdf').to_return(
           body: 'test',

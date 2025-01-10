@@ -88,7 +88,7 @@ RSpec.describe SlidesController, type: :controller do
 
   describe 'POST #create' do
     it 'succeed to create record' do
-      allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
+      allow(SlideHub::Cloud::Engine::Aws).to receive(:send_message).and_return(true)
       allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
       data = build(:slide)
       login_by_user default_user
@@ -99,7 +99,7 @@ RSpec.describe SlidesController, type: :controller do
     end
 
     it 'faled to create record because of validation' do
-      allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
+      allow(SlideHub::Cloud::Engine::Aws).to receive(:send_message).and_return(true)
       allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
       data = build(:slide)
       data.category_id = nil # cause validation error
@@ -110,7 +110,7 @@ RSpec.describe SlidesController, type: :controller do
     end
 
     it 'failed to create record because of duplicate key' do
-      allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
+      allow(SlideHub::Cloud::Engine::Aws).to receive(:send_message).and_return(true)
       allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
       slides = create_list(:slide, 2)
       first_key = slides[0].object_key
@@ -176,7 +176,7 @@ RSpec.describe SlidesController, type: :controller do
     end
 
     it 'succeeds to update the record with running conversion' do
-      allow(SlideHub::Cloud::Engine::AWS).to receive(:send_message).and_return(true)
+      allow(SlideHub::Cloud::Engine::Aws).to receive(:send_message).and_return(true)
       allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
       data = create(:slide)
       data.not_converted! # Not converted yet...
@@ -201,8 +201,8 @@ RSpec.describe SlidesController, type: :controller do
     end
 
     it 'succeeds to update the record with running conversion' do
-      allow(SlideHub::Cloud::Engine::AWS).to receive(:delete_slide).and_return(true)
-      allow(SlideHub::Cloud::Engine::AWS).to receive(:delete_generated_files).and_return(true)
+      allow(SlideHub::Cloud::Engine::Aws).to receive(:delete_slide).and_return(true)
+      allow(SlideHub::Cloud::Engine::Aws).to receive(:delete_generated_files).and_return(true)
       data = create(:slide)
       login_by_user default_user
       delete :destroy, params: { id: data.id }

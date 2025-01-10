@@ -31,7 +31,7 @@ describe 'Slide' do
 
   before do
     CloudConfig.class_eval { remove_const(:PROVIDER_ENGINE) }
-    CloudConfig::PROVIDER_ENGINE = SlideHub::Cloud::Engine::AWS
+    CloudConfig::PROVIDER_ENGINE = SlideHub::Cloud::Engine::Aws
     CloudHelpers.switch_to_aws
   end
 

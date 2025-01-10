@@ -31,7 +31,7 @@ namespace :docker do
       # Buildxインスタンスの確認と作成
       buildx_instance
 
-      tags = ["-t ryuzee/slidehub:#{SlideHub::VERSION}"]
+      tags = ["-t ryuzee/slidehub:#{SlideHub::Version}"]
       tags << '-t ryuzee/slidehub:latest' if ENV.fetch('latest', 0).to_i == 1
 
       cmd = "docker buildx build --platform linux/amd64 --load -q #{tags.join(' ')} ."
@@ -49,7 +49,7 @@ namespace :docker do
 
   task :push do
     Dir.chdir("#{File.dirname(__FILE__)}/../../") do
-      tags = ["ryuzee/slidehub:#{SlideHub::VERSION}"]
+      tags = ["ryuzee/slidehub:#{SlideHub::Version}"]
       tags << 'ryuzee/slidehub:latest' if ENV.fetch('latest', 0).to_i == 1
 
       tags.each do |tag|

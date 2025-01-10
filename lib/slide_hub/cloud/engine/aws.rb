@@ -1,7 +1,7 @@
 module SlideHub
   module Cloud
     module Engine
-      class AWS
+      class Aws
         class Config
           include ActiveSupport::Configurable
           config_accessor :bucket_name
@@ -18,12 +18,12 @@ module SlideHub
           yield config
 
           if self.configured?
-            Aws.config.update({
+            ::Aws.config.update({
               region: @config.region,
-              credentials: Aws::Credentials.new(@config.aws_access_id, @config.aws_secret_key),
+              credentials: ::Aws::Credentials.new(@config.aws_access_id, @config.aws_secret_key),
             })
           else
-            Aws.config.update({
+            ::Aws.config.update({
               region: @config.region,
             })
           end
@@ -72,7 +72,7 @@ module SlideHub
 
         ## SQS
         def self.sqs
-          @sqs ||= Aws::SQS::Client.new(region: @config.region)
+          @sqs ||= ::Aws::SQS::Client.new(region: @config.region)
         end
 
         def self.send_message(message)
@@ -113,7 +113,7 @@ module SlideHub
         # S3
         def self.upload_files(bucket, files, prefix)
           files.each do |file|
-            Aws::S3::Client.new(region: @config.region).put_object(
+            ::Aws::S3::Client.new(region: @config.region).put_object(
               bucket: bucket,
               key: "#{prefix}/#{File.basename(file)}",
               body: File.read(file),
@@ -124,7 +124,7 @@ module SlideHub
         end
 
         def self.get_file_list(bucket, prefix)
-          resp = Aws::S3::Client.new(region: @config.region).list_objects({
+          resp = ::Aws::S3::Client.new(region: @config.region).list_objects({
             bucket: bucket,
             max_keys: 1000,
             prefix: prefix,
@@ -137,7 +137,7 @@ module SlideHub
         end
 
         def self.save_file(bucket, key, destination)
-          Aws::S3::Client.new(region: @config.region).get_object(
+          ::Aws::S3::Client.new(region: @config.region).get_object(
             response_target: destination,
             bucket: bucket,
             key: key,
@@ -172,7 +172,7 @@ module SlideHub
         end
 
         def self.delete_files(bucket, files)
-          Aws::S3::Client.new(region: @config.region).delete_objects({
+          ::Aws::S3::Client.new(region: @config.region).delete_objects({
             bucket: bucket,
             delete: {
               objects: files,
@@ -182,7 +182,7 @@ module SlideHub
         end
 
         def self.get_download_url(bucket, key)
-          signer = Aws::S3::Presigner.new(client: Aws::S3::Client.new(region: @config.region))
+          signer = ::Aws::S3::Presigner.new(client: ::Aws::S3::Client.new(region: @config.region))
           signer.presigned_url(:get_object, bucket: bucket, key: key)
         end
 
@@ -198,7 +198,7 @@ module SlideHub
             secret_key = @config.aws_secret_key
             security_token = ''
           else
-            ec2 = Aws::EC2::Client.new(region: @config.region)
+            ec2 = ::Aws::EC2::Client.new(region: @config.region)
             credential = ec2.config[:credentials].credentials
             access_id = credential.access_key_id
             secret_key = credential.secret_access_key
