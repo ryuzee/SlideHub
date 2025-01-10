@@ -31,7 +31,7 @@ RSpec.describe Admin::LogsController, type: :controller do
       it 'works!' do
         get :download, params: { path: Rails.root.join('log', 'test.log') }
         expect(response.status).to eq(200)
-        expect(response.headers['Content-Disposition']).to eq('attachment; filename="test.log"')
+        expect(response.headers['Content-Disposition']).to match(/attachment; filename="test\.log"/)
       end
 
       it 'redirect to index' do

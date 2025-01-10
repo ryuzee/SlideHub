@@ -30,6 +30,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: [:index]
   before_action :username_to_id, only: [:show, :embedded]
+  skip_forgery_protection only: [:embedded]
 
   def index
     user_id = current_user.id

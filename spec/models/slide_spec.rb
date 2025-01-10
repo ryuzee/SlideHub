@@ -27,6 +27,7 @@ require 'rails_helper'
 describe 'Slide' do
   let!(:default_user) { create(:default_user) }
   let!(:default_category) { create(:default_category) }
+  let!(:success_data) do { user_id: default_user.id, name: 'dummy', description: 'dummy', object_key: 'dummy', category_id: default_category.id } end
 
   before do
     CloudConfig.class_eval { remove_const(:PROVIDER_ENGINE) }
@@ -35,7 +36,6 @@ describe 'Slide' do
   end
 
   describe 'Creating "Slide" model' do
-    success_data = { user_id: 1, name: 'dummy', description: 'dummy', object_key: 'dummy', category_id: 1 }
 
     it 'is valid with user_id, name, description, object_key and category' do
       slide = Slide.new(success_data)

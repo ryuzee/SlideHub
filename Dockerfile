@@ -16,8 +16,8 @@ RUN bash -c "source /root/.bashrc && rbenv rehash"
 
 RUN curl -L git.io/nodebrew | perl - setup
 ENV PATH /root/.nodebrew/current/bin:$PATH
-RUN /root/.nodebrew/current/bin/nodebrew install v12.16.1
-RUN /root/.nodebrew/current/bin/nodebrew use v12.16.1
+RUN /root/.nodebrew/current/bin/nodebrew install v18.19.1
+RUN /root/.nodebrew/current/bin/nodebrew use v18.19.1
 RUN npm install --g yarn
 
 RUN apt-get -y autoremove && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
@@ -30,12 +30,13 @@ WORKDIR /opt/application/current/
 COPY Gemfile /opt/application/current/
 COPY Gemfile.lock /opt/application/current/
 
-RUN /bin/bash -lc 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bundle install'
+RUN bash -l -c 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bundle install'
 
 # 開発環境専用の処理をオプション化
 ARG INSTALL_MAILCATCHER=false
 RUN bash -l -c "if [ \"$INSTALL_MAILCATCHER\" = \"true\" ]; then gem install mailcatcher -v 0.6.5; fi"
 
+ENV NODE_OPTIONS=--openssl-legacy-provider
 COPY package.json /opt/application/current/
 COPY yarn.lock /opt/application/current/
 RUN yarn
