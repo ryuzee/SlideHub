@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@eonasdan/tempus-dominus": "^6.0.0-beta5.1",
     "@fortawesome/fontawesome-free": "^6.1.1",
     "@popperjs/core": "2",
+    "@rails/webpacker": "5.4.4",
     "admin-lte": "^3",
     "bootstrap": "4.6.2",
     "clipboard": "1.7.1",
@@ -12,6 +15,11 @@
     "js-cookie": "2.0.4",
     "mousetrap": "1.6.0",
     "popper.js": "^1.16.1",
-    "sticky-kit": "1.1.2"
+    "sticky-kit": "1.1.2",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3"
   }
 }

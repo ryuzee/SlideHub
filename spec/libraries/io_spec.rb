@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'io'
+# require 'io'
 
 describe 'Class IO' do
   path = "#{File.dirname(File.dirname(__FILE__))}/fixtures/dummy.txt"

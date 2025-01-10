@@ -10,7 +10,7 @@ RSpec.describe Admin::SlideDownloadController, type: :controller do
 
     describe 'GET /admin/slide_download/1' do
       it 'works!' do
-        allow(SlideHub::Cloud::Engine::AWS).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
+        allow(SlideHub::Cloud::Engine::Aws).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
         allow(SlideHub::Cloud::Engine::Azure).to receive(:get_slide_download_url).and_return('http://www.example.com/1.pdf')
         stub_request(:any, 'http://www.example.com/1.pdf').to_return(
           body: 'test',
@@ -19,7 +19,7 @@ RSpec.describe Admin::SlideDownloadController, type: :controller do
         slide = create(:slide)
         get :show, params: { id: slide.id }
         expect(response.status).to eq(200)
-        expect(response.headers['Content-Disposition']).to eq("attachment; filename=\"#{slide.object_key}#{slide.extension}\"")
+        expect(response.headers['Content-Disposition']).to match(/attachment; filename="#{slide.object_key}#{slide.extension}"/)
       end
     end
   end

@@ -16,18 +16,18 @@ RSpec.describe Admin::SlidesController, type: :controller do
         expect(response.status).to eq(200)
         expect(assigns(:slides)).to eq(slides)
         expect(response).to render_template :index
-        expect(response.content_type).to eq 'text/html'
+        expect(response.content_type).to match /text\/html/
       end
     end
 
     describe 'GET /admin/slides/index.csv' do
       it 'returns csv that includes all slides' do
         slides = create_list(:slide, 3, convert_status: -1)
-        get 'index', { format: 'csv' }
+        get 'index', params: { format: 'csv' }
         expect(response.status).to eq(200)
         expect(assigns(:slides)).to eq(slides)
         expect(response).to render_template :index
-        expect(response.content_type).to eq 'text/csv'
+        expect(response.content_type).to match /text\/csv/
       end
     end
 

@@ -24,7 +24,7 @@ RSpec.describe Admin::CustomFilesController, type: :controller do
 
     describe 'POST /admin/custom_files' do
       it 'works!' do
-        allow(SlideHub::Cloud::Engine::AWS).to receive(:upload_files).and_return(true)
+        allow(SlideHub::Cloud::Engine::Aws).to receive(:upload_files).and_return(true)
         allow(SlideHub::Cloud::Engine::Azure).to receive(:upload_files).and_return(true)
         post 'create', params: {
           custom_file: {
@@ -38,7 +38,7 @@ RSpec.describe Admin::CustomFilesController, type: :controller do
       end
 
       it 'updates the existing record if path is equal to the existing one' do
-        allow(SlideHub::Cloud::Engine::AWS).to receive(:upload_files).and_return(true)
+        allow(SlideHub::Cloud::Engine::Aws).to receive(:upload_files).and_return(true)
         allow(SlideHub::Cloud::Engine::Azure).to receive(:upload_files).and_return(true)
         custom_file = create(:default_custom_file)
         post 'create', params: {
@@ -55,7 +55,7 @@ RSpec.describe Admin::CustomFilesController, type: :controller do
 
     describe 'DELETE /admin/custom_files/1' do
       it 'works!' do
-        allow(SlideHub::Cloud::Engine::AWS).to receive(:delete_files).and_return(true)
+        allow(SlideHub::Cloud::Engine::Aws).to receive(:delete_files).and_return(true)
         allow(SlideHub::Cloud::Engine::Azure).to receive(:delete_files).and_return(true)
         custom_file = create(:default_custom_file)
         delete :destroy, params: { id: custom_file.id }

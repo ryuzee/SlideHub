@@ -1,6 +1,6 @@
 module CloudHelpers
   def self.switch_to_aws
-    SlideHub::Cloud::Engine::AWS.configure do |config|
+    SlideHub::Cloud::Engine::Aws.configure do |config|
       config.region = 'ap-northeast-1'
       config.aws_access_id = 'aws_access_id'
       config.aws_secret_key = 'aws_secret_key'

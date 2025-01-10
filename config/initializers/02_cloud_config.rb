@@ -9,7 +9,7 @@ if Rails.application.config.slidehub.azure?
   end
   Rails.application.config.active_storage.service = :azure
 else
-  SlideHub::Cloud::Engine::AWS.configure do |config|
+  SlideHub::Cloud::Engine::Aws.configure do |config|
     config.region = Rails.application.config.slidehub.region
     config.aws_access_id = Rails.application.config.slidehub.aws_access_id
     config.aws_secret_key = Rails.application.config.slidehub.aws_secret_key
@@ -26,7 +26,7 @@ module CloudConfig
   PROVIDER_ENGINE = if Rails.application.config.slidehub.azure?
                       SlideHub::Cloud::Engine::Azure
                     else
-                      SlideHub::Cloud::Engine::AWS
+                      SlideHub::Cloud::Engine::Aws
                     end
 
   def self.service_name

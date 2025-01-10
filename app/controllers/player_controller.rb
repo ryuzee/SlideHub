@@ -1,6 +1,7 @@
 class PlayerController < ApplicationController
   include SlideUtil
   before_action :set_slide
+  skip_forgery_protection
 
   def show
     prepare_content

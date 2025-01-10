@@ -1,5 +1,5 @@
-module SlideHub
-  module Subdomain
+ module SlideHub
+  class Subdomain
     @subdomains = %w[www admin slide slidehub main mysql information_schema]
 
     def self.list

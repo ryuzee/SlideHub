@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'json', '~> 2.2'
-gem 'rails', '5.2.7.1'
+# gem 'rails', '5.2.7.1'
+gem 'rails', '6.1.7.10'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0.7'
+# gem 'sass-rails', '~> 5.0.7'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
 # https://github.com/lautis/uglifier/issues/173#issuecomment-857616825
 gem 'uglifier', '= 4.1.0'
@@ -14,7 +16,10 @@ gem 'jbuilder'
 # Store session to database
 gem 'activerecord-session_store'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# gem 'sqlite3'
+# For ruby 2.7
+gem 'sqlite3', '~> 1.4.0'
+
 # Use mysql
 gem 'execjs'
 gem 'mysql2', '~> 0.5'
@@ -74,9 +79,16 @@ gem 'yaml_db'
 # i18n for enum
 gem 'enum_help'
 # Multi Tenant
-gem 'apartment'
+# gem 'apartment'
+gem 'ros-apartment', require: 'apartment'
 
 gem 'psych', '~> 3.1'
+
+gem 'webpacker'
+
+# ffi-1.17.0 requires rubygems version >= 3.3.22
+# https://github.com/ffi/ffi/issues/1103
+gem 'ffi', '1.16.3'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

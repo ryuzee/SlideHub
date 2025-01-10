@@ -10,7 +10,7 @@ jobs:
     shell: /bin/bash --login
 
     docker:
-      - image: cimg/ruby:2.7.6-node
+      - image: cimg/ruby:3.1.5-node
         environment:
           CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
           CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
@@ -21,6 +21,7 @@ jobs:
           OSS_REGION: ap-northeast-1
           OSS_SECRET_KEY_BASE: dummy
           RAILS_ENV: test
+          # NODE_OPTIONS: --openssl-legacy-provider
       - image: circleci/mysql:5.7
 
     steps:
@@ -45,7 +46,7 @@ jobs:
           - v1-dep-master-
           - v1-dep-
 
-      - run: gem install bundler:1.17.3
+      - run: gem install bundler:2.3.27
       - run: 'bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3 '
 
       - save_cache:

@@ -10,6 +10,7 @@ module SlideHub
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
+    config.autoloader = :zeitwerk
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -23,8 +24,11 @@ module SlideHub
     config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
 
-    config.autoload_paths += %W[#{config.root}/lib]
-    config.autoload_paths += %W[#{config.root}/lib/slide_hub]
+    # config.autoload_paths += %W[#{config.root}/lib]
+    # config.autoload_paths += %W[#{config.root}/lib/slide_hub]
+    config.autoload_paths << "#{config.root}/lib"
+    config.eager_load_paths << "#{config.root}/lib"
+    # config.autoload_paths << "#{config.root}/lib/slide_hub"
 
     config.assets.paths << "#{Rails}/vendor/assets/fonts"
     config.assets.paths << "#{Rails}/node_modules"
@@ -32,7 +36,7 @@ module SlideHub
     config.public_file_server.enabled
 
     config.enable_dependency_loading = true
-    config.active_record.sqlite3.represent_boolean_as_integer = true
+    # config.active_record.sqlite3.represent_boolean_as_integer = true
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     # config.active_record.raise_in_transactional_callbacks = true
