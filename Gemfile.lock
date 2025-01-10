@@ -2098,8 +2098,6 @@ GEM
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-rspec (3.3.0)
       rubocop (~> 1.61)
-    ruby-debug-ide (0.7.4)
-      rake (>= 0.8.1)
     ruby-filemagic (0.7.3)
     ruby-graphviz (1.2.5)
       rexml
@@ -2296,7 +2294,6 @@ DEPENDENCIES
   rubocop
   rubocop-rails
   rubocop-rspec
-  ruby-debug-ide
   ruby-filemagic
   sass-rails
   sdoc

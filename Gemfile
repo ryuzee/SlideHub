@@ -100,7 +100,7 @@ group :development, :test do
   gem 'rails-flog', require: 'flog'
   gem 'rspec_junit_formatter'
   gem 'rspec-rails'
-  gem 'ruby-debug-ide'
+  # gem 'ruby-debug-ide'
   gem 'shoulda-matchers', require: false
   gem 'simplecov'
   gem 'simplecov-html'
