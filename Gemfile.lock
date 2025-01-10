@@ -1755,9 +1755,6 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     date (3.4.1)
-    debase (0.2.8)
-      debase-ruby_core_source (>= 3.3.6)
-    debase-ruby_core_source (3.4.0)
     debug_inspector (1.2.0)
     devise (4.9.4)
       bcrypt (~> 3.0)
@@ -2252,7 +2249,6 @@ DEPENDENCIES
   capybara
   counter_culture
   database_cleaner
-  debase
   devise
   devise-i18n
   devise-i18n-views
