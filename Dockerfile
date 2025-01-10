@@ -9,9 +9,9 @@ RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
 RUN git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build
 ENV PATH /root/.rbenv/bin:$PATH
 ENV RAILS_ROOT /opt/application/current
-RUN bash -c "source /root/.bashrc && rbenv install 2.7.6"
-RUN bash -c "source /root/.bashrc && rbenv global 2.7.6"
-RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler -v 1.17.3"
+RUN bash -c "source /root/.bashrc && rbenv install 3.1.6"
+RUN bash -c "source /root/.bashrc && rbenv global 3.1.6"
+RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler -v 2.3.27"
 RUN bash -c "source /root/.bashrc && rbenv rehash"
 
 RUN curl -L git.io/nodebrew | perl - setup
