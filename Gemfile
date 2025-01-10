@@ -8,7 +8,7 @@ gem 'rails', '6.1.7.10'
 gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
 # https://github.com/lautis/uglifier/issues/173#issuecomment-857616825
-gem 'uglifier', '= 4.1.0'
+gem 'uglifier', '4.2.1'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
