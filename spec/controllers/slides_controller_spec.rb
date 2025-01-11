@@ -27,6 +27,11 @@ RSpec.describe SlidesController, type: :controller do
   render_views
   let(:default_user) { create(:default_user) }
 
+  before do
+    CloudConfig::provider = SlideHub::Cloud::Engine::Aws
+    CloudHelpers.switch_to_aws
+  end
+
   describe 'GET #index' do
     it 'render index' do
       get :index
