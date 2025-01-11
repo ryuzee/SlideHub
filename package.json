@@ -9,6 +9,7 @@
     "admin-lte": "^3",
     "bootstrap": "4.6.2",
     "clipboard": "1.7.1",
+    "crypto-js": "4.2.0",
     "jquery": "3.7.1",
     "jquery-lazyload": "1.9.7",
     "jquery.equalheights": "1.5.3",
