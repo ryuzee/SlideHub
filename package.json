@@ -12,7 +12,7 @@
     "crypto-js": "4.2.0",
     "jquery": "3.7.1",
     "jquery-lazyload": "1.9.7",
-    "jquery.equalheights": "1.5.3",
+    "jquery-match-height": "^0.7.2",
     "js-cookie": "2.0.4",
     "mousetrap": "1.6.0",
     "popper.js": "^1.16.1",
