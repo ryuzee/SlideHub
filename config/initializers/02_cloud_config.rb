@@ -9,17 +9,22 @@ module CloudConfig
 
     # 初期値の設定
     def setup_defaults(config)
-      @provider = config.azure? ? SlideHub::Cloud::Engine::Azure : SlideHub::Cloud::Engine::Aws
+      @provider = config.use_azure ? SlideHub::Cloud::Engine::Azure : SlideHub::Cloud::Engine::Aws
     end
 
     # サービス名を取得する
     def service_name
-      @provider == SlideHub::Cloud::Engine::Azure ? 'azure' : 'aws'
-    end
+      result = case @provider.to_s
+               when "SlideHub::Cloud::Engine::Azure" then 'azure'
+               when "SlideHub::Cloud::Engine::Aws" then 'aws'
+               else 'unknown'
+              end
+      result
+    end      
   end
 end
 
-if slidehub_config.azure?
+if slidehub_config.use_azure
   SlideHub::Cloud::Engine::Azure.configure do |config|
     config.bucket_name = slidehub_config.azure_container_name
     config.image_bucket_name = slidehub_config.azure_image_container_name

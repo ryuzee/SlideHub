@@ -293,7 +293,7 @@ docker-compose run app bash -l -c 'bundle exec rspec'
 If you want to run conversion process in the development environment, run the command as follows.
 
 ```
-docker-compose run app bash -l -c 'bin/rails runner -e development "require \"./lib/slide_hub/batch\"; Batch.execute"'
+docker-compose run app bash -l -c 'bin/rails runner -e development "require \"./lib/slide_hub/batch\"; SlideHub::Batch.execute"'
 ```
 
 ## Register batch procedure to cron (If you do not use Docker)
@@ -301,7 +301,7 @@ docker-compose run app bash -l -c 'bin/rails runner -e development "require \"./
 * Handling uploaded slides (Mandatory)
 
 ```
-*/1 * * * * /bin/bash -lc 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bin/rails runner -e production "require \"./lib/slide_hub/batch\"; Batch.execute"'
+*/1 * * * * /bin/bash -lc 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bin/rails runner -e production "require \"./lib/slide_hub/batch\"; SlideHub::Batch.execute"'
 ```
 
 * Generating sitemap and send it to Google and Bing (Optional)
