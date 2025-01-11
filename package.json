@@ -17,6 +17,7 @@
     "mousetrap": "1.6.0",
     "popper.js": "^1.16.1",
     "sticky-kit": "1.1.2",
+    "uplot": "1.6.31",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },
