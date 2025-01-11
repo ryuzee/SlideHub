@@ -11,26 +11,25 @@
     <!--[if lt IE 9]>
       <%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" %>
     <![endif]-->
-    <%= stylesheet_link_tag "application", :media => "all" %>
+
+  <% if ApplicationSetting['site.favicon'].blank? %>
+    <%= favicon_pack_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+    <%= favicon_pack_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+    <%= favicon_pack_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+    <%= favicon_pack_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+    <%= favicon_pack_tag 'favicon.ico', :rel => 'shortcut icon' %>
+  <% else %>
+    <%= favicon_link_tag ApplicationSetting['site.favicon'], :rel => 'shortcut icon' %>
+  <% end %>
+    <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:latest_slides) %>)" href="<%= latest_index_path(format: "rss") %>" />
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:popular_slides) %>)" href="<%= popular_index_path(format: "rss") %>" />
+    <%= stylesheet_pack_tag 'application', 'data-turbo-track': 'reload' %>
     <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" %>
     <% ApplicationSetting['site.theme'] = 'default' unless %w[default white dark gray].include?(ApplicationSetting['site.theme']) %>
     <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/bootstrap.css?20220501" %>
     <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/custom.css?20220501" %>
     <%= stylesheet_link_tag "/custom/override.css" %>
-
-  <% if ApplicationSetting['site.favicon'].blank? %>
-    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
-    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
-    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
-    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
-    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
-  <% else %>
-    <%= favicon_link_tag ApplicationSetting['site.favicon'], :rel => 'shortcut icon' %>
-  <% end %>
-
-    <%= javascript_include_tag "application" %>
-    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:latest_slides) %>)" href="<%= latest_index_path(format: "rss") %>" />
-    <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:popular_slides) %>)" href="<%= popular_index_path(format: "rss") %>" />
   </head>
   <body class="slidehub_body" oncontextmenu="return false;">
 
@@ -74,9 +73,9 @@
               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
               <span class="avatar20" aria-hidden="true">
                 <% if current_user.avatar.attached? %>
-                <%= image_tag(current_user.avatar.variant(resize: "32x32")) %>
+                <%= image_pack_tag(current_user.avatar.variant(resize: "32x32")) %>
                 <% else %>
-                <%= image_tag('avatar/thumb/missing.png') %>
+                <%= image_pack_tag('avatar/thumb/missing.png') %>
                 <% end %>
               </span>&nbsp;<%= current_user.email %><span class="caret"></span></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">

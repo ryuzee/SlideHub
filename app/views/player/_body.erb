@@ -1,8 +1,10 @@
+<%= javascript_pack_tag 'player', 'data-turbo-track': 'reload' %>
+
 <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" %>
 
 <%= render 'css', prefix: prefix %>
 
-<% default_image = image_url("loading.jpg") %>
+<% default_image = asset_pack_url("media/images/loading.jpg") %>
 <div>
   <ul style="display:none" id="<%= prefix %>slide_list">
     <%= raw slide_page_image_list_tag(slide) %>

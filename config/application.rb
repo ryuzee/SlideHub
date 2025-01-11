@@ -30,9 +30,11 @@ module SlideHub
     config.eager_load_paths << "#{config.root}/lib"
     # config.autoload_paths << "#{config.root}/lib/slide_hub"
 
-    config.assets.paths << "#{Rails}/vendor/assets/fonts"
-    config.assets.paths << "#{Rails}/node_modules"
-    config.assets.digest = true
+    # migrated from Sprockets to Webpacker
+    config.assets.enabled = false
+    # config.assets.paths << "#{Rails}/vendor/assets/fonts"
+    # config.assets.paths << "#{Rails}/node_modules"
+    # config.assets.digest = true
     config.public_file_server.enabled
 
     config.enable_dependency_loading = true

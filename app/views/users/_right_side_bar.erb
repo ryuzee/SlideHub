@@ -4,7 +4,7 @@
       <% if user.avatar.attached?  %>
       <%= image_tag(url_for(user.avatar), class: 'img-fluid d-block mx-auto') %>
       <% else %>
-      <%= image_tag('avatar/medium/missing.png', class: 'img-fluid d-block mx-auto') %>
+      <%= image_pack_tag('avatar/medium/missing.png', class: 'img-fluid d-block mx-auto') %>
       <% end %>
     </div>
     <div class="profile-usertitle">

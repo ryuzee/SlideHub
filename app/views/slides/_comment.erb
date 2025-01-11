@@ -5,7 +5,7 @@
       <% if c.user.avatar.attached? %>
       <%= image_tag(c.user.avatar.variant(resize: "32x32"), class: 'img-fluid') %>
       <% else %>
-      <%= image_tag('avatar/thumb/missing.png') %>
+      <%= image_pack_tag('avatar/thumb/missing.png') %>
       <% end %>
     </div>
     <div class="media-body" style="padding-left:10px;">

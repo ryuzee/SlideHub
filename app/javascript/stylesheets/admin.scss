@@ -1,0 +1,4 @@
+@use "sass:meta";
+@import "../../../node_modules/admin-lte/dist/css/adminlte.min.css";
+@include meta.load-css("../../../node_modules/@eonasdan/tempus-dominus/dist/css/tempus-dominus.min");
+@import "../../../vendor/assets/stylesheets/admin_custom.css";
