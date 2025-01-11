@@ -30,8 +30,7 @@ describe 'Slide' do
   let!(:success_data) do { user_id: default_user.id, name: 'dummy', description: 'dummy', object_key: 'dummy', category_id: default_category.id } end
 
   before do
-    CloudConfig.class_eval { remove_const(:PROVIDER_ENGINE) }
-    CloudConfig::PROVIDER_ENGINE = SlideHub::Cloud::Engine::Aws
+    CloudConfig::provider = SlideHub::Cloud::Engine::Aws
     CloudHelpers.switch_to_aws
   end
 

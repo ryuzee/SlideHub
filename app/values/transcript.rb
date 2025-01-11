@@ -8,7 +8,7 @@ class Transcript
   end
 
   def url
-    "#{CloudConfig::PROVIDER_ENGINE.resource_endpoint}/#{object_key}/transcript.txt"
+    "#{CloudConfig::provider.resource_endpoint}/#{object_key}/transcript.txt"
   end
 
   def lines

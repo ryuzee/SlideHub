@@ -38,7 +38,7 @@ module SlideHub
       attr_reader :logger, :work_dir, :object_key, :work_file, :convert_util
 
       def save_file
-        return false unless CloudConfig::PROVIDER_ENGINE.save_file(CloudConfig::PROVIDER_ENGINE.config.bucket_name, object_key, "#{work_dir}/#{work_file}")
+        return false unless CloudConfig::provider.save_file(CloudConfig::provider.config.bucket_name, object_key, "#{work_dir}/#{work_file}")
 
         @file_type = convert_util.get_slide_file_type("#{work_dir}/#{work_file}")
         true
@@ -89,7 +89,7 @@ module SlideHub
 
       def upload_files
         logger.info(@upload_file_list.inspect)
-        CloudConfig::PROVIDER_ENGINE.upload_files(CloudConfig::PROVIDER_ENGINE.config.image_bucket_name, @upload_file_list, object_key)
+        CloudConfig::provider.upload_files(CloudConfig::provider.config.image_bucket_name, @upload_file_list, object_key)
       end
 
       def update_database
