@@ -11,7 +11,7 @@ RSpec.describe PagesController, type: :controller do
     end
 
     it 'leads to 404' do
-      expect { get :show, params: { path: 'no_existent_path' } }.to raise_error(ActiveRecord::RecordNotFound, "Couldn't find Page")
+      expect { get :show, params: { path: 'no_existent_path' } }.to raise_error(ActiveRecord::RecordNotFound, "Couldn't find Page with [WHERE `pages`.`path` = ?]")
     end
   end
 end

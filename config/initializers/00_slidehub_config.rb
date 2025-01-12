@@ -1,3 +1,5 @@
+require_relative '../../lib/slide_hub/config'
+
 Rails.application.config.slidehub = SlideHub::Config.new
 
 # AWS

@@ -184,7 +184,7 @@ RSpec.describe SlidesController, type: :controller do
       allow(SlideHub::Cloud::Engine::Aws).to receive(:send_message).and_return(true)
       allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
       data = create(:slide)
-      data.not_converted! # Not converted yet...
+      data.unconverted! # Not converted yet...
       data.name = 'Engawa'
       login_by_user default_user
       post :update, params: { id: data.id, slide: data.attributes }

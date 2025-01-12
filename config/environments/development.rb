@@ -9,6 +9,8 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
+  config.secret_key_base = '03659dccb3fab0cd06470f86c6f7d7dc5758afdd8f7bf80097b4fbd8760a29bc5fc1f76b4273c4d8be4b2d265257e657f21d0f060853bf5fa2dd70359a23b6d6'
+
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true

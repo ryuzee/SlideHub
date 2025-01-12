@@ -124,9 +124,9 @@
           <td><%= user.admin %></td>
           <td><%= user.slides_count %></td>
           <td><%= user.sign_in_count %></td>
-          <td><%= user.last_sign_in_at.to_s(:middle) if user.last_sign_in_at %></td>
-          <td><%= user.created_at.to_s(:middle) if user.created_at %></td>
-          <td><%= user.updated_at.to_s(:middle) if user.updated_at %></td>
+          <td><%= user.last_sign_in_at.to_formatted_s(:default) if user.last_sign_in_at %></td>
+          <td><%= user.created_at.to_formatted_s(:default) if user.created_at %></td>
+          <td><%= user.updated_at.to_formatted_s(:default) if user.updated_at %></td>
           <td>
             <%= button_to t(:edit), edit_admin_user_path(user.id), method: 'get', class: 'btn btn-primary btn-xs', form_class: 'form-inline' %>
           </td>
