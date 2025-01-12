@@ -30,12 +30,11 @@ describe 'Slide' do
   let!(:success_data) do { user_id: default_user.id, name: 'dummy', description: 'dummy', object_key: 'dummy', category_id: default_category.id } end
 
   before do
-    CloudConfig::provider = SlideHub::Cloud::Engine::Aws
+    CloudConfig.provider = SlideHub::Cloud::Engine::Aws
     CloudHelpers.switch_to_aws
   end
 
   describe 'Creating "Slide" model' do
-
     it 'is valid with user_id, name, description, object_key and category' do
       slide = Slide.new(success_data)
       expect(slide.valid?).to eq(true)

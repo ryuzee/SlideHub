@@ -14,7 +14,7 @@ module SlideHub
           config_accessor :aws_secret_key
         end
 
-        def self.configure(&block)
+        def self.configure(&)
           yield config
 
           if self.configured?

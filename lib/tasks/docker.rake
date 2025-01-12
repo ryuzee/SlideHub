@@ -9,6 +9,7 @@ namespace :docker do
     unless s.success?
       raise "Command failed: #{cmd}\nError: #{e}"
     end
+
     o.strip
   end
 
@@ -38,12 +39,12 @@ namespace :docker do
       puts "Running build command: #{cmd}"
 
       # awkを含むコマンドの実行
-      output, status = Open3.capture2(cmd)
+      _, status = Open3.capture2(cmd)
       unless status.success?
         raise 'Failed to build Docker image: No output from build command.'
       end
 
-      puts "Build successful"
+      puts 'Build successful'
     end
   end
 
@@ -60,6 +61,5 @@ namespace :docker do
     end
   end
 end
-
 
 # vim: filetype=ruby

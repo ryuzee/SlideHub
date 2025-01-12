@@ -16,7 +16,7 @@ RSpec.describe Admin::SlidesController, type: :controller do
         expect(response.status).to eq(200)
         expect(assigns(:slides)).to eq(slides)
         expect(response).to render_template :index
-        expect(response.content_type).to match /text\/html/
+        expect(response.content_type).to match(%r{text/html})
       end
     end
 
@@ -27,7 +27,7 @@ RSpec.describe Admin::SlidesController, type: :controller do
         expect(response.status).to eq(200)
         expect(assigns(:slides)).to eq(slides)
         expect(response).to render_template :index
-        expect(response.content_type).to match /text\/csv/
+        expect(response.content_type).to match(%r{text/csv})
       end
     end
 

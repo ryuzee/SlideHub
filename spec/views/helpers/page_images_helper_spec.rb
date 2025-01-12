@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PageImagesHelper, type: :helper do
   before do
-    CloudConfig::provider = SlideHub::Cloud::Engine::Aws
+    CloudConfig.provider = SlideHub::Cloud::Engine::Aws
     CloudHelpers.switch_to_aws
   end
 

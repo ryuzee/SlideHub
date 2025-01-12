@@ -17,7 +17,7 @@ module SlideHub
           config_accessor :azure_storage_account_name
         end
 
-        def self.configure(&block)
+        def self.configure(&)
           yield config
           # ::Azure.config.storage_account_name = @config.azure_storage_account_name
           # ::Azure.config.storage_access_key = @config.azure_storage_access_key

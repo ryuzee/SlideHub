@@ -6,7 +6,7 @@ module SlideUtil
   end
 
   def download_slide
-    url = CloudConfig::provider.get_slide_download_url(@slide.object_key)
+    url = CloudConfig.provider.get_slide_download_url(@slide.object_key)
     begin
       require 'open-uri'
       data = URI.parse(url).open.read
