@@ -14,20 +14,3 @@
 //
 const images = require.context('../images', true)
 const imagePath = (name) => images(name, true)
-
-require("jquery")
-require("bootstrap")
-require("rails-ujs")
-window.moment = require("moment")
-require("@popperjs/core/dist/umd/popper.min")
-window.tempusDominus = require("@eonasdan/tempus-dominus/dist/js/tempus-dominus.min")
-require("@fortawesome/fontawesome-free/js/fontawesome.min")
-require("@fortawesome/fontawesome-free/js/solid.min")
-require("mousetrap/mousetrap.min")
-require("sticky-kit/dist/sticky-kit")
-require("jquery-lazyload/jquery.lazyload")
-require("jquery-match-height/dist/jquery.matchHeight")
-window.Cookies = require("js-cookie")
-window.Clipboard = require("clipboard/dist/clipboard")
-
-import 'stylesheets/application.scss'

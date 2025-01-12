@@ -23,7 +23,7 @@ gem 'sqlite3', '~> 1.4.0'
 # Use mysql
 gem 'execjs'
 gem 'mysql2', '~> 0.5'
-gem 'sprockets', '3.7.2'
+# gem 'sprockets', '3.7.2'
 # Paginate
 gem 'will_paginate'
 gem 'will_paginate-bootstrap-style'
@@ -70,7 +70,7 @@ gem 'momentjs-rails'
 gem 'unicorn', '~> 5'
 gem 'unicorn-rails'
 # https://github.com/alexspeller/non-stupid-digest-assets
-gem 'non-stupid-digest-assets'
+# gem 'non-stupid-digest-assets'
 
 # reserved words for username
 gem 'reserved_word'
@@ -84,7 +84,7 @@ gem 'ros-apartment', require: 'apartment'
 
 gem 'psych', '~> 3.1'
 
-gem 'webpacker'
+gem 'webpacker', '~> 5.0'
 
 # ffi-1.17.0 requires rubygems version >= 3.3.22
 # https://github.com/ffi/ffi/issues/1103

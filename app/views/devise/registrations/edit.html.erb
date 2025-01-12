@@ -49,9 +49,9 @@
         <div class="row">
           <div class="col-md-1">
             <% if current_user.avatar.attached?  %>
-            <%= image_tag(url_for(current_user.avatar), :class => 'img-fluid') %>
+            <%= image_pack_tag(url_for(current_user.avatar), :class => 'img-fluid') %>
             <% else  %>
-            <%= image_tag('avatar/medium/missing.png', :class => 'img-fluid') %>
+            <%= image_pack_tag('avatar/medium/missing.png', :class => 'img-fluid') %>
             <% end %>
           </div>
           <div class="col-md-11">

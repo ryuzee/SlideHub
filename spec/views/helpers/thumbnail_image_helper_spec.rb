@@ -16,13 +16,13 @@ RSpec.describe ThumbnailImageHelper, type: :helper do
     it 'returns image url for convert_error' do
       slide = FactoryBot.create(:slide)
       slide.convert_status = :convert_error
-      expect(helper.thumbnail_image_url(slide)).to start_with '/assets/failed_to_convert_small'
+      expect(helper.thumbnail_image_url(slide)).to start_with '/packs-test/media/images/failed_to_convert_small'
     end
 
     it 'returns image url for not_converted' do
       slide = FactoryBot.create(:slide)
       slide.convert_status = :not_converted
-      expect(helper.thumbnail_image_url(slide)).to start_with '/assets/converting_small'
+      expect(helper.thumbnail_image_url(slide)).to start_with '/packs-test/media/images/converting_small'
     end
   end
 end

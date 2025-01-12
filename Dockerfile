@@ -48,7 +48,9 @@ RUN chmod 755 /opt/application/current/script/*.sh
 ARG SUPERVISOR_CONF=script/oss_docker_supervisor.conf
 COPY $SUPERVISOR_CONF /etc/supervisor.conf
 
-RUN bash -l -c 'OSS_SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rake assets:precompile'
+# RUN bash -l -c 'OSS_SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rake assets:precompile'
+
+RUN bash -l -c 'RAILS_ENV=production bin/webpack'
 
 # ポートの切り替え
 ARG EXPOSE_PORTS="3000"

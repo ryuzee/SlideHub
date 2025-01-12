@@ -5,8 +5,8 @@ if page_list.instance_of?(Array) && page_list.count > 0
   twitter_image_url = "#{CloudConfig::provider.resource_endpoint}/#{page_list[0]}"
   facebook_image_url = slide.thumbnail.url_middle
 else
-  twitter_image_url = image_url("converting.jpg")
-  facebook_image_url = image_url("converting.jpg")
+  twitter_image_url = asset_pack_url("media/images/converting.jpg")
+  facebook_image_url = asset_pack_url("media/images/converting.jpg")
 end
 
 keywords =  [slide.name]

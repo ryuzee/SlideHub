@@ -9,17 +9,18 @@
     <% set_meta_tags title: content_for?(:title) ? yield(:title) : "", site: ApplicationSetting['site.name'], reverse: true %>
     <%= display_meta_tags %>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <%= stylesheet_link_tag "admin" %>
-    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
-    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
-    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
-    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
-    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+    <%= favicon_pack_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+    <%= favicon_pack_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+    <%= favicon_pack_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+    <%= favicon_pack_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+    <%= favicon_pack_tag 'favicon.ico', :rel => 'shortcut icon' %>
     <!--[if lt IE 9]>
       <%= javascript_include_tag "https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js" %>
       <%= javascript_include_tag "https://oss.maxcdn.com/respond/1.4.2/respond.min.js" %>
     <![endif]-->
-    <%= javascript_include_tag "admin" %>
+    <%= javascript_pack_tag 'admin', 'data-turbo-track': 'reload' %>
+    <%#= stylesheet_link_tag "admin" %>
+    <%= stylesheet_pack_tag 'admin', 'data-turbo-track': 'reload' %>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
