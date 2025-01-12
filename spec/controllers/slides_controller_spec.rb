@@ -28,7 +28,7 @@ RSpec.describe SlidesController, type: :controller do
   let(:default_user) { create(:default_user) }
 
   before do
-    CloudConfig::provider = SlideHub::Cloud::Engine::Aws
+    CloudConfig.provider = SlideHub::Cloud::Engine::Aws
     CloudHelpers.switch_to_aws
   end
 

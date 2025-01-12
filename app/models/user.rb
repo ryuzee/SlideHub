@@ -45,14 +45,14 @@ class User < ApplicationRecord
   validates :biography, presence: true
   validates :biography, length: { maximum: 1024 }
 
-  VALID_USERNAME_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,30}[a-zA-Z0-9]\z/.freeze
+  VALID_USERNAME_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,30}[a-zA-Z0-9]\z/
   validates :username, uniqueness: true,
                        length: { minimum: 3, maximum: 32 },
                        format: { with: VALID_USERNAME_REGEX },
                        exclusion: { in: ReservedWord.list }
 
   # current twitter account length must be greater than 5...
-  VALID_TWITTER_ACCOUNT_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,15}[a-zA-Z0-9]\z/.freeze
+  VALID_TWITTER_ACCOUNT_REGEX = /\A[a-zA-Z][0-9A-Za-z\-_]{1,15}[a-zA-Z0-9]\z/
   validates :twitter_account, allow_blank: true,
                               length: { minimum: 1, maximum: 15 },
                               format: { with: VALID_TWITTER_ACCOUNT_REGEX }
@@ -61,7 +61,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   def self.ransackable_attributes(auth_object = nil)
-    ["display_name", "username", "avatar_attachment", "avatar_blob", "slides", "email", "provider", "admin"]
+    %w[display_name username avatar_attachment avatar_blob slides email provider admin]
   end
 
   def password_required?

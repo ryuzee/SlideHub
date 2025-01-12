@@ -9,6 +9,7 @@ AllCops:
     - "vendor/**/*" # rubocop config/default.yml
     - "db/schema.rb"
     - "Vagrantfile"
+    - "bin/*"
   DisplayCopNames: true
 
 # Rails用
@@ -22,7 +23,7 @@ AllCops:
 #     - "increment!"
 
 ##################### Gemspec ##################################
-Gemspec/DateAssignment: # new in 1.10
+Gemspec/DeprecatedAttributeAssignment: # new in 1.10
   Enabled: true
 Gemspec/RequireMFA: # new in 1.23
   Enabled: true

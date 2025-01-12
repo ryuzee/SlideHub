@@ -1,9 +1,7 @@
 module Custom
   class CssController < ApplicationController
     def show
-      respond_to do |format|
-        format.css
-      end
+      respond_to(&:css)
     end
   end
 end

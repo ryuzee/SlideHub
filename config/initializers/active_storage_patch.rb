@@ -68,7 +68,7 @@ module ActiveStorage
             client.delete_blob(container, blob.name)
           end
 
-          break unless marker = results.continuation_token.presence
+          break unless (marker = results.continuation_token.presence)
         end
       end
     end

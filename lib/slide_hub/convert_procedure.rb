@@ -38,7 +38,7 @@ module SlideHub
       attr_reader :logger, :work_dir, :object_key, :work_file, :convert_util
 
       def save_file
-        return false unless CloudConfig::provider.save_file(CloudConfig::provider.config.bucket_name, object_key, "#{work_dir}/#{work_file}")
+        return false unless CloudConfig.provider.save_file(CloudConfig.provider.config.bucket_name, object_key, "#{work_dir}/#{work_file}")
 
         @file_type = convert_util.get_slide_file_type("#{work_dir}/#{work_file}")
         true
@@ -56,7 +56,7 @@ module SlideHub
           false
         end
         logger.info('Start converting from PDF to JPG')
-        @slide_image_list = convert_util.pdf_to_jpg(work_dir, "#{work_file}")
+        @slide_image_list = convert_util.pdf_to_jpg(work_dir, work_file.to_s)
         logger.info(convert_util.get_local_file_list(work_dir, '').inspect)
         @upload_file_list = @slide_image_list.dup
         true
@@ -89,7 +89,7 @@ module SlideHub
 
       def upload_files
         logger.info(@upload_file_list.inspect)
-        CloudConfig::provider.upload_files(CloudConfig::provider.config.image_bucket_name, @upload_file_list, object_key)
+        CloudConfig.provider.upload_files(CloudConfig.provider.config.image_bucket_name, @upload_file_list, object_key)
       end
 
       def update_database

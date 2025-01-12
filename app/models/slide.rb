@@ -57,7 +57,7 @@ class Slide < ApplicationRecord
   scope :owner, ->(user_id) { where('user_id = ?', user_id) }
 
   def self.ransackable_associations(auth_object = nil)
-    ["base_tags", "category", "comments", "tag_taggings", "taggings", "tags", "user"]
+    %w[base_tags category comments tag_taggings taggings tags user]
   end
 
   def record_access(access_type)
