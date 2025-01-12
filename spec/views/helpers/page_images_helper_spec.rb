@@ -24,7 +24,7 @@ RSpec.describe PageImagesHelper, type: :helper do
 
     it 'returns tag that indicate converting' do
       slide = FactoryBot.create(:slide)
-      slide.convert_status = :not_converted
+      slide.convert_status = :unconverted
       slide.num_of_pages = 0
       slide.save!
       tag = helper.slide_page_image_list_tag(slide)

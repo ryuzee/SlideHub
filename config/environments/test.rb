@@ -12,6 +12,8 @@ Rails.application.configure do
   # preloads Rails for running tests, you may have to set it to true.
   config.eager_load = false
 
+  config.secret_key_base = '19566ee27bb9532014f7a419a540efd05714e495c2e2b1e5fceeea1d0bf5f52f9dbce11af2b268c8cb0adeca7f9b58cc10dca203e5a03112874b66cd714092a2'
+
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
   config.public_file_server.headers = {

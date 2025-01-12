@@ -19,7 +19,9 @@ jobs:
           OSS_DB_USERNAME_TEST: 'root'
           OSS_DB_PASSWORD_TEST: ''
           OSS_REGION: ap-northeast-1
+          OSS_IMAGE_BUCKET_NAME: ossfiles-dev
           OSS_SECRET_KEY_BASE: dummy
+          OSS_USE_AZURE: 0
           RAILS_ENV: test
           # NODE_OPTIONS: --openssl-legacy-provider
       - image: circleci/mysql:5.7
@@ -63,7 +65,12 @@ jobs:
           - ~/.gradle
           - ~/.cache/bower
 
-      - run: bundle exec rake db:create db:migrate
+      - run: 
+          command: bundle exec rake db:create db:migrate
+          environment:
+            RAILS_ENV: test
+            RACK_ENV: test
+
       - run: bower install
 
       - run:

@@ -12,7 +12,7 @@
 #  updated_at     :datetime
 #  object_key     :string(255)      default("")
 #  extension      :string(10)       default(""), not null
-#  convert_status :integer          default("not_converted")
+#  convert_status :integer          default("unconverted")
 #  total_view     :integer          default(0), not null
 #  page_view      :integer          default(0)
 #  download_count :integer          default(0), not null

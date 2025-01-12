@@ -16,7 +16,7 @@ require 'securerandom'
 #  updated_at     :datetime
 #  object_key     :string(255)      default("")
 #  extension      :string(10)       default(""), not null
-#  convert_status :integer          default("not_converted")
+#  convert_status :integer          default("unconverted")
 #  total_view     :integer          default(0), not null
 #  page_view      :integer          default(0)
 #  download_count :integer          default(0), not null
@@ -47,7 +47,7 @@ class Slide < ApplicationRecord
   validates :category_id, presence: true
   # validates :category_id, :presence => true, :inclusion => { :in => Category.all.map(&:id) }
 
-  enum convert_status: { not_converted: 0, converted: 100, convert_error: -1 }
+  enum convert_status: { unconverted: 0, converted: 100, convert_error: -1 }
 
   scope :published, -> { where('convert_status = ? and private != 1', convert_statuses[:converted]) }
   scope :failed, -> { where('convert_status != ?', convert_statuses[:converted]) }
@@ -55,6 +55,10 @@ class Slide < ApplicationRecord
   scope :popular, -> { order('total_view desc') }
   scope :category, ->(category_id) { where('category_id = ?', category_id) }
   scope :owner, ->(user_id) { where('user_id = ?', user_id) }
+
+  def self.ransackable_associations(auth_object = nil)
+    ["base_tags", "category", "comments", "tag_taggings", "taggings", "tags", "user"]
+  end
 
   def record_access(access_type)
     increment!(:page_view).increment!(:total_view) if access_type == :page_view

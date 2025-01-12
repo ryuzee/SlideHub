@@ -70,7 +70,7 @@ $(document).ready(function() {
       var key   = $(data).find("Key").text();
       $("#SlideKey").val(key).change();
       <% if command != 'add' %>
-      $("#SlideConvertStatus").val("not_converted");
+      $("#SlideConvertStatus").val("unconverted");
       <% end %>
     }).fail(function( jqXHR, textStatus, errorThrown ) {
       console.log(jqXHR.status);

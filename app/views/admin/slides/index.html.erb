@@ -124,8 +124,8 @@
           <td><%= link_to slide.id, slide_path(slide.id) %></td>
           <td><%= link_to slide.name, slide_path(slide.id) %>&nbsp;</td>
           <td><%= link_to slide.user_id, user_path(slide.user_id) %>&nbsp;</td>
-          <td><%= slide.created_at.to_s(:middle) if slide.created_at %></td>
-          <td><%= slide.updated_at.to_s(:middle) if slide.updated_at %></td>
+          <td><%= slide.created_at.to_formatted_s(:default) if slide.created_at %></td>
+          <td><%= slide.updated_at.to_formatted_s(:default) if slide.updated_at %></td>
           <td><%= slide.convert_status_i18n %></td>
           <td><%= slide.total_view %></td>
           <td><%= slide.page_view %></td>

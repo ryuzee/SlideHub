@@ -1,3 +1,6 @@
+require_relative '../../lib/slide_hub/cloud/engine/aws'
+require_relative '../../lib/slide_hub/cloud/engine/azure'
+
 def slidehub_config
   Rails.application.config.slidehub
 end
@@ -9,7 +12,11 @@ module CloudConfig
 
     # 初期値の設定
     def setup_defaults(config)
-      @provider = config.use_azure ? SlideHub::Cloud::Engine::Azure : SlideHub::Cloud::Engine::Aws
+      if config.use_azure == "1"
+        @provider = SlideHub::Cloud::Engine::Azure
+      else
+        @provider = SlideHub::Cloud::Engine::Aws
+      end
     end
 
     # サービス名を取得する
@@ -24,7 +31,7 @@ module CloudConfig
   end
 end
 
-if slidehub_config.use_azure
+if slidehub_config.use_azure == "1"
   SlideHub::Cloud::Engine::Azure.configure do |config|
     config.bucket_name = slidehub_config.azure_container_name
     config.image_bucket_name = slidehub_config.azure_image_container_name

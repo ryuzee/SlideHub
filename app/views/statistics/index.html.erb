@@ -26,8 +26,8 @@
       <% @slides.each do |slide| %>
         <tr>
           <td><%= link_to slide.name, slide_path(slide.id) %>&nbsp;</td>
-          <td><%= slide.created_at %></td>
-          <td><%= slide.updated_at %></td>
+          <td><%= slide.created_at.to_formatted_s(:default) %></td>
+          <td><%= slide.updated_at.to_formatted_s(:default) %></td>
           <td><%= slide.convert_status_i18n %></td>
           <td><%= slide.page_view %></td>
           <td><%= slide.embedded_view %></td>

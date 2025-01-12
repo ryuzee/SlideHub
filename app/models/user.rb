@@ -60,6 +60,10 @@ class User < ApplicationRecord
   has_many :slides, dependent: :destroy
   has_one_attached :avatar
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["display_name", "username", "avatar_attachment", "avatar_blob", "slides", "email", "provider", "admin"]
+  end
+
   def password_required?
     return false if skip_password_validation
     return false if provider.present?
