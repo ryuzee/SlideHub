@@ -3,18 +3,20 @@
 <% prefix = js_prefix %>
 <%= render 'slides/meta_tags', slide: @slide %>
 
+<% if params[:vertical] != "1" %>
+<div style="padding-top:0px;">
+<%= render 'slides/slide_horizontal', slide: @slide, start_position: @start_position, prefix: prefix %>
+</div>
+<% else %>
+<div style="padding-top:0px;">
+<%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
+</div>
+<% end %>
+
 <div class="row">
   <!--left main area -->
   <div class="col-md-8 bottom_padding_20" id="slide_div_box2">
-    <% if params[:vertical] != "1" %>
-    <div style="padding-top:20px;">
-    <%= render 'slides/slide_horizontal', slide: @slide, start_position: @start_position, prefix: prefix %>
-    </div>
-    <% else %>
-    <div style="padding-top:20px;">
-    <%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
-    </div>
-    <% end %>
+
 
     <div class="card" style="margin-top:20px">
       <!--name and description-->

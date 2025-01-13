@@ -1,6 +1,6 @@
   <div class="card" style="font-size:0.9em;">
     <ul class="list-group list-group-flush">
-      <li class="list-group-item"><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;<%= t(:published) %><span class="float-right"><%= slide.created_at %></span></li>
+      <li class="list-group-item"><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;<%= t(:published) %><span class="float-right"><%= slide.created_at.to_formatted_s(:middle) %></span></li>
       <li class="list-group-item"><i class="fa fa-th"></i>&nbsp;&nbsp;<%= t(:category) %><span class="float-right"><a href="<%= category_path slide.category_id %>"><%= slide.category_name %></a></span></li>
       <li class="list-group-item"><i class="fa fa-eye"></i>&nbsp;&nbsp;<%= t(:total_view) %><span class="float-right"><%= slide.total_view %></span></li>
       <li class="list-group-item"><i class="fa fa-desktop"></i>&nbsp;&nbsp;<%= t(:embedded_view) %><span class="float-right"><%= slide.embedded_view %></span></li>

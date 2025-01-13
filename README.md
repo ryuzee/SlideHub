@@ -164,6 +164,7 @@ $CONTAINER_ID=/usr/bin/docker run -d \
   --env OSS_PRODUCTION_HOST=$OSS_PRODUCTION_HOST \
   --env OSS_ROOT_URL=$OSS_ROOT_URL \
   --env RAILS_LOG_TO_STDOUT=1 \
+  --env OSS_TIMEZONE=Asia/Tokyo \
 -P --name slidehub ryuzee/slidehub:latest`
 ```
 
@@ -214,6 +215,9 @@ RAILS_LOG_TO_STDOUT=[1] # set the variable if you want the standard output
 
 # Mandatory
 OSS_SECRET_KEY_BASE=[Your Secret Key Base]
+
+# Timezone
+OSS_TIMEZONE=[Your Timezone] # Default Asia/Tokyo
 
 # Mail settings
 OSS_SMTP_SERVER=[Your SMTP server]
@@ -340,4 +344,3 @@ bundle
 ## License
 
 MIT License
-

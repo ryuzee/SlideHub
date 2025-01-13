@@ -112,12 +112,12 @@
     </nav>
 
     <a name="page_top"></a>
-    <div class="container" id="main_container" role="main">
-      <%= raw ApplicationSetting['custom_content.center_top'] %>
+    <div class="container" id="main_container" style="padding-top:20px;" role="main">
+      <%= render :partial => 'shared/custom_content_center_top' %>
       <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
       <%= yield %>
-      <%= raw ApplicationSetting['custom_content.center_bottom'] %>
+      <%= render :partial => 'shared/custom_content_center_bottom' %>
       <br clear="all" />
     </div> <!-- /container -->
 
