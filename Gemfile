@@ -18,8 +18,7 @@ gem 'jbuilder'
 gem 'activerecord-session_store'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
-# For ruby 2.7
-gem 'sqlite3', '~> 1.4.0'
+gem 'sqlite3'
 
 # Use mysql
 gem 'execjs'
