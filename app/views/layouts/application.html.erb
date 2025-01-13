@@ -73,7 +73,7 @@
               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
               <span class="avatar20" aria-hidden="true">
                 <% if current_user.avatar.attached? %>
-                <%= image_pack_tag(current_user.avatar.variant(resize: "32x32")) %>
+                <%= image_tag(url_for(current_user.avatar), :size => '32x32') %>
                 <% else %>
                 <%= image_pack_tag('avatar/thumb/missing.png') %>
                 <% end %>
