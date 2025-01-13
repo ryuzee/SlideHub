@@ -11,7 +11,7 @@
           </div>
           <div class="col-md-6">
             <h3 style="font-size:0.9em"><span class="no_decoration"><a href="<%= slide_path(s.id) %>"><%= strip_tags s.name.truncate(24) %></a></span></h3>
-            <p style="font-size:0.8em"><%= s.created_at %> by <a href="<%= user_by_username_path(username: s.user.username) %>"><%= strip_tags s.user.display_name %></a></p>
+            <p style="font-size:0.8em"><%= s.created_at.to_formatted_s(:middle) %> by <a href="<%= user_by_username_path(username: s.user.username) %>"><%= strip_tags s.user.display_name %></a></p>
           </div>
         </div>
         </li>
