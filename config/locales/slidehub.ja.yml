@@ -130,7 +130,7 @@ ja:
   cannot_access_to_tenant: "テナントにアクセスできません"
   top_page: "トップページ"
   total_view: "スライド表示回数"
-  transcripts: "Transcript"
+  transcript: "テキスト"
   user_list: "ユーザー一覧"
   user_was_updated: "ユーザーを保存しました"
   update: "更新"
