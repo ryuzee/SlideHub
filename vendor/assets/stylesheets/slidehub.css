@@ -34,7 +34,11 @@ body.slidehub_body {
 /* Main Area styles
 -------------------------------------------------- */
 .slidehub_body #main_container {
-  max-width:1024px; background-color:transparent; padding-top: 60px; margin-top:1em; border:none;
+  max-width: 1024px;
+  background-color: transparent;
+  padding-top: 60px;
+  margin-top: 1em;
+  border: none;
 }
 
 .slidehub_body div.row a,
@@ -59,17 +63,44 @@ body.slidehub_body {
 -------------------------------------------------- */
 .slidehub_body div#slide_div_box {
   background-color: #fff !important;
-  border:1px solid #ccc;
-  padding:20px !important;
-  margin-top:20px;
-  margin-bottom:20px
+  border: 1px solid #ccc;
+  padding: 20px !important;
+  margin-top: 20px;
+  margin-bottom: 20px
 }
 
 .slidehub_body div.slide_description {
-  padding:0.8em;
-  margin-top:0.8em;
-  padding-bottom:0px;
+  padding: 0.8em;
+  margin-top: 0.8em;
+  padding-bottom: 0px;
   text-align: justify;
+}
+
+.slide_description .item {
+  font-size: 0.9em;
+  display: flex;
+  align-items: flex-start;
+  /* 番号と内容を揃える */
+  margin-bottom: 10px;
+  /* 各項目間の余白 */
+}
+
+.slide_description .number {
+  min-width: 30px;
+  /* 番号の幅を固定 */
+  text-align: right;
+  /* 番号を右寄せ */
+  padding-right: 10px;
+  /* 番号と文字の間の余白 */
+  font-weight: bold;
+  /* 番号を強調 */
+}
+
+.slide_description .content {
+  flex: 1;
+  /* 残りのスペースを埋める */
+  text-align: left;
+  /* テキストを左揃え */
 }
 
 .slidehub_body div.slide_detail_row {
@@ -79,8 +110,8 @@ body.slidehub_body {
 /* Show slide vertically
 -------------------------------------------------- */
 .slidehub_body div.vertical_slide_box {
-  border:1px solid #000;
-  margin-bottom:0px;
+  border: 1px solid #000;
+  margin-bottom: 0px;
 }
 
 .slidehub_body div.icon_right {
@@ -93,7 +124,7 @@ body.slidehub_body {
 
 /* Slide Card styles
 -------------------------------------------------- */
-.slidehub_body .slidecard .slidecard-image{
+.slidehub_body .slidecard .slidecard-image {
   overflow: hidden;
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
@@ -103,7 +134,7 @@ body.slidehub_body {
   /** border-bottom: 1px solid #ccc; **/
 }
 
-.slidehub_body .slidecard .slidecard-image img{
+.slidehub_body .slidecard .slidecard-image img {
   -webkit-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
   -ms-transition: all 0.4s ease;
@@ -111,7 +142,7 @@ body.slidehub_body {
   transition: all 0.4s ease;
 }
 
-.slidehub_body .slidecard .slidecard-image:hover img{
+.slidehub_body .slidecard .slidecard-image:hover img {
   /*-webkit-transform: scale(1.2) rotate(-7deg);
   -moz-transform: scale(1.2) rotate(-7deg);
   -ms-transform: scale(1.2) rotate(-7deg);
@@ -119,13 +150,13 @@ body.slidehub_body {
   transform: scale(1.2) rotate(-7deg);*/
   -webkit-transform: scale(1.2);
   -moz-transform: scale(1.2);
-  -ms-transform: scale(1.2) ;
+  -ms-transform: scale(1.2);
   -o-transform: scale(1.2);
   transform: scale(1.2);
 }
 
 .slidehub_body .slidecard {
-  position:relative;
+  position: relative;
   margin-top: 0px;
   position: relative;
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -141,10 +172,11 @@ body.slidehub_body {
   height: auto;
 }
 
-.slidehub_body .slidecard .slidecard-content .slidecard-title, .slidehub_body .slidecard-reveal .slidecard-title{
+.slidehub_body .slidecard .slidecard-content .slidecard-title,
+.slidehub_body .slidecard-reveal .slidecard-title {
   font-size: 0.9em;
   font-weight: bold !important;
-  height:2.4em;
+  height: 2.4em;
   margin-bottom: 0.4em;
   overflow: hidden;
   vertical-align: middle;
@@ -154,16 +186,17 @@ body.slidehub_body {
 .slidehub_body .slidecard .slidecard-content .slidecard-description {
   font-size: 0.8em;
   height: 3em;
-  overflow:hidden;
+  overflow: hidden;
 }
 
-.slidehub_body .slidecard .slidecard-action{
+.slidehub_body .slidecard .slidecard-action {
   padding: 20px;
   border-top: 1px solid rgba(160, 160, 160, 0.2);
 }
-.slidehub_body .slidecard .slidecard-action a{
+
+.slidehub_body .slidecard .slidecard-action a {
   font-size: 15px;
-  text-transform:uppercase;
+  text-transform: uppercase;
   margin-right: 20px;
   -webkit-transition: color 0.3s ease;
   -moz-transition: color 0.3s ease;
@@ -171,31 +204,33 @@ body.slidehub_body {
   -ms-transition: color 0.3s ease;
   transition: color 0.3s ease;
 }
-.slidehub_body .slidecard .slidecard-action a:hover{
-  text-decoration:none;
+
+.slidehub_body .slidecard .slidecard-action a:hover {
+  text-decoration: none;
 }
 
-.slidehub_body .slidecard .slidecard-information{
+.slidehub_body .slidecard .slidecard-information {
   padding: 2px;
   border-top: 1px solid rgba(160, 160, 160, 0.2);
   font-size: 0.6em;
 }
-.slidehub_body .slidecard .slidecard-reveal{
+
+.slidehub_body .slidecard .slidecard-reveal {
   padding: 20px;
   position: absolute;
   background-color: #FFF;
   width: 100%;
   overflow-y: auto;
   /*top: 0;*/
-  left:0;
-  bottom:0;
+  left: 0;
+  bottom: 0;
   height: 100%;
   z-index: 1;
   display: none;
 }
 
-.slidehub_body .slidecard .slidecard-reveal p{
-  margin:20px;
+.slidehub_body .slidecard .slidecard-reveal p {
+  margin: 20px;
 }
 
 /* Avatar styles
@@ -213,24 +248,24 @@ body.slidehub_body {
 }
 
 .slidehub_body .avatar50 img {
-  width:50px;
-  height:50px;
+  width: 50px;
+  height: 50px;
 }
 
 .slidehub_body .avatar20 img {
-  width:18px;
-  height:18px;
+  width: 18px;
+  height: 18px;
   border: 1px solid #666;
   border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
-  padding:0px;
+  padding: 0px;
 }
 
 /* Profile sidebar styles
 -------------------------------------------------- */
 .slidehub_body .profile-sidebar {
-  margin-top:20px;
+  margin-top: 20px;
   padding: 20px 0 10px 0;
 }
 
@@ -256,10 +291,10 @@ body.slidehub_body {
 }
 
 .slidehub_body .profile-usertitle-job {
-  text-align:left;
+  text-align: left;
   font-size: 0.8em;
-  margin-left:1em;
-  margin-right:1em;
+  margin-left: 1em;
+  margin-right: 1em;
   margin-bottom: 15px;
 }
 
@@ -286,35 +321,46 @@ body.slidehub_body {
 /* Comment Form styles
 -------------------------------------------------- */
 .slidehub_body .comment_post {
-  border: 1px solid #ccc;
   padding-top: 8px;
-  padding-bottom:2px;
+  padding-bottom: 2px;
   padding-left: 10px;
   padding-right: 10px;
 }
 
 /* Share Button styles
 -------------------------------------------------- */
-.slidehub_body ul.share-buttons{
+.slidehub_body ul.share-buttons {
   list-style: none;
   padding: 0;
 }
 
-.slidehub_body ul.share-buttons li{
+.slidehub_body ul.share-buttons li {
   display: inline;
 }
 
 /* Tag styles
 -------------------------------------------------- */
-.tag1 { font-size: 1.0em; }
-.tag2 { font-size: 1.2em; }
-.tag3 { font-size: 1.4em; }
-.tag4 { font-size: 1.6em; }
+.tag1 {
+  font-size: 1.0em;
+}
+
+.tag2 {
+  font-size: 1.2em;
+}
+
+.tag3 {
+  font-size: 1.4em;
+}
+
+.tag4 {
+  font-size: 1.6em;
+}
 
 /* Error styles
 -------------------------------------------------- */
 .slidehub_body #error_explanation {
   color: red;
+
   ul {
     color: red;
     margin: 0 0 30px 0;
@@ -326,8 +372,8 @@ body.slidehub_body {
 }
 
 .slidehub_body div.alert {
-  margin-top:20px !important;
-  margin-bottom:0px !important;
+  margin-top: 20px !important;
+  margin-bottom: 0px !important;
 }
 
 abbr {
@@ -338,7 +384,7 @@ abbr {
 -------------------------------------------------- */
 @media only screen and (max-width: 760px) {
   .slidehub_body div#slide_div_box2 {
-    padding-left :0px !important;
+    padding-left: 0px !important;
     padding-right: 0px !important;
   }
 }

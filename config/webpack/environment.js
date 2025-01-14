@@ -31,6 +31,14 @@ environment.plugins.append(
     })
 );
 
+
+environment.plugins.append(
+    'Provide',
+    new webpack.ProvidePlugin({
+        Rails: ['@rails/ujs']
+    })
+);
+
 environment.loaders.append('expose', {
     test: require.resolve('jquery'), // jQuery のパスを指定
     use: [

@@ -15,9 +15,10 @@
 const images = require.context('../images', true)
 const imagePath = (name) => images(name, true)
 
+import Rails from "@rails/ujs"
+Rails.start()
 require("jquery")
 require("bootstrap")
-require("rails-ujs")
 window.moment = require("moment")
 require("@popperjs/core/dist/umd/popper.min")
 window.tempusDominus = require("@eonasdan/tempus-dominus/dist/js/tempus-dominus.min")

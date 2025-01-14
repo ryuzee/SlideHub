@@ -4,70 +4,95 @@
 <%= render 'slides/meta_tags', slide: @slide %>
 
 <% if params[:vertical] != "1" %>
-<div style="padding-top:0px;">
-<%= render 'slides/slide_horizontal', slide: @slide, start_position: @start_position, prefix: prefix %>
-</div>
+  <div style="padding-top:0px;">
+    <%= render 'slides/slide_horizontal', slide: @slide, start_position: @start_position, prefix: prefix %>
+  </div>
 <% else %>
-<div style="padding-top:0px;">
-<%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
-</div>
+  <div style="padding-top:0px;">
+    <%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
+  </div>
 <% end %>
+<div class="mb-4"></div>
 
-<div class="row">
-  <!--left main area -->
-  <div class="col-md-8 bottom_padding_20" id="slide_div_box2">
+<div class="card">
+  <!--name and description-->
+  <div class="card-body">
+    <h2 class="h4 card-title"><%= strip_tags @slide.name %></h2>
+    <div class="card-text"><%= simple_format(h(@slide.description)) %></div>
+    <% if @slide.tags.count > 0 %>
+      <ul class="list-inline" style="line-height: 2.5;">
+        <% @slide.tags.each do |t| %>
+          <li class="list-inline-item"><a href="<%= search_index_path %>?q%5Btag_search%5D=<%= t %>"><span class="badge badge-primary p-2" style="font-size:0.9em; font-weight: normal"><%= t %></span></a></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <div class="pt-2"><%= render 'slides/share_buttons' %></div>
+  </div>
+  <div class="card-footer">
+    <ul class="list-inline mb-0 pb-0" style="line-height: 2.5;">
+      <li class="list-inline-item">
+        <% if @slide.user.avatar.attached?  %>
+          <%= image_tag(url_for(@slide.user.avatar), :size => '32x32', :class => 'rounded-circle') %>
+        <% else %>
+          <%= image_pack_tag('avatar/medium/missing.png', :size => '32x32', :class => 'rounded-circle') %>
+        <% end %>
+        <%= link_to strip_tags(@slide.user.display_name), user_by_username_path(username: @slide.user.username) %>
+      </li>
+      <li class="list-inline-item"><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;<span class="float-right"><%= @slide.created_at.to_formatted_s(:middle) %></span></li>
+      <li class="list-inline-item"><i class="fa fa-th"></i>&nbsp;&nbsp;<span class="float-right"><a href="<%= category_path @slide.category_id %>"><%= @slide.category_name %></a></span></li>
+      <li class="list-inline-item"><i class="fa fa-eye"></i>&nbsp;&nbsp;<span class="float-right"><%= @slide.total_view %></span></li>
+      <li class="list-inline-item"><i class="fa fa-desktop"></i>&nbsp;&nbsp;<span class="float-right"><%= @slide.embedded_view %></span></li>
+      <% if @slide.downloadable %>
+        <li class="list-inline-item"><i class="fa fa-cart-arrow-down"></i>&nbsp;&nbsp;<%= t(:downloads) %><span class="float-right"><%= @slide.download_count %></span></li>
+      <% end %>
+      <% if params[:vertical] == "1" %>
+        <li class="list-inline-item"><i class="fa fa-play"></i>&nbsp;&nbsp;<%= link_to t(:show_slide_with_normal_mode), "/slides/#{@slide.id}" %></li>
+      <% else %>
+        <li class="list-inline-item"><i class="fa fa-film"></i>&nbsp;&nbsp;<%= link_to t(:show_slide_vertically), "/slides/#{@slide.id}?vertical=1" %></li>
+      <% end %>
+      <% if @slide.downloadable %>
+        <li class="list-inline-item"><i class="fa fa-download"></i>&nbsp;&nbsp;<%= link_to t(:download_slide), slide_download_path(@slide.id) %></li>
+      <% end %>
+      <li class="list-inline-item"><i class="fa fa-code"></i>&nbsp;&nbsp;<%= link_to t(:show_embedded_code), "#", :id => "show_embedded", data: {"toggle":"modal", "target":"embedded_dialog"} %></li>
+      <% if user_signed_in? and current_user.id == @slide.user_id %>
+        <li class="list-inline-item"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<%= link_to t(:edit_slide), edit_slide_path(@slide.id) %></li>
+        <li class="list-inline-item"><i class="fa fa-trash"></i>&nbsp;&nbsp;<%= link_to t(:delete_slide), slide_path(@slide.id), :method => :delete, data: { confirm: "Are you sure you want to delete?"} %></li>
+      <% end %>
+      <li class="list-inline-item"></li>
+    </ul>
+  </div>
+</div>
+<div class="mb-4"></div>
 
+<%= render :partial => 'shared/custom_content_center_bottom' %>
 
-    <div class="card" style="margin-top:20px">
-      <!--name and description-->
-      <div class="card-body">
-        <h2 class="h4 card-title"><%= strip_tags @slide.name %></h2>
-        <div class="h6 card-text"><%= simple_format(h(@slide.description)) %></div>
-      </div>
-      <!--/name and description-->
+<!-- Transcript -->
+<h3><%= t(:transcript) %></h3>
+<div class="card" style="margin-top:20px">
+  <div class="card-body">
+    <%= render 'slides/transcript', slide: @slide, prefix: prefix %>
+  </div>
+</div>
+<div class="mb-4"></div>
 
-      <!--tab-->
-      <div class="card-body">
+<!-- Comment -->
+<h3><%= t 'activerecord.models.comment' %></h3>
+<div class="card" style="margin-top:20px">
+  <div class="card-body">
+    <%= render 'slides/comment', comment: @comment, posted_comments: @posted_comments %>
+  </div>
+</div>
+<div class="mb-4"></div>
 
-        <ul class="nav nav-tabs nav-pills">
-          <li class="nav-item">
-            <a href="#tab1" class="nav-link active" data-toggle="tab"><%= t :transcripts %></a>
-          </li>
-          <li class="nav-item">
-            <a href="#tab2" class="nav-link" data-toggle="tab"><%= t 'activerecord.models.comment' %></a>
-          </li>
-        </ul>
-
-        <div class="tab-content">
-          <div id="tab1" class="tab-pane active">
-            <!-- Transcript -->
-            <%= render 'slides/transcript', slide: @slide, prefix: prefix %>
-          </div>
-          <div id="tab2" class="tab-pane">
-            <!-- Comment -->
-            <%= render 'slides/comment', comment: @comment, posted_comments: @posted_comments %>
-          </div>
-        </div>
-
-      </div>
-      <!--/tab-->
+<% if @related_slides.count > 0 %>
+  <div id="popular">
+    <h3><%= t(:related_slides) %></h3>
+    <div>
+      <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @related_slides %>
     </div>
   </div>
-  <!--/left main area -->
-
-  <!--right sidebar -->
-  <div class="col-md-4" id="rightside">
-    <%= raw ApplicationSetting['custom_content.right_top'] %>
-    <%= render 'users/right_side_bar', user: @slide.user %>
-    <div class="mb-4"></div>
-    <%= render 'slides/command_and_detail', slide: @slide %>
-    <div class="mb-4"></div>
-    <%= render 'slides/related_slides', related_slides: @related_slides %>
-  </div>
-  <!--/right sidebar -->
-
-</div>
-<!--/row-->
+  <div class="mb-4"></div>
+<% end %>
 
 <script type="text/javascript">
   $(document).ready(function(){

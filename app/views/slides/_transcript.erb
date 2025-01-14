@@ -5,14 +5,20 @@
       <% tran = clear_invisible_string(tran) %>
       <% page_count += 1 %>
       <% if not tran.blank? %>
-        <% if params[:vertical] != "1" %>
-          <div style="font-size:0.8em; margin-bottom:0.4em;"><a href="#page_top" onclick="javascript:OSSJSPARTS<%= prefix %>.moveTo(<%= page_count - 1 %>);"><%= page_count %>.</a> <%= tran %></div>
-        <% else %>
-          <div style="font-size:0.8em;"><a href="#img-<%= page_count - 1 %>"><%= page_count %>.</a> <%= tran %></div>
-        <% end %>
+        <div class="item">
+          <% if params[:vertical] != "1" %>
+            <span class="number"><a href="#page_top" onclick="javascript:OSSJSPARTS<%= prefix %>.moveTo(<%= page_count - 1 %>);"><%= page_count %>.</a></span>
+          <% else %>
+            <span class="number"><a href="#img-<%= page_count - 1 %>"><%= page_count %>.</a></span>
+          <% end %>
+          <span class="content"><%= tran %></span>
+        </div>
       <% end %>
+
     <% end %>
   </div>
 <% else %>
-  <div class="slide_description"><div style="font-size:0.9em;">No Transcript...</div></div>
+  <div class="slide_description">
+    <div style="font-size:0.9em;">No Transcript...</div>
+  </div>
 <% end %>

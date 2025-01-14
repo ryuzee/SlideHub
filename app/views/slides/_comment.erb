@@ -1,26 +1,28 @@
 <% if not posted_comments.empty? %>
   <% posted_comments.each do |c| %>
-  <div class="card-body media comment_post">
-    <div class="pull-left avatar50" style="padding-right:0px !important">
-      <% if c.user.avatar.attached? %>
-      <%= image_tag(c.user.avatar.variant(resize: "32x32"), class: 'img-fluid') %>
-      <% else %>
-      <%= image_pack_tag('avatar/thumb/missing.png') %>
-      <% end %>
-    </div>
-    <div class="media-body" style="padding-left:10px;">
-      <div class="h6" style="margin-top:0px"><a href="<%= user_by_username_path(username: c.user.username) %>"><%= strip_tags c.user.display_name %></a></div>
-      <div class="h6"><%= strip_tags c.comment %></div>
-      <div class="h6"><%= c.created_at %>
-        <% if (user_signed_in? and current_user.id == c.user_id) %>
-          &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to t(:delete), "/comments/#{c.id}", :method => :delete, data: { confirm: "Are you sure you want to delete?" } %>
+    <div class="card-body media">
+      <div class="pull-left avatar50" style="padding-right:0px !important">
+        <% if c.user.avatar.attached? %>
+          <%= image_tag(url_for(c.user.avatar), :size => '32x32', class: 'img-fluid') %>
+        <% else %>
+          <%= image_pack_tag('avatar/thumb/missing.png') %>
         <% end %>
       </div>
+      <div class="media-body" style="padding-left:1em;">
+        <div class="h6" style="margin-top:0px"><a href="<%= user_by_username_path(username: c.user.username) %>"><%= strip_tags c.user.display_name %></a></div>
+        <div class="h6"><%= strip_tags c.comment %></div>
+        <div class="h6"><%= c.created_at.to_formatted_s(:middle) %>
+          <% if (user_signed_in? and current_user.id == c.user_id) %>
+            &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to t(:delete), "/comments/#{c.id}", :method => :delete, data: { method: :delete, confirm: "Are you sure you want to delete?" } %>
+          <% end %>
+        </div>
+      </div>
     </div>
-  </div>
   <% end %>
 <% else %>
-  <div class="media comment_post"><div class="h6"><%= t(:no_comments) %></div></div>
+  <div class="media">
+    <div class="h6"><%= t(:no_comments) %></div>
+  </div>
 <% end %>
 
 <% if user_signed_in? %>

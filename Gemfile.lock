@@ -2062,6 +2062,8 @@ GEM
     rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails-ujs (0.1.0)
+      railties (>= 3.1)
     rails_best_practices (1.23.2)
       activesupport
       code_analyzer (~> 0.5.5)
@@ -2341,6 +2343,7 @@ DEPENDENCIES
   rails-controller-testing
   rails-erd
   rails-flog
+  rails-ujs
   rails_best_practices
   ransack
   reek
