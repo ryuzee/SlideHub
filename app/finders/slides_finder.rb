@@ -21,7 +21,7 @@ class SlidesFinder
     ids.collect { |id| slides.detect { |x| x.id == id.to_i } }
   end
 
-  def self.related(category_id, slide_id, limit = 10)
+  def self.related(category_id, slide_id, limit = 12)
     Slide.published.latest.
       where('category_id = ?', category_id).
       where('id != ?', slide_id).
