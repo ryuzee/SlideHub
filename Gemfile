@@ -88,7 +88,7 @@ gem 'webpacker', '~> 5.0'
 
 # ffi-1.17.0 requires rubygems version >= 3.3.22
 # https://github.com/ffi/ffi/issues/1103
-gem 'ffi', '1.16.3'
+gem 'ffi', '1.17.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
