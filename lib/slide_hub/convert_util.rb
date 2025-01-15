@@ -26,7 +26,7 @@ module SlideHub
     def pdf_to_jpg(dir, file)
       # cmd = "cd #{dir} && mutool draw -o slide-%d.jpg -r 300 #{file}.pdf"
       # 歴史的経緯で、過去のツールでは0埋め連番だったのを再現する
-      cmd = "cd #{dir} && mutool draw -o slide-%0#{Math.log10(`cd #{dir} && mutool info #{file}.pdf | grep Pages | awk '{print $2}'`.to_i).ceil}d.jpg -r 60 #{file}.pdf"
+      cmd = "cd #{dir} && mutool draw -o slide-%0#{Math.log10(`cd #{dir} && mutool info #{file}.pdf | grep Pages | awk '{print $2}'`.to_i).ceil}d.jpg -r 120 #{file}.pdf"
       puts cmd
       result = exec_command(cmd)
       if result
