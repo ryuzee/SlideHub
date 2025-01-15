@@ -8,41 +8,43 @@
 #
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+<% require_relative '../lib/slide_hub/env_util' %>
+
 development:
-  adapter: <%= ENV['OSS_DB_ENGINE_DEV']  ||= 'mysql2' %>
+  adapter: <%= SlideHub::EnvUtil.fetch('DB_ENGINE_DEV', 'mysql2') %>
   encoding: utf8
   reconnect: true
-  database: <%= ENV['OSS_DB_NAME_DEV']  ||= 'slidehub' %>
+  database: <%= SlideHub::EnvUtil.fetch('DB_NAME_DEV', 'slidehub') %>
   pool: 5
-  username: <%= ENV['OSS_DB_USERNAME_DEV'] %>
-  password: <%= ENV['OSS_DB_PASSWORD_DEV'] %>
-  host: <%= ENV['OSS_DB_URL_DEV'] %>
-  port: <%= ENV['OSS_DB_PORT_DEV']  ||= '3306' %>
-  azure: <%= ENV['OSS_DB_USE_AZURE_DEV'] ||= 'false' %>
+  username: <%= SlideHub::EnvUtil.fetch('DB_USERNAME_DEV') %>
+  password: <%= SlideHub::EnvUtil.fetch('DB_PASSWORD_DEV') %>
+  host: <%= SlideHub::EnvUtil.fetch('DB_URL_DEV') %>
+  port: <%= SlideHub::EnvUtil.fetch('DB_PORT_DEV', '3306') %>
+  azure: <%= SlideHub::EnvUtil.fetch('DB_USE_AZURE_DEV', 'false') %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  adapter: <%= ENV['OSS_DB_ENGINE_TEST']  ||= 'mysql2' %>
+  adapter: <%= SlideHub::EnvUtil.fetch('DB_ENGINE_TEST', 'mysql2') %>
   encoding: utf8
   reconnect: true
-  database: <%= ENV['OSS_DB_NAME_TEST']  ||= 'test_slidehub' %>
+  database: <%= SlideHub::EnvUtil.fetch('DB_NAME_TEST', 'test_slidehub') %>
   pool: 5
-  username: <%= ENV['OSS_DB_USERNAME_TEST'] %>
-  password: <%= ENV['OSS_DB_PASSWORD_TEST'] %>
-  host: <%= ENV['OSS_DB_URL_TEST'] %>
-  port: <%= ENV['OSS_DB_PORT_TEST']  ||= '3306' %>
-  azure: <%= ENV['OSS_DB_USE_AZURE_TEST'] ||= 'false' %>
+  username: <%= SlideHub::EnvUtil.fetch('DB_USERNAME_TEST') %>
+  password: <%= SlideHub::EnvUtil.fetch('DB_PASSWORD_TEST') %>
+  host: <%= SlideHub::EnvUtil.fetch('DB_URL_TEST') %>
+  port: <%= SlideHub::EnvUtil.fetch('DB_PORT_TEST', '3306') %>
+  azure: <%= SlideHub::EnvUtil.fetch('DB_USE_AZURE_TEST', 'false') %>
 
 production:
-  adapter: <%= ENV['OSS_DB_ENGINE']  ||= 'mysql2' %>
+  adapter: <%= SlideHub::EnvUtil.fetch('DB_ENGINE', 'mysql2') %>
   encoding: utf8
   reconnect: true
-  database: <%= ENV['OSS_DB_NAME']  ||= 'slidehub' %>
+  database: <%= SlideHub::EnvUtil.fetch('DB_NAME', 'slidehub') %>
   pool: 5
-  username: <%= ENV['OSS_DB_USERNAME'] %>
-  password: <%= ENV['OSS_DB_PASSWORD'] %>
-  host: <%= ENV['OSS_DB_URL'] %>
-  port: <%= ENV['OSS_DB_PORT']  ||= '3306' %>
-  azure: <%= ENV['OSS_DB_USE_AZURE'] ||= 'false' %>
+  username: <%= SlideHub::EnvUtil.fetch('DB_USERNAME') %>
+  password: <%= SlideHub::EnvUtil.fetch('DB_PASSWORD') %>
+  host: <%= SlideHub::EnvUtil.fetch('DB_URL') %>
+  port: <%= SlideHub::EnvUtil.fetch('DB_PORT', '3306') %>
+  azure: <%= SlideHub::EnvUtil.fetch('DB_USE_AZURE', 'false') %>

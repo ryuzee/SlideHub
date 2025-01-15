@@ -3,6 +3,7 @@
 # require 'convert_util'
 # require 'image'
 require 'tmpdir'
+require_relative 'env_util'
 
 module SlideHub
   class ConvertProcedure
@@ -94,7 +95,7 @@ module SlideHub
 
       def update_database
         # If multi-tenanted, update all database which includes specified object_key
-        if ENV.fetch('OSS_MULTI_TENANT', false)
+        if SlideHub::EnvUtil.fetch('MULTI_TENANT', false)
           tenants = Tenant.pluck(:name)
           tenants.each do |tenant|
             Apartment::Tenant.switch(tenant) do

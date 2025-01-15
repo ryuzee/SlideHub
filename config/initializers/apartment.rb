@@ -1,4 +1,5 @@
-return unless ENV.fetch('OSS_MULTI_TENANT') { '0' } == '1'
+require_relative '../../lib/slide_hub/env_util'
+return unless SlideHub::EnvUtil.fetch('MULTI_TENANT', 1) == '1'
 return unless Rails.application.config.database_configuration[Rails.env]['adapter'] == 'mysql2'
 
 # You can have Apartment route to the appropriate Tenant by adding some Rack middleware.

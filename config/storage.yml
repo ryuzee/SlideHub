@@ -1,13 +1,13 @@
+<% require_relative '../lib/slide_hub/env_util' %>
 amazon:
   service: S3
-  access_key_id: <%= ENV['OSS_AWS_ACCESS_ID'] ||= '' %>
-  secret_access_key: <%= ENV['OSS_AWS_SECRET_KEY'] ||= '' %>
-  region: <%= ENV['OSS_REGION'] ||= '' %>
-  bucket: <%= ENV['OSS_IMAGE_BUCKET_NAME'] ||= '' %>
+  access_key_id: <%= SlideHub::EnvUtil.fetch('AWS_ACCESS_ID', '') %>
+  secret_access_key: <%= SlideHub::EnvUtil.fetch('AWS_SECRET_KEY', '') %>
+  region: <%= SlideHub::EnvUtil.fetch('REGION', '') %>
+  bucket: <%= SlideHub::EnvUtil.fetch('IMAGE_BUCKET_NAME', '') %>
 
 azure:
   service: AzureStorage
-  storage_account_name: <%= ENV['OSS_AZURE_STORAGE_ACCOUNT_NAME'] ||= '' %>
-  storage_access_key: <%= ENV['OSS_AZURE_STORAGE_ACCESS_KEY'] ||= '' %>
-  container: <%= ENV['OSS_AZURE_IMAGE_CONTAINER_NAME'] ||= '' %>
-
+  storage_account_name: <%= SlideHub::EnvUtil.fetch('AZURE_STORAGE_ACCOUNT_NAME', '') %>
+  storage_access_key: <%= SlideHub::EnvUtil.fetch('AZURE_STORAGE_ACCESS_KEY', '') %>
+  container: <%= SlideHub::EnvUtil.fetch('AZURE_IMAGE_CONTAINER_NAME', '') %>

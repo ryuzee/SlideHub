@@ -134,37 +134,37 @@ However, if you want to run app by docker command, see follows.
 
 ```
 $CONTAINER_ID=/usr/bin/docker run -d \
-  --env OSS_REGION=$OSS_REGION \
-  --env OSS_SQS_URL=$OSS_SQS_URL \
-  --env OSS_BUCKET_NAME=$OSS_BUCKET_NAME \
-  --env OSS_IMAGE_BUCKET_NAME=$OSS_IMAGE_BUCKET_NAME \
-  --env OSS_USE_S3_STATIC_HOSTING=$OSS_USE_S3_STATIC_HOSTING \
-  --env OSS_AWS_SECRET_KEY=$OSS_AWS_SECRET_KEY \
-  --env OSS_AWS_ACCESS_ID=$OSS_AWS_ACCESS_ID \
-  --env OSS_USE_AZURE=$OSS_USE_AZURE \
-  --env OSS_AZURE_CONTAINER_NAME=$OSS_AZURE_CONTAINER_NAME \
-  --env OSS_AZURE_IMAGE_CONTAINER_NAME=$OSS_AZURE_IMAGE_CONTAINER_NAME \
-  --env OSS_AZURE_CDN_BASE_URL=$OSS_AZURE_CDN_BASE_URL \
-  --env OSS_AZURE_QUEUE_NAME=$OSS_AZURE_QUEUE_NAME \
-  --env OSS_AZURE_STORAGE_ACCESS_KEY=$OSS_AZURE_STORAGE_ACCESS_KEY \
-  --env OSS_AZURE_STORAGE_ACCOUNT_NAME=$OSS_AZURE_STORAGE_ACCOUNT_NAME \
-  --env OSS_SECRET_KEY_BASE=$OSS_SECRET_KEY_BASE \
-  --env OSS_DB_NAME=$OSS_DB_NAME \
-  --env OSS_DB_USERNAME=$OSS_DB_USERNAME \
-  --env OSS_DB_PASSWORD=$OSS_DB_PASSWORD \
-  --env OSS_DB_URL=$OSS_DB_URL \
-  --env OSS_DB_PORT=$OSS_DB_PORT \
-  --env OSS_DB_ENGINE=$OSS_DB_ENGINE \
-  --env OSS_DB_USE_AZURE=$OSS_DB_USE_AZURE \
-  --env OSS_SMTP_SERVER=$OSS_SMTP_SERVER \
-  --env OSS_SMTP_PORT=$OSS_SMTP_PORT \
-  --env OSS_SMTP_USERNAME=$OSS_SMTP_USERNAME \
-  --env OSS_SMTP_PASSWORD=$OSS_SMTP_PASSWORD \
-  --env OSS_SMTP_AUTH_METHOD=$OSS_SMTP_AUTH_METHOD \
-  --env OSS_PRODUCTION_HOST=$OSS_PRODUCTION_HOST \
-  --env OSS_ROOT_URL=$OSS_ROOT_URL \
+  --env SLIDEHUB_REGION=$SLIDEHUB_REGION \
+  --env SLIDEHUB_SQS_URL=$SLIDEHUB_SQS_URL \
+  --env SLIDEHUB_BUCKET_NAME=$SLIDEHUB_BUCKET_NAME \
+  --env SLIDEHUB_IMAGE_BUCKET_NAME=$SLIDEHUB_IMAGE_BUCKET_NAME \
+  --env SLIDEHUB_USE_S3_STATIC_HOSTING=$SLIDEHUB_USE_S3_STATIC_HOSTING \
+  --env SLIDEHUB_AWS_SECRET_KEY=$SLIDEHUB_AWS_SECRET_KEY \
+  --env SLIDEHUB_AWS_ACCESS_ID=$SLIDEHUB_AWS_ACCESS_ID \
+  --env SLIDEHUB_USE_AZURE=$SLIDEHUB_USE_AZURE \
+  --env SLIDEHUB_AZURE_CONTAINER_NAME=$SLIDEHUB_AZURE_CONTAINER_NAME \
+  --env SLIDEHUB_AZURE_IMAGE_CONTAINER_NAME=$SLIDEHUB_AZURE_IMAGE_CONTAINER_NAME \
+  --env SLIDEHUB_AZURE_CDN_BASE_URL=$SLIDEHUB_AZURE_CDN_BASE_URL \
+  --env SLIDEHUB_AZURE_QUEUE_NAME=$SLIDEHUB_AZURE_QUEUE_NAME \
+  --env SLIDEHUB_AZURE_STORAGE_ACCESS_KEY=$SLIDEHUB_AZURE_STORAGE_ACCESS_KEY \
+  --env SLIDEHUB_AZURE_STORAGE_ACCOUNT_NAME=$SLIDEHUB_AZURE_STORAGE_ACCOUNT_NAME \
+  --env SLIDEHUB_SECRET_KEY_BASE=$SLIDEHUB_SECRET_KEY_BASE \
+  --env SLIDEHUB_DB_NAME=$SLIDEHUB_DB_NAME \
+  --env SLIDEHUB_DB_USERNAME=$SLIDEHUB_DB_USERNAME \
+  --env SLIDEHUB_DB_PASSWORD=$SLIDEHUB_DB_PASSWORD \
+  --env SLIDEHUB_DB_URL=$SLIDEHUB_DB_URL \
+  --env SLIDEHUB_DB_PORT=$SLIDEHUB_DB_PORT \
+  --env SLIDEHUB_DB_ENGINE=$SLIDEHUB_DB_ENGINE \
+  --env SLIDEHUB_DB_USE_AZURE=$SLIDEHUB_DB_USE_AZURE \
+  --env SLIDEHUB_SMTP_SERVER=$SLIDEHUB_SMTP_SERVER \
+  --env SLIDEHUB_SMTP_PORT=$SLIDEHUB_SMTP_PORT \
+  --env SLIDEHUB_SMTP_USERNAME=$SLIDEHUB_SMTP_USERNAME \
+  --env SLIDEHUB_SMTP_PASSWORD=$SLIDEHUB_SMTP_PASSWORD \
+  --env SLIDEHUB_SMTP_AUTH_METHOD=$SLIDEHUB_SMTP_AUTH_METHOD \
+  --env SLIDEHUB_PRODUCTION_HOST=$SLIDEHUB_PRODUCTION_HOST \
+  --env SLIDEHUB_ROOT_URL=$SLIDEHUB_ROOT_URL \
   --env RAILS_LOG_TO_STDOUT=1 \
-  --env OSS_TIMEZONE=Asia/Tokyo \
+  --env SLIDEHUB_TIMEZONE=Asia/Tokyo \
 -P --name slidehub ryuzee/slidehub:latest`
 ```
 
@@ -181,29 +181,31 @@ Then prepare database as follows.
 The easiest way is to add these lines to `docker-compose.yml` when you are testing the app in your local environment.
 If you are trying to use the app for production, set these variables via any Docker platform.
 
+** Environment valiables must start with SLIDEHUB_ or OSS_ **
+
 #### Cloud Settings (Azure)
 
 ```
-OSS_USE_AZURE=[0|1] # If you want to use Azure, set 1
-OSS_AZURE_CONTAINER_NAME=[Original file container name]
-OSS_AZURE_IMAGE_CONTAINER_NAME=[Image container name]
-OSS_AZURE_CDN_BASE_URL=[Set value if you are using CDN]
-OSS_AZURE_QUEUE_NAME=[BLOB queue name]
-OSS_AZURE_STORAGE_ACCESS_KEY=[Azure Storage Access Key]
-OSS_AZURE_STORAGE_ACCOUNT_NAME=[Azure Storage Accout Name]
+SLIDEHUB_USE_AZURE=[0|1] # If you want to use Azure, set 1
+SLIDEHUB_AZURE_CONTAINER_NAME=[Original file container name]
+SLIDEHUB_AZURE_IMAGE_CONTAINER_NAME=[Image container name]
+SLIDEHUB_AZURE_CDN_BASE_URL=[Set value if you are using CDN]
+SLIDEHUB_AZURE_QUEUE_NAME=[BLOB queue name]
+SLIDEHUB_AZURE_STORAGE_ACCESS_KEY=[Azure Storage Access Key]
+SLIDEHUB_AZURE_STORAGE_ACCOUNT_NAME=[Azure Storage Accout Name]
 ```
 
 #### Cloud Settings (AWS)
 
 ```
-OSS_BUCKET_NAME=[Original file bucket name]
-OSS_IMAGE_BUCKET_NAME=[Image bucket name]
-OSS_USE_S3_STATIC_HOSTING=[1|0]
-OSS_REGION=[ap-northeast-1]
-OSS_CDN_BASE_URL=[Set value if you are using CDN]
-OSS_SQS_URL=[SQS URL]
-OSS_AWS_ACCESS_ID=[Your AWS Access Key if you run app out of AWS]
-OSS_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
+SLIDEHUB_BUCKET_NAME=[Original file bucket name]
+SLIDEHUB_IMAGE_BUCKET_NAME=[Image bucket name]
+SLIDEHUB_USE_S3_STATIC_HOSTING=[1|0]
+SLIDEHUB_REGION=[ap-northeast-1]
+SLIDEHUB_CDN_BASE_URL=[Set value if you are using CDN]
+SLIDEHUB_SQS_URL=[SQS URL]
+SLIDEHUB_AWS_ACCESS_ID=[Your AWS Access Key if you run app out of AWS]
+SLIDEHUB_AWS_SECRET_KEY=[Your AWS Secret Key if you run app out of AWS]
 ```
 
 #### General Settings
@@ -214,49 +216,49 @@ RAILS_ENV=[production|development]
 RAILS_LOG_TO_STDOUT=[1] # set the variable if you want the standard output
 
 # Mandatory
-OSS_SECRET_KEY_BASE=[Your Secret Key Base]
+SLIDEHUB_SECRET_KEY_BASE=[Your Secret Key Base]
 
 # Timezone
-OSS_TIMEZONE=[Your Timezone] # Default Asia/Tokyo
+SLIDEHUB_TIMEZONE=[Your Timezone] # Default Asia/Tokyo
 
 # Mail settings
-OSS_SMTP_SERVER=[Your SMTP server]
-OSS_SMTP_PORT=[587]
-OSS_SMTP_USERNAME=[Your SMTP account]
-OSS_SMTP_PASSWORD=[Your SMTP password]
-OSS_SMTP_AUTH_METHOD=plain
-OSS_FROM_EMAIL=[Email address that will be used sender]
+SLIDEHUB_SMTP_SERVER=[Your SMTP server]
+SLIDEHUB_SMTP_PORT=[587]
+SLIDEHUB_SMTP_USERNAME=[Your SMTP account]
+SLIDEHUB_SMTP_PASSWORD=[Your SMTP password]
+SLIDEHUB_SMTP_AUTH_METHOD=plain
+SLIDEHUB_FROM_EMAIL=[Email address that will be used sender]
 
-OSS_PRODUCTION_HOST=[hoge.example.com]
-OSS_ROOT_URL=[http://your_root_url]
-OSS_LOGIN_REQUIRED=[1] # set the variable if you would like to force users login to view any pages
+SLIDEHUB_PRODUCTION_HOST=[hoge.example.com]
+SLIDEHUB_ROOT_URL=[http://your_root_url]
+SLIDEHUB_LOGIN_REQUIRED=[1] # set the variable if you would like to force users login to view any pages
 
 # For production (closely related to rails environment)
-OSS_DB_NAME=[DB name for Prod] # Set openslideshare if using installer
-OSS_DB_USERNAME=[DB Username for Prod] # Set root if using installer
-OSS_DB_PASSWORD=[DB Password for Prod] # Set passw0rd if using installer
-OSS_DB_URL=[DB URL for Prod] # Set localhost if using installer
-OSS_DB_ENGINE=[DB Engine] # Default 'mysql2'. You can set 'mysql2' or 'sqlserver' (NOT 'mysql')
-OSS_DB_PORT=[DB Port] # Default 3306
-OSS_DB_USE_AZURE=[false|true] # If you are using Azure Database for MySQL, set true
+SLIDEHUB_DB_NAME=[DB name for Prod] # Set openslideshare if using installer
+SLIDEHUB_DB_USERNAME=[DB Username for Prod] # Set root if using installer
+SLIDEHUB_DB_PASSWORD=[DB Password for Prod] # Set passw0rd if using installer
+SLIDEHUB_DB_URL=[DB URL for Prod] # Set localhost if using installer
+SLIDEHUB_DB_ENGINE=[DB Engine] # Default 'mysql2'. You can set 'mysql2' or 'sqlserver' (NOT 'mysql')
+SLIDEHUB_DB_PORT=[DB Port] # Default 3306
+SLIDEHUB_DB_USE_AZURE=[false|true] # If you are using Azure Database for MySQL, set true
 
 # For development
-OSS_DB_NAME_DEV=[DB name for Dev]
-OSS_DB_USERNAME_DEV=[DB Username for Dev]
-OSS_DB_PASSWORD_DEV=[DB Password for Dev]
-OSS_DB_URL_DEV=[DB URL for Dev]
-OSS_DB_ENGINE_DEV=[DB ENGINE for Dev]
-OSS_DB_PORT_DEV=[DB PORT for Dev]
-OSS_DB_USE_AZURE_DEV=[Use Azure Database for MySQL for Dev]
+SLIDEHUB_DB_NAME_DEV=[DB name for Dev]
+SLIDEHUB_DB_USERNAME_DEV=[DB Username for Dev]
+SLIDEHUB_DB_PASSWORD_DEV=[DB Password for Dev]
+SLIDEHUB_DB_URL_DEV=[DB URL for Dev]
+SLIDEHUB_DB_ENGINE_DEV=[DB ENGINE for Dev]
+SLIDEHUB_DB_PORT_DEV=[DB PORT for Dev]
+SLIDEHUB_DB_USE_AZURE_DEV=[Use Azure Database for MySQL for Dev]
 
 # For test
-OSS_DB_NAME_TEST=[DB name for Test]
-OSS_DB_USERNAME_TEST=[DB Username for Test]
-OSS_DB_PASSWORD_TEST=[DB Password for Test]
-OSS_DB_URL_TEST=[DB URL for Test]
-OSS_DB_ENGINE_TEST=[DB ENGINE for Test]
-OSS_DB_PORT_TEST=[DB PORT for Test]
-OSS_DB_USE_AZURE_TEST=[Use Azure Database for MySQL for Test]
+SLIDEHUB_DB_NAME_TEST=[DB name for Test]
+SLIDEHUB_DB_USERNAME_TEST=[DB Username for Test]
+SLIDEHUB_DB_PASSWORD_TEST=[DB Password for Test]
+SLIDEHUB_DB_URL_TEST=[DB URL for Test]
+SLIDEHUB_DB_ENGINE_TEST=[DB ENGINE for Test]
+SLIDEHUB_DB_PORT_TEST=[DB PORT for Test]
+SLIDEHUB_DB_USE_AZURE_TEST=[Use Azure Database for MySQL for Test]
 ```
 
 ## For Development mode
