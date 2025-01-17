@@ -90,9 +90,10 @@
     if (OSSJSPARTS.isFullScreen()) {
       w = Math.round(screen.width * val / OSSJSPARTS.slides.length);
     } else {
-      w = (Math.round(OSSJSPARTS.progressbarRect.right - OSSJSPARTS.progressbarRect.left) * val / OSSJSPARTS.slides.length);
-      if (w >= (OSSJSPARTS.progressbarRect.right - OSSJSPARTS.progressbarRect.left)) {
-        w = OSSJSPARTS.progressbarRect.right - OSSJSPARTS.progressbarRect.left - 1;
+      var rect_width = eid(OSSJSPARTS.addCssPrefix("slide_area")).clientWidth;
+      w = Math.floor(rect_width * val / OSSJSPARTS.slides.length);
+      if (w >= rect_width) {
+        w = rect_width - 1;
       }
     }
     OSSJSPARTS.thumb.style.width = w + "px";
@@ -284,3 +285,13 @@
     window.onload = OSSJSPARTS.loadSlide;
     window.onmousemove = OSSJSPARTS.handleMouseMove;
   }
+
+  const target = eid(OSSJSPARTS.addCssPrefix("slide_area"));
+  const resizeObserver = new ResizeObserver(entries => {
+    for (let entry of entries) {
+      OSSJSPARTS.progressbarRect = OSSJSPARTS.progressbar.getBoundingClientRect();
+      OSSJSPARTS.showProgress();
+      OSSJSPARTS.setSliderPosition(OSSJSPARTS.currentPageIndex + 1);
+    }
+  });
+  resizeObserver.observe(target);
