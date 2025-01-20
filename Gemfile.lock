@@ -2108,7 +2108,7 @@ GEM
     reverse_markdown (3.0.0)
       nokogiri
     rexml (3.4.0)
-    rmagick (6.0.1)
+    rmagick (6.1.0)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     ros-apartment (3.2.0)
