@@ -59,6 +59,8 @@ class User < ApplicationRecord
 
   has_many :slides, dependent: :destroy
   has_one_attached :avatar
+  attribute :admin, :boolean, default: false
+  attribute :disabled, :boolean, default: false
 
   def self.ransackable_attributes(auth_object = nil)
     %w[display_name username avatar_attachment avatar_blob slides email provider admin]

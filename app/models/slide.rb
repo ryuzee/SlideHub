@@ -47,7 +47,8 @@ class Slide < ApplicationRecord
   validates :category_id, presence: true
   # validates :category_id, :presence => true, :inclusion => { :in => Category.all.map(&:id) }
 
-  enum convert_status: { unconverted: 0, converted: 100, convert_error: -1 }
+  attribute :convert_status, :integer
+  enum :convert_status, { unconverted: 0, converted: 100, convert_error: -1 }
 
   scope :published, -> { where('convert_status = ? and private != 1', convert_statuses[:converted]) }
   scope :failed, -> { where('convert_status != ?', convert_statuses[:converted]) }
