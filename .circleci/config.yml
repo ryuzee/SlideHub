@@ -10,7 +10,7 @@ jobs:
     shell: /bin/bash --login
 
     docker:
-      - image: cimg/ruby:3.1.5-node
+      - image: cimg/ruby:3.3.6-node
         environment:
           CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
           CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
@@ -65,7 +65,7 @@ jobs:
           - ~/.gradle
           - ~/.cache/bower
 
-      - run: 
+      - run:
           command: bundle exec rake db:create db:migrate
           environment:
             RAILS_ENV: test

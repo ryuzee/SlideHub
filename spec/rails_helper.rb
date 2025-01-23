@@ -65,6 +65,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   # deviseのテストヘルパーをロードする
+  Rails.application.reload_routes_unless_loaded
   require 'devise'
   require 'support/controller_macros'
   require 'support/omniauth_macros'
