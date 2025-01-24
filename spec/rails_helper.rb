@@ -105,3 +105,14 @@ end
 # In factory_bot 5, associations default to using the same build strategy as their parent object
 # See https://qiita.com/TunaGinger/items/ca08b1eaa5c1e321e302
 FactoryBot.use_parent_strategy = false
+
+require 'capybara/rails'
+
+Capybara.server = :webrick
+Capybara.app = Rails.application
+Capybara.server_host = '127.0.0.1'
+Capybara.app_host = 'http://127.0.0.1:3001'
+Capybara.server_port = 3001
+Capybara.default_max_wait_time = 10
+Capybara.default_driver = :rack_test
+Capybara.current_driver = :rack_test
