@@ -15,4 +15,4 @@ str.each_line do |s|
 end
 %>
 <% require 'uglifier' %>
-<%= raw Uglifier.compile(script) %>
+<%= raw Uglifier.new(:harmony => true).compile(script) %>
