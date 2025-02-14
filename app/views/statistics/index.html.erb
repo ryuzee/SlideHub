@@ -2,9 +2,9 @@
 <% content_for :title, t(:my_statistics) %>
 
 <h3><%= t(:my_statistics) %>
-   <span class="float-right">
-     <a href="<%= statistics_path %>.csv" class="btn btn-xs btn-default">CSV</a>
-   </span>
+  <span class="float-right">
+    <a href="<%= statistics_path %>.csv" class="btn btn-xs btn-default">CSV</a>
+  </span>
 </h3>
 
 <div>
@@ -24,16 +24,16 @@
     </thead>
     <tbody>
       <% @slides.each do |slide| %>
-        <tr>
-          <td><%= link_to slide.name, slide_path(slide.id) %>&nbsp;</td>
-          <td><%= slide.created_at.to_formatted_s(:default) %></td>
-          <td><%= slide.updated_at.to_formatted_s(:default) %></td>
-          <td><%= slide.convert_status_i18n %></td>
-          <td><%= slide.page_view %></td>
-          <td><%= slide.embedded_view %></td>
-          <td><%= slide.download_count %></td>
-          <td><%= slide.comments.count %></td>
-        </tr>
+      <tr>
+        <td><%= link_to slide.name, slide_path(slide.id) %>&nbsp;</td>
+        <td><%= slide.created_at.try(:to_formatted_s, :default) %></td>
+        <td><%= slide.updated_at.try(:to_formatted_s, :default) %></td>
+        <td><%= slide.convert_status_i18n %></td>
+        <td><%= slide.page_view %></td>
+        <td><%= slide.embedded_view %></td>
+        <td><%= slide.download_count %></td>
+        <td><%= slide.comments.count %></td>
+      </tr>
       <% end %>
     </tbody>
   </table>

@@ -27,8 +27,8 @@ CSV.generate do |csv|
       slide.embedded_view,
       slide.download_count,
       slide.comments.count,
-      slide.created_at,
-      slide.updated_at,
+      slide.created_at.try(:to_formatted_s, :default),
+      slide.updated_at.try(:to_formatted_s, :default),
     ]
     csv << csv_column_values
   end
