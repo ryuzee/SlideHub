@@ -1779,8 +1779,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-i18n (1.12.1)
+    devise-i18n (1.13.0)
       devise (>= 4.9.0)
+      rails-i18n
     devise-i18n-views (0.3.7)
     diff-lcs (1.6.0)
     docile (1.4.1)
@@ -2070,6 +2071,9 @@ GEM
     rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails-i18n (8.0.1)
+      i18n (>= 0.7, < 2)
+      railties (>= 8.0.0, < 9)
     rails_best_practices (1.23.2)
       activesupport
       code_analyzer (~> 0.5.5)
@@ -2302,7 +2306,7 @@ GEM
     yard (0.9.37)
     yard-solargraph (0.1.0)
       yard (~> 0.9)
-    zeitwerk (2.7.1)
+    zeitwerk (2.7.2)
 
 PLATFORMS
   ruby
