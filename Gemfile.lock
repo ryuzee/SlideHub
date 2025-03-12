@@ -1989,9 +1989,9 @@ GEM
     omniauth-rails_csrf_protection (1.0.2)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
-    omniauth-saml (2.2.2)
+    omniauth-saml (2.2.3)
       omniauth (~> 2.1)
-      ruby-saml (~> 1.17)
+      ruby-saml (~> 1.18)
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
@@ -2019,7 +2019,7 @@ GEM
     psych (3.3.4)
     public_suffix (6.0.1)
     racc (1.8.1)
-    rack (2.2.12)
+    rack (2.2.13)
     rack-contrib (2.5.0)
       rack (< 4)
     rack-dev-mark (0.8.0)
@@ -2173,7 +2173,7 @@ GEM
       rexml
     ruby-progressbar (1.13.0)
     ruby-rc4 (0.1.5)
-    ruby-saml (1.17.0)
+    ruby-saml (1.18.0)
       nokogiri (>= 1.13.10)
       rexml
     ruby2_keywords (0.0.5)
