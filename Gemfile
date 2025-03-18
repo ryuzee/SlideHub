@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'json', '~> 2.10'
 # gem 'rails', '5.2.7.1'
 # gem 'rails', '6.1.7.10'
-gem 'rails', '8.0.1'
+gem 'rails', '8.0.2'
 # Use SCSS for stylesheets
 # gem 'sass-rails', '~> 5.0.7'
 gem 'sass-rails'
