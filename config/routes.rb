@@ -87,6 +87,8 @@ Rails.application.routes.draw do
     get 'override' => 'css#show'
   end
 
+  get 'sitemap.xml', to: 'sitemap#index', format: 'xml', as: :sitemap
+
   # config/routes.rb
   Rails.application.routes.draw do
     root 'slides#index'

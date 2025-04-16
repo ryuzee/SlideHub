@@ -47,7 +47,6 @@ gem 'acts-as-taggable-on'
 gem 'ransack'
 # Manage Title and meta tags
 gem 'meta-tags'
-gem 'sitemap_generator'
 # AWS
 gem 'aws-sdk', '~> 3'
 gem 'aws-sdk-s3'

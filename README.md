@@ -310,12 +310,6 @@ docker-compose run app bash -l -c 'bin/rails runner -e development "require \"./
 */1 * * * * /bin/bash -lc 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bin/rails runner -e production "require \"./lib/slide_hub/batch\"; SlideHub::Batch.execute"'
 ```
 
-* Generating sitemap and send it to Google and Bing (Optional)
-
-```
-0 3 * * * /bin/bash -lc 'source /etc/environment ; export PATH="$HOME/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bin/rake  sitemap:refresh RAILS_ENV=production'
-```
-
 ## Login to the app
 
 Default account is `admin@example.com` and the password is `passw0rd`.
