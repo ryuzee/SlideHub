@@ -1852,7 +1852,7 @@ GEM
     faraday-retry (1.0.3)
     faraday_middleware (1.2.1)
       faraday (~> 1.0)
-    ffi (1.17.1)
+    ffi (1.17.2)
     formatador (1.1.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -2335,7 +2335,7 @@ DEPENDENCIES
   factory_bot
   factory_bot_rails
   faker
-  ffi (= 1.17.1)
+  ffi (= 1.17.2)
   guard
   guard-rubocop
   hirb
