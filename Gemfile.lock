@@ -1889,7 +1889,7 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jmespath (1.6.2)
-    json (2.10.2)
+    json (2.11.3)
     jwt (2.10.1)
       base64
     kgio (2.11.4)
@@ -2341,7 +2341,7 @@ DEPENDENCIES
   hirb
   i18n_generators
   jbuilder
-  json (~> 2.10)
+  json (~> 2.11)
   launchy
   meta-tags
   meta_request
