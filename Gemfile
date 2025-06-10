@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'json', '~> 2.10'
+gem 'json', '~> 2.12'
 # gem 'rails', '5.2.7.1'
 # gem 'rails', '6.1.7.10'
 gem 'rails', '8.0.2'
@@ -87,7 +87,7 @@ gem 'webpacker', '~> 5.0'
 
 # ffi-1.17.0 requires rubygems version >= 3.3.22
 # https://github.com/ffi/ffi/issues/1103
-gem 'ffi', '1.17.1'
+gem 'ffi', '1.17.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
