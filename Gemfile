@@ -81,7 +81,7 @@ gem 'enum_help'
 # gem 'apartment'
 gem 'ros-apartment', require: 'apartment'
 
-gem 'psych', '~> 3.1'
+gem 'psych', '~> 5.2'
 
 gem 'webpacker', '~> 5.0'
 
