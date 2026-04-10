@@ -1,5 +1,4 @@
 require 'azure/storage/blob'
-require 'active_storage/service/azure_storage_service'
 module ActiveStorage
   # Wraps the Microsoft Azure Storage Blob Service as an Active Storage service.
   # See ActiveStorage::Service for the generic API documentation that applies to all services.
