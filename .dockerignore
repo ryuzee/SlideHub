@@ -36,3 +36,4 @@ vendor/bundle
 Guardfile
 Vagrantfile
 lib/tasks/docker.rake
+bundle_cache/

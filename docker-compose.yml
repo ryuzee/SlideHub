@@ -64,6 +64,7 @@ services:
       - '1080:1080'
     volumes:
       - .:/opt/application/current:cached
+      - ./bundle_cache:/usr/local/bundle
 
 volumes:
   mysql-data:
