@@ -87,7 +87,7 @@ GEM
       zeitwerk (>= 2.4, < 3.0)
     addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
-    afm (0.2.2)
+    afm (1.0.0)
     amazing_print (1.6.0)
     anbt-sql-formatter (0.1.0)
     annotate (2.6.5)
@@ -2015,9 +2015,9 @@ GEM
     parser (3.3.8.0)
       ast (~> 2.4.1)
       racc
-    pdf-reader (2.14.1)
+    pdf-reader (2.15.1)
       Ascii85 (>= 1.0, < 3.0, != 2.0.0)
-      afm (~> 0.2.1)
+      afm (>= 0.2.1, < 2)
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
