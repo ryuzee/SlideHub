@@ -16,7 +16,7 @@
     "jquery": "3.7.1",
     "jquery-lazyload": "1.9.7",
     "jquery-match-height": "^0.7.2",
-    "js-cookie": "2.0.4",
+    "js-cookie": "3.0.7",
     "mousetrap": "1.6.0",
     "popper.js": "^1.16.1",
     "sticky-kit": "1.1.2",
