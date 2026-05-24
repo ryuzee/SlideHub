@@ -5318,9 +5318,10 @@ jqvmap-novulnerability@^1.5.1:
   dependencies:
     jquery "^3.4.0"
 
-js-cookie@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.0.4.tgz#5f43d1872118aaf5e7a16029b70976eb7315c6a5"
+js-cookie@3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.7.tgz#0a53abfc459c8e89c85d7a38eb6cb68714965b8c"
+  integrity sha512-z/wZZgDrkNV1eA0ULjM/F9/50Ya8fbzgKneSpoPsXSGd0KnpdtHfOZWK+GcwLk+EZbS4F9RBhU+K2RgzuDaItw==
 
 js-tokens@^4.0.0:
   version "4.0.0"
