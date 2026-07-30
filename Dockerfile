@@ -14,11 +14,19 @@ RUN bash -c "source /root/.bashrc && rbenv global 3.3.6"
 RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler -v 2.3.27"
 RUN bash -c "source /root/.bashrc && rbenv rehash"
 
-RUN curl -L git.io/nodebrew | perl - setup
 ENV PATH /root/.nodebrew/current/bin:$PATH
-RUN /root/.nodebrew/current/bin/nodebrew install v18.19.1
-RUN /root/.nodebrew/current/bin/nodebrew use v18.19.1
-RUN npm install --g yarn
+# nodebrewはArchive::Tarで展開するが、Ubuntuの patched Archive::Tar が相対シンボリック
+# リンクの展開を拒否するためnpm等が入らない。公式tarballをGNU tarで展開する。
+ARG NODE_VERSION=v18.19.1
+RUN mkdir -p /root/.nodebrew/node \
+    && curl -fsSL -o /tmp/node.tar.gz "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz" \
+    && tar -xzf /tmp/node.tar.gz -C /root/.nodebrew/node \
+    && mv "/root/.nodebrew/node/node-${NODE_VERSION}-linux-x64" "/root/.nodebrew/node/${NODE_VERSION}" \
+    && ln -sfn "/root/.nodebrew/node/${NODE_VERSION}" /root/.nodebrew/current \
+    && rm -f /tmp/node.tar.gz \
+    && node -v && npm -v \
+    && npm install --g yarn \
+    && yarn -v
 
 RUN apt-get -y autoremove && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
