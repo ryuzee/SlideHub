@@ -121,7 +121,9 @@ Rails.application.config.middleware.insert_before Warden::Manager, Apartment::El
 module ApartmentCache
   private
 
-    def normalize_key(key, options)
+    # ActiveSupport::Cache::Store#normalize_key(key, options = nil) と同じシグネチャにする。
+    # 第2引数を省略して呼ばれると ArgumentError になるため。
+    def normalize_key(key, options = nil)
       "#{Apartment::Tenant.current}/#{super}"
     end
 end
