@@ -1,15 +1,3 @@
-<script type="text/javascript">
-$(function(){
-  $('.datetimepicker').datetimepicker({
-    useCurrent: false,
-    sideBySide: false,
-    showTodayButton: true,
-    showClear: true,
-    showClose: true
-  });
-});
-</script>
-
 <%= form_for slide, :html => { :class => "form-horizontal slide" }, :url => admin_slide_path(slide.id)  do |f| %>
   <% if slide.errors.any? %>
     <div id="error_expl" class="card card-danger">

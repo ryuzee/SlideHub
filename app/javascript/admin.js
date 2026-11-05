@@ -1,6 +1,8 @@
 // esbuild でバンドルし app/assets/builds/admin.js に出力する（package.json の build スクリプト）
 import "./jquery_global"
 import Rails from "@rails/ujs"
+// AdminLTE 3 のドロップダウンやモーダルは Bootstrap 4 の JS に依存する
+import "bootstrap"
 import "admin-lte/dist/js/adminlte.min"
 import moment from "moment"
 import * as tempusDominus from "@eonasdan/tempus-dominus/dist/js/tempus-dominus.min"
