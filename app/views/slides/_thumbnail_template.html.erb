@@ -1,8 +1,8 @@
     <div class="row" style="max-width:1024px; margin:0 auto;">
     <% slides.each do |slide| %>
       <% next if slide.nil? %>
-      <div class="<%= column_class %>" style="padding:4px;">
-        <div class="card slidecard">
+      <div class="<%= column_class %> d-flex" style="padding:4px;">
+        <div class="card slidecard w-100">
           <div class="slidecard-image">
             <%= link_to slide_thumbnail_tag(slide), slide_path(slide.id) %>
           </div>
@@ -25,11 +25,3 @@
 
       <% end %>
     </div>
-
-<script type="text/javascript">
-$(window).on('load', function () {
-    $('.slidecard-basic-info').matchHeight();
-    $('.slidecard-information').matchHeight();
-    $('.slidecard').matchHeight();
-});
-</script>

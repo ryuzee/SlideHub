@@ -98,8 +98,6 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $("#rightside").stick_in_parent();
-
     if (Cookies.get("SlideTab")) {
       $('a[data-bs-toggle="tab"]').parent().removeClass('active');
       $('a[href="#' + Cookies.get("SlideTab") +'"]').click();

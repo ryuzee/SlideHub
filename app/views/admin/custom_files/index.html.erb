@@ -63,7 +63,7 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    var clipboard = new Clipboard('.copy-to-clipboard');
+    var clipboard = new ClipboardJS('.copy-to-clipboard');
     clipboard.on('success', function(e) {
       e.clearSelection();
     });

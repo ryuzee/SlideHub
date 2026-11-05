@@ -555,9 +555,10 @@ chokidar@^4.0.0:
   dependencies:
     readdirp "^4.0.1"
 
-clipboard@1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/clipboard/-/clipboard-1.7.1.tgz#360d6d6946e99a7a1fef395e42ba92b5e9b5a16b"
+clipboard@^2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/clipboard/-/clipboard-2.0.11.tgz#62180360b97dd668b6b3a84ec226975762a70be5"
+  integrity sha512-C+0bbOqkezLIsmWSvlsXS0Q0bmkugu7jcfMIACB+RDEntIzQIkdr148we28AfSloQLRdZlYL/QYyrq05j/3Faw==
   dependencies:
     good-listener "^1.2.2"
     select "^1.1.2"
@@ -1337,10 +1338,6 @@ jquery-knob-chif@^1.2.13:
   resolved "https://registry.yarnpkg.com/jquery-knob-chif/-/jquery-knob-chif-1.2.13.tgz#5f1e462ef3745d27a9fd66ce1141fe82b44a5762"
   integrity sha1-Xx5GLvN0XSep/WbOEUH+grRKV2I=
 
-jquery-lazyload@1.9.7:
-  version "1.9.7"
-  resolved "https://registry.yarnpkg.com/jquery-lazyload/-/jquery-lazyload-1.9.7.tgz#9982b388c533c0b611214b3c5aaa0b9fede071f7"
-
 jquery-mapael@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/jquery-mapael/-/jquery-mapael-2.2.0.tgz#a68850c680ef0ce3f8b865e8a48b2a018250ca73"
@@ -1350,11 +1347,6 @@ jquery-mapael@^2.2.0:
     raphael "^2.2.0 || ^2.1.1"
   optionalDependencies:
     jquery-mousewheel "^3.1"
-
-jquery-match-height@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/jquery-match-height/-/jquery-match-height-0.7.2.tgz#f8d9f3ba5314daab109cf07408674be204be5f0e"
-  integrity sha512-qSyC0GBc4zUlgBcxfyyumJSVUm50T6XuJEIz59cKaI28VXMUT95mZ6KiIjhMIMbG8IiJhh65FtQO1XD42TAcwg==
 
 jquery-mousewheel@^3.1, jquery-mousewheel@^3.1.13:
   version "3.1.13"
@@ -1395,9 +1387,10 @@ jqvmap-novulnerability@^1.5.1:
   dependencies:
     jquery "^3.4.0"
 
-js-cookie@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.0.4.tgz#5f43d1872118aaf5e7a16029b70976eb7315c6a5"
+js-cookie@^3:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.8.tgz#444e6f4b27a5d844594fef61c9d6bca5f0787688"
+  integrity sha512-yeJd4aNAdYZQjaon2bpD/Gb0B/omw7HQOsynXXcOiWVCacbBcPlgn8S/d1X6blFSaHao7ozqtW7NZW19xpCtIw==
 
 jsgrid@^1.5.3:
   version "1.5.3"
@@ -1473,10 +1466,6 @@ moment@^2.29.4:
   version "2.31.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.31.0.tgz#6e19184e8005a9dfc61c9351263d4d6ea2ace7aa"
   integrity sha512-0acOTfMiWOheYS4eoWb80yYMb/JLvVv9SHbs2PehaDzfUG0Bw855SKyk0IKTnPGa5+U2bmi3W68l1+sGLX/pvw==
-
-mousetrap@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.0.tgz#0168fcabb11d07669e87490324c981208121ac4d"
 
 next-tick@^1.1.0:
   version "1.1.0"
@@ -1759,10 +1748,6 @@ static-module@^3.0.2:
     shallow-copy "~0.0.1"
     static-eval "^2.0.5"
     through2 "~2.0.3"
-
-sticky-kit@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/sticky-kit/-/sticky-kit-1.1.2.tgz#f319919b9336622f5f71f11678ee5cefbfa85e83"
 
 string_decoder@~1.1.1:
   version "1.1.1"

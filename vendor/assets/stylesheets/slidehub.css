@@ -397,3 +397,20 @@ abbr {
   object-fit: cover;
   background-color: #e9ecef;
 }
+
+/* カードの上側（サムネイル部分）は角丸にせず、下側だけ角丸にする */
+.slidehub_body .slidecard.card {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* カードの高さを揃え、投稿者・日付の欄をカードの下端に寄せる（旧 jquery-match-height の代わり） */
+.slidehub_body .slidecard .slidecard-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.slidehub_body .slidecard .slidecard-information {
+  margin-top: auto;
+}

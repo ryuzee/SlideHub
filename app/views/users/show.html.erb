@@ -18,12 +18,6 @@
     <div>
       <%= will_paginate @slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
     </div>
-
-    <script type="text/javascript">
-        $(window).load(function () {
-            $('.col-md-4').matchHeight();
-        });
-    </script>
   </div>
 
   <div class="col-md-3">

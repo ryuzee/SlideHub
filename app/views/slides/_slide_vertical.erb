@@ -14,27 +14,15 @@ end
 <% page_alt = "#{strip_tags(slide.name)} (#{count}/#{page_count})" %>
 <div class="vertical_slide_box">
   <a name="img-<%= count-1 %>"></a>
-  <% if count <= 2 %>
-    <%= image_tag u, class: "lazy img-fluid", style: "width:100%", alt: page_alt %>
-  <% else %>
-    <%= image_tag "spacer640x480.png", class: "lazy img-fluid", style: "width:100%", alt: page_alt, data: { original: u } %>
-  <% end %>
+  <%# 最初の2枚はすぐに読み込み、3枚目以降はブラウザの遅延読み込みに任せる %>
+  <%= image_tag u, class: "img-fluid", style: "width:100%", alt: page_alt, loading: (count <= 2 ? "eager" : "lazy") %>
 </div>
 <div class="icon_right">
 <a href="#top"><i class="fa fa-arrow-up"></i></a>
 </div>
 <% end %>
 <% elsif slide.convert_error? %>
-    <%= image_tag "failed_to_convert.jpg", class: "lazy img-fluid" %>
+    <%= image_tag "failed_to_convert.jpg", class: "img-fluid" %>
 <% else %>
-    <%= image_tag "converting.jpg", class: "lazy img-fluid" %>
+    <%= image_tag "converting.jpg", class: "img-fluid" %>
 <% end %>
-
-<script type="text/javascript">
-$(function() {
-    $(".slidehub_body img.lazy").lazyload({
-        threshold : 200,
-        effect: "fadeIn"
-    });
-});
-</script>
