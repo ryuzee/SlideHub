@@ -388,3 +388,12 @@ abbr {
     padding-right: 0px !important;
   }
 }
+
+/* 一覧のサムネイル。枠を 4:3 に固定し、画像が無くてもカードの大きさを揃える */
+.slide-thumbnail {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background-color: #e9ecef;
+}

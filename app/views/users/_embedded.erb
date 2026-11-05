@@ -4,7 +4,7 @@
     <div style="padding:4px;">
       <div class="slidecard">
         <div class="slidecard-image">
-          <%= link_to image_tag(thumbnail_image_url(slide), class: "img-fluid", style: "width:100%", alt: strip_tags(slide.name), loading: "lazy"), slide_url(slide.id) %>
+          <%= link_to slide_thumbnail_tag(slide), slide_url(slide.id) %>
         </div>
         <div class="slidecard-content">
           <div class="slidecard-basic-info">
@@ -23,6 +23,14 @@
 </div>
 
 <style>
+.slidehub_body .slide-thumbnail {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background-color: #e9ecef;
+}
+
 .slidehub_body .slidecard {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, "Arial", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "游ゴシック", YuGothic, sans-serif;
   max-width: 400px;

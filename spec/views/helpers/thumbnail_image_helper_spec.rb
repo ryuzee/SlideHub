@@ -25,4 +25,15 @@ RSpec.describe ThumbnailImageHelper, type: :helper do
       expect(helper.thumbnail_image_url(slide)).to start_with '/assets/converting_small'
     end
   end
+  describe 'slide_thumbnail_tag' do
+    it 'renders a lazy 4:3 thumbnail with a fallback image' do
+      slide = FactoryBot.create(:slide, name: 'My <b>Slide</b>')
+      tag = Nokogiri::HTML.fragment(helper.slide_thumbnail_tag(slide, class: 'extra')).at('img')
+      expect(tag['src']).to eq helper.thumbnail_image_url(slide)
+      expect(tag['class']).to eq 'slide-thumbnail extra'
+      expect(tag['alt']).to eq 'My Slide'
+      expect(tag['loading']).to eq 'lazy'
+      expect(tag['data-fallback-src']).to match %r{/assets/no_image-.*\.svg\z}
+    end
+  end
 end

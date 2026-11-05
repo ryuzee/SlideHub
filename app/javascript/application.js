@@ -1,5 +1,6 @@
 // esbuild でバンドルし app/assets/builds/application.js に出力する（package.json の build スクリプト）
 import "./jquery_global"
+import "./image_fallback"
 import Rails from "@rails/ujs"
 import * as bootstrap from "bootstrap"
 import moment from "moment"
