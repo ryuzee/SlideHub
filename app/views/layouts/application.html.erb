@@ -22,8 +22,8 @@
     <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
     <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" %>
     <% ApplicationSetting['site.theme'] = 'default' unless %w[default white dark gray].include?(ApplicationSetting['site.theme']) %>
-    <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/bootstrap.css?20220501" %>
-    <%= stylesheet_link_tag "/themes/#{ApplicationSetting['site.theme']}/custom.css?20220501" %>
+    <%= theme_stylesheet_link_tag ApplicationSetting['site.theme'], 'bootstrap.css' %>
+    <%= theme_stylesheet_link_tag ApplicationSetting['site.theme'], 'custom.css' %>
     <%= stylesheet_link_tag "/custom/override.css" %>
   </head>
   <body class="slidehub_body" oncontextmenu="return false;">
@@ -43,37 +43,37 @@
     <nav class="navbar navbar-expand-lg  <%= css_class %> sticky-top">
       <div class="container d-flex justify-content-between">
         <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;<%= ApplicationSetting['site.name'] %></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item <%= 'active' if controller.controller_name == 'popular' %>"><%= link_to t("popular"), popular_index_path, class: 'nav-link'  %></li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'latest' %>"><%= link_to t("latest"), latest_index_path, class: 'nav-link'  %></li>
-            <li class="nav-item dropdown<%= ' active' if controller.controller_name == 'categories' %>">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true"><%= t 'category' %></a>
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><%= link_to t("popular"), popular_index_path, class: "nav-link#{' active' if controller.controller_name == 'popular'}" %></li>
+            <li class="nav-item"><%= link_to t("latest"), latest_index_path, class: "nav-link#{' active' if controller.controller_name == 'latest'}" %></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle<%= ' active' if controller.controller_name == 'categories' %>" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true"><%= t 'category' %></a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <% @categories.each do |cat| %>
                 <%= link_to cat.name, category_path(cat.id), class: 'dropdown-item' %>
                 <% end %>
               </div>
             </li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'search' %>"><%= link_to t("search"), search_index_path, class: 'nav-link'  %></li>
+            <li class="nav-item"><%= link_to t("search"), search_index_path, class: "nav-link#{' active' if controller.controller_name == 'search'}" %></li>
             <%= raw custom_links(controller) %>
           </ul>
           <% if user_signed_in? %>
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="navbar-nav">
             <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
               <span class="avatar20" aria-hidden="true">
                 <% if current_user.avatar.attached? %>
                 <%= image_tag(url_for(current_user.avatar), :size => '32x32') %>
                 <% else %>
                 <%= image_tag('avatar/thumb/missing.png') %>
                 <% end %>
-              </span>&nbsp;<%= current_user.email %><span class="caret"></span></a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              </span>&nbsp;<%= current_user.email %></a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <% if (ApplicationSetting['site.only_admin_can_upload']).to_i == 0 || current_user.admin == true %>
               <a class="dropdown-item" href="<%= new_slide_path %>"><i class="fa fa-pencil"></i>&nbsp;<%= t 'upload' %>!!</a>
               <% end %>
@@ -83,7 +83,7 @@
               <% if current_user.admin %>
               <!-- admin -->
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="<%= admin_dashboard_path %>"><i class="fa fa-wrench"></i></span>&nbsp;<%= t :admin_dashboard %></a>
+              <a class="dropdown-item" href="<%= admin_dashboard_path %>"><i class="fa fa-wrench"></i>&nbsp;<%= t :admin_dashboard %></a>
               <!-- // admin -->
               <% end %>
               <div class="dropdown-divider"></div>
@@ -94,7 +94,7 @@
           </ul>
           <% else %>
           <% if ApplicationSetting['site.display_login_link'] == "1" %>
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="navbar-nav">
             <% if ApplicationSetting['site.signup_enabled'] == "1" %>
             <li class="nav-item"><%= link_to t("signup"), new_user_registration_path, class: 'nav-link' %></li>
             <% end %>
@@ -120,10 +120,10 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <p class="text-muted text-left"><%= raw ApplicationSetting['site.footer'] %></p>
+            <p class="text-muted text-start"><%= raw ApplicationSetting['site.footer'] %></p>
           </div>
           <div class="col-md-6">
-            <p class="text-muted text-right">Powered by <%= link_to "SlideHub", "https://github.com/ryuzee/SlideHub", target: "_blank", rel: "noopener noreferrer" %> <%= SlideHub::Version %></p>
+            <p class="text-muted text-end">Powered by <%= link_to "SlideHub", "https://github.com/ryuzee/SlideHub", target: "_blank", rel: "noopener noreferrer" %> <%= SlideHub::Version %></p>
           </div>
         </div>
       </div>

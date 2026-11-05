@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build": "esbuild app/javascript/application.js app/javascript/admin.js --bundle --minify --sourcemap --format=iife --target=es2017 --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "esbuild app/javascript/stylesheets/application.css app/javascript/stylesheets/admin.css --bundle --minify --outdir=app/assets/builds"
+    "build:css": "esbuild app/javascript/stylesheets/application.css app/javascript/stylesheets/admin.css --bundle --minify --outdir=app/assets/builds",
+    "build:themes": "sass app/javascript/themes/default.scss:public/themes/default/bootstrap.css app/javascript/themes/dark.scss:public/themes/dark/bootstrap.css app/javascript/themes/gray.scss:public/themes/gray/bootstrap.css app/javascript/themes/white.scss:public/themes/white/bootstrap.css --load-path=node_modules --style=compressed --no-source-map --quiet-deps --silence-deprecation=import,global-builtin,color-functions,if-function"
   },
   "dependencies": {
     "@eonasdan/tempus-dominus": "^6.0.0-beta5.1",
@@ -11,7 +12,8 @@
     "@popperjs/core": "2",
     "@rails/ujs": "^7.1.3-4",
     "admin-lte": "^3",
-    "bootstrap": "4.6.2",
+    "bootstrap": "^5.3",
+    "bootstrap4": "npm:bootstrap@4.6.2",
     "clipboard": "1.7.1",
     "crypto-js": "4.2.0",
     "esbuild": "^0.28.2",
@@ -24,5 +26,9 @@
     "popper.js": "^1.16.1",
     "sticky-kit": "1.1.2",
     "uplot": "1.6.31"
+  },
+  "devDependencies": {
+    "bootswatch": "^5.3",
+    "sass": "~1.97.3"
   }
 }

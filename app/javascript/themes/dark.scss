@@ -1,0 +1,13 @@
+// dark テーマ: Bootswatch Darkly（Bootstrap 5.3）
+// yarn build:themes で public/themes/dark/bootstrap.css に出力する
+
+// 旧テーマ同様、Web フォントは読み込まない
+$web-font-path: false;
+
+// Bootstrap 4 と同じく、リンクの下線はホバー時だけにする
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+@import "bootswatch/dist/darkly/variables";
+@import "bootstrap/scss/bootstrap";
+@import "bootswatch/dist/darkly/bootswatch";

@@ -1,0 +1,22 @@
+// white テーマ: 旧 Themestr.app `Monotony` (Bootstrap 4.3.1) の配色とフォントを Bootstrap 5.3 で再現
+// yarn build:themes で public/themes/white/bootstrap.css に出力する
+@import url("https://fonts.googleapis.com/css?family=Montserrat:200,300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,700");
+
+// Bootstrap 4 と同じく、リンクの下線はホバー時だけにする
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+$primary: #222222;
+$secondary: #666666;
+$success: #333333;
+$info: #515151;
+$warning: #5f5f5f;
+$danger: #434343;
+$light: #eceeec;
+$dark: #111111;
+
+$font-family-sans-serif: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$headings-font-family: "Open Sans", $font-family-sans-serif;
+
+@import "bootstrap/scss/bootstrap";

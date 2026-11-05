@@ -10,20 +10,18 @@
     <div class="card card-default">
       <div class="card-body">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form" }) do |f| %>
-          <div class="form-group">
+          <div class="mb-3">
             <%= f.label :email %>
             <%= f.email_field :email, autofocus: true, class: "form-control" %>
           </div>
-          <div class="form-group">
+          <div class="mb-3">
             <%= f.label :password %><%= render "devise/shared/forget_password" %>
             <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
           </div>
           <% if devise_mapping.rememberable? %>
-            <div class="checkbox">
-              <label>
-                <%= f.check_box :remember_me %>
-                <%= f.label :remember_me %>
-              </label>
+            <div class="form-check">
+              <%= f.check_box :remember_me, class: "form-check-input" %>
+              <%= f.label :remember_me, class: "form-check-label" %>
             </div>
           <% end %>
           <%= f.submit t(:signin), class: "btn btn-primary" %>

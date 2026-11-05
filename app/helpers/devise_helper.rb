@@ -6,10 +6,7 @@ module DeviseHelper
     resource.errors.full_messages.each do |error_message|
       html += <<-EOF
       <div class="alert alert-danger alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert">
-          <span aria-hidden="true">&times;</span>
-          <span class="sr-only">close</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
         #{error_message}
       </div>
       EOF

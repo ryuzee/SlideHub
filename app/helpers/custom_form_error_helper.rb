@@ -10,7 +10,7 @@ module CustomFormErrorHelper
 
   def create_error_div(error_messages)
     result = <<~HTML
-      <small class="help-block">#{error_messages.first}</small>
+      <small class="form-text text-danger">#{error_messages.first}</small>
     HTML
     raw result
   end

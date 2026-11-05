@@ -1,7 +1,7 @@
 /*
  * esbuild で結合し app/assets/builds/application.css に出力する（package.json の build:css スクリプト）。
  * ビルド済みの CSS を Sass に通すと calc() が書き換えられて失敗するため、素の CSS として結合する。
+ * Bootstrap 本体は各テーマの bootstrap.css（public/themes 配下, yarn build:themes で生成）が提供する。
  */
-@import "bootstrap/dist/css/bootstrap.min.css";
 @import "@eonasdan/tempus-dominus/dist/css/tempus-dominus.min.css";
 @import "../../../vendor/assets/stylesheets/slidehub.css";

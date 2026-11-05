@@ -10,16 +10,16 @@
     <div class="card card-default">
     <div class="card-body">
 
-    <form id="upload-form" class="form-horizontal" method="post" enctype="multipart/form-data" action="javascript:void(0); return false;">
+    <form id="upload-form" method="post" enctype="multipart/form-data" action="javascript:void(0); return false;">
 
-    <div class="form-group">
+    <div class="mb-3">
       <label class="form-label col-sm-2"><%= t(:file) %></label>
       <div class="col-sm-10">
-        <input type="file" name="file" id="file" class="form-control-file" />
+        <input type="file" name="file" id="file" class="form-control" />
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
       <label class="form-label col-sm-2"></label>
       <div class="col-sm-10">
         <div class="progress">
@@ -28,15 +28,15 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
+    <div class="mb-3">
+      <div class="col-sm-10">
         <input type="submit" id="re-upload" class="btn btn-primary" value="<%= t :re_upload_slide %>" />
       </div>
     </div>
 
 </form>
 
-<%= form_for @slide, :html => { :class => "form-horizontal slide" } do |f| %>
+<%= form_for @slide, :html => { :class => "slide" } do |f| %>
 
     <% if @slide.errors.any? %>
     <div id="error_expl" class="card card-danger">
@@ -53,7 +53,7 @@
     </div>
   <% end %>
 
-  <div class="form-group">
+  <div class="mb-3">
     <%= f.label :name, :class => 'form-label col-sm-2' %>
     <div class="col-sm-10">
       <%= f.text_field :name, :class => 'form-control' %>
@@ -61,7 +61,7 @@
     </div>
 
   </div>
-  <div class="form-group">
+  <div class="mb-3">
     <%= f.label :description, :class => 'form-label col-sm-2' %>
     <div class="col-sm-10">
       <%= f.text_area :description, :class => 'form-control' %>
@@ -69,21 +69,20 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="checkbox">
-        <label>
-          <%= f.check_box :downloadable %>&nbsp;<%= t('activerecord.attributes.slide.downloadable') %>
-        </label>
+  <div class="mb-3">
+    <div class="col-sm-10">
+      <div class="form-check">
+        <%= f.check_box :downloadable, class: "form-check-input" %>
+        <%= f.label :downloadable, t('activerecord.attributes.slide.downloadable'), class: "form-check-label" %>
       </div>
       <%= errors(@slide, :downloadable) %>
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="mb-3">
     <%= f.label t('activerecord.models.category'), :class => 'form-label col-sm-2' %>
     <div class="col-sm-10">
-      <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: 'form-control'} %>
+      <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: 'form-select'} %>
       <%= errors(@slide, :category_id) %>
     </div>
   </div>
@@ -91,7 +90,7 @@
   <%= f.hidden_field :id, :value => @slide.id %>
   <%= f.hidden_field :convert_status, :id => 'SlideConvertStatus' %>
   <%= f.hidden_field :object_key, :id => 'SlideKey', :value => @slide.object_key %>
-  <div class="form-group">
+  <div class="mb-3">
     <%= f.label t('activerecord.models.tag'), :class => 'form-label col-sm-2' %>
     <div class="col-sm-10">
       <%= f.text_field :tag_list, :value => @slide.tag_list.join(','), :class => 'form-control' %>
@@ -99,19 +98,18 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="checkbox">
-        <label>
-          <%= f.check_box :private %>&nbsp;<%= t('activerecord.attributes.slide.private') %>
-        </label>
+  <div class="mb-3">
+    <div class="col-sm-10">
+      <div class="form-check">
+        <%= f.check_box :private, class: "form-check-input" %>
+        <%= f.label :private, t('activerecord.attributes.slide.private'), class: "form-check-label" %>
       </div>
       <%= errors(@slide, :private) %>
     </div>
   </div>
 
   <%= f.submit nil, :id => 'save_button', :class => 'btn btn-primary' %>
-  <%= link_to t("helpers.links.cancel"), slides_path, :class => 'btn btn-default' %>
+  <%= link_to t("helpers.links.cancel"), slides_path, :class => 'btn btn-outline-secondary' %>
 
 <% end %>
 
