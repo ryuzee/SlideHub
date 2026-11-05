@@ -17,7 +17,7 @@ RUN bash -c "source /root/.bashrc && rbenv rehash"
 ENV PATH /root/.nodebrew/current/bin:$PATH
 # nodebrewはArchive::Tarで展開するが、Ubuntuの patched Archive::Tar が相対シンボリック
 # リンクの展開を拒否するためnpm等が入らない。公式tarballをGNU tarで展開する。
-ARG NODE_VERSION=v18.19.1
+ARG NODE_VERSION=v22.23.4
 RUN mkdir -p /root/.nodebrew/node \
     && curl -fsSL -o /tmp/node.tar.gz "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz" \
     && tar -xzf /tmp/node.tar.gz -C /root/.nodebrew/node \
