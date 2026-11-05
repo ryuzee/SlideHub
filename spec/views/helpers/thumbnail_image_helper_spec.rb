@@ -35,5 +35,28 @@ RSpec.describe ThumbnailImageHelper, type: :helper do
       expect(tag['loading']).to eq 'lazy'
       expect(tag['data-fallback-src']).to match %r{/assets/no_image-.*\.svg\z}
     end
+
+    it 'uses the 16:9 thumbnail and falls back to the 4:3 one when the site setting is 16:9' do
+      ApplicationSetting['site.thumbnail_aspect_ratio'] = '16:9'
+      slide = FactoryBot.create(:slide)
+      tag = Nokogiri::HTML.fragment(helper.slide_thumbnail_tag(slide)).at('img')
+      expect(tag['src']).to eq slide.thumbnail.url_wide
+      expect(tag['class']).to eq 'slide-thumbnail slide-thumbnail-16x9'
+      fallbacks = tag['data-fallback-src'].split
+      expect(fallbacks.first).to eq slide.thumbnail.url
+      expect(fallbacks.last).to match %r{/assets/no_image-.*\.svg\z}
+    ensure
+      ApplicationSetting['site.thumbnail_aspect_ratio'] = '4:3'
+    end
+
+    it 'keeps the converting image for unconverted slides even when the setting is 16:9' do
+      ApplicationSetting['site.thumbnail_aspect_ratio'] = '16:9'
+      slide = FactoryBot.create(:slide, convert_status: Slide.convert_statuses[:unconverted])
+      tag = Nokogiri::HTML.fragment(helper.slide_thumbnail_tag(slide)).at('img')
+      expect(tag['src']).to start_with '/assets/converting_small'
+      expect(tag['class']).to eq 'slide-thumbnail slide-thumbnail-16x9'
+    ensure
+      ApplicationSetting['site.thumbnail_aspect_ratio'] = '4:3'
+    end
   end
 end

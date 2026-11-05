@@ -30,6 +30,7 @@ class ApplicationSetting
     'site.favicon',
     'site.footer',
     'site.theme',
+    'site.thumbnail_aspect_ratio',
   ]
 
   class << self

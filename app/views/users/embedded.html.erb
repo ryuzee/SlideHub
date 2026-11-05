@@ -2,10 +2,14 @@
     var elm = document.getElementById("slidehub-<%= @prefix %>");
     elm.innerHTML = `<%= raw @body.gsub!(/\n/, '').gsub!(/ {2,}/,' ') %>`;
     // 埋め込み先のページでは application.js が無いので、ここでサムネイルの差し替えを行う
+    // data-fallback-src に空白区切りで並べた候補を前から順に試す（image_fallback.js と同じ動き）
     elm.addEventListener("error", function(e) {
       var img = e.target;
-      if (img.tagName === "IMG" && img.dataset.fallbackSrc && img.src !== img.dataset.fallbackSrc) {
-        img.src = img.dataset.fallbackSrc;
-      }
+      if (img.tagName !== "IMG") return;
+      var candidates = (img.dataset.fallbackSrc || "").split(/\s+/).filter(Boolean);
+      var next = candidates.shift();
+      if (!next || img.src === next) return;
+      img.dataset.fallbackSrc = candidates.join(" ");
+      img.src = next;
     }, true);
 })();

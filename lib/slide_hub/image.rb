@@ -3,10 +3,23 @@ require 'rmagick'
 
 module SlideHub
   class Image
-    def thumbnail(src, dest)
-      width = 320
-      height = 240
+    # 一覧用サムネイルのファイル名と大きさ。サイト設定 site.thumbnail_aspect_ratio で表示する方を選ぶ
+    LIST_THUMBNAILS = {
+      'thumbnail.jpg' => { width: 320, height: 240 },
+      'thumbnail-16x9.jpg' => { width: 480, height: 270 },
+    }.freeze
 
+    # 1ページ目の画像から一覧用サムネイル（4:3 と 16:9）を同じディレクトリに作り、作ったファイルのパスを返す
+    def list_thumbnails(first_page)
+      LIST_THUMBNAILS.map do |name, size|
+        save_to = "#{File.dirname(first_page)}/#{name}"
+        thumbnail(first_page, save_to, **size)
+        save_to
+      end
+    end
+
+    # 一覧用のサムネイル。既定は 4:3 (320x240)。16:9 用は width: 480, height: 270 で作る
+    def thumbnail(src, dest, width: 320, height: 240)
       thumb = Magick::Image.from_blob(File.read(src)).shift
       thumb_out = if thumb.columns < width || thumb.rows < height
                     cover_white(thumb, width, height)

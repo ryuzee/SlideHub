@@ -44,4 +44,13 @@
 
   <%= submit_tag t(:save_settings), class: 'btn btn-primary' %>
 <% end %>
+
+<div class="card card-secondary card-outline mt-4">
+  <div class="card-body">
+    <h3 class="h5 mb-2"><%= t(:regenerate_thumbnails) %></h3>
+    <p class="text-muted small mb-3"><%= t(:regenerate_thumbnails_description) %></p>
+    <%= button_to t(:regenerate_thumbnails), admin_thumbnail_regeneration_path, method: :post,
+                  class: 'btn btn-outline-secondary', data: { confirm: t(:regenerate_thumbnails_confirm) } %>
+  </div>
+</div>
 </section>

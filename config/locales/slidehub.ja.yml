@@ -142,6 +142,10 @@ ja:
     links:
       cancel: "キャンセル"
   send_convert_request_completed: "再変換のリクエストを送信しました"
+  regenerate_thumbnails: "サムネイルを一括再生成"
+  regenerate_thumbnails_description: "変換済みのすべてのスライドについて、一覧用のサムネイル（4:3 と 16:9）を作り直します。変換バッチが順に処理するので、反映まで時間がかかります。"
+  regenerate_thumbnails_confirm: "すべてのスライドのサムネイルを作り直します。よろしいですか？"
+  regenerate_thumbnails_requested: "%{count}件のスライドのサムネイル再生成をリクエストしました"
   site:
     display_login_link: "ログインリンクを表示する"
     only_admin_can_upload: "管理者のみアップロード可能にする"
@@ -151,6 +155,7 @@ ja:
     favicon: "favicionのURL"
     footer: "フッターの文字列"
     theme: "テーマ"
+    thumbnail_aspect_ratio: "一覧のサムネイルの縦横比"
   custom_content:
     center_top: "中央上部"
     center_bottom: "中央下部"

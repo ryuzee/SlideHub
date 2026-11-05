@@ -1,11 +1,20 @@
 module ThumbnailImageHelper
-  # 一覧用のサムネイル画像。枠を 4:3 に固定し（.slide-thumbnail）、
-  # 画像が読み込めないときは JS (image_fallback.js) で no_image.svg に差し替える。
+  # 一覧用のサムネイル画像。枠の縦横比はサイト設定 site.thumbnail_aspect_ratio（4:3 / 16:9）に従う。
+  # 画像が読み込めないときは JS (image_fallback.js) が data-fallback-src の候補を順に試す。
+  #   16:9: thumbnail-16x9.jpg → thumbnail.jpg（16:9 版をまだ作っていないスライド用）→ no_image.svg
+  #   4:3:  thumbnail.jpg → no_image.svg
   def slide_thumbnail_tag(slide, **options)
-    classes = ['slide-thumbnail', options.delete(:class)].compact.join(' ')
-    image_tag(thumbnail_image_url(slide),
+    wide = wide_thumbnail? && slide.converted?
+    classes = ['slide-thumbnail', ('slide-thumbnail-16x9' if wide_thumbnail?), options.delete(:class)].compact.join(' ')
+    fallbacks = [(slide.thumbnail.url if wide), asset_url('no_image.svg')].compact
+
+    image_tag(wide ? slide.thumbnail.url_wide : thumbnail_image_url(slide),
               alt: strip_tags(slide.name), loading: 'lazy', class: classes,
-              data: { fallback_src: asset_url('no_image.svg') }, **options)
+              data: { fallback_src: fallbacks.join(' ') }, **options)
+  end
+
+  def wide_thumbnail?
+    ApplicationSetting['site.thumbnail_aspect_ratio'] == '16:9'
   end
 
   def thumbnail_image_url(slide)

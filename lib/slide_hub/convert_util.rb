@@ -24,10 +24,9 @@ module SlideHub
     end
 
     def pdf_to_jpg(dir, file)
-      # cmd = "cd #{dir} && mutool draw -o slide-%d.jpg -r 300 #{file}.pdf"
       # 歴史的経緯で、過去のツールでは0埋め連番だったのを再現する
-      cmd = "cd #{dir} && mutool draw -o slide-%0#{Math.log10(`cd #{dir} && mutool info #{file}.pdf | grep Pages | awk '{print $2}'`.to_i).ceil}d.jpg -r 120 #{file}.pdf"
-      puts cmd
+      width = self.class.page_number_width(pdf_page_count(dir, file))
+      cmd = "cd #{dir} && mutool draw -o slide-%0#{width}d.jpg -r 120 #{file}.pdf"
       result = exec_command(cmd)
       if result
         self.get_local_file_list(dir, '.jpg')
@@ -37,13 +36,19 @@ module SlideHub
       end
     end
 
+    # ページ番号の0埋めの桁数。表示側 (SlidePages#list) と同じく、ページ数の桁数にする。
+    # 以前は Math.log10(ページ数).ceil で、10・100・1000 ページちょうどのとき1桁足りなかった
+    def self.page_number_width(page_count)
+      page_count.abs.to_s.length
+    end
+
+    def pdf_page_count(dir, file)
+      `cd #{dir} && mutool info #{file}.pdf | grep Pages | awk '{print $2}'`.to_i
+    end
+
     def jpg_to_thumbnail(list)
       slidehub_image = SlideHub::Image.new
-      thumbnail_list = []
-
-      save_to = "#{File.dirname(list[0])}/thumbnail.jpg"
-      slidehub_image.thumbnail(list[0], save_to)
-      thumbnail_list.push(save_to)
+      thumbnail_list = slidehub_image.list_thumbnails(list[0])
 
       save_to = "#{File.dirname(list[0])}/thumbnail-middle.jpg"
       slidehub_image.shrink(list[0], save_to)

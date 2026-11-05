@@ -6,6 +6,7 @@ defaults: &defaults
     name: "SlideHub"
     header_inverse: "1"
     theme: "default"
+    thumbnail_aspect_ratio: "4:3"
   custom_content:
     center_top: ""
     center_bottom: ""

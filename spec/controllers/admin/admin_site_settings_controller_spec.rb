@@ -13,6 +13,14 @@ RSpec.describe Admin::SiteSettingsController, type: :controller do
         get 'index'
         expect(response.status).to eq(200)
       end
+
+      it 'creates rows for settings added later and shows the regeneration button' do
+        Setting.where(var: 'site.thumbnail_aspect_ratio').delete_all
+        get 'index'
+        expect(Setting.where(var: 'site.thumbnail_aspect_ratio').count).to eq(1)
+        expect(response.body).to include(I18n.t('site.thumbnail_aspect_ratio'))
+        expect(response.body).to include(admin_thumbnail_regeneration_path)
+      end
     end
 
     describe 'POST /admin/site_settings/update' do

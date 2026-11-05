@@ -398,6 +398,11 @@ abbr {
   background-color: #e9ecef;
 }
 
+/* サイト設定で 16:9 を選んだとき */
+.slide-thumbnail.slide-thumbnail-16x9 {
+  aspect-ratio: 16 / 9;
+}
+
 /* カードの上側（サムネイル部分）は角丸にせず、下側だけ角丸にする */
 .slidehub_body .slidecard.card {
   border-top-left-radius: 0;

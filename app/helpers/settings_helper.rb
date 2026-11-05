@@ -9,6 +9,10 @@ module SettingsHelper
       return form.select :value, [%w[default default], %w[dark dark], %w[white white], %w[gray gray]], {}, { class: 'form-control' }
     end
 
+    if var == 'site.thumbnail_aspect_ratio'
+      return form.select :value, [%w[4:3 4:3], %w[16:9 16:9]], {}, { class: 'form-control' }
+    end
+
     if %w[site.name site.favicon site.footer].include?(var)
       return form.text_field :value, class: 'form-control'
     end

@@ -27,6 +27,19 @@ RSpec.describe SettingsHelper, type: :helper do
       ApplicationSetting['site.theme'] = 'default'
     end
 
+    it "returns '<select>' with 4:3 and 16:9 when setting key is 'site.thumbnail_aspect_ratio'" do
+      ApplicationSetting['site.thumbnail_aspect_ratio'] = '16:9'
+      @setting = ApplicationSetting.unscoped.where("var like 'site.thumbnail_aspect_ratio'").first
+      fields_for('settings[]', @setting, index: nil) do |fh|
+        input_tag = generate_form_field(@setting, fh)
+        expect(input_tag).to include('<select class="form-control"')
+        expect(input_tag).to include('<option value="4:3">4:3</option>')
+        expect(input_tag).to include('<option selected="selected" value="16:9">16:9</option>')
+      end
+    ensure
+      ApplicationSetting['site.thumbnail_aspect_ratio'] = '4:3'
+    end
+
     it "returns '<input>' when setting key is 'name'" do
       ApplicationSetting['site.name'] = 'test'
       @setting = ApplicationSetting.unscoped.where("var like 'site.name'").first

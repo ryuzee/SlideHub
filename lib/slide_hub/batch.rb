@@ -16,14 +16,25 @@ module SlideHub
 
       resp.messages.each do |msg|
         obj = JSON.parse(msg.body)
-        logger.info("Start converting slide. id=#{obj['id']} object_key=#{obj['object_key']}")
-        result = ConvertProcedure.new(object_key: obj['object_key'], logger: SlideHub::BatchLogger).run
-        if result
+        result = process(obj, logger)
+        logger.error("Processing failed. type=#{obj['type']} id=#{obj['id']} object_key=#{obj['object_key']}") unless result
+        # サムネイル再生成は失敗しても繰り返さない（ページ画像が無いなど、やり直しても直らないため）
+        if result || obj['type'] == 'thumbnail'
           logger.info("Delete message from Queue. id=#{obj['id']} object_key=#{obj['object_key']}")
           CloudConfig.provider.delete_message(msg)
-        else
-          logger.error("Slide conversion failed. id=#{obj['id']} object_key=#{obj['object_key']}")
         end
+      end
+    end
+
+    # type が thumbnail のメッセージは一覧用サムネイルの再生成だけを行う（管理画面の一括再生成）。
+    # それ以外（type なし）はスライドの変換。
+    def self.process(obj, logger)
+      if obj['type'] == 'thumbnail'
+        logger.info("Start regenerating thumbnails. id=#{obj['id']} object_key=#{obj['object_key']}")
+        ThumbnailProcedure.new(object_key: obj['object_key'], logger: logger).run
+      else
+        logger.info("Start converting slide. id=#{obj['id']} object_key=#{obj['object_key']}")
+        ConvertProcedure.new(object_key: obj['object_key'], logger: logger).run
       end
     end
   end
