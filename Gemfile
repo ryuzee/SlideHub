@@ -7,10 +7,11 @@ gem 'json', '~> 2.12'
 # gem 'rails', '8.1.3'
 # gem 'rails', '8.1.3.1'
 gem 'rails', '8.1.4.1'
-# Use SCSS for stylesheets
-# gem 'sass-rails', '~> 5.0.7'
-gem 'sass-rails'
-# Use Uglifier as compressor for JavaScript assets
+# Asset pipeline (JS/CSS は jsbundling-rails / cssbundling-rails でビルドし、propshaft が配信する)
+gem 'cssbundling-rails'
+gem 'jsbundling-rails'
+gem 'propshaft'
+# プレイヤー (app/views/player/show*.html.erb) が埋め込み用 JS を実行時に圧縮するのに使う
 # https://github.com/lautis/uglifier/issues/173#issuecomment-857616825
 gem 'uglifier', '= 4.1.0'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -85,8 +86,6 @@ gem 'enum_help'
 gem 'ros-apartment', require: 'apartment'
 
 gem 'psych', '~> 3.1'
-
-gem 'webpacker', '~> 5.0'
 
 # ffi-1.17.0 requires rubygems version >= 3.3.22
 # https://github.com/ffi/ffi/issues/1103

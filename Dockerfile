@@ -44,7 +44,6 @@ RUN bash -l -c 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; c
 ARG INSTALL_MAILCATCHER=false
 RUN bash -l -c "if [ \"$INSTALL_MAILCATCHER\" = \"true\" ]; then gem install mailcatcher -v 0.10.0; fi"
 
-ENV NODE_OPTIONS=--openssl-legacy-provider
 COPY package.json /opt/application/current/
 COPY yarn.lock /opt/application/current/
 RUN yarn
@@ -56,9 +55,9 @@ RUN chmod 755 /opt/application/current/script/*.sh
 ARG SUPERVISOR_CONF=script/oss_docker_supervisor.conf
 COPY $SUPERVISOR_CONF /etc/supervisor.conf
 
-# RUN bash -l -c 'OSS_SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rake assets:precompile'
-
-RUN bash -l -c 'RAILS_ENV=production bin/webpack'
+# yarn build / yarn build:css (esbuild) を実行し、その結果を public/assets にダイジェスト付きで配置する。
+# ビルド時は DB が無いので、ros-apartment の起動時テナント初期化を無効にする
+RUN bash -l -c 'APARTMENT_DISABLE_INIT=1 SECRET_KEY_BASE_DUMMY=1 RAILS_ENV=production bin/rails assets:precompile'
 
 # ポートの切り替え
 ARG EXPOSE_PORTS="3000"

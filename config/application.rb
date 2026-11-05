@@ -32,11 +32,7 @@ module SlideHub
     config.eager_load_paths << "#{config.root}/lib"
     # config.autoload_paths << "#{config.root}/lib/slide_hub"
 
-    # migrated from Sprockets to Webpacker
-    config.assets.enabled = false
-    # config.assets.paths << "#{Rails}/vendor/assets/fonts"
-    # config.assets.paths << "#{Rails}/node_modules"
-    # config.assets.digest = true
+    # JS/CSS は jsbundling-rails / cssbundling-rails (esbuild) で app/assets/builds に出力し、propshaft で配信する
     config.public_file_server.enabled
 
     config.enable_dependency_loading = true

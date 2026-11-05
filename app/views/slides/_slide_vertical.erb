@@ -17,7 +17,7 @@ end
   <% if count <= 2 %>
     <%= image_tag u, class: "lazy img-fluid", style: "width:100%", alt: page_alt %>
   <% else %>
-    <%= image_pack_tag "spacer640x480.png", class: "lazy img-fluid", style: "width:100%", alt: page_alt, data: { original: u } %>
+    <%= image_tag "spacer640x480.png", class: "lazy img-fluid", style: "width:100%", alt: page_alt, data: { original: u } %>
   <% end %>
 </div>
 <div class="icon_right">
@@ -25,9 +25,9 @@ end
 </div>
 <% end %>
 <% elsif slide.convert_error? %>
-    <%= image_pack_tag "failed_to_convert.jpg", class: "lazy img-fluid" %>
+    <%= image_tag "failed_to_convert.jpg", class: "lazy img-fluid" %>
 <% else %>
-    <%= image_pack_tag "converting.jpg", class: "lazy img-fluid" %>
+    <%= image_tag "converting.jpg", class: "lazy img-fluid" %>
 <% end %>
 
 <script type="text/javascript">

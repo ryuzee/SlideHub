@@ -25,16 +25,7 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = true
 
-  # Compress JavaScripts and CSS.
-  config.assets.js_compressor = Uglifier.new(harmony: true)
-  # config.assets.css_compressor = :sass
-
-  # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.cache_store = :memory_store
-  config.assets.debug = false
-  config.assets.compile = true
-
-  # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
+  # JS/CSS は esbuild で圧縮済み。public/assets は rails assets:precompile で生成する（Dockerfile 参照）
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'

@@ -23,7 +23,6 @@ jobs:
           OSS_SECRET_KEY_BASE: dummy
           OSS_USE_AZURE: 0
           RAILS_ENV: test
-          # NODE_OPTIONS: --openssl-legacy-provider
       - image: circleci/mysql:5.7
 
     steps:
@@ -39,6 +38,7 @@ jobs:
       - run: sudo chmod -R 777 ~/.npm
       - run: sudo apt-get install -y build-essential ruby-dev libmagic-dev libmysqlclient-dev libsqlite3-dev pkg-config libmagickcore-dev libmagickwand-dev
       - run: yarn
+      - run: yarn build && yarn build:css
 
       - restore_cache:
           keys:

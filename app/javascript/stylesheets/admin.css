@@ -1,0 +1,6 @@
+/*
+ * esbuild で結合し app/assets/builds/admin.css に出力する（package.json の build:css スクリプト）。
+ */
+@import "admin-lte/dist/css/adminlte.min.css";
+@import "@eonasdan/tempus-dominus/dist/css/tempus-dominus.min.css";
+@import "../../../vendor/assets/stylesheets/admin_custom.css";
