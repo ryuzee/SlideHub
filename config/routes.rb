@@ -88,6 +88,7 @@ Rails.application.routes.draw do
   end
 
   get 'sitemap.xml', to: 'sitemap#index', format: 'xml', as: :sitemap
+  get 'robots.txt', to: 'robots#index', format: false, as: :robots
 
   # config/routes.rb
   Rails.application.routes.draw do

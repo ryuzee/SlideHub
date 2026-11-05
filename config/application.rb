@@ -22,9 +22,9 @@ module SlideHub
     # config.time_zone = 'Central Time (US & Canada)'
     config.time_zone = SlideHub::EnvUtil.fetch('TIMEZONE', 'Asia/Tokyo')
 
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+    # The default locale is :ja (Accept-Language が無い・未対応の場合). All translations from config/locales/*.rb,yml are auto loaded.
     config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    config.i18n.default_locale = :en
+    config.i18n.default_locale = :ja
 
     # config.autoload_paths += %W[#{config.root}/lib]
     # config.autoload_paths += %W[#{config.root}/lib/slide_hub]

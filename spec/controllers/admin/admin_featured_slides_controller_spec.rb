@@ -38,7 +38,7 @@ RSpec.describe Admin::FeaturedSlidesController, type: :controller do
           slide = build(:slide)
           post :create, params: { featured_slide: { slide_id: slide.id } }
           expect(response.status).to eq(200)
-          expect(response.body).to include('is not included in the list')
+          expect(response.body).to include(I18n.t('errors.messages.inclusion'))
         end
       end
     end

@@ -1,5 +1,11 @@
 module SessionHelpers
+  # ボタン名などを英語UIで検証するため、英語のブラウザとしてアクセスする
+  def use_english_browser
+    page.driver.header('Accept-Language', 'en') if page.driver.respond_to?(:header)
+  end
+
   def sign_up_with(email: '', password: '', confirmation: '', username: '', display_name: '', biography: '')
+    use_english_browser
     visit new_user_registration_path
     fill_in 'user_email', with: email
     fill_in 'user_password', with: password
@@ -11,6 +17,7 @@ module SessionHelpers
   end
 
   def sign_in(email, password)
+    use_english_browser
     visit new_user_session_path
     fill_in 'user_email', with: email
     fill_in 'user_password', with: password

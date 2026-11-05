@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :set_uploadable
   before_action :signup_enabled?, if: :devise_controller?
   before_action :set_host
+  before_action :set_default_meta_tags
   before_action :clear_session
   before_action :authenticate_user! if Rails.application.config.slidehub.login_required == '1'
 
@@ -48,6 +49,18 @@ class ApplicationController < ActionController::Base
       if Rails.env.production?
         Rails.application.routes.default_url_options[:host] = request.host_with_port || Rails.application.config.slidehub.root_url
       end
+    end
+
+    # サイト共通のOGP/Twitter Cardの既定値。各ビューでset_meta_tagsすれば上書きされる
+    def set_default_meta_tags
+      site_name = ApplicationSetting['site.name']
+      set_meta_tags og: {
+        site_name: site_name,
+        locale: I18n.locale.to_s == 'ja' ? 'ja_JP' : 'en_US',
+        type: 'website',
+      }, twitter: {
+        card: 'summary',
+      }
     end
 
     def clear_session

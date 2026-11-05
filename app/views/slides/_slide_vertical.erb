@@ -11,12 +11,13 @@ end
 <% page_list.each do |f| %>
 <% count +=1 %>
 <% u = "#{CloudConfig::provider.resource_endpoint}/#{f}" %>
+<% page_alt = "#{strip_tags(slide.name)} (#{count}/#{page_count})" %>
 <div class="vertical_slide_box">
   <a name="img-<%= count-1 %>"></a>
   <% if count <= 2 %>
-    <%= image_tag u, class: "lazy img-fluid", style: "width:100%" %>
+    <%= image_tag u, class: "lazy img-fluid", style: "width:100%", alt: page_alt %>
   <% else %>
-    <%= image_pack_tag "spacer640x480.png", class: "lazy img-fluid", style: "width:100%", data: { original: u } %>
+    <%= image_pack_tag "spacer640x480.png", class: "lazy img-fluid", style: "width:100%", alt: page_alt, data: { original: u } %>
   <% end %>
 </div>
 <div class="icon_right">

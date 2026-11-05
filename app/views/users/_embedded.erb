@@ -4,7 +4,7 @@
     <div style="padding:4px;">
       <div class="slidecard">
         <div class="slidecard-image">
-          <%= link_to image_tag(thumbnail_image_url(slide), class: "img-fluid", style: "width:100%"), slide_url(slide.id) %>
+          <%= link_to image_tag(thumbnail_image_url(slide), class: "img-fluid", style: "width:100%", alt: strip_tags(slide.name), loading: "lazy"), slide_url(slide.id) %>
         </div>
         <div class="slidecard-content">
           <div class="slidecard-basic-info">

@@ -1,4 +1,11 @@
     <%= javascript_include_tag "#{player_url slide.id}/#{start_position}?prefix=#{prefix}&inside=1" %>
+    <% first_page = slide.converted? ? slide.pages.list.first : nil %>
+    <% if first_page %>
+      <%# プレイヤーはJSで描画されるため、JSを実行しないクローラー向けに1枚目の画像をHTMLに出す %>
+      <noscript>
+        <%= image_tag "#{CloudConfig.provider.resource_endpoint}/#{first_page}", alt: strip_tags(slide.name), class: "img-fluid", style: "width:100%" %>
+      </noscript>
+    <% end %>
     <script type="application/javascript">
       window.onkeydown = function(evt) {
         if (evt.keyCode == 74 || evt.keyCode == 39) {

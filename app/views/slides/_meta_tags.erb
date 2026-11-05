@@ -1,7 +1,6 @@
 <%
-
 page_list = slide.pages.list
-if page_list.instance_of?(Array) && page_list.count > 0
+if slide.converted? && page_list.instance_of?(Array) && page_list.count > 0
   twitter_image_url = "#{CloudConfig::provider.resource_endpoint}/#{page_list[0]}"
   facebook_image_url = slide.thumbnail.url_middle
 else
@@ -16,23 +15,35 @@ if slide.tags.count > 0
   end
 end
 
+description = strip_tags(slide.description).squish.truncate(120)
+
 set_meta_tags author: user_by_username_url(username: slide.user_username)
 set_meta_tags keywords: keywords
-set_meta_tags description: strip_tags(slide.description).truncate(100)
+set_meta_tags description: description
+# /slides/:id/:page や ?vertical=1 などの重複URLを /slides/:id に正規化する
+set_meta_tags canonical: slide_url(slide.id)
+# 非公開・未変換のスライドは検索結果に出さない
+set_meta_tags noindex: true, nofollow: false if slide.private || !slide.converted?
 
 set_meta_tags og: {
-  title:    slide.name,
-  type:     'article',
-  url:      slide_url(slide.id),
-  image:    facebook_image_url
+  title:       slide.name,
+  description: description,
+  type:        'article',
+  url:         slide_url(slide.id),
+  image:       facebook_image_url
+}
+set_meta_tags article: {
+  published_time: slide.created_at.iso8601,
+  modified_time:  (slide.updated_at || slide.created_at).iso8601,
+  tag:            slide.tags.map(&:to_s)
 }
 
-unless slide.user_twitter_account.blank?
-  set_meta_tags twitter: {
-    card:    'summary_large_image',
-    site:    "@#{slide.user_twitter_account}",
-    image:   twitter_image_url
-  }
-end
-
+twitter = {
+  card:        'summary_large_image',
+  title:       slide.name,
+  description: description,
+  image:       twitter_image_url
+}
+twitter[:creator] = "@#{slide.user_twitter_account}" unless slide.user_twitter_account.blank?
+set_meta_tags twitter: twitter
 %>

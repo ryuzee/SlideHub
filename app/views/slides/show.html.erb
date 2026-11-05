@@ -2,6 +2,8 @@
 <% content_for :title, @slide.name %>
 <% prefix = js_prefix %>
 <%= render 'slides/meta_tags', slide: @slide %>
+<%= json_ld_tag(slide_structured_data(@slide)) %>
+<%= json_ld_tag(slide_breadcrumb_structured_data(@slide)) %>
 
 <% if params[:vertical] != "1" %>
   <div style="padding-top:0px;">
@@ -17,7 +19,7 @@
 <div class="card">
   <!--name and description-->
   <div class="card-body">
-    <h2 class="h4 card-title"><%= strip_tags @slide.name %></h2>
+    <h1 class="h4 card-title"><%= strip_tags @slide.name %></h1>
     <div class="card-text"><%= simple_format(h(@slide.description)) %></div>
     <% if @slide.tags.count > 0 %>
       <ul class="list-inline" style="line-height: 2.5;">
