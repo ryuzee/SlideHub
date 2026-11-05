@@ -82,28 +82,28 @@
           <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
             <li class="nav-header"><%= t(:admin_menu) %></li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'dashboards' %>"><a class="nav-link" href="<%= admin_dashboard_path %>"><i class="nav-icon fa fa-home"></i> <span><%= t :admin_dashboard %></span></a></li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'slides' %>"><a class="nav-link" href="<%= admin_slides_path %>"><i class="nav-icon fa fa-file"></i> <span><%= t('activerecord.models.slide') %></span></a></li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'featured_slides' %>"><a class="nav-link" href="<%= admin_featured_slides_path %>"><i class="nav-icon fa fa-eye"></i> <span><%= t(:featured_slides) %></span></a></li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'users' %>"><a class="nav-link" href="<%= admin_users_path %>"><i class="nav-icon fa fa-user"></i> <span><%= t('activerecord.models.user') %></span></a></li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'categories' %>"><a class="nav-link" href="<%= admin_categories_path %>"><i class="nav-icon fa fa-book"></i> <span><%= t('activerecord.models.category') %></span></a></li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'custom_contents' %>"><a class="nav-link" href="<%= admin_custom_contents_path %>"><i class="nav-icon fa fa-code"></i> <span><%= t(:custom_contents) %></span></a></li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'pages' %>"><a class="nav-link" href="<%= admin_pages_path %>"><i class="nav-icon fa fa-file-text"></i> <span><%= t('custom_pages') %></span></a></li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'custom_files' %>"><a class="nav-link" href="<%= admin_custom_files_path %>"><i class="nav-icon fa fa-upload"></i> <span><%= t(:custom_files) %></span></a></li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'logs' %>"><a class="nav-link" href="<%= admin_logs_index_path %>"><i class="nav-icon fa fa-list"></i> <span><%= t(:logs) %></span></a></li>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'site_settings' %>"><a class="nav-link" href="<%= admin_site_settings_path %>"><i class="nav-icon fa fa-cog"></i> <span><%= t(:site_settings) %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'dashboards' %>"><a class="nav-link" href="<%= admin_dashboard_path %>"><i class="nav-icon fa fa-home"></i> <p><%= t :admin_dashboard %></p></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'slides' %>"><a class="nav-link" href="<%= admin_slides_path %>"><i class="nav-icon fa fa-file"></i> <p><%= t('activerecord.models.slide') %></p></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'featured_slides' %>"><a class="nav-link" href="<%= admin_featured_slides_path %>"><i class="nav-icon fa fa-eye"></i> <p><%= t(:featured_slides) %></p></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'users' %>"><a class="nav-link" href="<%= admin_users_path %>"><i class="nav-icon fa fa-user"></i> <p><%= t('activerecord.models.user') %></p></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'categories' %>"><a class="nav-link" href="<%= admin_categories_path %>"><i class="nav-icon fa fa-book"></i> <p><%= t('activerecord.models.category') %></p></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'custom_contents' %>"><a class="nav-link" href="<%= admin_custom_contents_path %>"><i class="nav-icon fa fa-code"></i> <p><%= t(:custom_contents) %></p></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'pages' %>"><a class="nav-link" href="<%= admin_pages_path %>"><i class="nav-icon fa fa-file-text"></i> <p><%= t('custom_pages') %></p></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'custom_files' %>"><a class="nav-link" href="<%= admin_custom_files_path %>"><i class="nav-icon fa fa-upload"></i> <p><%= t(:custom_files) %></p></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'logs' %>"><a class="nav-link" href="<%= admin_logs_index_path %>"><i class="nav-icon fa fa-list"></i> <p><%= t(:logs) %></p></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'site_settings' %>"><a class="nav-link" href="<%= admin_site_settings_path %>"><i class="nav-icon fa fa-cog"></i> <p><%= t(:site_settings) %></p></a></li>
             <% if Tenant.primary? %>
-            <li class="nav-item <%= 'active' if controller.controller_name == 'tenants' %>"><a class="nav-link" href="<%= admin_tenants_path %>"><i class="nav-icon fa fa-building"></i> <span><%= t(:tenant) %></span></a></li>
+            <li class="nav-item <%= 'active' if controller.controller_name == 'tenants' %>"><a class="nav-link" href="<%= admin_tenants_path %>"><i class="nav-icon fa fa-building"></i> <p><%= t(:tenant) %></p></a></li>
             <% end %>
             <li class="nav-header"><%= t(:public_site) %></li>
-            <li class="nav-item"><a class="nav-link" href="<%= slides_path %>"><i class="nav-icon fa fa-file"></i> <span><%= t('activerecord.models.slide') %></span></a></li>
-            <li class="nav-item"><a class="nav-link" href="<%= popular_index_path %>"><i class="nav-icon fa fa-star"></i> <span><%= t(:popular_slides) %></span></a></li>
-            <li class="nav-item"><a class="nav-link" href="<%= latest_index_path %>"><i class="nav-icon fa fa-calendar"></i> <span><%= t(:latest_slides) %></span></a></li>
+            <li class="nav-item"><a class="nav-link" href="<%= slides_path %>"><i class="nav-icon fa fa-file"></i> <p><%= t('activerecord.models.slide') %></p></a></li>
+            <li class="nav-item"><a class="nav-link" href="<%= popular_index_path %>"><i class="nav-icon fa fa-star"></i> <p><%= t(:popular_slides) %></p></a></li>
+            <li class="nav-item"><a class="nav-link" href="<%= latest_index_path %>"><i class="nav-icon fa fa-calendar"></i> <p><%= t(:latest_slides) %></p></a></li>
 
             <li class="nav-header"><%= t(:public_site) %> by <%= t('activerecord.models.category') %></li>
             <% @categories.each do |cat| %>
               <li class="nav-item">
-              <a class="nav-link" href="<%= category_path(cat.id) %>"><i class="fa fa-circle nav-icon"></i> <span><%= cat.name %></span></a>
+              <a class="nav-link" href="<%= category_path(cat.id) %>"><i class="fa fa-circle nav-icon"></i> <p><%= cat.name %></p></a>
               </li>
             <% end %>
           </ul><!-- /.sidebar-menu -->
