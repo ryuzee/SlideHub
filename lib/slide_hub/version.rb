@@ -1,3 +1,3 @@
 module SlideHub
-  Version = '2.5.0'.freeze
+  Version = '2.6.0'.freeze
 end
