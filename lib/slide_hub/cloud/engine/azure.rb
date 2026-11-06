@@ -76,6 +76,14 @@ module SlideHub
           qs.delete_message(@config.queue_name, message_object.id, message_object.handle)
         end
 
+        # キューに残っているメッセージのおおよその件数（処理中のものも含む概算）。取得できなければ nil
+        def self.queue_length
+          approximate_message_count, _metadata = create_qs.get_queue_metadata(@config.queue_name)
+          approximate_message_count.to_i
+        rescue StandardError
+          nil
+        end
+
         def self.batch_delete(entries)
           result = true
           entries.each do |entry|

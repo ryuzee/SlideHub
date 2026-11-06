@@ -51,6 +51,66 @@
     <p class="text-muted small mb-3"><%= t(:regenerate_thumbnails_description) %></p>
     <%= button_to t(:regenerate_thumbnails), admin_thumbnail_regeneration_path, method: :post,
                   class: 'btn btn-outline-secondary', data: { confirm: t(:regenerate_thumbnails_confirm) } %>
+
+    <%# 進捗はキューの残り件数からの概算。一括再生成を一度でも実行していれば表示する %>
+    <div id="thumbnail-regeneration-progress" class="mt-3 d-none"
+         data-url="<%= admin_thumbnail_regeneration_path(format: :json) %>"
+         data-text-progress="<%= t(:regenerate_thumbnails_progress) %>"
+         data-text-finished="<%= t(:regenerate_thumbnails_finished) %>"
+         data-text-unavailable="<%= t(:regenerate_thumbnails_unavailable) %>"
+         data-text-minutes="<%= t(:regenerate_thumbnails_minutes) %>">
+      <div class="progress mb-2" style="height: 1.25rem;">
+        <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <p class="small mb-0 js-progress-text"></p>
+      <p class="small text-muted mb-0"><%= t(:regenerate_thumbnails_progress_note) %></p>
+    </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  (function() {
+    var box = document.getElementById('thumbnail-regeneration-progress');
+    if (!box) return;
+    var bar = box.querySelector('.progress-bar');
+    var text = box.querySelector('.js-progress-text');
+
+    function format(template, values) {
+      return template.replace(/%\{(\w+)\}/g, function(_, key) { return values[key]; });
+    }
+
+    function render(p) {
+      if (!p.requested) return false;
+      box.classList.remove('d-none');
+      if (p.remaining === null) {
+        text.textContent = box.dataset.textUnavailable;
+        return true;
+      }
+      var percent = p.requested_count > 0 ? Math.round(p.done * 100 / p.requested_count) : 100;
+      bar.style.width = percent + '%';
+      bar.setAttribute('aria-valuenow', percent);
+      bar.textContent = percent + '%';
+      if (p.finished) {
+        bar.classList.add('bg-success');
+        text.textContent = format(box.dataset.textFinished, { count: p.requested_count });
+        return false;
+      }
+      var minutes = Math.max(1, Math.ceil(p.estimated_seconds / 60));
+      text.textContent = format(box.dataset.textProgress, {
+        done: p.done, count: p.requested_count, remaining: p.remaining,
+        time: format(box.dataset.textMinutes, { minutes: minutes })
+      });
+      return true;
+    }
+
+    function poll() {
+      fetch(box.dataset.url, { headers: { 'Accept': 'application/json' }, credentials: 'same-origin' })
+        .then(function(res) { return res.json(); })
+        .then(function(p) { if (render(p)) setTimeout(poll, 10000); })
+        .catch(function() { setTimeout(poll, 30000); });
+    }
+
+    poll();
+  })();
+</script>
 </section>

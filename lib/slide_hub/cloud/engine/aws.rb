@@ -101,6 +101,17 @@ module SlideHub
           })
         end
 
+        # キューに残っているメッセージのおおよその件数（SQS の値は概算）。取得できなければ nil
+        def self.queue_length
+          attributes = self.sqs.get_queue_attributes(
+            queue_url: @config.sqs_url,
+            attribute_names: %w[ApproximateNumberOfMessages ApproximateNumberOfMessagesNotVisible],
+          ).attributes
+          attributes['ApproximateNumberOfMessages'].to_i + attributes['ApproximateNumberOfMessagesNotVisible'].to_i
+        rescue StandardError
+          nil
+        end
+
         def self.batch_delete(entries)
           # self.sqs.delete_message_batch(queue_url: @config.sqs_url, entries: entries)
           result = true
