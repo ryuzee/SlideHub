@@ -12,13 +12,11 @@ class SlidesFinder
   end
 
   # :reek:UncommunicativeVariableName { enabled: false }
+  # 注目のスライドを管理画面で決めた並び順で返す。非公開や未変換のものは飛ばして limit 件まで
   def self.featured(limit = 10)
-    ids = FeaturedSlide.order(created_at: 'desc').pluck(:slide_id)
-    slides = Slide.published.
-             includes(:user).
-             where(id: ids).
-             limit(limit)
-    ids.collect { |id| slides.detect { |x| x.id == id.to_i } }
+    ids = FeaturedSlide.ordered.pluck(:slide_id)
+    slides = Slide.published.includes(:user).where(id: ids).index_by(&:id)
+    ids.filter_map { |id| slides[id] }.first(limit)
   end
 
   def self.related(category_id, slide_id, limit = 12)

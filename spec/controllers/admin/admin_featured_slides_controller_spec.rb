@@ -13,12 +13,32 @@ RSpec.describe Admin::FeaturedSlidesController, type: :controller do
         get 'index'
         expect(response.status).to eq(200)
       end
+
+      it 'lists published candidates that are not featured yet, filtered by title' do
+        featured = create(:featured_slide, slide: create(:slide, name: 'Featured Sushi'))
+        candidate = create(:slide, name: 'Candidate Sushi')
+        create(:slide, name: 'Private Sushi', private: true)
+        create(:slide, name: 'Other')
+        get 'index', params: { q: 'Sushi' }
+        expect(assigns(:candidates)).to eq([candidate])
+        expect(assigns(:featured_slides)).to eq([featured])
+      end
     end
 
     describe 'GET /admin/featured_slides/new' do
-      it 'works!' do
+      it 'redirects to the list, where slides are added now' do
         get 'new'
-        expect(response.status).to eq(200)
+        expect(response).to redirect_to '/admin/featured_slides'
+      end
+    end
+
+    describe 'PATCH /admin/featured_slides/reorder' do
+      it 'saves the order' do
+        a = create(:featured_slide)
+        b = create(:featured_slide)
+        patch :reorder, params: { ids: [a.id, b.id] }, format: :json
+        expect(response.status).to eq(204)
+        expect(FeaturedSlide.ordered.pluck(:id)).to eq([a.id, b.id])
       end
     end
 
@@ -37,7 +57,7 @@ RSpec.describe Admin::FeaturedSlidesController, type: :controller do
         it 'does not save record as a featured slides' do
           slide = build(:slide)
           post :create, params: { featured_slide: { slide_id: slide.id } }
-          expect(response.status).to eq(200)
+          expect(response.status).to eq(422)
           expect(response.body).to include(I18n.t('errors.messages.inclusion'))
         end
       end

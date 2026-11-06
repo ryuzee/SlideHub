@@ -111,6 +111,9 @@
                     <li><%= link_to admin_slide_download_path(slide.id), class: 'dropdown-item' do %><i class="fa fa-download fa-fw me-2"></i><%= t(:download) %><% end %></li>
                     <li><a class="dropdown-item" href="<%= slide.transcript.url %>" target="_blank" rel="noopener noreferrer"><i class="fa fa-file-lines fa-fw me-2"></i><%= t(:transcript) %></a></li>
                     <li><a class="dropdown-item" href="<%= slide.pages.url %>" target="_blank" rel="noopener noreferrer"><i class="fa fa-list fa-fw me-2"></i><%= t(:page_list_json) %></a></li>
+                    <% if slide.converted? && !slide.private %>
+                      <li><%= button_to admin_featured_slides_path, method: :post, params: { 'featured_slide[slide_id]' => slide.id }, class: 'dropdown-item', form_class: 'd-block' do %><i class="fa fa-star fa-fw me-2"></i><%= t(:add_to_featured) %><% end %></li>
+                    <% end %>
                     <li><hr class="dropdown-divider"></li>
                     <li><%= link_to admin_slide_reconvert_path(slide.id), class: 'dropdown-item', data: { confirm: t(:confirm_to_send_reconvert_request) } do %><i class="fa fa-rotate fa-fw me-2"></i><%= t(:reconvert) %><% end %></li>
                   </ul>

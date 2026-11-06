@@ -1,6 +1,7 @@
 // esbuild でバンドルし app/assets/builds/admin.js に出力する（package.json の build スクリプト）
 import "./jquery_global"
 import "./image_fallback"
+import "./featured_slides_sort"
 import Rails from "@rails/ujs"
 import * as bootstrap from "bootstrap"
 // AdminLTE 4（Bootstrap 5）。サイドバーの開閉やツリーメニューは data-lte-toggle 属性で動く

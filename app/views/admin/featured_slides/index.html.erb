@@ -1,52 +1,90 @@
 <%= admin_page_header(section: link_to(t(:featured_slides), admin_featured_slides_path)) do %><%= t(:featured_slides) %><% end %>
 
 <section class="content">
-
-
-  <div class="card card-info card-outline">
-    <div class="card-header">
-      <h3 class="card-title">&nbsp;</h3>
-      <div class="card-tools">
-        <div class="input-group input-group-sm text-end">
-          <div class="input-group-btn">
-            <%= link_to t(:set_featured_slide), new_admin_featured_slide_path, class: 'btn btn-primary' %>
-          </div>
-        </div>
+<div class="row g-3">
+  <%# 注目のスライド（並び順）。ドラッグか上下ボタンで並べ替えると、すぐに保存する %>
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><%= t(:featured_slides_order) %></h3>
       </div>
-    </div>
-    <div class="card-body p-0">
-      <!-- Table -->
       <% if @featured_slides.empty? %>
-        <%= render 'admin/shared/empty', message: t(:no_featured_slides), icon: 'fa-eye' %>
+        <%= render 'admin/shared/empty', message: t(:no_featured_slides), icon: 'fa-star' %>
       <% else %>
-      <table class="table table-striped small">
-        <thead>
-          <tr>
-            <th class="col-md-1"><%= t('activerecord.attributes.slide.id') %></th>
-            <th class="col-md-2"><%= t('activerecord.attributes.slide.name') %></th>
-            <th class="col-md-1"><%= t('activerecord.attributes.slide.user_id') %></th>
-            <th class="col-md-1"><%= t('activerecord.attributes.slide.created_at') %></th>
-            <th class="col-md-1"><%= t('activerecord.attributes.slide.total_view') %></th>
-            <th class="col-md-1"><%= t('activerecord.attributes.slide.comments_count') %></th>
-            <th class="col-md-1"><%= t('command') %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @featured_slides.each do |fs| %>
-            <% next if fs.slide.nil? %>
-            <tr>
-              <td><%= link_to fs.slide.id, slide_path(fs.slide.id) %></td>
-              <td><%= link_to fs.slide.name, slide_path(fs.slide.id) %>&nbsp;</td>
-              <td><%= link_to fs.slide.user_username, user_by_username_path(username: fs.slide.user_username) %>&nbsp;</td>
-              <td><%= fs.slide.created_at %></td>
-              <td><%= fs.slide.total_view %></td>
-              <td><%= fs.slide.comments_count %></td>
-              <td><%= button_to t('delete'), admin_featured_slide_path(fs), method: :delete, class: 'btn btn-outline-danger btn-sm', data: { confirm: t(:confirm_to_delete) } %></td>
-            </tr>
+        <div class="card-body pb-0">
+          <p class="small text-body-secondary mb-3"><%= t(:featured_slides_order_help, count: FeaturedSlide::TOP_PAGE_LIMIT) %></p>
+        </div>
+        <ol class="list-group list-group-flush" id="featured-slides-sortable"
+            data-reorder-url="<%= reorder_admin_featured_slides_path %>"
+            data-top-limit="<%= FeaturedSlide::TOP_PAGE_LIMIT %>"
+            data-text-saved="<%= t(:featured_slides_order_saved) %>"
+            data-text-failed="<%= t(:featured_slides_order_failed) %>">
+          <% @featured_slides.each do |featured| %>
+            <% slide = featured.slide %>
+            <% next if slide.nil? %>
+            <li class="list-group-item d-flex align-items-center gap-3 featured-slide-item" draggable="true" data-id="<%= featured.id %>">
+              <span class="featured-drag-handle text-body-secondary" title="<%= t(:drag_to_reorder) %>" aria-hidden="true"><i class="fa fa-grip-vertical"></i></span>
+              <span class="featured-position fw-semibold text-body-secondary" style="width: 1.5rem;"></span>
+              <%= slide_thumbnail_tag(slide, class: 'admin-thumbnail') %>
+              <div class="flex-grow-1 min-w-0">
+                <%= link_to slide.name, edit_admin_slide_path(slide.id), class: 'fw-semibold d-block text-truncate' %>
+                <div class="small text-body-secondary">
+                  <%= slide.user_display_name %> · <%= slide.created_at.to_formatted_s(:default) %> · <%= t(:views_count, count: slide.total_view) %>
+                  <% unless slide.converted? && !slide.private %>
+                    <span class="badge text-bg-warning ms-1"><%= t(:not_shown_on_top) %></span>
+                  <% end %>
+                </div>
+                <span class="badge text-bg-success featured-top-badge d-none"><%= t(:shown_on_top) %></span>
+              </div>
+              <div class="btn-group btn-group-sm" role="group">
+                <button type="button" class="btn btn-outline-secondary js-move-up" aria-label="<%= t(:move_up) %>" title="<%= t(:move_up) %>"><i class="fa fa-arrow-up"></i></button>
+                <button type="button" class="btn btn-outline-secondary js-move-down" aria-label="<%= t(:move_down) %>" title="<%= t(:move_down) %>"><i class="fa fa-arrow-down"></i></button>
+              </div>
+              <%= button_to admin_featured_slide_path(featured), method: :delete, class: 'btn btn-outline-danger btn-sm', form_class: 'd-inline', title: t(:delete), aria: { label: t(:delete) }, data: { confirm: t(:confirm_to_delete) } do %><i class="fa fa-trash"></i><% end %>
+            </li>
           <% end %>
-        </tbody>
-      </table>
+        </ol>
       <% end %>
     </div>
   </div>
+
+  <%# 追加するスライドを探す。タイトルで検索し、空なら新しい順に出す %>
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><%= t(:add_featured_slide) %></h3>
+      </div>
+      <div class="card-body">
+        <%= form_tag admin_featured_slides_path, method: :get, class: 'd-flex gap-2 mb-3', role: 'search' do %>
+          <%= search_field_tag :q, params[:q], class: 'form-control', placeholder: t('activerecord.attributes.slide.name'), aria: { label: t('activerecord.attributes.slide.name') } %>
+          <%= submit_tag t(:search), class: 'btn btn-primary', name: nil %>
+        <% end %>
+
+        <% if @featured_slide.errors.any? %>
+          <div class="alert alert-danger py-2 small"><%= @featured_slide.errors.full_messages.to_sentence %></div>
+        <% end %>
+
+        <p class="small text-body-secondary mb-2">
+          <%= params[:q].present? ? t(:search_results_for, query: params[:q]) : t(:latest_published_slides) %>
+        </p>
+        <% if @candidates.empty? %>
+          <%= render 'admin/shared/empty', message: t(:no_slides_found), icon: 'fa-file' %>
+        <% else %>
+          <ul class="list-group">
+            <% @candidates.each do |slide| %>
+              <li class="list-group-item d-flex align-items-center gap-2">
+                <%= slide_thumbnail_tag(slide, class: 'admin-thumbnail') %>
+                <div class="flex-grow-1 min-w-0">
+                  <div class="fw-semibold text-truncate"><%= slide.name %></div>
+                  <div class="small text-body-secondary"><%= slide.user_display_name %> · <%= slide.created_at.to_formatted_s(:default) %></div>
+                </div>
+                <%= button_to admin_featured_slides_path, method: :post, params: { 'featured_slide[slide_id]' => slide.id, q: params[:q] }, class: 'btn btn-outline-primary btn-sm text-nowrap', form_class: 'd-inline' do %><i class="fa fa-plus me-1"></i><%= t(:add) %><% end %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 </section>

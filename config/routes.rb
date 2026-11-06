@@ -50,7 +50,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resource :dashboard, only: [:show]
-    resources :featured_slides, only: [:index, :new, :create, :destroy]
+    resources :featured_slides, only: [:index, :new, :create, :destroy] do
+      patch :reorder, on: :collection
+    end
     resources :slides, only: [:index, :edit, :update]
     resources :slide_download, only: [:show]
     resources :slide_reconvert, only: [:show]
