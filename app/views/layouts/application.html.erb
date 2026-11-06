@@ -31,7 +31,7 @@
     <%
       inverse = ApplicationSetting['site.header_inverse']
       inverse = 0 if inverse.nil?
-      if inverse == 0
+      if inverse.to_s == "0"
         css_class = "navbar-light bg-secondary"
       else
         css_class = "navbar-dark bg-primary"

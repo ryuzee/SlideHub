@@ -54,11 +54,11 @@ module Admin
 
       def tenant_enabled
         unless Rails.application.config.database_configuration[Rails.env]['adapter'] == 'mysql2'
-          return redirect_to admin_dashboard_path, notice: t(:cannot_access_to_tenant)
+          return redirect_to admin_dashboard_path, alert: t(:cannot_access_to_tenant)
         end
 
         unless Tenant.primary?
-          redirect_to admin_dashboard_path, notice: t(:cannot_access_to_tenant)
+          redirect_to admin_dashboard_path, alert: t(:cannot_access_to_tenant)
         end
       end
   end

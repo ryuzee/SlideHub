@@ -20,30 +20,52 @@
     <div class="app-wrapper">
       <nav class="app-header navbar navbar-expand bg-body">
         <div class="container-fluid">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav align-items-center">
             <li class="nav-item">
               <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button" aria-label="Toggle sidebar"><i class="fas fa-bars"></i></a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link bg-info text-white rounded dropdown-toggle" href="#" id="navbarVersionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <%= current_user.display_name %>
-              </a>
-              <div class="dropdown-menu py-0" aria-labelledby="navbarVersionDropdown">
-                <%= link_to t(:my_statistics), statistics_index_path, class: 'dropdown-item' %>
-                <%= link_to t(:my_slides), user_by_username_path(username: current_user.username), class: 'dropdown-item' %>
-                <div class="dropdown-divider"></div>
-                <%= link_to t(:my_account), edit_user_registration_path, class: 'dropdown-item' %>
-                <%= link_to t(:logout), destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
-              </div>
+            <li class="nav-item d-none d-md-block">
+              <form action="<%= admin_slides_path %>" method="get" class="d-flex ms-2" role="search">
+                <div class="input-group input-group-sm">
+                  <input type="search" name="q[name_cont]" class="form-control" placeholder="<%= t(:search_slides) %>" aria-label="<%= t(:search_slides) %>">
+                  <button type="submit" class="btn btn-outline-secondary" aria-label="<%= t(:search) %>"><i class="fa fa-search"></i></button>
+                </div>
+              </form>
             </li>
           </ul>
 
-          <form action="<%= admin_slides_path %>" method="get" class="d-flex ms-3" role="search">
-            <div class="input-group input-group-sm">
-              <input type="text" name="q[name_cont]" class="form-control" placeholder="Search..." aria-label="Search">
-              <button type="submit" name="search" id="search-btn" class="btn btn-outline-secondary"><i class="fa fa-search"></i></button>
-            </div>
-          </form>
+          <ul class="navbar-nav ms-auto align-items-center">
+            <%# ライト / ダーク / 自動（OS に合わせる）の切り替え。AdminLTE 4 の color-mode が data-bs-theme-value を見て動く %>
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="<%= t(:color_mode) %>">
+                <span data-lte-theme-icon="light"><i class="fa fa-sun"></i></span>
+                <span data-lte-theme-icon="dark" class="d-none"><i class="fa fa-moon"></i></span>
+                <span data-lte-theme-icon="auto" class="d-none"><i class="fa fa-circle-half-stroke"></i></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><button type="button" class="dropdown-item" data-bs-theme-value="light"><i class="fa fa-sun me-2"></i><%= t(:color_mode_light) %></button></li>
+                <li><button type="button" class="dropdown-item" data-bs-theme-value="dark"><i class="fa fa-moon me-2"></i><%= t(:color_mode_dark) %></button></li>
+                <li><button type="button" class="dropdown-item" data-bs-theme-value="auto"><i class="fa fa-circle-half-stroke me-2"></i><%= t(:color_mode_auto) %></button></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown user-menu">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="adminUserMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <% if current_user.avatar.attached? %>
+                  <%= image_tag url_for(current_user.avatar), size: '28x28', class: 'rounded-circle me-2', alt: '' %>
+                <% else %>
+                  <%= image_tag 'avatar/thumb/missing.png', size: '28x28', class: 'rounded-circle me-2', alt: '' %>
+                <% end %>
+                <span class="d-none d-md-inline"><%= current_user.display_name %></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminUserMenu">
+                <li><%= link_to t(:my_statistics), statistics_index_path, class: 'dropdown-item' %></li>
+                <li><%= link_to t(:my_slides), user_by_username_path(username: current_user.username), class: 'dropdown-item' %></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><%= link_to t(:my_account), edit_user_registration_path, class: 'dropdown-item' %></li>
+                <li><%= link_to t(:logout), destroy_user_session_path, method: :delete, class: 'dropdown-item' %></li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </nav>
 
@@ -72,16 +94,9 @@
               <li class="nav-item"><a class="nav-link<%= ' active' if controller.controller_name == 'tenants' %>" href="<%= admin_tenants_path %>"><i class="nav-icon fa fa-building"></i><p><%= t(:tenant) %></p></a></li>
               <% end %>
               <li class="nav-header"><%= t(:public_site) %></li>
-              <li class="nav-item"><a class="nav-link" href="<%= slides_path %>"><i class="nav-icon fa fa-file"></i><p><%= t('activerecord.models.slide') %></p></a></li>
-              <li class="nav-item"><a class="nav-link" href="<%= popular_index_path %>"><i class="nav-icon fa fa-star"></i><p><%= t(:popular_slides) %></p></a></li>
-              <li class="nav-item"><a class="nav-link" href="<%= latest_index_path %>"><i class="nav-icon fa fa-calendar"></i><p><%= t(:latest_slides) %></p></a></li>
-
-              <li class="nav-header"><%= t(:public_site) %> by <%= t('activerecord.models.category') %></li>
-              <% @categories.each do |cat| %>
-                <li class="nav-item">
-                <a class="nav-link" href="<%= category_path(cat.id) %>"><i class="nav-icon fa fa-circle"></i><p><%= cat.name %></p></a>
-                </li>
-              <% end %>
+              <li class="nav-item"><a class="nav-link" href="<%= root_path %>" target="_blank" rel="noopener"><i class="nav-icon fa fa-arrow-up-right-from-square"></i><p><%= t(:open_public_site) %></p></a></li>
+              <li class="nav-item"><a class="nav-link" href="<%= popular_index_path %>" target="_blank" rel="noopener"><i class="nav-icon fa fa-star"></i><p><%= t(:popular_slides) %></p></a></li>
+              <li class="nav-item"><a class="nav-link" href="<%= latest_index_path %>" target="_blank" rel="noopener"><i class="nav-icon fa fa-calendar"></i><p><%= t(:latest_slides) %></p></a></li>
             </ul>
           </nav>
         </div>
@@ -91,6 +106,7 @@
         <div class="app-content">
           <div class="container-fluid px-4 py-2">
             <%= yield %>
+            <%= render 'admin/shared/toasts' %>
           </div>
         </div>
       </main>

@@ -1,168 +1,112 @@
-<section class="content-header">
-<h1><%= t :admin_dashboard %></h1>
-</section>
+<%= admin_page_header do %><%= t :admin_dashboard %><% end %>
 
 <section class="content">
 
-<!-- Info boxes -->
-<div class="row">
-  <div class="col-md-3 col-sm-6 col-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-success"><i class="fa fa-file"></i></span>
+<%# よく見る4つの数字 %>
+<div class="row g-3 mb-3">
+  <div class="col-md-3 col-sm-6">
+    <div class="info-box mb-0">
+      <span class="info-box-icon text-bg-success"><i class="fa fa-file"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"><%= t(:number_of_slides) %></span>
-        <span class="info-box-number"><%= @dashboard.slide_count %></span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-  <div class="col-md-3 col-sm-6 col-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-primary"><i class="fa fa-user"></i></span>
+        <span class="info-box-number"><%= number_with_delimiter(@dashboard.slide_count) %></span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6">
+    <div class="info-box mb-0">
+      <span class="info-box-icon text-bg-primary"><i class="fa fa-user"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"><%= t(:number_of_users) %></span>
-        <span class="info-box-number"><%= @dashboard.user_count %></span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-
-  <div class="col-md-3 col-sm-6 col-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-secondary"><i class="fa fa-eye"></i></span>
+        <span class="info-box-number"><%= number_with_delimiter(@dashboard.user_count) %></span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6">
+    <div class="info-box mb-0">
+      <span class="info-box-icon text-bg-info"><i class="fa fa-eye"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"><%= t(:number_of_page_view) %></span>
-        <span class="info-box-number"><%= @dashboard.page_view %></span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-
-  <div class="col-md-3 col-sm-6 col-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-warning"><i class="fa fa-eye"></i></span>
-      <div class="info-box-content">
-        <span class="info-box-text"><%=t 'activerecord.attributes.slide.embedded_view' %></span>
-        <span class="info-box-number"><%= @dashboard.embedded_view %></span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-
-  <div class="col-md-3 col-sm-6 col-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-danger"><i class="fa fa-exclamation-circle"></i></span>
-      <div class="info-box-content">
-        <span class="info-box-text"><%= t(:number_of_conversion_failed) %></span>
-        <span class="info-box-number"><%= @dashboard.conversion_failed_count %></span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-
-  <div class="col-md-3 col-sm-6 col-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-warning"><i class="fa fa-download"></i></span>
-      <div class="info-box-content">
-        <span class="info-box-text"><%= t(:number_of_downloads) %></span>
-        <span class="info-box-number"><%= @dashboard.download_count %></span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-
-  <div class="col-md-3 col-sm-6 col-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-info"><i class="fa fa-comments"></i></span>
-      <div class="info-box-content">
-        <span class="info-box-text"><%= t(:number_of_comments) %></span>
-        <span class="info-box-number"><%= @dashboard.comment_count %></span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-
-
-</div><!-- /.row -->
-
-<!-- TABLE: LATEST ORDERS -->
-<div class="row">
-  <div class="col-md-6 col-sm-12 col-12">
-    <div class="card card-primary card-outline">
-      <div class="card-header">
-        <h3 class="card-title"><%= t(:latest_published_slides) %></h3>
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
-            <i class="fas fa-minus"></i>
-          </button>
-          <button type="button" class="btn btn-tool" data-lte-toggle="card-remove">
-            <i class="fas fa-times"></i>
-          </button>
+        <span class="info-box-number"><%= number_with_delimiter(@dashboard.page_view) %></span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6">
+    <%# 変換失敗はクリックすると失敗したスライドの一覧を開く %>
+    <%= link_to admin_slides_path(q: { convert_status_eq: Slide.convert_statuses[:convert_error] }), class: 'text-decoration-none text-reset' do %>
+      <div class="info-box mb-0">
+        <span class="info-box-icon <%= @dashboard.conversion_failed_count.positive? ? 'text-bg-danger' : 'text-bg-secondary' %>"><i class="fa fa-triangle-exclamation"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text"><%= t(:number_of_conversion_failed) %></span>
+          <span class="info-box-number"><%= number_with_delimiter(@dashboard.conversion_failed_count) %></span>
+          <% if @dashboard.conversion_failed_count.positive? %>
+            <span class="small text-danger"><%= t(:show_failed_slides) %> <i class="fa fa-arrow-right"></i></span>
+          <% end %>
         </div>
-      </div><!-- /.box-header -->
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-sm no-margin">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th><%= t('activerecord.attributes.slide.name') %></th>
-                <th><%= t(:slide_author) %></th>
-                <th><%= t('activerecord.attributes.slide.created_at') %></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @dashboard.latest_slides.each do |slide| %>
-                <tr>
-                  <td><%= link_to slide.id, slide_path(slide.id) %></td>
-                  <td><%= slide.name %></td>
-                  <td><%= link_to slide.user_display_name, user_by_username_path(username: slide.user_username) %></td>
-                  <td><%= slide.created_at %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div><!-- /.table-responsive -->
-      </div><!-- /.box-body -->
-      <div class="card-footer clearfix">
-        <%= link_to t(:view_all_slides), admin_slides_path, class: "btn btn-sm btn-outline-secondary btn-flat float-end" %>
-      </div><!-- /.box-footer -->
-    </div><!-- /.box -->
-  </div><!-- /.col -->
-  <div class="col-md-6 col-sm-12 col-12">
-    <div class="card card-primary card-outline">
-      <div class="card-header">
-        <h3 class="card-title"><%= t(:popular_slides) %></h3>
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
-            <i class="fas fa-minus"></i>
-          </button>
-          <button type="button" class="btn btn-tool" data-lte-toggle="card-remove">
-            <i class="fas fa-times"></i>
-          </button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%# そのほかの数字は1行にまとめる %>
+<div class="card mb-3">
+  <div class="card-body py-2">
+    <div class="d-flex flex-wrap gap-4 small">
+      <span><i class="fa fa-code me-1 text-body-secondary"></i><%= t('activerecord.attributes.slide.embedded_view') %> <strong><%= number_with_delimiter(@dashboard.embedded_view) %></strong></span>
+      <span><i class="fa fa-download me-1 text-body-secondary"></i><%= t(:number_of_downloads) %> <strong><%= number_with_delimiter(@dashboard.download_count) %></strong></span>
+      <span><i class="fa fa-comments me-1 text-body-secondary"></i><%= t(:number_of_comments) %> <strong><%= number_with_delimiter(@dashboard.comment_count) %></strong></span>
+      <span>
+        <i class="fa fa-layer-group me-1 text-body-secondary"></i><%= t(:conversion_queue) %>
+        <% queue_length = @dashboard.queue_length %>
+        <strong><%= queue_length.nil? ? t(:unavailable) : t(:queue_messages, count: queue_length) %></strong>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="card card-primary card-outline mb-3">
+  <div class="card-header">
+    <h3 class="card-title"><%= t(:monthly_uploads) %></h3>
+  </div>
+  <div class="card-body">
+    <%= render 'monthly_uploads_chart', counts: @dashboard.monthly_upload_counts %>
+  </div>
+</div>
+
+<div class="row g-3">
+  <% [[t(:latest_published_slides), @dashboard.latest_slides], [t(:popular_slides), @dashboard.popular_slides]].each do |title, slides| %>
+    <div class="col-lg-6">
+      <div class="card card-primary card-outline h-100">
+        <div class="card-header">
+          <h3 class="card-title"><%= title %></h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" aria-label="<%= t(:collapse) %>"><i class="fas fa-minus"></i></button>
+          </div>
         </div>
-      </div><!-- /.box-header -->
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-sm no-margin">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th><%= t('activerecord.attributes.slide.name') %></th>
-                <th><%= t(:slide_author) %></th>
-                <th><%= t('activerecord.attributes.slide.created_at') %></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @dashboard.popular_slides.each do |slide| %>
-                <tr>
-                  <td><%= link_to slide.id, slide_path(slide.id) %></td>
-                  <td><%= slide.name %></td>
-                  <td><%= link_to slide.user_display_name, user_by_username_path(username: slide.user_username) %></td>
-                  <td><%= slide.created_at %></td>
-                </tr>
+        <div class="card-body p-0">
+          <% if slides.empty? %>
+            <%= render 'admin/shared/empty', message: t(:no_slides_found), icon: 'fa-file' %>
+          <% else %>
+            <ul class="list-group list-group-flush">
+              <% slides.each do |slide| %>
+                <li class="list-group-item d-flex align-items-center gap-3">
+                  <%= link_to slide_thumbnail_tag(slide, class: 'admin-thumbnail'), edit_admin_slide_path(slide.id) %>
+                  <div class="flex-grow-1 min-w-0">
+                    <%= link_to slide.name, edit_admin_slide_path(slide.id), class: 'fw-semibold d-block text-truncate' %>
+                    <div class="small text-body-secondary">
+                      <%= slide.user_display_name %> · <%= slide.created_at.to_formatted_s(:default) %> · <%= t(:views_count, count: slide.total_view) %>
+                    </div>
+                  </div>
+                </li>
               <% end %>
-            </tbody>
-          </table>
-        </div><!-- /.table-responsive -->
-      </div><!-- /.box-body -->
-      <div class="card-footer clearfix">
-        <%= link_to t(:view_all_slides), admin_slides_path, class: "btn btn-sm btn-outline-secondary btn-flat float-end" %>
-      </div><!-- /.box-footer -->
-    </div><!-- /.box -->
-  </div><!-- /.col -->
+            </ul>
+          <% end %>
+        </div>
+        <div class="card-footer text-end">
+          <%= link_to t(:view_all_slides), admin_slides_path, class: 'btn btn-sm btn-outline-secondary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
 </section>

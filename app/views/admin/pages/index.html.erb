@@ -1,19 +1,6 @@
-<section class="content-header d-flex">
-  <div>
-    <h1><%= t('custom_pages') %></h1>
-  </div>
-  <div class="ms-auto">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-        <li class="breadcrumb-item active"><%= link_to t(:custom_pages), admin_pages_path %></li>
-      </ol>
-    </nav>
-  </div>
-</section>
+<%= admin_page_header(section: link_to(t(:custom_pages), admin_pages_path)) do %><%= t('custom_pages') %><% end %>
 
 <section class="content">
-  <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
   <div class="card card-warning card-outline">
     <div class="card-header">
@@ -28,6 +15,9 @@
     </div>
     <div class="card-body p-0">
       <!-- Table -->
+      <% if @pages.empty? %>
+        <%= render 'admin/shared/empty', message: t(:no_pages), icon: 'fa-file-lines' %>
+      <% else %>
       <table class="table table-striped small">
         <thead>
           <tr>
@@ -48,12 +38,13 @@
               <td><%= page.created_at %></td>
               <td><%= page.updated_at %></td>
               <td>
-                <%= button_to t(:delete), admin_page_path(page.id), method: :delete, class: 'btn btn-primary btn-sm', form_class: 'd-inline', data: {:confirm => t(:confirm_to_delete_page)} %>
+                <%= button_to t(:delete), admin_page_path(page.id), method: :delete, class: 'btn btn-outline-danger btn-sm', form_class: 'd-inline', data: { confirm: t(:confirm_to_delete) } %>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
+      <% end %>
     </div>
 
     <div>

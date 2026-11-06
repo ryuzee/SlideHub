@@ -1,48 +1,50 @@
-<section class="content-header d-flex">
-  <div>
-    <h1><%= t(:site_settings) %></h1>
-  </div>
-  <div class="ms-auto">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-        <li class="breadcrumb-item active"><%= link_to t(:site_settings), admin_site_settings_path %></li>
-      </ol>
-    </nav>
-  </div>
-</section>
+<%= admin_page_header(section: link_to(t(:site_settings), admin_site_settings_path)) do %><%= t(:site_settings) %><% end %>
 
 <section class="content">
-<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
-<%= form_tag update_admin_site_settings_path, method: :post, class: 'form-horizontal slide' do %>
-  <div class="card card-warning card-outline">
-    <div class="card-body p-0">
-    <!-- Table -->
-    <table class="table table-striped small">
-      <thead>
-        <tr>
-          <th class="col-md-4"><%= t(:key) %></th>
-          <th class="col-md-8"><%= t(:value) %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% index = 0 %>
-        <% @settings.each do |s| %>
-          <%= fields_for('settings[]', s, index: nil) do |fh| %>
-            <tr>
-              <td><%= t(s.var) %><%= fh.hidden_field :var %></td>
-              <td><%= generate_form_field(s, fh) %></td>
-            </tr>
-            <% index += 1 %>
+<%= form_tag update_admin_site_settings_path, method: :post, class: 'slide' do %>
+  <% index = 0 %>
+  <% grouped_settings(@settings).each do |group, settings| %>
+    <div class="card mb-3">
+      <div class="card-header"><h3 class="card-title"><%= t("setting_groups.#{group}") %></h3></div>
+      <div class="list-group list-group-flush">
+        <% settings.each do |setting| %>
+          <%# 行ごとに番号を付ける（スイッチの hidden と checkbox が同じ設定として送られるように） %>
+          <%= fields_for("settings[#{index}]", setting) do |fh| %>
+            <div class="list-group-item py-3">
+              <%= fh.hidden_field :var %>
+              <div class="row g-2 align-items-center">
+                <div class="col-md-5">
+                  <label class="form-label fw-semibold mb-0" for="<%= setting_field_id(setting) %>"><%= t(setting.var) %></label>
+                  <% description = t("setting_descriptions.#{setting.var}", default: '') %>
+                  <% if description.present? %><div class="small text-body-secondary"><%= description %></div><% end %>
+                </div>
+                <div class="col-md-7">
+                  <% if boolean_setting?(setting) %>
+                    <div class="form-check form-switch fs-5 mb-0"><%= generate_form_field(setting, fh) %></div>
+                  <% else %>
+                    <%= generate_form_field(setting, fh) %>
+                  <% end %>
+                  <% if setting.var == 'site.theme' %>
+                    <div class="d-flex flex-wrap gap-3 mt-2 small text-body-secondary">
+                      <% SettingsHelper::THEMES.each do |theme, color| %>
+                        <span class="d-inline-flex align-items-center"><span class="d-inline-block rounded-circle border me-1" style="width: 14px; height: 14px; background: <%= color %>;"></span><%= theme %></span>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
           <% end %>
+          <% index += 1 %>
         <% end %>
-      </tbody>
-    </table>
-  </div>
-  </div>
+      </div>
+    </div>
+  <% end %>
 
-  <%= submit_tag t(:save_settings), class: 'btn btn-primary' %>
+  <div class="mb-4">
+    <%= submit_tag t(:save_settings), class: 'btn btn-primary' %>
+  </div>
 <% end %>
 
 <div class="card card-secondary card-outline mt-4">

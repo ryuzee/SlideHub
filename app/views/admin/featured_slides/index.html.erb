@@ -1,20 +1,7 @@
-<section class="content-header d-flex">
-  <div>
-    <h1><%= t(:featured_slides) %></h1>
-  </div>
-  <div class="ms-auto">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-        <li class="breadcrumb-item active"><%= link_to t(:featured_slides), admin_featured_slides_path %></li>
-      </ol>
-    </nav>
-  </div>
-</section>
+<%= admin_page_header(section: link_to(t(:featured_slides), admin_featured_slides_path)) do %><%= t(:featured_slides) %><% end %>
 
 <section class="content">
 
-  <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
   <div class="card card-info card-outline">
     <div class="card-header">
@@ -29,6 +16,9 @@
     </div>
     <div class="card-body p-0">
       <!-- Table -->
+      <% if @featured_slides.empty? %>
+        <%= render 'admin/shared/empty', message: t(:no_featured_slides), icon: 'fa-eye' %>
+      <% else %>
       <table class="table table-striped small">
         <thead>
           <tr>
@@ -51,11 +41,12 @@
               <td><%= fs.slide.created_at %></td>
               <td><%= fs.slide.total_view %></td>
               <td><%= fs.slide.comments_count %></td>
-              <td><%= button_to t('delete'), admin_featured_slide_path(fs), :method => :delete, :class => 'btn btn-primary btn-sm' %></td>
+              <td><%= button_to t('delete'), admin_featured_slide_path(fs), method: :delete, class: 'btn btn-outline-danger btn-sm', data: { confirm: t(:confirm_to_delete) } %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
+      <% end %>
     </div>
   </div>
 </section>

@@ -1,21 +1,8 @@
-<section class="content-header d-flex">
-  <div>
-    <h1><%= t('activerecord.models.category') %></h1>
-  </div>
-  <div class="ms-auto">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-        <li class="breadcrumb-item active"><%= link_to t('activerecord.models.category'), admin_categories_path %></li>
-      </ol>
-    </nav>
-  </div>
-</section>
+<%= admin_page_header(section: link_to(t('activerecord.models.category'), admin_categories_path)) do %><%= t('activerecord.models.category') %><% end %>
 
 <!-- Main content -->
 <section class="content">
 <!-- Your Page Content Here -->
-<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <div class="card card-warning card-outline">
   <div class="card-header">
@@ -30,6 +17,9 @@
   </div>
   <div class="card-body p-0">
   <!-- Table -->
+  <% if @categories.empty? %>
+    <%= render 'admin/shared/empty', message: t(:no_categories), icon: 'fa-book' %>
+  <% else %>
   <table class="table table-striped small">
     <thead>
       <tr>
@@ -48,12 +38,13 @@
           <td><%= category.name_ja %></td>
           <td><%= category.slides.count %></td>
           <td>
-            <%= button_to t(:edit), edit_admin_category_path(category.id), method: 'get', class: 'btn btn-primary btn-sm', form_class: 'd-inline' %>
+            <%= link_to t(:edit), edit_admin_category_path(category.id), class: 'btn btn-primary btn-sm' %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+  <% end %>
   </div>
 </div>
 </section>

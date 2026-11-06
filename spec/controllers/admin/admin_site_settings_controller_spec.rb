@@ -24,6 +24,13 @@ RSpec.describe Admin::SiteSettingsController, type: :controller do
     end
 
     describe 'POST /admin/site_settings/update' do
+      it 'saves settings sent with row numbers (switch hidden field and checkbox)' do
+        post :update, params: { settings: { '0' => { 'var' => 'site.Neta3', 'value' => '1' }, '1' => { 'var' => 'site.Neta4', 'value' => 'Ika' } } }
+        expect(response).to redirect_to '/admin/site_settings/'
+        expect(ApplicationSetting['site.Neta3']).to eq('1')
+        expect(ApplicationSetting['site.Neta4']).to eq('Ika')
+      end
+
       it 'works!' do
         data = [{ 'var' => 'site.Neta1', 'value' => 'Toro' }, { 'var' => 'site.Neta2', 'value' => 'Unit' }]
         post :update, params: { settings: data }

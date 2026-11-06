@@ -1,0 +1,22 @@
+<%# フラッシュメッセージを右上のトーストで出す（数秒で自動的に消える。エラーは消さない） %>
+<% if flash.any? %>
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1090;">
+    <% flash.each do |type, message| %>
+      <% next if message.blank? %>
+      <% error = %w[alert error].include?(type.to_s) %>
+      <div class="toast align-items-center border-0 <%= error ? 'text-bg-danger' : 'text-bg-success' %>"
+           role="<%= error ? 'alert' : 'status' %>" aria-live="<%= error ? 'assertive' : 'polite' %>" aria-atomic="true"
+           data-bs-autohide="<%= error ? 'false' : 'true' %>" data-bs-delay="5000">
+        <div class="d-flex">
+          <div class="toast-body"><%= message %></div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <script type="text/javascript">
+    document.querySelectorAll('.toast-container .toast').forEach(function(el) {
+      bootstrap.Toast.getOrCreateInstance(el).show();
+    });
+  </script>
+<% end %>

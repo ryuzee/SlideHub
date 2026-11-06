@@ -1,19 +1,6 @@
-<section class="content-header d-flex">
-  <div>
-    <h1><%= t(:tenant) %></h1>
-  </div>
-  <div class="ms-auto">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-        <li class="breadcrumb-item active"><%= link_to t(:tenant), admin_tenants_path %></li>
-      </ol>
-    </nav>
-  </div>
-</section>
+<%= admin_page_header(section: link_to(t(:tenant), admin_tenants_path)) do %><%= t(:tenant) %><% end %>
 
 <section class="content">
-<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <%= form_for @tenant, :html => { :class => "form-horizontal tenant" }, :url => admin_tenant_path(@tenant.id) do |f| %>
 

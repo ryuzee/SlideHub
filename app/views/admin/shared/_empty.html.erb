@@ -1,0 +1,6 @@
+<%# 空の一覧。locals: message（必須）、icon（Font Awesome のクラス）、action（ボタンなどの HTML） %>
+<div class="admin-empty">
+  <div class="admin-empty-icon"><i class="fa <%= local_assigns.fetch(:icon, 'fa-inbox') %>"></i></div>
+  <p class="mb-3"><%= message %></p>
+  <%= local_assigns[:action] %>
+</div>

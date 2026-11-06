@@ -7,7 +7,11 @@ module Admin
     end
 
     def update
-      params.require(:settings).map do |param|
+      # 画面からは settings[番号][var] の形（スイッチの hidden と checkbox を同じ設定にまとめるため）、
+      # 以前の形式 settings[][var] は配列で届く
+      settings = params.require(:settings)
+      settings = settings.values if settings.is_a?(ActionController::Parameters)
+      settings.each do |param|
         data = param.to_unsafe_h
         ApplicationSetting[data['var']] = data['value']
       end

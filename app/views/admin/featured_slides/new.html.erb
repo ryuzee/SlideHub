@@ -1,20 +1,7 @@
-<section class="content-header d-flex">
-  <div>
-    <h1><%= t(:featured_slides) %></h1>
-  </div>
-  <div class="ms-auto">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-        <li class="breadcrumb-item active"><%= link_to t(:featured_slides), admin_featured_slides_path %></li>
-      </ol>
-    </nav>
-  </div>
-</section>
+<%= admin_page_header(section: link_to(t(:featured_slides), admin_featured_slides_path)) do %><%= t(:featured_slides) %><% end %>
 
 <section class="content">
 
-<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <%= form_for @featured_slide, :html => { :class => "form-horizontal slide" }, :url => admin_featured_slides_path  do |f| %>
 

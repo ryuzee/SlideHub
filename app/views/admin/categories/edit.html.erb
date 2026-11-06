@@ -1,20 +1,7 @@
-<section class="content-header d-flex">
-  <div>
-    <h1><%= t(:edit_category) %></h1>
-  </div>
-  <div class="ms-auto">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="ms-auto breadcrumb-item"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
-        <li class="breadcrumb-item active"><%= link_to t('activerecord.models.category'), admin_categories_path %></li>
-      </ol>
-    </nav>
-  </div>
-</section>
+<%= admin_page_header(section: link_to(t('activerecord.models.category'), admin_categories_path)) do %><%= t(:edit_category) %><% end %>
 
 <section class="content">
 
-<%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
 
 <%= form_for @category, :html => { :class => "form-horizontal category" }, :url => admin_category_path(@category.id) do |f| %>
   <% if @category.errors.any? %>
@@ -59,7 +46,7 @@
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t("helpers.links.cancel"), admin_categories_path, :class => 'btn btn-outline-secondary' %>
-  <%= link_to t(:delete_category), admin_category_path(@category[:id]), :method => 'delete', :class => 'btn btn-danger float-end', data: {:confirm => t(:confirm_to_delete_category)} %>
+  <%= link_to t(:delete_category), admin_category_path(@category[:id]), :method => 'delete', :class => 'btn btn-outline-danger float-end', data: {:confirm => t(:confirm_to_delete_category)} %>
 
 <% end %>
 

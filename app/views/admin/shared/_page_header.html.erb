@@ -1,0 +1,17 @@
+<div class="app-content-header px-0 pt-3 pb-2">
+  <div class="row align-items-center g-2">
+    <div class="col-sm-7">
+      <h1 class="h3 mb-0"><%= title %></h1>
+    </div>
+    <% if section %>
+      <div class="col-sm-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb float-sm-end mb-0 small">
+            <li class="breadcrumb-item"><%= link_to t(:admin_dashboard), admin_dashboard_path %></li>
+            <li class="breadcrumb-item active" aria-current="page"><%= section %></li>
+          </ol>
+        </nav>
+      </div>
+    <% end %>
+  </div>
+</div>

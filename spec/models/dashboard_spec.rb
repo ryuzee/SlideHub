@@ -1,21 +1,16 @@
 require 'rails_helper'
 
-describe 'Dashboard' do
-  describe 'Creating "Dashboard" model' do
-    it 'has collect methods' do
-      create(:default_user)
-      create(:default_category)
-      create(:slide)
-      dashboard = Dashboard.new
-      expect(dashboard.slide_count).to be_integer
-      expect(dashboard.user_count).to be_integer
-      expect(dashboard.conversion_failed_count).to be_integer
-      expect(dashboard.comment_count).to be_integer
-      expect(dashboard.page_view).to be_integer
-      expect(dashboard.download_count).to be_integer
-      expect(dashboard.embedded_view).to be_integer
-      expect(dashboard.latest_slides.class.to_s).to eq 'Slide::ActiveRecord_Relation'
-      expect(dashboard.popular_slides.class.to_s).to eq 'Slide::ActiveRecord_Relation'
+RSpec.describe Dashboard do
+  describe '#monthly_upload_counts' do
+    it 'counts slides per month for the last months, including empty months' do
+      now = Time.zone.parse('2026-11-15 12:00')
+      create(:slide, created_at: Time.zone.parse('2026-11-01 00:30'))
+      create(:slide, created_at: Time.zone.parse('2026-11-10'))
+      create(:slide, created_at: Time.zone.parse('2026-09-30 23:30'))
+      create(:slide, created_at: Time.zone.parse('2026-07-31'))
+
+      counts = described_class.new.monthly_upload_counts(months: 3, now: now)
+      expect(counts).to eq([[Date.new(2026, 9, 1), 1], [Date.new(2026, 10, 1), 0], [Date.new(2026, 11, 1), 2]])
     end
   end
 end

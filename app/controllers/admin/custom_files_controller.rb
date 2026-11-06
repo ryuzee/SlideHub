@@ -52,7 +52,7 @@ module Admin
       end
 
       def attached_check
-        redirect_to new_admin_custom_file_path, notice: t(:no_attached_file) if custom_file_params[:file].blank?
+        redirect_to new_admin_custom_file_path, alert: t(:no_attached_file) if custom_file_params[:file].blank?
       end
 
       def save_tmp_file(uploaded_file)

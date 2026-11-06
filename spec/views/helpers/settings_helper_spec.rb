@@ -2,15 +2,23 @@ require 'rails_helper'
 
 RSpec.describe SettingsHelper, type: :helper do
   describe 'settings_links' do
-    it "returns '<select>' when setting key is 'site.header_inverse'" do
-      ApplicationSetting['site.header_inverse'] = 1
+    it "returns a checked switch when setting key is 'site.header_inverse'" do
+      ApplicationSetting['site.header_inverse'] = '1'
       @setting = ApplicationSetting.unscoped.where("var like 'site.header_inverse'").first
-      fields_for('settings[]', @setting, index: nil) do |fh|
+      fields_for('settings[0]', @setting) do |fh|
         input_tag = generate_form_field(@setting, fh)
-        expect(input_tag).to match(/.*<select.*>.*/)
+        expect(input_tag).to include('<input name="settings[0][value]" type="hidden" value="0"')
+        expect(input_tag).to match(/<input class="form-check-input" role="switch" [^>]*type="checkbox" value="1" checked="checked"/)
       end
     ensure
-      ApplicationSetting['site.header_inverse'] = 0
+      ApplicationSetting['site.header_inverse'] = '0'
+    end
+
+    it 'groups settings and puts unknown ones into the other group' do
+      settings = %w[site.theme site.name site.unknown].map { |var| Setting.new(var: var) }
+      expect(grouped_settings(settings).map { |group, list| [group, list.map(&:var)] }).to eq(
+        [['general', ['site.name']], ['display', ['site.theme']], ['other', ['site.unknown']]],
+      )
     end
 
     it "returns '<select>' when setting key is 'theme'" do
@@ -45,7 +53,7 @@ RSpec.describe SettingsHelper, type: :helper do
       @setting = ApplicationSetting.unscoped.where("var like 'site.name'").first
       fields_for('settings[]', @setting, index: nil) do |fh|
         input_tag = generate_form_field(@setting, fh)
-        expect(input_tag).to match(/.*<input class="form-control" type="text" value="test" .*>.*/)
+        expect(input_tag).to match(/.*<input class="form-control" id="setting_site_name" type="text" value="test" .*>.*/)
       end
     ensure
       ApplicationSetting['site.name'] = 'SlideHub'

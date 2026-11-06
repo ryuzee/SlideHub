@@ -1,0 +1,24 @@
+<%# 月別投稿数の棒グラフ（SVG）。locals: counts = [[Date, 件数], ...] %>
+<% max = [counts.map(&:last).max.to_i, 1].max %>
+<% bar_width = 100.0 / counts.size %>
+<figure class="mb-0">
+  <svg viewBox="0 0 100 44" preserveAspectRatio="none" class="w-100" style="height: 180px;" role="img" aria-label="<%= t(:monthly_uploads) %>">
+    <% counts.each_with_index do |(month, count), index| %>
+      <% height = 36.0 * count / max %>
+      <rect x="<%= (index * bar_width + bar_width * 0.18).round(2) %>" y="<%= (38 - height).round(2) %>"
+            width="<%= (bar_width * 0.64).round(2) %>" height="<%= height.round(2) %>" rx="0.6"
+            fill="var(--bs-primary)" opacity="<%= count.zero? ? 0.25 : 0.85 %>">
+        <title><%= l(month, format: '%Y/%m') %>: <%= count %></title>
+      </rect>
+    <% end %>
+    <line x1="0" y1="38" x2="100" y2="38" stroke="var(--bs-border-color)" stroke-width="0.3" />
+  </svg>
+  <div class="d-flex small text-body-secondary">
+    <% counts.each do |month, count| %>
+      <div class="text-center" style="width: <%= bar_width %>%;">
+        <div class="fw-semibold text-body"><%= count %></div>
+        <div><%= month.month %><%= t(:month_suffix) %></div>
+      </div>
+    <% end %>
+  </div>
+</figure>

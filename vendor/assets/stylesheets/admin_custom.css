@@ -6,24 +6,61 @@ abbr {
   display: none;
 }
 
-/* 各画面の見出し（section.content-header）。AdminLTE 4 には無いので、AdminLTE 3 と同じような余白と大きさにする */
-.app-content .content-header {
-  padding: 1rem 0 .75rem;
-}
-
-.app-content .content-header h1 {
-  font-size: 1.75rem;
-  margin: 0;
-}
-
-.app-content .content-header .breadcrumb {
-  margin-bottom: 0;
-  padding: 0;
-  background: transparent;
-  font-size: .9rem;
-}
-
 /* AdminLTE 3 にあった角の無いボタン */
 .btn.btn-flat {
   border-radius: 0;
+}
+
+/* 一覧のサムネイル */
+.admin-thumbnail {
+  width: 96px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius-sm);
+  background-color: var(--bs-tertiary-bg);
+}
+
+/* 一覧の表: 見出しを折り返さず、数値は右寄せ */
+.admin-list-table th {
+  white-space: nowrap;
+}
+
+.admin-list-table td.num,
+.admin-list-table th.num {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 空の一覧 */
+.admin-empty {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--bs-secondary-color);
+}
+
+.admin-empty .admin-empty-icon {
+  font-size: 2rem;
+  margin-bottom: .75rem;
+  opacity: .6;
+}
+
+/* flex の中で文字を省略表示（text-truncate）させるため */
+.min-w-0 {
+  min-width: 0;
+}
+
+/* サイト設定で 16:9 を選んだとき */
+.admin-thumbnail.slide-thumbnail-16x9 {
+  aspect-ratio: 16 / 9;
+}
+
+/* 一覧のタイトルなどの太字リンクは、ホバー時だけ下線を出す */
+.app-content a.fw-semibold {
+  text-decoration: none;
+}
+
+.app-content a.fw-semibold:hover {
+  text-decoration: underline;
 }

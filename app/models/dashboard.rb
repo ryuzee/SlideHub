@@ -40,6 +40,23 @@ class Dashboard
     @summary.embedded_view
   end
 
+  # 直近 months か月の月別投稿数（古い月から順）。[[Date(月初), 件数], ...]
+  # 月の区切りはアプリのタイムゾーンで数えるので、DB の関数ではなく Ruby で集計する
+  def monthly_upload_counts(months: 12, now: Time.zone.now)
+    first_month = now.beginning_of_month - (months - 1).months
+    counts = Slide.where(created_at: first_month..).pluck(:created_at).
+             map { |time| time.in_time_zone.to_date.beginning_of_month }.tally
+    (0...months).map do |offset|
+      month = (first_month + offset.months).to_date
+      [month, counts.fetch(month, 0)]
+    end
+  end
+
+  # 変換キューに残っているメッセージのおおよその件数。取得できなければ nil
+  def queue_length
+    CloudConfig.provider.queue_length
+  end
+
   def latest_slides
     SlidesFinder.latest
   end
