@@ -2,10 +2,10 @@
   <div>
     <h1><%= t(:new_category) %></h1>
   </div>
-  <div class="ml-auto">
+  <div class="ms-auto">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
         <li class="breadcrumb-item active"><%= link_to t('activerecord.models.category'), admin_categories_path %></li>
       </ol>
     </nav>
@@ -33,7 +33,7 @@
   <% end %>
 
   <div class="control-group">
-    <%= f.label :name_en, :class => 'control-label' %>
+    <%= f.label :name_en, :class => 'form-label' %>
     <div class="controls">
       <%= f.text_field :name_en, :class => 'form-control' %>
     </div>
@@ -41,7 +41,7 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :name_ja, :class => 'control-label' %>
+    <%= f.label :name_ja, :class => 'form-label' %>
     <div class="controls">
       <%= f.text_field :name_ja, :class => 'form-control' %>
     </div>
@@ -51,7 +51,7 @@
   <br clear="all" />
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
-  <%= link_to t("helpers.links.cancel"), admin_categories_path, :class => 'btn btn-default' %>
+  <%= link_to t("helpers.links.cancel"), admin_categories_path, :class => 'btn btn-outline-secondary' %>
 
 <% end %>
 

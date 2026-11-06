@@ -18,7 +18,7 @@ RSpec.describe SettingsHelper, type: :helper do
       @setting = ApplicationSetting.unscoped.where("var like 'site.theme'").first
       fields_for('settings[]', @setting, index: nil) do |fh|
         input_tag = generate_form_field(@setting, fh)
-        expect(input_tag).to match(/.*<select class="form-control".*>.*/)
+        expect(input_tag).to match(/.*<select class="form-select".*>.*/)
         %w[default dark white].each do |theme|
           expect(input_tag).to match(/.*#{theme}.*/)
         end
@@ -32,7 +32,7 @@ RSpec.describe SettingsHelper, type: :helper do
       @setting = ApplicationSetting.unscoped.where("var like 'site.thumbnail_aspect_ratio'").first
       fields_for('settings[]', @setting, index: nil) do |fh|
         input_tag = generate_form_field(@setting, fh)
-        expect(input_tag).to include('<select class="form-control"')
+        expect(input_tag).to include('<select class="form-select"')
         expect(input_tag).to include('<option value="4:3">4:3</option>')
         expect(input_tag).to include('<option selected="selected" value="16:9">16:9</option>')
       end

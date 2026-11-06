@@ -2,10 +2,10 @@
   <div>
     <h1><%= t(:featured_slides) %></h1>
   </div>
-  <div class="ml-auto">
+  <div class="ms-auto">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
         <li class="breadcrumb-item active"><%= link_to t(:featured_slides), admin_featured_slides_path %></li>
       </ol>
     </nav>
@@ -19,7 +19,7 @@
 <%= form_for @featured_slide, :html => { :class => "form-horizontal slide" }, :url => admin_featured_slides_path  do |f| %>
 
   <div class="control-group">
-    <%= f.label :slide_id, :class => 'control-label' %>
+    <%= f.label :slide_id, :class => 'form-label' %>
     <div class="controls">
       <%= f.text_field :slide_id, :class => 'form-control' %>
     </div>

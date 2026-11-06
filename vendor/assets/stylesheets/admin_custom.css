@@ -5,3 +5,25 @@
 abbr {
   display: none;
 }
+
+/* 各画面の見出し（section.content-header）。AdminLTE 4 には無いので、AdminLTE 3 と同じような余白と大きさにする */
+.app-content .content-header {
+  padding: 1rem 0 .75rem;
+}
+
+.app-content .content-header h1 {
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+.app-content .content-header .breadcrumb {
+  margin-bottom: 0;
+  padding: 0;
+  background: transparent;
+  font-size: .9rem;
+}
+
+/* AdminLTE 3 にあった角の無いボタン */
+.btn.btn-flat {
+  border-radius: 0;
+}

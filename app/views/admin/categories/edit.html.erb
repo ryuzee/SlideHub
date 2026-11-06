@@ -2,10 +2,10 @@
   <div>
     <h1><%= t(:edit_category) %></h1>
   </div>
-  <div class="ml-auto">
+  <div class="ms-auto">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="ml-auto breadcrumb-item"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="ms-auto breadcrumb-item"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
         <li class="breadcrumb-item active"><%= link_to t('activerecord.models.category'), admin_categories_path %></li>
       </ol>
     </nav>
@@ -33,14 +33,14 @@
   <% end %>
 
   <div class="control-group">
-    <%= f.label :id, :class => 'control-label' %>
+    <%= f.label :id, :class => 'form-label' %>
     <div class="controls">
       <%= f.text_field "_id", :value => @category[:id], :disabled => "disabled", :class => 'form-control' %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :name_en, :class => 'control-label' %>
+    <%= f.label :name_en, :class => 'form-label' %>
     <div class="controls">
       <%= f.text_field :name_en, :class => 'form-control' %>
     </div>
@@ -48,7 +48,7 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :name_ja, :class => 'control-label' %>
+    <%= f.label :name_ja, :class => 'form-label' %>
     <div class="controls">
       <%= f.text_field :name_ja, :class => 'form-control' %>
     </div>
@@ -58,8 +58,8 @@
   <br clear="all" />
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
-  <%= link_to t("helpers.links.cancel"), admin_categories_path, :class => 'btn btn-default' %>
-  <%= link_to t(:delete_category), admin_category_path(@category[:id]), :method => 'delete', :class => 'btn btn-danger float-right', data: {:confirm => t(:confirm_to_delete_category)} %>
+  <%= link_to t("helpers.links.cancel"), admin_categories_path, :class => 'btn btn-outline-secondary' %>
+  <%= link_to t(:delete_category), admin_category_path(@category[:id]), :method => 'delete', :class => 'btn btn-danger float-end', data: {:confirm => t(:confirm_to_delete_category)} %>
 
 <% end %>
 

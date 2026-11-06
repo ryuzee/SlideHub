@@ -2,10 +2,10 @@
   <div>
     <h1><%= t('custom_pages') %></h1>
   </div>
-  <div class="ml-auto">
+  <div class="ms-auto">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
         <li class="breadcrumb-item active"><%= link_to t(:custom_pages), admin_pages_path %></li>
       </ol>
     </nav>
@@ -19,7 +19,7 @@
     <div class="card-header">
       <h3 class="card-title">&nbsp;</h3>
       <div class="card-tools">
-        <div class="input-group input-group-sm text-right">
+        <div class="input-group input-group-sm text-end">
           <div class="input-group-btn">
             <%= link_to t(:new_page), new_admin_page_path, class: 'btn btn-primary' %>
           </div>
@@ -48,7 +48,7 @@
               <td><%= page.created_at %></td>
               <td><%= page.updated_at %></td>
               <td>
-                <%= button_to t(:delete), admin_page_path(page.id), method: :delete, class: 'btn btn-primary btn-xs', form_class: 'form-inline', data: {:confirm => t(:confirm_to_delete_page)} %>
+                <%= button_to t(:delete), admin_page_path(page.id), method: :delete, class: 'btn btn-primary btn-sm', form_class: 'd-inline', data: {:confirm => t(:confirm_to_delete_page)} %>
               </td>
             </tr>
           <% end %>

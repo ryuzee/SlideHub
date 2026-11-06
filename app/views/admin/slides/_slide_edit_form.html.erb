@@ -14,7 +14,7 @@
     </div>
   <% end %>
 
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :id, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_field "_id", :value => slide[:id], :disabled => "disabled", :class => 'form-control' %>
@@ -22,139 +22,141 @@
     <%= errors(slide, :user_id) %>
   </div>
 
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :user_id, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_field :user_id, :class => 'form-control' %>
     </div>
     <%= errors(slide, :user_id) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :name, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_field :name, :class => 'form-control' %>
     </div>
     <%= errors(slide, :name) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :description, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_area :description, :rows => 4, :class => 'form-control' %>
     </div>
     <%= errors(slide, :description) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :downloadable, :class => 'col-sm-2 col-form-label' %>
-    <div class="col-sm-10 checkbox">
-      <label>
-        <%= f.check_box :downloadable %>&nbsp;<%= t('activerecord.attributes.slide.downloadable') %>
-      </label>
+    <div class="col-sm-10 pt-2">
+      <div class="form-check">
+        <%= f.check_box :downloadable, class: "form-check-input" %>
+        <%= f.label :downloadable, t('activerecord.attributes.slide.downloadable'), class: "form-check-label" %>
+      </div>
     </div>
     <%= errors(slide, :downloadable) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label t('activerecord.models.category'), :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
-      <%= f.collection_select :category_id, Category.all, :id, :name,  {prompt: false}, {class: "form-control"} %>
+      <%= f.collection_select :category_id, Category.all, :id, :name,  {prompt: false}, {class: "form-select"} %>
     </div>
     <%= errors(slide, :category_id) %>
   </div>
-  <div class="form-group row" style="position: relative">
+  <div class="mb-3 row" style="position: relative">
     <%= f.label :created_at, :class => 'col-sm-2 col-form-label' %>
-    <div class="input-group datetimepicker col-sm-10" id="datetimepicker1">
-      <%= f.text_field :created_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm', value: (f.object.created_at.blank? ? '' : f.object.created_at.strftime('%Y/%m/%d %H:%M')) %>
-      <div class="input-group-append input-group-addon">
+    <div class="col-sm-10">
+      <div class="input-group datetimepicker" id="datetimepicker1">
+        <%= f.text_field :created_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm', value: (f.object.created_at.blank? ? '' : f.object.created_at.strftime('%Y/%m/%d %H:%M')) %>
         <span class="input-group-text" id="date1"><i class="fa fa-calendar"></i></span>
       </div>
     </div>
     <%= errors(slide, :created_at) %>
   </div>
-  <div class="form-group row" style="position: relative">
+  <div class="mb-3 row" style="position: relative">
     <%= f.label :updated_at, :class => 'col-sm-2 col-form-label' %>
-    <div class="input-group datetimepicker col-sm-10" id="datetimepicker2">
-      <%= f.text_field :updated_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' , value: (f.object.updated_at.blank? ? '' : f.object.updated_at.strftime('%Y/%m/%d %H:%M')) %>
-      <div class="input-group-append input-group-addon">
+    <div class="col-sm-10">
+      <div class="input-group datetimepicker" id="datetimepicker2">
+        <%= f.text_field :updated_at, data: { :date_format => 'YYYY/MM/DD HH:mm' }, :class => 'form-control', placeholder: 'YYYY/MM/DD HH:mm' , value: (f.object.updated_at.blank? ? '' : f.object.updated_at.strftime('%Y/%m/%d %H:%M')) %>
         <span class="input-group-text" id="date2"><i class="fa fa-calendar"></i></span>
       </div>
     </div>
     <%= errors(slide, :updated_at) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :object_key, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_field :object_key, :class => 'form-control' %>
     </div>
     <%= errors(slide, :object_key) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :extension, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_field :extension, :class => 'form-control' %>
     </div>
     <%= errors(slide, :extension) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :convert_status, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
-      <%= f.select :convert_status, Slide.convert_statuses.map {|k, v| [t("enums.slide.convert_status.#{k}"), k] }, {prompt: false}, {class: "form-control"} %>
+      <%= f.select :convert_status, Slide.convert_statuses.map {|k, v| [t("enums.slide.convert_status.#{k}"), k] }, {prompt: false}, {class: "form-select"} %>
     </div>
     <%= errors(slide, :convert_status) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :total_view, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_field :total_view, :class => 'form-control' %>
     </div>
     <%= errors(slide, :total_view) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :page_view, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_field :page_view, :class => 'form-control' %>
     </div>
     <%= errors(slide, :page_view) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :embedded_view, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_field :embedded_view, :class => 'form-control' %>
     </div>
     <%= errors(slide, :embedded_view) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :download_count, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_field :download_count, :class => 'form-control' %>
     </div>
     <%= errors(slide, :download_count) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :num_of_pages, :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_field :num_of_pages, :class => 'form-control' %>
     </div>
     <%= errors(slide, :num_of_pages) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label t('activerecord.models.tag'), :class => 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= f.text_field :tag_list, :value => slide.tag_list.join(','), :class => 'form-control' %>
     </div>
     <%= errors(slide, :tag_list) %>
   </div>
-  <div class="form-group row">
+  <div class="mb-3 row">
     <%= f.label :private, :class => 'col-sm-2 col-form-label' %>
-    <div class="col-sm-10 checkbox">
-      <label>
-        <%= f.check_box :private %>&nbsp;<%= t('activerecord.attributes.slide.private') %>
-      </label>
+    <div class="col-sm-10 pt-2">
+      <div class="form-check">
+        <%= f.check_box :private, class: "form-check-input" %>
+        <%= f.label :private, t('activerecord.attributes.slide.private'), class: "form-check-label" %>
+      </div>
     </div>
     <%= errors(slide, :private) %>
   </div>
   <br clear="all" />
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
-  <%= link_to t("helpers.links.cancel"), admin_slides_path, :class => 'btn btn-default' %>
+  <%= link_to t("helpers.links.cancel"), admin_slides_path, :class => 'btn btn-outline-secondary' %>
 
 <% end %>
 

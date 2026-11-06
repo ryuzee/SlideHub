@@ -2,10 +2,10 @@
   <div>
     <h1><%= t('activerecord.models.category') %></h1>
   </div>
-  <div class="ml-auto">
+  <div class="ms-auto">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
         <li class="breadcrumb-item active"><%= link_to t('activerecord.models.category'), admin_categories_path %></li>
       </ol>
     </nav>
@@ -21,7 +21,7 @@
   <div class="card-header">
     <h3 class="card-title">&nbsp;</h3>
     <div class="card-tools">
-      <div class="input-group input-group-sm text-right">
+      <div class="input-group input-group-sm text-end">
         <div class="input-group-btn">
           <%= link_to t(:new_category), new_admin_category_path, class: 'btn btn-primary' %>
         </div>
@@ -48,7 +48,7 @@
           <td><%= category.name_ja %></td>
           <td><%= category.slides.count %></td>
           <td>
-            <%= button_to t(:edit), edit_admin_category_path(category.id), method: 'get', class: 'btn btn-primary btn-xs', form_class: 'form-inline' %>
+            <%= button_to t(:edit), edit_admin_category_path(category.id), method: 'get', class: 'btn btn-primary btn-sm', form_class: 'd-inline' %>
           </td>
         </tr>
       <% end %>

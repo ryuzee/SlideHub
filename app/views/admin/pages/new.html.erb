@@ -2,10 +2,10 @@
   <div>
     <h1><%= t(:page) %><small></small></h1>
   </div>
-  <div class="ml-auto">
+  <div class="ms-auto">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
         <li class="breadcrumb-item active"><%= link_to t(:custom_pages), admin_pages_path %></li>
       </ol>
     </nav>
@@ -34,17 +34,17 @@
 
   <div class="control-group">
 
-    <%= f.label t(:path), :class => 'control-label' %>
+    <%= f.label t(:path), :class => 'form-label' %>
     <div class="controls">
       <%= f.text_field :path, :class => 'form-control' %>
     </div>
 
-    <%= f.label t(:title), :class => 'control-label' %>
+    <%= f.label t(:title), :class => 'form-label' %>
     <div class="controls">
       <%= f.text_field :title, :class => 'form-control' %>
     </div>
 
-    <%= f.label t(:content), :class => 'control-label' %>
+    <%= f.label t(:content), :class => 'form-label' %>
     <div class="controls">
       <%= f.text_area :content, :cols => 70, :rows => 20, :class => 'form-control' %>
     </div>

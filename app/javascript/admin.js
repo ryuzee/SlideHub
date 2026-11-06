@@ -1,10 +1,9 @@
 // esbuild でバンドルし app/assets/builds/admin.js に出力する（package.json の build スクリプト）
 import "./jquery_global"
 import Rails from "@rails/ujs"
-// AdminLTE 3 のドロップダウンやモーダルは Bootstrap 4 の JS に依存する。
-// 公開画面は Bootstrap 5 なので、package.json の別名 bootstrap4 を使う
-import "bootstrap4"
-import "admin-lte/dist/js/adminlte.min"
+import * as bootstrap from "bootstrap"
+// AdminLTE 4（Bootstrap 5）。サイドバーの開閉やツリーメニューは data-lte-toggle 属性で動く
+import "admin-lte"
 import moment from "moment"
 import * as tempusDominus from "@eonasdan/tempus-dominus/dist/js/tempus-dominus.min"
 import "@fortawesome/fontawesome-free/js/fontawesome.min"
@@ -15,6 +14,7 @@ import ClipboardJS from "clipboard"
 Rails.start()
 
 // ビュー内のインラインスクリプトから使うライブラリ
+window.bootstrap = bootstrap
 window.moment = moment
 window.tempusDominus = tempusDominus
 window.Cookies = Cookies

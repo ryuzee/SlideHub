@@ -6,7 +6,7 @@
 
 <!-- Info boxes -->
 <div class="row">
-  <div class="col-md-3 col-sm-6 col-xs-12">
+  <div class="col-md-3 col-sm-6 col-12">
     <div class="info-box">
       <span class="info-box-icon bg-success"><i class="fa fa-file"></i></span>
       <div class="info-box-content">
@@ -15,7 +15,7 @@
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
-  <div class="col-md-3 col-sm-6 col-xs-12">
+  <div class="col-md-3 col-sm-6 col-12">
     <div class="info-box">
       <span class="info-box-icon bg-primary"><i class="fa fa-user"></i></span>
       <div class="info-box-content">
@@ -25,9 +25,9 @@
     </div><!-- /.info-box -->
   </div><!-- /.col -->
 
-  <div class="col-md-3 col-sm-6 col-xs-12">
+  <div class="col-md-3 col-sm-6 col-12">
     <div class="info-box">
-      <span class="info-box-icon bg-dark"><i class="fa fa-eye"></i></span>
+      <span class="info-box-icon bg-secondary"><i class="fa fa-eye"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"><%= t(:number_of_page_view) %></span>
         <span class="info-box-number"><%= @dashboard.page_view %></span>
@@ -35,9 +35,9 @@
     </div><!-- /.info-box -->
   </div><!-- /.col -->
 
-  <div class="col-md-3 col-sm-6 col-xs-12">
+  <div class="col-md-3 col-sm-6 col-12">
     <div class="info-box">
-      <span class="info-box-icon bg-yellow"><i class="fa fa-eye"></i></span>
+      <span class="info-box-icon bg-warning"><i class="fa fa-eye"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"><%=t 'activerecord.attributes.slide.embedded_view' %></span>
         <span class="info-box-number"><%= @dashboard.embedded_view %></span>
@@ -45,9 +45,9 @@
     </div><!-- /.info-box -->
   </div><!-- /.col -->
 
-  <div class="col-md-3 col-sm-6 col-xs-12">
+  <div class="col-md-3 col-sm-6 col-12">
     <div class="info-box">
-      <span class="info-box-icon bg-red"><i class="fa fa-exclamation-circle"></i></span>
+      <span class="info-box-icon bg-danger"><i class="fa fa-exclamation-circle"></i></span>
       <div class="info-box-content">
         <span class="info-box-text"><%= t(:number_of_conversion_failed) %></span>
         <span class="info-box-number"><%= @dashboard.conversion_failed_count %></span>
@@ -55,7 +55,7 @@
     </div><!-- /.info-box -->
   </div><!-- /.col -->
 
-  <div class="col-md-3 col-sm-6 col-xs-12">
+  <div class="col-md-3 col-sm-6 col-12">
     <div class="info-box">
       <span class="info-box-icon bg-warning"><i class="fa fa-download"></i></span>
       <div class="info-box-content">
@@ -65,7 +65,7 @@
     </div><!-- /.info-box -->
   </div><!-- /.col -->
 
-  <div class="col-md-3 col-sm-6 col-xs-12">
+  <div class="col-md-3 col-sm-6 col-12">
     <div class="info-box">
       <span class="info-box-icon bg-info"><i class="fa fa-comments"></i></span>
       <div class="info-box-content">
@@ -80,15 +80,15 @@
 
 <!-- TABLE: LATEST ORDERS -->
 <div class="row">
-  <div class="col-md-6 col-sm-12 col-xs-24">
+  <div class="col-md-6 col-sm-12 col-12">
     <div class="card card-primary card-outline">
       <div class="card-header">
         <h3 class="card-title"><%= t(:latest_published_slides) %></h3>
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
             <i class="fas fa-minus"></i>
           </button>
-          <button type="button" class="btn btn-tool" data-card-widget="remove">
+          <button type="button" class="btn btn-tool" data-lte-toggle="card-remove">
             <i class="fas fa-times"></i>
           </button>
         </div>
@@ -118,19 +118,19 @@
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="card-footer clearfix">
-        <%= link_to t(:view_all_slides), admin_slides_path, class: "btn btn-sm btn-default btn-flat float-right" %>
+        <%= link_to t(:view_all_slides), admin_slides_path, class: "btn btn-sm btn-outline-secondary btn-flat float-end" %>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
-  <div class="col-md-6 col-sm-12 col-xs-24">
+  <div class="col-md-6 col-sm-12 col-12">
     <div class="card card-primary card-outline">
       <div class="card-header">
         <h3 class="card-title"><%= t(:popular_slides) %></h3>
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
             <i class="fas fa-minus"></i>
           </button>
-          <button type="button" class="btn btn-tool" data-card-widget="remove">
+          <button type="button" class="btn btn-tool" data-lte-toggle="card-remove">
             <i class="fas fa-times"></i>
           </button>
         </div>
@@ -160,7 +160,7 @@
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="card-footer clearfix">
-        <%= link_to t(:view_all_slides), admin_slides_path, class: "btn btn-sm btn-default btn-flat float-right" %>
+        <%= link_to t(:view_all_slides), admin_slides_path, class: "btn btn-sm btn-outline-secondary btn-flat float-end" %>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->

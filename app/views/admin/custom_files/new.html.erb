@@ -2,10 +2,10 @@
   <div>
     <h1><%= t(:custom_files) %></h1>
   </div>
-  <div class="ml-auto">
+  <div class="ms-auto">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
         <li class="breadcrumb-item active"><%= link_to t(:custom_files), admin_custom_files_path %></li>
       </ol>
     </nav>
@@ -21,7 +21,7 @@
     <%= f.file_field :file, class: "form-control" %>
     <div class="mb-1"></div>
 
-    <%= f.label t(:description), :class => 'control-label' %>
+    <%= f.label t(:description), :class => 'form-label' %>
     <div class="controls">
       <%= f.text_field :description, :class => 'form-control' %>
     </div>

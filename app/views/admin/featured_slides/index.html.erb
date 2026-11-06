@@ -2,10 +2,10 @@
   <div>
     <h1><%= t(:featured_slides) %></h1>
   </div>
-  <div class="ml-auto">
+  <div class="ms-auto">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
         <li class="breadcrumb-item active"><%= link_to t(:featured_slides), admin_featured_slides_path %></li>
       </ol>
     </nav>
@@ -20,7 +20,7 @@
     <div class="card-header">
       <h3 class="card-title">&nbsp;</h3>
       <div class="card-tools">
-        <div class="input-group input-group-sm text-right">
+        <div class="input-group input-group-sm text-end">
           <div class="input-group-btn">
             <%= link_to t(:set_featured_slide), new_admin_featured_slide_path, class: 'btn btn-primary' %>
           </div>
@@ -51,7 +51,7 @@
               <td><%= fs.slide.created_at %></td>
               <td><%= fs.slide.total_view %></td>
               <td><%= fs.slide.comments_count %></td>
-              <td><%= button_to t('delete'), admin_featured_slide_path(fs), :method => :delete, :class => 'btn btn-primary btn-xs' %></td>
+              <td><%= button_to t('delete'), admin_featured_slide_path(fs), :method => :delete, :class => 'btn btn-primary btn-sm' %></td>
             </tr>
           <% end %>
         </tbody>

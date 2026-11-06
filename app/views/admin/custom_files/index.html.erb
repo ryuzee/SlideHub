@@ -2,10 +2,10 @@
   <div>
     <h1><%= t(:custom_files) %></h1>
   </div>
-  <div class="ml-auto">
+  <div class="ms-auto">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item ml-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
+        <li class="breadcrumb-item ms-auto"><a href="<%= admin_dashboard_path %>"><i class="fa fa-dashboard"></i> <%= t(:admin_dashboard) %></a></li>
         <li class="breadcrumb-item active"><%= link_to t(:custom_files), admin_custom_files_path %></li>
       </ol>
     </nav>
@@ -19,7 +19,7 @@
     <div class="card-header">
       <h3 class="card-title">&nbsp;</h3>
       <div class="card-tools">
-        <div class="input-group input-group-sm text-right">
+        <div class="input-group input-group-sm text-end">
           <div class="input-group-btn">
             <%= link_to t(:new_custom_file), new_admin_custom_file_path, class: 'btn btn-primary' %>
           </div>
@@ -45,12 +45,10 @@
               <td><span id="<%= "file-#{index}" %>"><%= "#{CloudConfig::provider.resource_endpoint}/#{CustomFile.custom_files_directory}/#{custom_file.path}" %></span></td>
               <td><%= custom_file.description %></td>
               <td class="text-center">
-                <form class="form-horizontal">
-                  <div class="form-inline">
-                    <button type="button" class="btn btn-xs copy-to-clipboard" data-clipboard-target="<%= "#file-#{index}" %>"><%= t(:copy) %></button>&nbsp;&nbsp;
-                    <%= button_to t(:delete), admin_custom_file_path(custom_file.id), method: :delete, class: 'btn btn-primary btn-xs', form_class: 'form-inline' %>
-                  </div>
-    </div>
+                <div class="d-flex gap-2 justify-content-center">
+                  <button type="button" class="btn btn-outline-secondary btn-sm copy-to-clipboard" data-clipboard-target="<%= "#file-#{index}" %>"><%= t(:copy) %></button>
+                  <%= button_to t(:delete), admin_custom_file_path(custom_file.id), method: :delete, class: 'btn btn-primary btn-sm', form_class: 'd-inline' %>
+                </div>
               </td>
             </tr>
             <% index += 1 %>
