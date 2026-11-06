@@ -2250,7 +2250,7 @@ GEM
       yard-activesupport-concern (~> 0.0)
       yard-solargraph (~> 0.1)
     spring (4.4.2)
-    sqlite3 (2.9.2)
+    sqlite3 (2.9.6)
       mini_portile2 (~> 2.8.0)
     thor (1.5.0)
     tilt (2.6.0)
