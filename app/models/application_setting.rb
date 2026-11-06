@@ -1,7 +1,7 @@
 class ApplicationSetting
   @defaults = begin
     content = File.read(Rails.root.join('config', 'app.yml'))
-    hash = content.empty? ? {} : YAML.safe_load(ERB.new(content).result, [], [], true).to_hash
+    hash = content.empty? ? {} : YAML.safe_load(ERB.new(content).result, aliases: true).to_hash
     hash = hash[Rails.env] || {}
     hash
   end

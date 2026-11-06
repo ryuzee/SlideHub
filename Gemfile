@@ -86,7 +86,7 @@ gem 'enum_help'
 # gem 'apartment'
 gem 'ros-apartment', require: 'apartment'
 
-gem 'psych', '~> 3.1'
+gem 'psych', '~> 5'
 
 # ffi-1.17.0 requires rubygems version >= 3.3.22
 # https://github.com/ffi/ffi/issues/1103
