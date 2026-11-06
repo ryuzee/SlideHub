@@ -1,27 +1,18 @@
-<div class="mb-4"></div>
 <% content_for :title, t('.forgot_your_password') %>
 
-<div class="row">
-  <div class="col-md-12">
-    <h3><%= t('.forgot_your_password') %></h3>
+<div class="sh-auth">
+  <h1 class="sh-auth-title"><%= t('.forgot_your_password') %></h1>
 
-    <%= render "devise/shared/signin_with_omniauth" %>
+  <%= render "devise/shared/signin_with_omniauth" %>
 
-    <%= bootstrap_devise_error_messages! %>
-    <div class="card card-default">
-      <div class="card-body">
-        <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, role: "form" }) do |f| %>
-          <div class="mb-3">
-            <%= f.label :email %>
-            <%= f.email_field :email, autofocus: true, class: "form-control" %>
-          </div>
-          <%= f.submit t('.send_me_reset_password_instructions', :default => 'Send me reset password instructions'), class: "btn btn-primary" %>
-        <% end %>
-      </div>
+  <%= bootstrap_devise_error_messages! %>
+  <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, role: "form", class: "sh-auth-form" }) do |f| %>
+    <div class="mb-3">
+      <%= f.label :email, class: "form-label" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
     </div>
-    <div class="mb-4"></div>
-    <%= render "devise/shared/signup_link" %>
+    <%= f.submit t('.send_me_reset_password_instructions', :default => 'Send me reset password instructions'), class: "btn btn-primary w-100" %>
+  <% end %>
 
-  </div>
+  <%= render "devise/shared/signup_link" %>
 </div>
-<br />

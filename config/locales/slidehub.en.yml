@@ -200,6 +200,8 @@ en:
   signin: "Signin"
   signin_with_provider: "Signin with %{provider}"
   signup: "Signup"
+  or_use_email: "or use your email"
+  no_account_yet: "No account yet?"
   show_embedded_code: "Show Embedded Code"
   show_slide_vertically: "Show Slide Vertically"
   show_slide_with_normal_mode: "Show Slide with Normal Mode"

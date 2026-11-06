@@ -1,35 +1,30 @@
-<div class="mb-4"></div>
 <% content_for :title, t('.sign_in') %>
 
-<div class="row">
-  <div class="col-md-12">
-    <h3><%= t(:signin) %></h3>
+<div class="sh-auth">
+  <h1 class="sh-auth-title"><%= t(:signin) %></h1>
 
-    <%= render "devise/shared/signin_with_omniauth" %>
+  <%= render "devise/shared/signin_with_omniauth" %>
 
-    <div class="card card-default">
-      <div class="card-body">
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form" }) do |f| %>
-          <div class="mb-3">
-            <%= f.label :email %>
-            <%= f.email_field :email, autofocus: true, class: "form-control" %>
-          </div>
-          <div class="mb-3">
-            <%= f.label :password %><%= render "devise/shared/forget_password" %>
-            <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-          </div>
-          <% if devise_mapping.rememberable? %>
-            <div class="form-check">
-              <%= f.check_box :remember_me, class: "form-check-input" %>
-              <%= f.label :remember_me, class: "form-check-label" %>
-            </div>
-          <% end %>
-          <%= f.submit t(:signin), class: "btn btn-primary" %>
-        <% end %>
-      </div>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form", class: "sh-auth-form" }) do |f| %>
+    <div class="mb-3">
+      <%= f.label :email, class: "form-label" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
     </div>
-    <div class="mb-4"></div>
-    <%= render "devise/shared/signup_link" %>
-  </div>
+    <div class="mb-3">
+      <div class="sh-auth-label-row">
+        <%= f.label :password, class: "form-label" %>
+        <%= render "devise/shared/forget_password" %>
+      </div>
+      <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+    </div>
+    <% if devise_mapping.rememberable? %>
+      <div class="form-check mb-3">
+        <%= f.check_box :remember_me, class: "form-check-input" %>
+        <%= f.label :remember_me, class: "form-check-label" %>
+      </div>
+    <% end %>
+    <%= f.submit t(:signin), class: "btn btn-primary w-100" %>
+  <% end %>
+
+  <%= render "devise/shared/signup_link" %>
 </div>
-<br />

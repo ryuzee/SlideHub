@@ -1,11 +1,15 @@
+<%# 外部サービスでのサインイン。メールアドレスのフォームと同じ幅の、目立ちすぎないボタンにする %>
 <% if devise_mapping.omniauthable? && Rails.application.config.slidehub.facebook? %>
-    <div class="main">
-  <% resource_class.omniauth_providers.each do |provider| %>
-    <% next if provider.to_s == 'twitter' and Rails.application.config.slidehub.twitter? == false %>
-    <% next if provider.to_s == 'facebook' and Rails.application.config.slidehub.facebook? == false %>
-    <% next if provider.to_s == 'saml' and Rails.application.config.slidehub.saml? == false %>
-          <%= link_to t(:signin_with_provider, :provider => provider.to_s.titleize), omniauth_authorize_path(resource_name, provider), :class => 'btn btn-lg btn-primary', :method => :post %>&nbsp;&nbsp;
-  <% end %>
-    </div>
-    <br clear="all" />
+  <% icons = { 'twitter' => 'fa-brands fa-twitter', 'facebook' => 'fa-brands fa-facebook-f', 'saml' => 'fa fa-building' } %>
+  <div class="sh-auth-providers">
+    <% resource_class.omniauth_providers.each do |provider| %>
+      <% next if provider.to_s == 'twitter' and Rails.application.config.slidehub.twitter? == false %>
+      <% next if provider.to_s == 'facebook' and Rails.application.config.slidehub.facebook? == false %>
+      <% next if provider.to_s == 'saml' and Rails.application.config.slidehub.saml? == false %>
+      <%= button_to omniauth_authorize_path(resource_name, provider), method: :post, class: 'btn btn-sh-quiet', form_class: 'sh-auth-provider' do %>
+        <i class="<%= icons[provider.to_s] || 'fa fa-right-to-bracket' %>" aria-hidden="true"></i><%= t(:signin_with_provider, provider: provider.to_s.titleize) %>
+      <% end %>
+    <% end %>
+  </div>
+  <p class="sh-auth-divider"><span><%= t(:or_use_email) %></span></p>
 <% end %>

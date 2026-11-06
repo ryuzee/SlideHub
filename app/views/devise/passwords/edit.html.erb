@@ -1,25 +1,24 @@
-<div class="mb-4"></div>
-<%= bootstrap_devise_error_messages! %>
-<div class="card card-default">
-  <div class="card-heading">
-    <h4><%= t('.change_your_password', :default => 'Change your password') %></h4>
-  </div>
-  <div class="card-body">
-    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, role: "form" }) do |f| %>
-      <%= f.hidden_field :reset_password_token %>
+<% content_for :title, t('.change_your_password', :default => 'Change your password') %>
 
-      <div class="mb-3">
-        <%= f.label :password, t('.new_password', :default => 'New password') %>
-        <%= f.password_field :password, autofocus: true, class: "form-control"  %>
-      </div>
+<div class="sh-auth">
+  <h1 class="sh-auth-title"><%= t('.change_your_password', :default => 'Change your password') %></h1>
 
-      <div class="mb-3">
-        <%= f.label :password_confirmation, t('.confirm_new_password', :default => 'Confirm new password') %>
-        <%= f.password_field :password_confirmation, class: "form-control"  %>
-      </div>
+  <%= bootstrap_devise_error_messages! %>
+  <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, role: "form", class: "sh-auth-form" }) do |f| %>
+    <%= f.hidden_field :reset_password_token %>
 
-      <%= f.submit t('.change_my_password', :default => 'Change my password'), class: "btn btn-primary" %>
-    <% end %>
-  </div>
+    <div class="mb-3">
+      <%= f.label :password, t('.new_password', :default => 'New password'), class: "form-label" %>
+      <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :password_confirmation, t('.confirm_new_password', :default => 'Confirm new password'), class: "form-label" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+    </div>
+
+    <%= f.submit t('.change_my_password', :default => 'Change my password'), class: "btn btn-primary w-100" %>
+  <% end %>
+
+  <div class="sh-auth-footer"><%= render "devise/shared/links" %></div>
 </div>
-<%= render "devise/shared/links" %>
