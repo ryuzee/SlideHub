@@ -1,12 +1,9 @@
-<div class="mb-4"></div>
-<div class="row">
-  <div class="col-md-12">
-    <%- model_class = Slide -%>
-    <h3><%=t :slides_in_category, category: @category.name %></h3>
-
-    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slides %>
-
-    <br clear="all" />
-    <%= will_paginate @slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
-  </div>
-</div>
+<% content_for :title, @category.name %>
+<% filters = capture do %>
+  <nav class="sh-chips" aria-label="<%= t(:category) %>">
+    <% @categories.each do |category| %>
+      <%= link_to category.name, category_path(category.id), class: "sh-tag#{' active' if category.id == @category.id}", aria: { current: (category.id == @category.id ? 'page' : nil) } %>
+    <% end %>
+  </nav>
+<% end %>
+<%= render 'slides/list_page', heading: @category.name, slides: @slides, filters: filters %>

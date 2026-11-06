@@ -1,38 +1,13 @@
-<div class="mb-4"></div>
+<% content_for :title, t(:slides_by_user, user: @user.display_name) %>
+<% content_for :full_bleed, true %>
+<% content_for :top_band, 'paper' %>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= "#{strip_tags(@user.display_name)}'s Slides" %>)" href="<%= user_by_username_path(username: @user.username, format: "rss") %>" />
 
-<% content_for :title, t(:slides_by_user, user: @user.display_name) %>
-<div class="row">
-  <div class="col-md-9">
-    <h3><%= t :slides_by_user, user: @user.display_name %></h3>
-    <div style="margin-bottom:10px;">
-      <% if params['sort_by'] != 'popularity' %>
-        <a class="btn btn-primary active" style="color:#fff;"><%= t :order_by_uploaded_date %></a>
-        <a href="?sort_by=popularity" class="btn btn-secondary"><%= t :order_by_popularity %></a>
-      <% else %>
-        <a href="?sort_by=date" class="btn btn-secondary"><%= t :order_by_uploaded_date %></a>
-        <a class="btn btn-primary active" style="color:#fff;"><%= t :order_by_popularity %></a>
-      <% end %>
-    </div>
-    <%= render 'slides/thumbnail_template', column_class: 'col-md-4 col-sm-8', slides: @slides %>
-    <div>
-      <%= will_paginate @slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
-    </div>
-  </div>
+<%= render 'users/profile', user: @user, slides: @slides, tags: @tags,
+           heading: strip_tags(@user.display_name),
+           rss_url: user_by_username_path(username: @user.username, format: 'rss') %>
 
-  <div class="col-md-3">
-    <%= render 'users/right_side_bar', user: @user %>
-    <br clear="all" />
-
-    <div class="card">
-      <div class="card-header"><%= t :popular_tags %></div>
-      <div class="card-body">
-        <% tag_cloud(@tags, %w(tag1 tag2 tag3 tag4)) do |tag, css_class| %>
-          <%= link_to tag.name, "#{search_index_path}?q%5Btag_search%5D=#{tag.name}", :class => css_class %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+<div class="container site-page">
+  <%= render 'slides/thumbnail_template', slides: @slides %>
+  <%= will_paginate @slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
 </div>
-
-<div class="mb-4"></div>

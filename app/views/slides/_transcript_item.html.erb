@@ -1,0 +1,8 @@
+<div class="item">
+  <% if vertical %>
+    <span class="number"><a href="#img-<%= page - 1 %>" aria-label="<%= t(:go_to_page, page: page) %>"><%= page %></a></span>
+  <% else %>
+    <span class="number"><a href="#page_top" onclick="javascript:OSSJSPARTS<%= prefix %>.moveTo(<%= page - 1 %>);" aria-label="<%= t(:go_to_page, page: page) %>"><%= page %></a></span>
+  <% end %>
+  <span class="content"><%= text %></span>
+</div>

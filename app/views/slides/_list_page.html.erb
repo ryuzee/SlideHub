@@ -1,0 +1,12 @@
+<%# 最新・人気・カテゴリの一覧ページ。見出し、件数、カードの並び、ページ送り %>
+<div class="sh-page-head">
+  <h1><%= heading %></h1>
+  <span class="sh-count"><%= t(:slides_count, count: slides.total_entries) %></span>
+</div>
+<%= local_assigns[:filters] %>
+<% if slides.empty? %>
+  <p class="sh-empty"><%= t(:no_slides_found) %></p>
+<% else %>
+  <%= render 'slides/thumbnail_template', slides: slides %>
+  <%= will_paginate slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
+<% end %>

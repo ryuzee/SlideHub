@@ -1,16 +1,17 @@
-<div class="mb-4"></div>
 <% content_for :title, t(:search) %>
 <% set_meta_tags noindex: true %>
-<div class="row">
-  <div class="col-md-12">
-    <%- model_class = Slide -%>
-    <h3><%=t :search_slides %></h3>
-
-    <%= render 'search_form', search_q: @search %>
-
-    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slides %>
-
-    <br clear="all" />
-    <%= will_paginate @slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
-  </div>
+<div class="sh-page-head">
+  <h1><%= t :search_slides %></h1>
+  <span class="sh-count"><%= t(:slides_count, count: @slides.total_entries) %></span>
 </div>
+
+<div class="sh-panel">
+  <%= render 'search_form', search_q: @search %>
+</div>
+
+<% if @slides.empty? %>
+  <p class="sh-empty"><%= t(:no_search_results) %></p>
+<% else %>
+  <%= render 'slides/thumbnail_template', slides: @slides %>
+  <%= will_paginate @slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
+<% end %>

@@ -1,27 +1,10 @@
-    <div class="row" style="max-width:1024px; margin:0 auto;">
-    <% slides.each do |slide| %>
-      <% next if slide.nil? %>
-      <div class="<%= column_class %> d-flex" style="padding:4px;">
-        <div class="card slidecard w-100">
-          <div class="slidecard-image">
-            <%= link_to slide_thumbnail_tag(slide), slide_path(slide.id) %>
-          </div>
-          <div class="slidecard-content">
-            <div class="slidecard-basic-info">
-              <div class="slidecard-title">
-                <span class="no_decoration"><a href="<%= slide_path(slide.id) %>"><%= strip_tags(slide.name).truncate(40) %></a></span>
-              </div>
-              <div class="slidecard-description"><%= strip_tags(slide.description).truncate(80) %></div>
-            </div>
-            <div class="slidecard-information">
-              <div class="h6" style="margin-top:2px;margin-bottom:2px;">
-                by <a href="<%= user_by_username_path(username: slide.user_username) %>">
-                  <%= strip_tags slide.user_display_name %></a> <% if slide.private %>(private)<% end %></div>
-              <%= slide.created_at.to_formatted_s(:default) %> | <%= slide.num_of_pages %> pages | <%= slide.total_view %> views
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <% end %>
+<%# スライドのカードを並べる。column_class を渡すと列幅を変えられる（サイドバーのあるページ用） %>
+<% column_class = local_assigns[:column_class].presence || 'col-12 col-sm-6 col-lg-4 col-xl-3' %>
+<div class="row g-4 slide-grid">
+  <% slides.each do |slide| %>
+    <% next if slide.nil? %>
+    <div class="<%= column_class %>">
+      <%= render 'slides/slide_card', slide: slide %>
     </div>
+  <% end %>
+</div>

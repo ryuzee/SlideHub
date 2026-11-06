@@ -15,13 +15,13 @@
     </div>
   <% end %>
 
-  <div class="control-group">
-    <div class="controls">
-      <%= f.text_field :comment, :class => 'form-control' %>
+  <div class="d-flex gap-2 align-items-start">
+    <div class="flex-grow-1">
+      <%= f.text_field :comment, class: 'form-control', placeholder: t(:comment_placeholder), aria: { label: t('activerecord.models.comment') } %>
       <%= errors(comment, :comment) %>
     </div>
+    <%= f.hidden_field :slide_id, :value => comment.slide_id %>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.submit t(:post_comment), class: 'btn btn-primary' %>
   </div>
-  <%= f.hidden_field :slide_id, :value => comment.slide_id %>
-  <%= f.hidden_field :user_id, :value => current_user.id %>
-  <%= f.submit nil, :class => 'btn btn-primary', :style => 'margin-top:10px;' %>
 <% end %>

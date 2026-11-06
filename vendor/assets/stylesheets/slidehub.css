@@ -1,9 +1,67 @@
-/* Global styles
+/*
+ * SlideHub 公開ページのスタイル。
+ *
+ * 考え方: スライドが主役。スライドを映す場所は暗い「ステージ」にし、
+ * それ以外は紙のように静かにする。一覧のカードは、ページ数に応じて紙が重なって見える「束」にする。
+ *
+ * 色はテーマ（Bootstrap の --bs-primary）とライト / ダークに合わせて変わる。
+ * カスタム CSS（管理画面の「カスタム CSS」）が当てているクラス名
+ * （slidehub_body, #main_container, slidecard 系, custom-footer, navbar 系）は残している。
+ */
+
+/* Tokens
+-------------------------------------------------- */
+.slidehub_body {
+  --sh-font: "IBM Plex Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, system-ui, sans-serif;
+  --sh-desk: #f3f4f7;
+  --sh-paper: #ffffff;
+  --sh-ink: #1b2230;
+  --sh-muted: #5d6678;
+  --sh-rule: #dfe3ea;
+  --sh-stage: #1c2330;
+  --sh-stage-ink: #edf0f5;
+  --sh-stage-muted: #a3acbb;
+  --sh-stage-rule: rgba(255, 255, 255, 0.12);
+  --sh-accent: var(--bs-primary);
+  --sh-radius: 6px;
+  --sh-sheet-shadow: 0 1px 2px rgba(27, 34, 48, 0.08), 0 4px 12px rgba(27, 34, 48, 0.06);
+}
+
+[data-bs-theme="dark"] .slidehub_body {
+  --sh-desk: #12161d;
+  --sh-paper: #1a1f29;
+  --sh-ink: #e6e9ef;
+  --sh-muted: #9aa3b2;
+  --sh-rule: #2b323e;
+  --sh-stage: #0b0e13;
+  --sh-sheet-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* gray / white テーマは、テーマ自身のフォントを使う */
+.slidehub_body.theme-gray,
+.slidehub_body.theme-white {
+  --sh-font: var(--bs-body-font-family);
+}
+
+/* Base
 -------------------------------------------------- */
 body.slidehub_body {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, "Arial", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "游ゴシック", YuGothic, sans-serif;
-  font-size: 16px;
-  line-height: 1.42857;
+  --bs-body-bg: var(--sh-desk);
+  --bs-body-color: var(--sh-ink);
+  --bs-secondary-color: var(--sh-muted);
+  --bs-border-color: var(--sh-rule);
+  --bs-body-font-family: var(--sh-font);
+  background-color: var(--sh-desk);
+  color: var(--sh-ink);
+  font-family: var(--sh-font);
+  font-size: 1rem;
+  line-height: 1.7;
+  font-feature-settings: "palt" 1;
+  -webkit-font-smoothing: antialiased;
+  /* フッターを画面の下端に置く（ページが短くても浮かない） */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .slidehub_body h1,
@@ -18,327 +76,1021 @@ body.slidehub_body {
 .slidehub_body .h4,
 .slidehub_body .h5,
 .slidehub_body .h6 {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, "Arial", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
-  font-weight: 300;
-  line-height: 1.2;
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  color: inherit;
 }
 
-.slidehub_body a,
-.slidehub_body a:hover,
-.slidehub_body a:visited,
-.slidehub_body a:active {
-  overflow: hidden;
-  outline: none;
+.slidehub_body :focus-visible {
+  outline: 2px solid var(--sh-accent);
+  outline-offset: 2px;
 }
 
-/* Main Area styles
+.slidehub_body .card {
+  --bs-card-bg: var(--sh-paper);
+  --bs-card-border-color: var(--sh-rule);
+}
+
+.slidehub_body .form-control,
+.slidehub_body .form-select {
+  background-color: var(--sh-paper);
+  border-color: var(--sh-rule);
+  color: var(--sh-ink);
+}
+
+.site-skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.5rem 1rem;
+  background: var(--sh-paper);
+  border-radius: var(--sh-radius);
+}
+
+/* Header
 -------------------------------------------------- */
+.slidehub_body .site-header {
+  --bs-navbar-color: var(--sh-muted);
+  --bs-navbar-hover-color: var(--sh-ink);
+  --bs-navbar-active-color: var(--sh-ink);
+  --bs-navbar-brand-color: var(--sh-ink);
+  --bs-navbar-brand-hover-color: var(--sh-ink);
+  --bs-navbar-padding-y: 0.625rem;
+  background-color: color-mix(in srgb, var(--sh-paper) 92%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--sh-rule);
+}
+
+.slidehub_body .site-header .navbar-brand {
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: 0.02em;
+  margin-right: 1.5rem;
+}
+
+.slidehub_body .site-header .nav-link {
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+/* 今いる場所は下線で示す */
+@media (min-width: 992px) {
+  .slidehub_body .site-header .navbar-nav .nav-link {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .slidehub_body .site-header .navbar-nav .nav-link.active {
+    box-shadow: inset 0 -2px 0 var(--sh-accent);
+  }
+}
+
+.slidehub_body .site-header-inverse {
+  --bs-navbar-color: rgba(255, 255, 255, 0.8);
+  --bs-navbar-hover-color: #fff;
+  --bs-navbar-active-color: #fff;
+  --bs-navbar-brand-color: #fff;
+  --bs-navbar-brand-hover-color: #fff;
+  background-color: var(--bs-primary);
+  border-bottom-color: transparent;
+}
+
+.slidehub_body .site-header-inverse .navbar-nav .nav-link.active {
+  box-shadow: inset 0 -2px 0 #fff;
+}
+
+.slidehub_body .site-header-inverse .site-upload-button {
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: #fff;
+  --bs-btn-color: var(--bs-primary);
+  --bs-btn-hover-bg: rgba(255, 255, 255, 0.9);
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-hover-color: var(--bs-primary);
+}
+
+.slidehub_body .site-header-inverse .site-search .form-control {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.slidehub_body .site-header-inverse .site-icon-button,
+.slidehub_body .site-header-inverse .site-signin-button {
+  color: #fff;
+}
+
+.slidehub_body .site-search {
+  position: relative;
+}
+
+.slidehub_body .site-search .form-control {
+  padding-left: 2.25rem;
+  border-radius: 999px;
+  background-color: var(--sh-desk);
+  border-color: transparent;
+  font-size: 0.9375rem;
+}
+
+.slidehub_body .site-search .form-control:focus {
+  background-color: var(--sh-paper);
+  border-color: var(--sh-accent);
+  box-shadow: none;
+}
+
+.slidehub_body .site-search-icon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--sh-muted);
+  font-size: 0.875rem;
+  pointer-events: none;
+}
+
+@media (min-width: 992px) {
+  .slidehub_body .site-search {
+    width: 18rem;
+  }
+}
+
+.slidehub_body .site-icon-button,
+.slidehub_body .site-avatar-button {
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--sh-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slidehub_body .site-icon-button:hover {
+  background-color: var(--sh-desk);
+  color: var(--sh-ink);
+}
+
+.slidehub_body .site-avatar,
+.slidehub_body .sh-avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--sh-desk);
+}
+
+.slidehub_body .site-signin-button {
+  color: var(--sh-ink);
+  font-weight: 500;
+}
+
+.slidehub_body .site-upload-button {
+  align-items: center;
+  border-radius: 999px;
+  padding-inline: 0.875rem;
+  font-weight: 500;
+}
+
+.slidehub_body .site-header .navbar-toggler {
+  border: 0;
+  padding: 0.375rem;
+  margin-left: 0.25rem;
+}
+
+.slidehub_body .site-user-menu {
+  min-width: 15rem;
+}
+
+/* Main
+-------------------------------------------------- */
+/* カスタム CSS が #main_container に幅を付けても、全幅の帯が崩れないようにする */
 .slidehub_body #main_container {
-  max-width: 1024px;
-  background-color: transparent;
-  padding-top: 60px;
-  margin-top: 1em;
-  border: none;
+  flex: 1 0 auto;
+  max-width: none !important;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
-.slidehub_body div.row a,
-.slidehub_body div.row a:hover,
-.slidehub_body div.row a:visited,
-.slidehub_body div.row a:active {
-  text-decoration: none;
+.slidehub_body .site-page {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
 }
 
-.slidehub_body span.no_decoration a,
-.slidehub_body span.no_decoration a:hover,
-.slidehub_body span.no_decoration a:visited,
-.slidehub_body span.no_decoration a:active {
-  text-decoration: none;
+/* 最上部のカスタムコンテンツとお知らせ。背景は下に続く帯と同じにする */
+.slidehub_body .site-custom-top {
+  /* 中の要素の下マージンが外にはみ出して、帯との間に別の色が見えないようにする */
+  display: flow-root;
+  padding-top: 1.25rem;
 }
 
-.slidehub_body .bottom_padding_20 {
-  padding-bottom: 20px;
+.slidehub_body .site-custom-top-paper {
+  background: var(--sh-paper);
 }
 
-/* Slide Item Area styles
--------------------------------------------------- */
-.slidehub_body div#slide_div_box {
-  background-color: #fff !important;
-  border: 1px solid #ccc;
-  padding: 20px !important;
-  margin-top: 20px;
-  margin-bottom: 20px
+/* 下に続く帯の上の余白は、この枠が受け持つ分だけ詰める */
+.slidehub_body .site-custom-top-stage ~ .sh-stage,
+.slidehub_body .site-custom-top-paper ~ .sh-profile {
+  padding-top: 0.5rem;
 }
 
-.slidehub_body div.slide_description {
-  padding: 0.8em;
-  margin-top: 0.8em;
-  padding-bottom: 0px;
-  text-align: justify;
-}
-
-.slide_description .item {
-  font-size: 0.9em;
+/* ページの見出し。左に見出し、右に件数やリンク */
+.slidehub_body .sh-page-head {
   display: flex;
-  align-items: flex-start;
-  /* 番号と内容を揃える */
-  margin-bottom: 10px;
-  /* 各項目間の余白 */
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.slidehub_body .sh-page-head h1 {
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  margin: 0;
+}
+
+.slidehub_body .sh-page-head .sh-count {
+  color: var(--sh-muted);
+  font-size: 0.9375rem;
+}
+
+/* セクションの見出し */
+.slidehub_body .sh-section {
+  padding-top: 3rem;
+  scroll-margin-top: 4rem;
+}
+
+.slidehub_body .sh-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--sh-rule);
+}
+
+.slidehub_body .sh-section-head h2 {
+  font-size: 1.375rem;
+  margin: 0;
+}
+
+.slidehub_body .sh-section-head a {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Stage（スライドを映す暗い帯）
+-------------------------------------------------- */
+.slidehub_body .sh-stage {
+  background-color: var(--sh-stage);
+  color: var(--sh-stage-ink);
+  --sh-muted: var(--sh-stage-muted);
+  --sh-rule: var(--sh-stage-rule);
+}
+
+.slidehub_body .sh-stage a:not(.btn) {
+  color: var(--sh-stage-ink);
+}
+
+/* white / gray テーマは主色が暗く、暗いステージの上ではボタンが見えにくいので白くする */
+.slidehub_body.theme-white .sh-stage .btn-primary,
+.slidehub_body.theme-gray .sh-stage .btn-primary {
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: #fff;
+  --bs-btn-color: var(--bs-primary);
+  --bs-btn-hover-bg: rgba(255, 255, 255, 0.88);
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-hover-color: var(--bs-primary);
+  --bs-btn-active-bg: rgba(255, 255, 255, 0.8);
+  --bs-btn-active-border-color: transparent;
+  --bs-btn-active-color: var(--bs-primary);
+}
+
+/* Deck card（一覧のカード）
+-------------------------------------------------- */
+.slidehub_body .slide-grid {
+  --bs-gutter-x: 1.75rem;
+  --bs-gutter-y: 2.75rem;
+}
+
+/* 同じ行のカードは高さを揃え、投稿者・日付の欄を下端に寄せる（説明の有無で行がずれないように） */
+.slidehub_body .slide-grid > [class*="col"] {
+  display: flex;
+}
+
+.slidehub_body .slidecard {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* サムネイルは1枚の紙。後ろにページ数に応じた紙が1〜2枚重なる */
+.slidehub_body .slidecard .slidecard-image {
+  position: relative;
+  isolation: isolate;
+  margin-top: 14px;
+}
+
+.slidehub_body .slidecard .slidecard-image > a {
+  position: relative;
+  display: block;
+  border-radius: var(--sh-radius);
+  overflow: hidden;
+  border: 1px solid var(--sh-rule);
+  background: var(--sh-paper);
+  box-shadow: var(--sh-sheet-shadow);
+  transition: transform 0.25s ease;
+}
+
+.slidehub_body .slidecard .slidecard-image::before,
+.slidehub_body .slidecard .slidecard-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 1px solid var(--sh-rule);
+  border-radius: var(--sh-radius);
+  background: var(--sh-paper);
+  transition: transform 0.25s ease;
+}
+
+.slidehub_body .slidecard .slidecard-image::before {
+  background: color-mix(in srgb, var(--sh-paper) 80%, var(--sh-muted));
+  transform: translateY(-6px) scaleX(0.95);
+}
+
+.slidehub_body .slidecard .slidecard-image::after {
+  background: color-mix(in srgb, var(--sh-paper) 62%, var(--sh-muted));
+  transform: translateY(-12px) scaleX(0.9);
+}
+
+.slidehub_body .slidecard[data-deck="1"] .slidecard-image::after,
+.slidehub_body .slidecard[data-deck="0"] .slidecard-image::after,
+.slidehub_body .slidecard[data-deck="0"] .slidecard-image::before {
+  display: none;
+}
+
+/* マウスを乗せると紙が少し浮き、束が広がる */
+.slidehub_body .slidecard:hover .slidecard-image > a {
+  transform: translateY(-3px);
+}
+
+.slidehub_body .slidecard:hover .slidecard-image::before {
+  transform: translateY(-9px) scaleX(0.95);
+}
+
+.slidehub_body .slidecard:hover .slidecard-image::after {
+  transform: translateY(-17px) scaleX(0.9);
+}
+
+.slidehub_body .slidecard .slidecard-pages {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(15, 18, 25, 0.72);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+}
+
+.slidehub_body .slidecard .slidecard-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 0.875rem 0.125rem 0;
+  background: transparent;
+}
+
+.slidehub_body .slidecard .slidecard-content .slidecard-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.slidehub_body .slidecard .slidecard-title a {
+  color: var(--sh-ink);
+  text-decoration: none;
+}
+
+/* タイトルのリンクをカード全体に広げる（サムネイルと二重にフォーカスしない） */
+.slidehub_body .slidecard .slidecard-title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.slidehub_body .slidecard:hover .slidecard-title a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* 説明は2行まで */
+.slidehub_body .slidecard .slidecard-content .slidecard-description {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--sh-muted);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.slidehub_body .slidecard .slidecard-information {
+  border: 0;
+  padding: 0;
+  margin: auto 0 0;
+  font-size: 0.8125rem;
+  color: var(--sh-muted);
+}
+
+.slidehub_body .slidecard .slidecard-author {
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+  color: var(--sh-ink);
+}
+
+.slidehub_body .slidecard .slidecard-author a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.slidehub_body .slidecard .slidecard-author a:hover {
+  text-decoration: underline;
+}
+
+.slidehub_body .slidecard .slidecard-meta {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 一覧のサムネイル。枠を 4:3 に固定し、画像が無くてもカードの大きさを揃える */
+.slide-thumbnail {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background-color: var(--bs-secondary-bg);
+}
+
+/* サイト設定で 16:9 を選んだとき */
+.slide-thumbnail.slide-thumbnail-16x9 {
+  aspect-ratio: 16 / 9;
+}
+
+/* 画像が無いときの代わりの画像は、ダーク表示では暗くする */
+[data-bs-theme="dark"] .slidehub_body img[src*="no_image"] {
+  filter: invert(0.88) hue-rotate(180deg);
+}
+
+/* Top page: featured hero
+-------------------------------------------------- */
+.slidehub_body .sh-hero {
+  padding: 2.5rem 0 3rem;
+}
+
+.slidehub_body .sh-hero-grid {
+  display: grid;
+  gap: 2rem 3rem;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .slidehub_body .sh-hero-grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+}
+
+.slidehub_body .sh-hero-screen {
+  display: block;
+  border-radius: var(--sh-radius);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+.slidehub_body .sh-hero-screen .slide-thumbnail {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.slidehub_body .sh-hero-label {
+  color: var(--sh-stage-muted);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.slidehub_body .sh-hero-title {
+  font-size: clamp(1.625rem, 1.2rem + 1.6vw, 2.5rem);
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+.slidehub_body .sh-hero-title a {
+  text-decoration: none;
+}
+
+.slidehub_body .sh-hero-title a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.slidehub_body .sh-hero-description {
+  color: var(--sh-stage-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.slidehub_body .sh-byline {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.slidehub_body .sh-byline-name {
+  font-weight: 700;
+  color: var(--sh-ink);
+  text-decoration: none;
+}
+
+.slidehub_body .sh-byline-name:hover {
+  text-decoration: underline;
+}
+
+.slidehub_body .sh-stage .sh-byline-name {
+  color: var(--sh-stage-ink);
+}
+
+.slidehub_body .sh-byline-meta {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.875rem;
+  font-size: 0.875rem;
+  color: var(--sh-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.slidehub_body .sh-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+/* 注目のスライドの2件目以降 */
+.slidehub_body .sh-hero-more {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--sh-stage-rule);
+  display: grid;
+  gap: 1rem 2rem;
+}
+
+@media (min-width: 768px) {
+  .slidehub_body .sh-hero-more {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Compact slide item（関連スライド・注目の続き）
+-------------------------------------------------- */
+.slidehub_body .sh-compact {
+  position: relative;
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 0.875rem;
+  align-items: start;
+}
+
+.slidehub_body .sh-compact-thumb {
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--sh-rule);
+}
+
+.slidehub_body .sh-compact-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.45;
+  margin: 0 0 0.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.slidehub_body .sh-compact-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.slidehub_body .sh-compact-title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.slidehub_body .sh-compact:hover .sh-compact-title a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.slidehub_body .sh-compact-meta {
+  font-size: 0.8125rem;
+  color: var(--sh-muted);
+}
+
+/* Slide page
+-------------------------------------------------- */
+.slidehub_body .sh-player-stage {
+  padding: 1.5rem 0 2rem;
+}
+
+/* プレーヤーは画面の高さに収まる幅にする（4:3 のスライドで、ヘッダーと操作バーの分を引く） */
+.slidehub_body .sh-player {
+  width: min(100%, calc((100vh - 13rem) * 4 / 3));
+  min-width: min(100%, 36rem);
+  margin: 0 auto;
+}
+
+.slidehub_body .sh-player-vertical {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.slidehub_body .sh-slide-body {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+.slidehub_body .sh-slide-title {
+  font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.125rem);
+  line-height: 1.35;
+  margin-bottom: 1.25rem;
+}
+
+.slidehub_body .sh-slide-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin: 1.5rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--sh-rule);
+  border-bottom: 1px solid var(--sh-rule);
+}
+
+.slidehub_body .sh-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.slidehub_body .sh-stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+
+.slidehub_body .sh-stat-label {
+  font-size: 0.8125rem;
+  color: var(--sh-muted);
+}
+
+.slidehub_body .sh-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.slidehub_body .sh-actions .btn {
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.slidehub_body .sh-share {
+  display: inline-flex;
+  gap: 0.375rem;
+}
+
+.slidehub_body .sh-actions .sh-icon-btn {
+  width: 2.375rem;
+  padding-inline: 0;
+  justify-content: center;
+}
+
+.slidehub_body .btn-sh-quiet {
+  --bs-btn-color: var(--sh-ink);
+  --bs-btn-bg: var(--sh-paper);
+  --bs-btn-border-color: var(--sh-rule);
+  --bs-btn-hover-color: var(--sh-ink);
+  --bs-btn-hover-bg: var(--sh-desk);
+  --bs-btn-hover-border-color: var(--sh-muted);
+  --bs-btn-active-bg: var(--sh-desk);
+  --bs-btn-active-border-color: var(--sh-muted);
+  --bs-btn-active-color: var(--sh-ink);
+}
+
+.slidehub_body .sh-description {
+  max-width: 42rem;
+  margin-bottom: 1.5rem;
+}
+
+.slidehub_body .sh-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+
+/* カスタムコンテンツ「右上」。スライド詳細のタグの直後に入る */
+.slidehub_body .sh-custom-right-top {
+  margin-top: 1.5rem;
+}
+
+.slidehub_body .sh-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--sh-rule);
+  background: var(--sh-paper);
+  color: var(--sh-ink);
+  font-size: 0.8125rem;
+  text-decoration: none;
+}
+
+.slidehub_body .sh-tag:hover {
+  border-color: var(--sh-accent);
+  color: var(--sh-accent);
+}
+
+.slidehub_body .sh-tag.active {
+  background: var(--sh-ink);
+  border-color: var(--sh-ink);
+  color: var(--sh-paper);
+}
+
+.slidehub_body .sh-aside-title {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.slidehub_body .sh-related {
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* 文字起こし。ページ番号を押すとそのページへ移る */
+.slide_description .item {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid var(--sh-rule);
+  font-size: 0.9375rem;
 }
 
 .slide_description .number {
-  min-width: 30px;
-  /* 番号の幅を固定 */
   text-align: right;
-  /* 番号を右寄せ */
-  padding-right: 10px;
-  /* 番号と文字の間の余白 */
-  font-weight: bold;
-  /* 番号を強調 */
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.slide_description .number a {
+  text-decoration: none;
 }
 
 .slide_description .content {
-  flex: 1;
-  /* 残りのスペースを埋める */
   text-align: left;
-  /* テキストを左揃え */
 }
 
-.slidehub_body div.slide_detail_row {
-  /** reserve **/
+/* コメント */
+.slidehub_body .sh-comment {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0.875rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--sh-rule);
 }
 
-/* Show slide vertically
--------------------------------------------------- */
+.slidehub_body .sh-comment-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.slidehub_body .sh-comment-head a:first-child {
+  font-weight: 700;
+  color: var(--sh-ink);
+  text-decoration: none;
+}
+
+.slidehub_body .sh-comment-head time {
+  color: var(--sh-muted);
+}
+
+.slidehub_body .sh-empty {
+  color: var(--sh-muted);
+  padding: 1rem 0;
+}
+
+/* 縦に並べて表示するとき */
 .slidehub_body div.vertical_slide_box {
-  border: 1px solid #000;
-  margin-bottom: 0px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.25rem;
 }
 
 .slidehub_body div.icon_right {
   text-align: right;
+  margin-bottom: 1rem;
 }
 
-.slidehub_body div.icon_right span {
-  color: #bbb;
+.slidehub_body div.icon_right a {
+  color: var(--sh-stage-muted);
+  font-size: 0.875rem;
 }
 
-/* Slide Card styles
+/* User profile
 -------------------------------------------------- */
-.slidehub_body .slidecard .slidecard-image {
-  overflow: hidden;
-  -webkit-transform-style: preserve-3d;
-  -moz-transform-style: preserve-3d;
-  -ms-transform-style: preserve-3d;
-  -o-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  /** border-bottom: 1px solid #ccc; **/
+.slidehub_body .sh-profile {
+  background: var(--sh-paper);
+  border-bottom: 1px solid var(--sh-rule);
+  padding: 2.5rem 0 0;
 }
 
-.slidehub_body .slidecard .slidecard-image img {
-  -webkit-transition: all 0.4s ease;
-  -moz-transition: all 0.4s ease;
-  -ms-transition: all 0.4s ease;
-  -o-transition: all 0.4s ease;
-  transition: all 0.4s ease;
+.slidehub_body .sh-profile-grid {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: center;
 }
 
-.slidehub_body .slidecard .slidecard-image:hover img {
-  /*-webkit-transform: scale(1.2) rotate(-7deg);
-  -moz-transform: scale(1.2) rotate(-7deg);
-  -ms-transform: scale(1.2) rotate(-7deg);
-  -o-transform: scale(1.2) rotate(-7deg);
-  transform: scale(1.2) rotate(-7deg);*/
-  -webkit-transform: scale(1.2);
-  -moz-transform: scale(1.2);
-  -ms-transform: scale(1.2);
-  -o-transform: scale(1.2);
-  transform: scale(1.2);
+.slidehub_body .sh-profile-avatar {
+  width: 6rem;
+  height: 6rem;
 }
 
-.slidehub_body .slidecard {
-  position: relative;
-  margin-top: 0px;
-  position: relative;
-  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  box-shadow: 4 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+.slidehub_body .sh-profile h1 {
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  margin: 0 0 0.25rem;
 }
 
-.slidehub_body .slidecard .slidecard-content {
-  padding: 10px;
+.slidehub_body .sh-profile-bio {
+  color: var(--sh-muted);
+  max-width: 42rem;
+  margin: 0;
+  white-space: pre-line;
 }
 
-.slidehub_body .slidecard .slidecard-basic-info {
-  height: auto;
+.slidehub_body .sh-profile-tags {
+  margin-top: 1.5rem;
 }
 
-.slidehub_body .slidecard .slidecard-content .slidecard-title,
-.slidehub_body .slidecard-reveal .slidecard-title {
-  font-size: 0.9em;
-  font-weight: bold !important;
-  height: 2.4em;
-  margin-bottom: 0.4em;
-  overflow: hidden;
-  vertical-align: middle;
-  display: table-cell;
+/* ページの下端に付くタブ（並び順の切り替え） */
+.slidehub_body .sh-tabs {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
 }
 
-.slidehub_body .slidecard .slidecard-content .slidecard-description {
-  font-size: 0.8em;
-  height: 3em;
-  overflow: hidden;
+.slidehub_body .sh-tabs a {
+  padding: 0.625rem 0;
+  color: var(--sh-muted);
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: inset 0 -2px 0 transparent;
 }
 
-.slidehub_body .slidecard .slidecard-action {
-  padding: 20px;
-  border-top: 1px solid rgba(160, 160, 160, 0.2);
+.slidehub_body .sh-tabs a:hover {
+  color: var(--sh-ink);
 }
 
-.slidehub_body .slidecard .slidecard-action a {
-  font-size: 15px;
-  text-transform: uppercase;
-  margin-right: 20px;
-  -webkit-transition: color 0.3s ease;
-  -moz-transition: color 0.3s ease;
-  -o-transition: color 0.3s ease;
-  -ms-transition: color 0.3s ease;
-  transition: color 0.3s ease;
+.slidehub_body .sh-tabs a.active {
+  color: var(--sh-ink);
+  box-shadow: inset 0 -2px 0 var(--sh-accent);
 }
 
-.slidehub_body .slidecard .slidecard-action a:hover {
+/* Pagination
+-------------------------------------------------- */
+.slidehub_body .pagination {
+  --bs-pagination-bg: var(--sh-paper);
+  --bs-pagination-border-color: var(--sh-rule);
+  --bs-pagination-color: var(--sh-ink);
+  --bs-pagination-hover-bg: var(--sh-desk);
+  --bs-pagination-hover-color: var(--sh-ink);
+  --bs-pagination-hover-border-color: var(--sh-rule);
+  --bs-pagination-disabled-bg: var(--sh-paper);
+  --bs-pagination-disabled-border-color: var(--sh-rule);
+  --bs-pagination-active-bg: var(--sh-ink);
+  --bs-pagination-active-border-color: var(--sh-ink);
+  --bs-pagination-active-color: var(--sh-paper);
+  justify-content: center;
+  gap: 0.25rem;
+  margin-top: 3rem;
+}
+
+.slidehub_body .pagination .page-link {
+  border-radius: var(--sh-radius) !important;
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+/* Panels（検索フォームなど）
+-------------------------------------------------- */
+.slidehub_body .sh-panel {
+  background: var(--sh-paper);
+  border: 1px solid var(--sh-rule);
+  border-radius: var(--sh-radius);
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.slidehub_body .sh-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Footer
+-------------------------------------------------- */
+.slidehub_body .custom-footer {
+  background: var(--sh-paper);
+  border-top: 1px solid var(--sh-rule);
+  padding: 2.5rem 0 2rem;
+  font-size: 0.875rem;
+  color: var(--sh-muted);
+}
+
+.slidehub_body .site-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+}
+
+.slidehub_body .site-footer-brand .fw-bold {
+  color: var(--sh-ink);
+  margin-bottom: 0.25rem;
+}
+
+.slidehub_body .site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.slidehub_body .site-footer-links a {
+  color: var(--sh-ink);
   text-decoration: none;
 }
 
-.slidehub_body .slidecard .slidecard-information {
-  padding: 2px;
-  border-top: 1px solid rgba(160, 160, 160, 0.2);
-  font-size: 0.6em;
+.slidehub_body .site-footer-links a:hover {
+  text-decoration: underline;
 }
 
-.slidehub_body .slidecard .slidecard-reveal {
-  padding: 20px;
-  position: absolute;
-  background-color: #FFF;
-  width: 100%;
-  overflow-y: auto;
-  /*top: 0;*/
-  left: 0;
-  bottom: 0;
-  height: 100%;
-  z-index: 1;
-  display: none;
+.slidehub_body .site-footer-powered {
+  margin-top: 2rem;
+  font-size: 0.8125rem;
 }
 
-.slidehub_body .slidecard .slidecard-reveal p {
-  margin: 20px;
+.slidehub_body .site-footer-powered a {
+  color: inherit;
 }
 
-/* Avatar styles
--------------------------------------------------- */
-.slidehub_body div.avatar50 {
-  background-color: white;
-  border: 1px solid #d9d9d9;
-  border-radius: 25px;
-  -moz-border-radius: 25px;
-  -webkit-border-radius: 25px;
-  height: 50px !important;
-  width: 50px;
-  overflow: hidden;
-  text-align: center;
-}
-
-.slidehub_body .avatar50 img {
-  width: 50px;
-  height: 50px;
-}
-
-.slidehub_body .avatar20 img {
-  width: 18px;
-  height: 18px;
-  border: 1px solid #666;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  padding: 0px;
-}
-
-/* Profile sidebar styles
--------------------------------------------------- */
-.slidehub_body .profile-sidebar {
-  margin-top: 20px;
-  padding: 20px 0 10px 0;
-}
-
-.slidehub_body .profile-userpic img {
-  float: none;
-  margin: 0 auto;
-  width: 40%;
-  height: 40%;
-  -webkit-border-radius: 50% !important;
-  -moz-border-radius: 50% !important;
-  border-radius: 50% !important;
-}
-
-.slidehub_body .profile-usertitle {
-  text-align: center;
-  margin-top: 14px;
-}
-
-.slidehub_body .profile-usertitle-name {
-  font-size: 1.1em;
-  font-weight: bold;
-  margin-bottom: 7px;
-}
-
-.slidehub_body .profile-usertitle-job {
-  text-align: left;
-  font-size: 0.8em;
-  margin-left: 1em;
-  margin-right: 1em;
-  margin-bottom: 15px;
-}
-
-.slidehub_body .profile-userbuttons {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.slidehub_body .profile-userbuttons .btn {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 6px 15px;
-  margin-right: 5px;
-}
-
-.slidehub_body .profile-userbuttons .btn:last-child {
-  margin-right: 0px;
-}
-
-.slidehub_body .profile-usermenu {
-  margin-top: 30px;
-}
-
-/* Comment Form styles
--------------------------------------------------- */
-.slidehub_body .comment_post {
-  padding-top: 8px;
-  padding-bottom: 2px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-/* Share Button styles
--------------------------------------------------- */
-.slidehub_body ul.share-buttons {
-  list-style: none;
-  padding: 0;
-}
-
-.slidehub_body ul.share-buttons li {
-  display: inline;
-}
-
-/* Tag styles
+/* Tag cloud（旧ユーザーページ用）
 -------------------------------------------------- */
 .tag1 {
   font-size: 1.0em;
@@ -356,66 +1108,31 @@ body.slidehub_body {
   font-size: 1.6em;
 }
 
-/* Error styles
+/* Forms and errors
 -------------------------------------------------- */
-.slidehub_body #error_explanation {
-  color: red;
-
-  ul {
-    color: red;
-    margin: 0 0 30px 0;
-  }
+.slidehub_body .bottom_padding_20 {
+  padding-bottom: 20px;
 }
 
 .slidehub_body .field_with_errors .form-control {
-  border: 1px solid red;
+  border-color: var(--bs-danger);
 }
 
 .slidehub_body div.alert {
-  margin-top: 20px !important;
-  margin-bottom: 0px !important;
+  margin-top: 1rem;
+  margin-bottom: 0;
 }
 
 abbr {
   display: none;
 }
 
-/* Narrow Window styles
+/* Motion
 -------------------------------------------------- */
-@media only screen and (max-width: 760px) {
-  .slidehub_body div#slide_div_box2 {
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+@media (prefers-reduced-motion: reduce) {
+  .slidehub_body *,
+  .slidehub_body *::before,
+  .slidehub_body *::after {
+    transition: none !important;
   }
-}
-
-/* 一覧のサムネイル。枠を 4:3 に固定し、画像が無くてもカードの大きさを揃える */
-.slide-thumbnail {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  background-color: #e9ecef;
-}
-
-/* サイト設定で 16:9 を選んだとき */
-.slide-thumbnail.slide-thumbnail-16x9 {
-  aspect-ratio: 16 / 9;
-}
-
-/* カードの上側（サムネイル部分）は角丸にせず、下側だけ角丸にする */
-.slidehub_body .slidecard.card {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-/* カードの高さを揃え、投稿者・日付の欄をカードの下端に寄せる（旧 jquery-match-height の代わり） */
-.slidehub_body .slidecard .slidecard-content {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-}
-
-.slidehub_body .slidecard .slidecard-information {
-  margin-top: auto;
 }

@@ -1,114 +1,124 @@
-<div class="mb-4"></div>
 <% content_for :title, @slide.name %>
+<% content_for :full_bleed, true %>
+<% content_for :top_band, 'stage' %>
 <% prefix = js_prefix %>
+<% vertical = params[:vertical] == "1" %>
+<% owner = user_signed_in? && current_user.id == @slide.user_id %>
 <%= render 'slides/meta_tags', slide: @slide %>
 <%= json_ld_tag(slide_structured_data(@slide)) %>
 <%= json_ld_tag(slide_breadcrumb_structured_data(@slide)) %>
 
-<% if params[:vertical] != "1" %>
-  <div style="padding-top:0px;">
-    <%= render 'slides/slide_horizontal', slide: @slide, start_position: @start_position, prefix: prefix %>
-  </div>
-<% else %>
-  <div style="padding-top:0px;">
-    <%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
-  </div>
-<% end %>
-<div class="mb-4"></div>
-
-<div class="card">
-  <!--name and description-->
-  <div class="card-body">
-    <h1 class="h4 card-title"><%= strip_tags @slide.name %></h1>
-    <div class="card-text"><%= simple_format(h(@slide.description)) %></div>
-    <% if @slide.tags.count > 0 %>
-      <ul class="list-inline" style="line-height: 2.5;">
-        <% @slide.tags.each do |t| %>
-          <li class="list-inline-item"><a href="<%= search_index_path %>?q%5Btag_search%5D=<%= t %>"><span class="badge text-bg-primary p-2" style="font-size:0.9em; font-weight: normal"><%= t %></span></a></li>
-        <% end %>
-      </ul>
+<%# スライドは暗いステージに映す %>
+<section class="sh-stage sh-player-stage" aria-label="<%= t(:slide_player) %>">
+  <div class="container">
+    <% if vertical %>
+      <div class="sh-player-vertical">
+        <%= render 'slides/slide_vertical', slide: @slide, start_position: @start_position %>
+      </div>
+    <% else %>
+      <div class="sh-player">
+        <%= render 'slides/slide_horizontal', slide: @slide, start_position: @start_position, prefix: prefix %>
+      </div>
     <% end %>
-    <div class="pt-2"><%= render 'slides/share_buttons' %></div>
   </div>
-  <div class="card-footer">
-    <ul class="list-inline mb-0 pb-0" style="line-height: 2.5;">
-      <li class="list-inline-item">
-        <% if @slide.user.avatar.attached?  %>
-          <%= image_tag(url_for(@slide.user.avatar), :size => '32x32', :class => 'rounded-circle') %>
-        <% else %>
-          <%= image_tag('avatar/medium/missing.png', :size => '32x32', :class => 'rounded-circle') %>
+</section>
+
+<div class="container sh-slide-body">
+  <div class="row g-5">
+    <div class="col-lg-8">
+      <h1 class="sh-slide-title"><%= strip_tags @slide.name %></h1>
+
+      <div class="sh-byline">
+        <%= user_avatar_tag(@slide.user, size: 44) %>
+        <div>
+          <%= link_to strip_tags(@slide.user.display_name), user_by_username_path(username: @slide.user.username), class: 'sh-byline-name' %>
+          <div class="sh-byline-meta">
+            <%= compact_date(@slide.created_at) %>
+            <%= link_to @slide.category_name, category_path(@slide.category_id) %>
+            <% if @slide.private %><span class="badge text-bg-secondary"><%= t(:private_slide) %></span><% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="sh-slide-stats">
+        <div class="sh-stat">
+          <span class="sh-stat-value"><%= number_with_delimiter(@slide.total_view) %></span>
+          <span class="sh-stat-label"><%= t(:stat_views) %></span>
+        </div>
+        <div class="sh-stat">
+          <span class="sh-stat-value"><%= number_with_delimiter(@slide.embedded_view) %></span>
+          <span class="sh-stat-label"><%= t(:stat_embedded_views) %></span>
+        </div>
+        <% if @slide.downloadable %>
+        <div class="sh-stat">
+          <span class="sh-stat-value"><%= number_with_delimiter(@slide.download_count) %></span>
+          <span class="sh-stat-label"><%= t(:stat_downloads) %></span>
+        </div>
         <% end %>
-        <%= link_to strip_tags(@slide.user.display_name), user_by_username_path(username: @slide.user.username) %>
-      </li>
-      <li class="list-inline-item"><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;<span class="float-end"><%= @slide.created_at.to_formatted_s(:middle) %></span></li>
-      <li class="list-inline-item"><i class="fa fa-th"></i>&nbsp;&nbsp;<span class="float-end"><a href="<%= category_path @slide.category_id %>"><%= @slide.category_name %></a></span></li>
-      <li class="list-inline-item"><i class="fa fa-eye"></i>&nbsp;&nbsp;<span class="float-end"><%= @slide.total_view %></span></li>
-      <li class="list-inline-item"><i class="fa fa-desktop"></i>&nbsp;&nbsp;<span class="float-end"><%= @slide.embedded_view %></span></li>
-      <% if @slide.downloadable %>
-        <li class="list-inline-item"><i class="fa fa-cart-arrow-down"></i>&nbsp;&nbsp;<%= t(:downloads) %><span class="float-end"><%= @slide.download_count %></span></li>
-      <% end %>
-      <% if params[:vertical] == "1" %>
-        <li class="list-inline-item"><i class="fa fa-play"></i>&nbsp;&nbsp;<%= link_to t(:show_slide_with_normal_mode), "/slides/#{@slide.id}" %></li>
-      <% else %>
-        <li class="list-inline-item"><i class="fa fa-film"></i>&nbsp;&nbsp;<%= link_to t(:show_slide_vertically), "/slides/#{@slide.id}?vertical=1" %></li>
-      <% end %>
-      <% if @slide.downloadable %>
-        <li class="list-inline-item"><i class="fa fa-download"></i>&nbsp;&nbsp;<%= link_to t(:download_slide), slide_download_path(@slide.id) %></li>
-      <% end %>
-      <li class="list-inline-item"><i class="fa fa-code"></i>&nbsp;&nbsp;<%= link_to t(:show_embedded_code), "#", :id => "show_embedded", data: {"toggle":"modal", "target":"embedded_dialog"} %></li>
-      <% if user_signed_in? and current_user.id == @slide.user_id %>
-        <li class="list-inline-item"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<%= link_to t(:edit_slide), edit_slide_path(@slide.id) %></li>
-        <li class="list-inline-item"><i class="fa fa-trash"></i>&nbsp;&nbsp;<%= link_to t(:delete_slide), slide_path(@slide.id), :method => :delete, data: { confirm: "Are you sure you want to delete?"} %></li>
-      <% end %>
-      <li class="list-inline-item"></li>
-    </ul>
-  </div>
-</div>
-<div class="mb-4"></div>
+        <div class="sh-stat">
+          <span class="sh-stat-value"><%= number_with_delimiter(@slide.num_of_pages) %></span>
+          <span class="sh-stat-label"><%= t(:stat_pages) %></span>
+        </div>
+      </div>
 
-<%= render :partial => 'shared/custom_content_right_top' %>
+      <div class="sh-actions">
+        <% if @slide.downloadable %>
+          <%= link_to slide_download_path(@slide.id), class: 'btn btn-primary' do %><i class="fa fa-download" aria-hidden="true"></i><%= t(:action_download) %><% end %>
+        <% end %>
+        <%= link_to '#', id: 'show_embedded', class: 'btn btn-sh-quiet', data: { toggle: 'modal', target: 'embedded_dialog' } do %><i class="fa fa-code" aria-hidden="true"></i><%= t(:action_embed) %><% end %>
+        <% if vertical %>
+          <%= link_to slide_path(@slide.id), class: 'btn btn-sh-quiet' do %><i class="fa fa-play" aria-hidden="true"></i><%= t(:action_normal_view) %><% end %>
+        <% else %>
+          <%= link_to slide_path(@slide.id, vertical: 1), class: 'btn btn-sh-quiet' do %><i class="fa fa-bars" aria-hidden="true"></i><%= t(:action_vertical_view) %><% end %>
+        <% end %>
+        <%= render 'slides/share_buttons' %>
+        <% if owner %>
+          <%= link_to edit_slide_path(@slide.id), class: 'btn btn-sh-quiet' do %><i class="fa fa-pen" aria-hidden="true"></i><%= t(:action_edit) %><% end %>
+          <%= link_to slide_path(@slide.id), method: :delete, data: { confirm: t(:confirm_delete_slide) }, class: 'btn btn-outline-danger' do %><i class="fa fa-trash" aria-hidden="true"></i><%= t(:action_delete) %><% end %>
+        <% end %>
+      </div>
 
-<!-- Transcript -->
-<h3><%= t(:transcript) %></h3>
-<div class="card" style="margin-top:20px">
-  <div class="card-body">
-    <%= render 'slides/transcript', slide: @slide, prefix: prefix %>
-  </div>
-</div>
-<div class="mb-4"></div>
+      <% if @slide.description.present? %>
+        <div class="sh-description"><%= simple_format(h(@slide.description)) %></div>
+      <% end %>
 
-<!-- Comment -->
-<h3><%= t 'activerecord.models.comment' %></h3>
-<div class="card" style="margin-top:20px">
-  <div class="card-body">
-    <%= render 'slides/comment', comment: @comment, posted_comments: @posted_comments %>
-  </div>
-</div>
-<div class="mb-4"></div>
+      <% if @slide.tags.any? %>
+        <ul class="sh-tags" aria-label="<%= t('activerecord.models.tag') %>">
+          <% @slide.tags.each do |tag| %>
+            <li><%= link_to tag, search_index_path(q: { tag_search: tag.to_s }), class: 'sh-tag' %></li>
+          <% end %>
+        </ul>
+      <% end %>
 
-<% if @related_slides.count > 0 %>
-  <div id="popular">
-    <h3><%= t(:related_slides) %></h3>
-    <div>
-      <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @related_slides %>
+      <%# カスタムコンテンツ「右上」は、タグの直後に出す %>
+      <% if ApplicationSetting['custom_content.right_top'].present? %>
+        <div class="sh-custom-right-top"><%= render 'shared/custom_content_right_top' %></div>
+      <% end %>
     </div>
+
+    <aside class="col-lg-4">
+      <% if @related_slides.any? %>
+        <h2 class="sh-aside-title"><%= t(:related_slides) %></h2>
+        <div class="sh-related">
+          <%# 右の列が左の情報より長くなりすぎないよう、6件まで %>
+          <% @related_slides.first(6).each do |slide| %>
+            <%= render 'slides/slide_compact', slide: slide %>
+          <% end %>
+        </div>
+      <% end %>
+    </aside>
   </div>
-  <div class="mb-4"></div>
-<% end %>
 
-<script type="text/javascript">
-  $(document).ready(function(){
-    if (Cookies.get("SlideTab")) {
-      $('a[data-bs-toggle="tab"]').parent().removeClass('active');
-      $('a[href="#' + Cookies.get("SlideTab") +'"]').click();
-    }
+  <%# 文字起こしとコメントは全幅 %>
+  <section class="sh-section" aria-labelledby="transcript-heading">
+    <div class="sh-section-head"><h2 id="transcript-heading"><%= t(:transcript) %></h2></div>
+    <%= render 'slides/transcript', slide: @slide, prefix: prefix %>
+  </section>
 
-    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-      var tabName = e.target.href;
-      var items = tabName.split("#");
-      Cookies.set("SlideTab",items[1], { expires: 365 });
-    });
-  });
-</script>
+  <section class="sh-section" aria-labelledby="comments-heading">
+    <div class="sh-section-head"><h2 id="comments-heading"><%= t 'activerecord.models.comment' %></h2></div>
+    <%= render 'slides/comment', comment: @comment, posted_comments: @posted_comments %>
+  </section>
+</div>
 
 <%= render 'slides/embedded_dialog', slide: @slide %>

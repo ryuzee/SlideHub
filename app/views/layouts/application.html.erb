@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="<%= I18n.locale %>">
+<% theme = %w[default white dark gray].include?(ApplicationSetting['site.theme']) ? ApplicationSetting['site.theme'] : 'default' %>
+<%# ライト / ダークは管理画面で選んだテーマだけで決める（dark ならダーク、それ以外はライト）。OS の設定には合わせない %>
+<html lang="<%= I18n.locale %>" data-bs-theme="<%= theme == 'dark' ? 'dark' : 'light' %>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,113 +21,136 @@
     <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:latest_slides) %>)" href="<%= latest_index_path(format: "rss") %>" />
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:popular_slides) %>)" href="<%= popular_index_path(format: "rss") %>" />
-    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;700&display=swap">
     <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" %>
-    <% ApplicationSetting['site.theme'] = 'default' unless %w[default white dark gray].include?(ApplicationSetting['site.theme']) %>
-    <%= theme_stylesheet_link_tag ApplicationSetting['site.theme'], 'bootstrap.css' %>
-    <%= theme_stylesheet_link_tag ApplicationSetting['site.theme'], 'custom.css' %>
+    <%= theme_stylesheet_link_tag theme, 'bootstrap.css' %>
+    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= theme_stylesheet_link_tag theme, 'custom.css' %>
     <%= stylesheet_link_tag "/custom/override.css" %>
   </head>
-  <body class="slidehub_body" oncontextmenu="return false;">
+  <%
+    # site.header_inverse が 1 のときは、ヘッダーをテーマの主色で塗る
+    header_class = ApplicationSetting['site.header_inverse'].to_s == '1' && theme != 'dark' ? 'site-header-inverse navbar-dark' : ''
+    can_upload = user_signed_in? && ((ApplicationSetting['site.only_admin_can_upload']).to_i == 0 || current_user.admin == true)
+  %>
+  <body class="slidehub_body theme-<%= theme %>" oncontextmenu="return false;">
 
-    <%
-      inverse = ApplicationSetting['site.header_inverse']
-      inverse = 0 if inverse.nil?
-      if inverse.to_s == "0"
-        css_class = "navbar-light bg-secondary"
-      else
-        css_class = "navbar-dark bg-primary"
-      end
-      if ApplicationSetting['site.theme'] == 'dark'
-        css_class = "navbar-dark bg-secondary"
-      end
-    %>
-    <nav class="navbar navbar-expand-lg  <%= css_class %> sticky-top">
-      <div class="container d-flex justify-content-between">
-        <a class="navbar-brand" href="<%= slides_path %>"><i class="fa fa-home"></i>&nbsp;<%= ApplicationSetting['site.name'] %></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
+    <a class="visually-hidden-focusable site-skip-link" href="#main_container"><%= t(:skip_to_content) %></a>
+
+    <nav class="navbar navbar-expand-lg sticky-top site-header <%= header_class %>">
+      <div class="container">
+        <a class="navbar-brand" href="<%= slides_path %>"><%= ApplicationSetting['site.name'] %></a>
+
+        <div class="d-flex align-items-center gap-1 order-lg-last">
+          <% if user_signed_in? %>
+            <% if can_upload %>
+              <%= link_to new_slide_path, class: 'btn btn-primary btn-sm site-upload-button d-none d-sm-inline-flex' do %><i class="fa fa-arrow-up-from-bracket me-2" aria-hidden="true"></i><%= t('upload') %><% end %>
+            <% end %>
+            <div class="dropdown">
+              <button type="button" class="btn site-avatar-button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="<%= t(:user_menu) %>">
+                <%= image_tag(current_user.avatar.attached? ? url_for(current_user.avatar) : 'avatar/thumb/missing.png', size: '32x32', class: 'site-avatar', alt: '') %>
+              </button>
+              <div class="dropdown-menu dropdown-menu-end site-user-menu">
+                <div class="px-3 py-2">
+                  <div class="fw-bold text-truncate"><%= current_user.display_name %></div>
+                  <div class="small text-body-secondary text-truncate"><%= current_user.email %></div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <% if can_upload %>
+                <a class="dropdown-item" href="<%= new_slide_path %>"><i class="fa fa-arrow-up-from-bracket fa-fw me-2"></i><%= t 'upload' %></a>
+                <% end %>
+                <a class="dropdown-item" href="<%= users_path %>"><i class="fa fa-layer-group fa-fw me-2"></i><%= t :my_slides %></a>
+                <a class="dropdown-item" href="<%= statistics_path %>"><i class="fa fa-chart-simple fa-fw me-2"></i><%= t :my_statistics %></a>
+                <a class="dropdown-item" href="<%= edit_user_registration_path %>"><i class="fa fa-user fa-fw me-2"></i><%= t :my_account %></a>
+                <% if current_user.admin %>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="<%= admin_dashboard_path %>"><i class="fa fa-gauge fa-fw me-2"></i><%= t :admin_dashboard %></a>
+                <% end %>
+                <div class="dropdown-divider"></div>
+                <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item' do %><i class="fa fa-right-from-bracket fa-fw me-2"></i><%= t(:logout) %><% end %>
+              </div>
+            </div>
+          <% elsif ApplicationSetting['site.display_login_link'] == "1" %>
+            <%= link_to t("signin"), new_user_session_path, class: 'btn btn-sm site-signin-button' %>
+            <% if ApplicationSetting['site.signup_enabled'] == "1" %>
+              <%= link_to t("signup"), new_user_registration_path, class: 'btn btn-primary btn-sm d-none d-sm-inline-flex' %>
+            <% end %>
+          <% end %>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto">
+          <ul class="navbar-nav me-lg-auto">
             <li class="nav-item"><%= link_to t("popular"), popular_index_path, class: "nav-link#{' active' if controller.controller_name == 'popular'}" %></li>
             <li class="nav-item"><%= link_to t("latest"), latest_index_path, class: "nav-link#{' active' if controller.controller_name == 'latest'}" %></li>
             <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle<%= ' active' if controller.controller_name == 'categories' %>" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true"><%= t 'category' %></a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a href="#" class="nav-link dropdown-toggle<%= ' active' if controller.controller_name == 'categories' %>" data-bs-toggle="dropdown" role="button" aria-expanded="false"><%= t 'category' %></a>
+              <div class="dropdown-menu">
                 <% @categories.each do |cat| %>
                 <%= link_to cat.name, category_path(cat.id), class: 'dropdown-item' %>
                 <% end %>
               </div>
             </li>
-            <li class="nav-item"><%= link_to t("search"), search_index_path, class: "nav-link#{' active' if controller.controller_name == 'search'}" %></li>
             <%= raw custom_links(controller) %>
           </ul>
-          <% if user_signed_in? %>
-          <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-              <span class="avatar20" aria-hidden="true">
-                <% if current_user.avatar.attached? %>
-                <%= image_tag(url_for(current_user.avatar), :size => '32x32') %>
-                <% else %>
-                <%= image_tag('avatar/thumb/missing.png') %>
-                <% end %>
-              </span>&nbsp;<%= current_user.email %></a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <% if (ApplicationSetting['site.only_admin_can_upload']).to_i == 0 || current_user.admin == true %>
-              <a class="dropdown-item" href="<%= new_slide_path %>"><i class="fa fa-pencil"></i>&nbsp;<%= t 'upload' %>!!</a>
-              <% end %>
-              <a class="dropdown-item" href="<%= users_path %>"><i class="fa fa-list-alt"></i>&nbsp;<%= t :my_slides %></a>
-              <a class="dropdown-item" href="<%= statistics_path %>"><i class="fa fa-signal"></i>&nbsp;<%= t :my_statistics %></a>
-              <a class="dropdown-item" href="<%= edit_user_registration_path %>"><i class="fa fa-user"></i>&nbsp;<%= t :my_account %></a>
-              <% if current_user.admin %>
-              <!-- admin -->
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="<%= admin_dashboard_path %>"><i class="fa fa-wrench"></i>&nbsp;<%= t :admin_dashboard %></a>
-              <!-- // admin -->
-              <% end %>
-              <div class="dropdown-divider"></div>
-              <%= link_to t(:logout), destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
 
-            </div>
-            </li>
-          </ul>
-          <% else %>
-          <% if ApplicationSetting['site.display_login_link'] == "1" %>
-          <ul class="navbar-nav">
-            <% if ApplicationSetting['site.signup_enabled'] == "1" %>
-            <li class="nav-item"><%= link_to t("signup"), new_user_registration_path, class: 'nav-link' %></li>
-            <% end %>
-            <li class="nav-item"><%= link_to t("signin"), new_user_session_path, class: 'nav-link' %></li>
-          </ul>
-          <% end %>
+          <%# サイト内検索。タイトルで探し、細かい条件は検索ページで指定する %>
+          <%= form_tag search_index_path, method: :get, class: 'site-search my-3 my-lg-0 mx-lg-3', role: 'search' do %>
+            <i class="fa fa-magnifying-glass site-search-icon" aria-hidden="true"></i>
+            <%= search_field_tag 'q[name_cont]', params.dig(:q, :name_cont), class: 'form-control', placeholder: t(:site_search_placeholder), aria: { label: t(:site_search_placeholder) } %>
           <% end %>
         </div>
       </div>
     </nav>
 
     <a name="page_top"></a>
-    <div class="container" id="main_container" style="padding-top:20px;" role="main">
-      <%= render :partial => 'shared/custom_content_center_top' %>
-      <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
+    <main id="main_container">
+      <%# カスタムコンテンツ（中央上部）とお知らせ。どちらも無いときは枠ごと出さない %>
+      <%# カスタムコンテンツ（中央上部）とお知らせは常に最上部に出す。
+          背景は、そのページの最初の帯（content_for :top_band が stage / paper）に合わせてつなげる %>
+      <% top_band = content_for?(:top_band) ? content_for(:top_band).to_s.strip : '' %>
+      <% show_custom_top = ApplicationSetting['custom_content.center_top'].present? %>
+      <% if show_custom_top || flash.any? %>
+        <div class="site-custom-top<%= " site-custom-top-#{top_band}" if top_band.present? %><%= ' sh-stage' if top_band == 'stage' %>">
+          <div class="container">
+            <%= render :partial => 'shared/custom_content_center_top' if show_custom_top %>
+            <%= render :partial => 'shared/flash', :locals => { :flash => flash } %>
+          </div>
+        </div>
+      <% end %>
 
-      <%= yield %>
-      <%= render :partial => 'shared/custom_content_center_bottom' %>
-      <br clear="all" />
-    </div> <!-- /container -->
+      <%# 全幅の帯（ステージなど）を使うページは content_for :full_bleed を立て、自分で container を置く %>
+      <% if content_for?(:full_bleed) %>
+        <%= yield %>
+      <% else %>
+        <div class="container site-page"><%= yield %></div>
+      <% end %>
+
+      <div class="container">
+        <%= render :partial => 'shared/custom_content_center_bottom' %>
+      </div>
+    </main>
 
     <footer class="custom-footer">
       <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <p class="text-muted text-start"><%= raw ApplicationSetting['site.footer'] %></p>
+        <div class="site-footer-inner">
+          <div class="site-footer-brand">
+            <div class="fw-bold"><%= ApplicationSetting['site.name'] %></div>
+            <div class="site-footer-note"><%= raw ApplicationSetting['site.footer'] %></div>
           </div>
-          <div class="col-md-6">
-            <p class="text-muted text-end">Powered by <%= link_to "SlideHub", "https://github.com/ryuzee/SlideHub", target: "_blank", rel: "noopener noreferrer" %> <%= SlideHub::Version %></p>
-          </div>
+          <nav class="site-footer-links" aria-label="<%= t(:footer_navigation) %>">
+            <%= link_to t(:latest_slides), latest_index_path %>
+            <%= link_to t(:popular_slides), popular_index_path %>
+            <%= link_to t(:search_slides), search_index_path %>
+            <%= link_to latest_index_path(format: 'rss') do %><i class="fa fa-rss me-1" aria-hidden="true"></i>RSS<% end %>
+          </nav>
         </div>
+        <div class="site-footer-powered">Powered by <%= link_to "SlideHub", "https://github.com/ryuzee/SlideHub", target: "_blank", rel: "noopener noreferrer" %> <%= SlideHub::Version %></div>
       </div>
     </footer>
   </body>
