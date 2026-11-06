@@ -2203,7 +2203,7 @@ GEM
       nokogiri (>= 1.13.10)
       rexml
     ruby2_keywords (0.0.5)
-    rubyzip (3.2.1)
+    rubyzip (3.4.0)
     sdoc (2.6.1)
       rdoc (>= 5.0)
     securerandom (0.4.1)
