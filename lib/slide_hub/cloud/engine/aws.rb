@@ -122,15 +122,22 @@ module SlideHub
         end
 
         # S3
+        # Content-Type は拡張子から決める。指定しないと S3 は application/octet-stream で配信し、
+        # ブラウザが CSS などを読み込まない
         def self.upload_files(bucket, files, prefix)
+          require 'mime/types'
           files.each do |file|
+            next unless File.exist?(file)
+
+            content_type = MIME::Types.type_for(File.extname(file))[0].to_s.presence || 'application/octet-stream'
             ::Aws::S3::Client.new(region: @config.region).put_object(
               bucket: bucket,
               key: "#{prefix}/#{File.basename(file)}",
-              body: File.read(file),
+              body: File.binread(file),
+              content_type: content_type,
               acl: 'public-read',
               storage_class: 'REDUCED_REDUNDANCY',
-            ) if File.exist?(file)
+            )
           end
         end
 
