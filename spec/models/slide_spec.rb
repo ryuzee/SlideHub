@@ -90,6 +90,23 @@ describe 'Slide' do
       status = Slide.update_after_convert('aaa', 'pdf', 100)
       expect(status).to eq(false)
     end
+
+    it 'switches the slide to the new key after reconversion' do
+      slide = FactoryBot.create(:slide)
+      Slide.update_after_convert(slide.object_key, 'pdf', 12, new_object_key: 'newkey')
+      saved = Slide.find(slide.id)
+      expect(saved.object_key).to eq('newkey')
+      expect(saved.convert_status).to eq('converted')
+      expect(saved.num_of_pages).to eq(12)
+    end
+  end
+
+  describe 'Method "generate_object_key"' do
+    it 'returns a different 32 character key each time' do
+      key = Slide.generate_object_key
+      expect(key).to match(/\A[0-9a-f]{32}\z/)
+      expect(Slide.generate_object_key).not_to eq(key)
+    end
   end
 
   describe 'Method "record_access"' do

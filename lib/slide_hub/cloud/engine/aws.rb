@@ -185,6 +185,17 @@ module SlideHub
           true
         end
 
+        # 元のファイルを、同じバケットの別のキーにコピーする（再変換で新しいキーに移すとき）
+        def self.copy_slide(from_key, to_key)
+          ::Aws::S3::Client.new(region: @config.region).copy_object(
+            bucket: @config.bucket_name,
+            copy_source: "#{@config.bucket_name}/#{from_key}",
+            key: to_key,
+            acl: 'public-read',
+          )
+          true
+        end
+
         def self.get_slide_download_url(key)
           self.get_download_url(@config.bucket_name, key)
         end

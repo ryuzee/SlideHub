@@ -269,6 +269,14 @@ describe 'SlideHub::Cloud::Engine::Aws' do
     it 'succeeds to get slide download url' do
       expect(SlideHub::Cloud::Engine::Aws.get_slide_download_url('myblob')).to eq('https://signed.example.com')
     end
+
+    it 'copies the original file to another key in the same bucket' do
+      client = double('S3 client')
+      allow(Aws::S3::Client).to receive(:new).and_return(client)
+      bucket = SlideHub::Cloud::Engine::Aws.config.bucket_name
+      expect(client).to receive(:copy_object).with(hash_including(bucket: bucket, copy_source: "#{bucket}/old", key: 'new'))
+      expect(SlideHub::Cloud::Engine::Aws.copy_slide('old', 'new')).to eq(true)
+    end
   end
 end
 

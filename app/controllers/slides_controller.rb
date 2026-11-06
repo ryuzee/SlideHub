@@ -79,12 +79,17 @@ class SlidesController < ApplicationController
     render "slides/#{CloudConfig.service_name}/edit"
   end
 
+  # ファイルを差し替えたとき（編集画面から新しいキーでアップロードしたとき）だけ変換し直す。
+  # タイトルなどの文字だけを変えたときは、変換しない
   def update
-    slide_params = params.require(:slide).permit(:name, :description, :object_key, :downloadable, :category_id, :tag_list, :convert_status, :private)
+    slide_params = params.require(:slide).permit(:name, :description, :object_key, :downloadable, :category_id, :tag_list, :private)
 
+    previous_object_key = @slide.object_key
     @slide.assign_attributes(slide_params)
-    if @slide.update(slide_params)
-      SlideConvertService.new(@slide).send_request unless @slide.converted?
+    replaced = @slide.object_key_changed?
+    @slide.convert_status = :unconverted if replaced
+    if @slide.save
+      SlideConvertService.new(@slide).send_request(previous_object_key: previous_object_key) if replaced
       redirect_to slide_path(@slide.id)
     else
       render "slides/#{CloudConfig.service_name}/edit"

@@ -75,10 +75,18 @@ class Slide < ApplicationRecord
     Slide.where('slides.object_key = ?', key).count.positive?
   end
 
-  def self.update_after_convert(object_key, file_type, num_of_pages)
+  # スライドのファイルを置くフォルダ（キー）の名前。ファイルの差し替えや再変換のたびに新しく振り、
+  # URL を変えることで、CDN やブラウザに残った古い画像が表示されないようにする
+  def self.generate_object_key
+    Digest::MD5.hexdigest(SecureRandom.hex + Time.zone.now.strftime('%Y%m%d%H%M%S'))
+  end
+
+  # new_object_key を渡すと、変換後のファイルを置いた新しいキーに切り替える（再変換）
+  def self.update_after_convert(object_key, file_type, num_of_pages, new_object_key: nil)
     slide = Slide.find_by(object_key: object_key)
     if slide
-      slide.converted!
+      slide.convert_status = :converted
+      slide.object_key = new_object_key if new_object_key.present?
       slide.extension = ".#{file_type}"
       slide.num_of_pages = num_of_pages
       slide.save

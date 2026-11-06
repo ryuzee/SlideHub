@@ -143,9 +143,6 @@ $(document).ready(function() {
             $(".progress-bar").html('100%');
             var key   = '<%= rand_name %>';
             $("#SlideKey").val(key).change();
-            <% if command != 'add' %>
-            $("#SlideConvertStatus").val("unconverted");
-            <% end %>
           });
         });
       };

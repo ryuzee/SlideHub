@@ -3,7 +3,7 @@
 
 <% require 'securerandom'
   require "digest/md5"
-  rand_name = Digest::MD5.hexdigest(SecureRandom.hex + Time.now.strftime("%Y%m%d%H%M%S"))
+  rand_name = Slide.generate_object_key
 %>
 
 <%= render :partial => 'slides/azure/upload_js', :locals => { :command => 'add', :rand_name => rand_name } %>

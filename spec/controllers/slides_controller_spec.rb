@@ -180,18 +180,39 @@ RSpec.describe SlidesController, type: :controller do
       expect(saved_record.name).to eq(data.name)
     end
 
-    it 'succeeds to update the record with running conversion' do
-      allow(SlideHub::Cloud::Engine::Aws).to receive(:send_message).and_return(true)
-      allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
+    it 'does not run conversion when only the text is changed, even if the slide is not converted' do
       data = create(:slide)
-      data.unconverted! # Not converted yet...
+      data.unconverted!
       data.name = 'Engawa'
       login_by_user default_user
+      expect(CloudConfig.provider).not_to receive(:send_message)
       post :update, params: { id: data.id, slide: data.attributes }
-      expect(response.status).to eq(302)
+      expect(response).to redirect_to "/slides/#{data.id}"
+      expect(Slide.find(data.id).name).to eq('Engawa')
+    end
+
+    it 'runs conversion with the previous key when the file is replaced with a new key' do
+      data = create(:slide)
+      data.converted!
+      previous_key = data.object_key
+      login_by_user default_user
+      expect(CloudConfig.provider).to receive(:send_message) do |message|
+        expect(JSON.parse(message)).to eq('id' => data.id, 'object_key' => 'replacedkey', 'previous_object_key' => previous_key)
+      end
+      post :update, params: { id: data.id, slide: data.attributes.merge('object_key' => 'replacedkey') }
       expect(response).to redirect_to "/slides/#{data.id}"
       saved_record = Slide.find(data.id)
-      expect(saved_record.name).to eq(data.name)
+      expect(saved_record.object_key).to eq('replacedkey')
+      expect(saved_record.convert_status).to eq('unconverted')
+    end
+
+    it 'ignores the convert status sent from the browser' do
+      data = create(:slide)
+      data.converted!
+      login_by_user default_user
+      expect(CloudConfig.provider).not_to receive(:send_message)
+      post :update, params: { id: data.id, slide: data.attributes.merge('convert_status' => 'unconverted') }
+      expect(Slide.find(data.id).convert_status).to eq('converted')
     end
   end
 

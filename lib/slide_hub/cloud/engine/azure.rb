@@ -151,6 +151,23 @@ module SlideHub
           true
         end
 
+        # 元のファイルを、同じコンテナの別のキーにコピーする（再変換で新しいキーに移すとき）
+        # Azure のコピーは非同期で終わることがあるので、終わるまで待つ（このあと元のファイルを消すため）
+        def self.copy_slide(from_key, to_key, timeout: 300)
+          bs = create_bs
+          _copy_id, status = bs.copy_blob(@config.bucket_name, to_key, @config.bucket_name, from_key)
+          deadline = Time.zone.now + timeout
+          while status == 'pending'
+            raise "Copying #{from_key} to #{to_key} did not finish in #{timeout} seconds" if Time.zone.now > deadline
+
+            sleep 2
+            status = bs.get_blob_properties(@config.bucket_name, to_key).properties[:copy_status]
+          end
+          raise "Copying #{from_key} to #{to_key} failed (#{status})" unless status == 'success'
+
+          true
+        end
+
         def self.get_slide_download_url(key)
           self.get_download_url(@config.bucket_name, key)
         end

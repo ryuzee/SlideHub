@@ -33,8 +33,10 @@ module SlideHub
         logger.info("Start regenerating thumbnails. id=#{obj['id']} object_key=#{obj['object_key']}")
         ThumbnailProcedure.new(object_key: obj['object_key'], logger: logger).run
       else
-        logger.info("Start converting slide. id=#{obj['id']} object_key=#{obj['object_key']}")
-        ConvertProcedure.new(object_key: obj['object_key'], logger: logger).run
+        logger.info("Start converting slide. id=#{obj['id']} object_key=#{obj['object_key']} " \
+                    "new_object_key=#{obj['new_object_key']} previous_object_key=#{obj['previous_object_key']}")
+        ConvertProcedure.new(object_key: obj['object_key'], new_object_key: obj['new_object_key'],
+                             previous_object_key: obj['previous_object_key'], logger: logger).run
       end
     end
   end

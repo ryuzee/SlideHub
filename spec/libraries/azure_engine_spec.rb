@@ -159,6 +159,33 @@ describe 'SlideHub::Cloud::Engine::Azure' do
     end
   end
 
+  describe 'copy_slide' do
+    let(:blob_service) { double('BlobService') }
+    let(:container) { SlideHub::Cloud::Engine::Azure.config.bucket_name }
+
+    before do
+      allow(Azure::Storage::Blob::BlobService).to receive(:create).and_return(blob_service)
+    end
+
+    it 'returns when the copy finishes right away' do
+      expect(blob_service).to receive(:copy_blob).with(container, 'new', container, 'old').and_return(['id', 'success'])
+      expect(SlideHub::Cloud::Engine::Azure.copy_slide('old', 'new')).to eq(true)
+    end
+
+    it 'waits until a pending copy finishes' do
+      allow(blob_service).to receive(:copy_blob).and_return(['id', 'pending'])
+      properties = double(properties: { copy_status: 'success' })
+      expect(blob_service).to receive(:get_blob_properties).with(container, 'new').and_return(properties)
+      allow(SlideHub::Cloud::Engine::Azure).to receive(:sleep)
+      expect(SlideHub::Cloud::Engine::Azure.copy_slide('old', 'new')).to eq(true)
+    end
+
+    it 'raises when the copy fails' do
+      allow(blob_service).to receive(:copy_blob).and_return(['id', 'failed'])
+      expect { SlideHub::Cloud::Engine::Azure.copy_slide('old', 'new') }.to raise_error(RuntimeError, /failed/)
+    end
+  end
+
   describe 'Blob Storage' do
     before do
       allow(Azure::Storage::Blob::BlobService).to receive(:new).and_return(Azure::Storage::Blob::DummyBlobService.new)
