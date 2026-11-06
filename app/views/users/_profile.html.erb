@@ -1,0 +1,34 @@
+<%# ユーザーページ上部のプロフィール。下端のタブで並び順を切り替える %>
+<% popular = params['sort_by'] == 'popularity' %>
+<section class="sh-profile">
+  <div class="container">
+    <div class="sh-profile-grid">
+      <%= user_avatar_tag(user, size: 96, class: 'sh-profile-avatar') %>
+      <div>
+        <h1><%= heading %></h1>
+        <% if user.biography.present? %>
+          <p class="sh-profile-bio"><%= strip_tags user.biography %></p>
+        <% end %>
+        <div class="sh-byline-meta mt-2">
+          <span><%= t(:slides_count, count: slides.total_entries) %></span>
+          <% if local_assigns[:rss_url] %>
+            <%= link_to rss_url do %><i class="fa fa-rss me-1" aria-hidden="true"></i>RSS<% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <% if tags.any? %>
+      <ul class="sh-tags sh-profile-tags" aria-label="<%= t(:popular_tags) %>">
+        <% tags.first(12).each do |tag| %>
+          <li><%= link_to tag.name, search_index_path(q: { tag_search: tag.name }), class: 'sh-tag' %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <nav class="sh-tabs" aria-label="<%= t(:sort_order) %>">
+      <%= link_to t(:order_by_uploaded_date), '?sort_by=date', class: (popular ? '' : 'active'), aria: { current: (popular ? nil : 'page') } %>
+      <%= link_to t(:order_by_popularity), '?sort_by=popularity', class: (popular ? 'active' : ''), aria: { current: (popular ? 'page' : nil) } %>
+    </nav>
+  </div>
+</section>

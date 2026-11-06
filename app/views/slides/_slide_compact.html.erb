@@ -1,0 +1,9 @@
+<%# 小さなサムネイルとタイトルを横に並べた1件（関連スライド、注目のスライドの続き） %>
+<div class="sh-compact">
+  <div class="sh-compact-thumb"><%= slide_thumbnail_tag(slide) %></div>
+  <div>
+    <div class="sh-compact-title"><%= link_to strip_tags(slide.name), slide_path(slide.id) %></div>
+    <div class="sh-compact-meta"><%= strip_tags(slide.user_display_name) %></div>
+    <div class="sh-compact-meta"><%= compact_date(slide.created_at) %></div>
+  </div>
+</div>

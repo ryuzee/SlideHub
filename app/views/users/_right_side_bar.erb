@@ -1,19 +1,10 @@
-<div class="card profile-sidebar">
-  <div class="card-body">
-    <div class="profile-userpic">
-      <% if user.avatar.attached?  %>
-      <%= image_tag(url_for(user.avatar), class: 'img-fluid d-block mx-auto') %>
-      <% else %>
-      <%= image_tag('avatar/medium/missing.png', class: 'img-fluid d-block mx-auto') %>
-      <% end %>
-    </div>
-    <div class="profile-usertitle">
-      <div class="profile-usertitle-name">
-        <%= link_to strip_tags(user.display_name), user_by_username_path(username: user.username) %>
-      </div>
-      <div class="profile-usertitle-job">
-        <%= strip_tags user.biography %>
-      </div>
-    </div>
+<%# アップロード・編集画面の右側に出す、投稿者のプロフィール %>
+<div class="sh-panel text-center">
+  <%= user_avatar_tag(user, size: 80, class: 'mb-3') %>
+  <div class="fw-bold">
+    <%= link_to strip_tags(user.display_name), user_by_username_path(username: user.username), class: 'sh-byline-name' %>
   </div>
+  <% if user.biography.present? %>
+    <p class="small text-body-secondary text-start mt-2 mb-0"><%= strip_tags user.biography %></p>
+  <% end %>
 </div>

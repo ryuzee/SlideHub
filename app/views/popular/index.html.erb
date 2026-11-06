@@ -1,13 +1,2 @@
-<div class="mb-4"></div>
 <% content_for :title, t(:popular_slides) %>
-<div class="row">
-  <div class="col-md-12">
-    <%- model_class = Slide -%>
-    <h3><%=t :popular_slides %></h3>
-
-    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slides %>
-
-    <br clear="all" />
-    <%= will_paginate @slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
-  </div>
-</div>
+<%= render 'slides/list_page', heading: t(:popular_slides), slides: @slides %>

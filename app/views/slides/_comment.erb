@@ -1,33 +1,25 @@
-<% if not posted_comments.empty? %>
+<% if posted_comments.empty? %>
+  <p class="sh-empty"><%= t(:no_comments) %></p>
+<% else %>
   <% posted_comments.each do |c| %>
-    <div class="card-body d-flex">
-      <div class="flex-shrink-0 avatar50">
-        <% if c.user.avatar.attached? %>
-          <%= image_tag(url_for(c.user.avatar), :size => '32x32', class: 'img-fluid') %>
-        <% else %>
-          <%= image_tag('avatar/thumb/missing.png') %>
-        <% end %>
-      </div>
-      <div class="flex-grow-1 ms-3">
-        <div class="h6" style="margin-top:0px"><a href="<%= user_by_username_path(username: c.user.username) %>"><%= strip_tags c.user.display_name %></a></div>
-        <div class="h6"><%= strip_tags c.comment %></div>
-        <div class="h6"><%= c.created_at.to_formatted_s(:middle) %>
-          <% if (user_signed_in? and current_user.id == c.user_id) %>
-            &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to t(:delete), "/comments/#{c.id}", :method => :delete, data: { method: :delete, confirm: "Are you sure you want to delete?" } %>
+    <div class="sh-comment">
+      <%= user_avatar_tag(c.user, size: 40) %>
+      <div>
+        <div class="sh-comment-head">
+          <a href="<%= user_by_username_path(username: c.user.username) %>"><%= strip_tags c.user.display_name %></a>
+          <%= compact_date(c.created_at) %>
+          <% if user_signed_in? && current_user.id == c.user_id %>
+            <%= link_to t(:delete), "/comments/#{c.id}", method: :delete, data: { confirm: t(:confirm_delete_comment) }, class: 'link-danger small' %>
           <% end %>
         </div>
+        <div><%= strip_tags c.comment %></div>
       </div>
     </div>
   <% end %>
-<% else %>
-  <div class="card-body">
-    <div class="h6"><%= t(:no_comments) %></div>
-  </div>
 <% end %>
 
 <% if user_signed_in? %>
-  <br />
-  <div class="comments form">
+  <div class="comments form mt-3">
     <%= render :partial => 'comments/form', :locals => { :comment => comment } %>
   </div>
 <% end %>

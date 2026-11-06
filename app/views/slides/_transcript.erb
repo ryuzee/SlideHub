@@ -1,24 +1,13 @@
+<%# 文字起こし。ページ番号を押すと、そのページへ移る %>
 <% if slide.transcript.try(:exist?) %>
-  <% page_count = 0 %>
+  <% vertical = params[:vertical] == "1" %>
   <div class="slide_description">
-    <% slide.transcript.lines.each do |tran| %>
-      <% tran = clear_invisible_string(tran) %>
-      <% page_count += 1 %>
-      <% if not tran.blank? %>
-        <div class="item">
-          <% if params[:vertical] != "1" %>
-            <span class="number"><a href="#page_top" onclick="javascript:OSSJSPARTS<%= prefix %>.moveTo(<%= page_count - 1 %>);"><%= page_count %>.</a></span>
-          <% else %>
-            <span class="number"><a href="#img-<%= page_count - 1 %>"><%= page_count %>.</a></span>
-          <% end %>
-          <span class="content"><%= tran %></span>
-        </div>
-      <% end %>
-
+    <% slide.transcript.lines.each_with_index do |line, index| %>
+      <% text = clear_invisible_string(line) %>
+      <% next if text.blank? %>
+      <%= render 'slides/transcript_item', page: index + 1, text: text, prefix: prefix, vertical: vertical %>
     <% end %>
   </div>
 <% else %>
-  <div class="slide_description">
-    <div style="font-size:0.9em;">No Transcript...</div>
-  </div>
+  <p class="sh-empty"><%= t(:no_transcript) %></p>
 <% end %>

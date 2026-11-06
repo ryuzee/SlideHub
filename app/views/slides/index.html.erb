@@ -1,35 +1,92 @@
 <% content_for :title, t(:top_page) %>
+<% content_for :full_bleed, true %>
+<% featured = @slide_index.featured_slides %>
+<% content_for :top_band, 'stage' if featured.any? %>
 
-<% if @slide_index.featured_slides.count > 0 %>
-<div class="mb-4"></div>
-<div class="row" id="featured">
-  <div class="col-md-12">
-    <h3><%=t :featured_slides %></h3>
+<% if featured.any? %>
+<%# 注目のスライド。1件目を大きく映し、2件目以降はその下に並べる %>
+<section class="sh-stage sh-hero" id="featured" aria-labelledby="featured-heading">
+  <div class="container">
     <% cache 'featured_slides', expires_in: 3.minutes, skip_digest: true do %>
-    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.featured_slides %>
+      <% lead = featured.first %>
+      <% lead_title = strip_tags(lead.name) %>
+      <% first_page = slide_page_image_urls(lead, count: 1).first %>
+      <% ratio_class = wide_thumbnail? ? 'slide-thumbnail-16x9' : '' %>
+      <div class="sh-hero-grid">
+        <a class="sh-hero-screen" href="<%= slide_path(lead.id) %>" tabindex="-1" aria-hidden="true">
+          <% if first_page %>
+            <%= image_tag first_page, alt: '', class: "slide-thumbnail #{ratio_class}", data: { fallback_src: lead.thumbnail.url } %>
+          <% else %>
+            <%= slide_thumbnail_tag(lead) %>
+          <% end %>
+        </a>
+        <div>
+          <p class="sh-hero-label" id="featured-heading"><%= t(:featured_slides) %></p>
+          <h1 class="sh-hero-title"><%= link_to lead_title, slide_path(lead.id) %></h1>
+          <% description = strip_tags(lead.description).strip %>
+          <% if description.present? %><p class="sh-hero-description"><%= description %></p><% end %>
+          <div class="sh-byline">
+            <%= user_avatar_tag(lead.user, size: 40) %>
+            <div>
+              <%= link_to strip_tags(lead.user_display_name), user_by_username_path(username: lead.user_username), class: 'sh-byline-name' %>
+              <div class="sh-byline-meta">
+                <%= compact_date(lead.created_at) %>
+                <span><%= t(:pages_count, count: lead.num_of_pages) %></span>
+                <span><%= t(:views_count, count: lead.total_view) %></span>
+              </div>
+            </div>
+          </div>
+          <div class="sh-hero-actions">
+            <%= link_to t(:view_slide), slide_path(lead.id), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+
+      <% if featured.size > 1 %>
+        <div class="sh-hero-more">
+          <% featured.drop(1).each do |slide| %>
+            <%= render 'slides/slide_compact', slide: slide %>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </div>
-</div>
+</section>
+<% else %>
+<h1 class="visually-hidden"><%= ApplicationSetting['site.name'] %></h1>
 <% end %>
 
-<div class="mb-4"></div>
-<div class="row" id="latest">
-  <div class="col-md-12">
-    <h3><%=t :latest_slides %>&nbsp;&nbsp;<small class="h6"><a href="<%= latest_index_path %>"><%= t :more_slides %></a></small></h3>
+<div class="container pb-5">
+  <section class="sh-section" id="latest" aria-labelledby="latest-heading">
+    <div class="sh-section-head">
+      <h2 id="latest-heading"><%= t :latest_slides %></h2>
+      <%= link_to t(:see_all), latest_index_path %>
+    </div>
     <% cache 'latest_slides', expires_in: 1.minutes, skip_digest: true do %>
-      <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.latest_slides %>
+      <%= render 'slides/thumbnail_template', slides: @slide_index.latest_slides %>
     <% end %>
-  </div>
-</div>
+  </section>
 
-<div class="mb-4"></div>
-<div class="row" id="popular">
-  <div class="col-md-12">
-    <h3><%=t :popular_slides %>&nbsp;&nbsp;<small class="h6"><a href="<%= popular_index_path %>"><%= t :more_slides %></a></small></h3>
+  <section class="sh-section" id="popular" aria-labelledby="popular-heading">
+    <div class="sh-section-head">
+      <h2 id="popular-heading"><%= t :popular_slides %></h2>
+      <%= link_to t(:see_all), popular_index_path %>
+    </div>
     <% cache 'popular_slides', expires_in: 3.minutes, skip_digest: true do %>
-    <%= render 'slides/thumbnail_template', column_class: 'col-md-3 col-sm-6', slides: @slide_index.popular_slides %>
+      <%= render 'slides/thumbnail_template', slides: @slide_index.popular_slides %>
     <% end %>
-  </div>
-</div>
+  </section>
 
-<br />
+  <% if @categories.present? %>
+  <section class="sh-section" id="categories" aria-labelledby="categories-heading">
+    <div class="sh-section-head">
+      <h2 id="categories-heading"><%= t :browse_by_category %></h2>
+    </div>
+    <div class="sh-chips">
+      <% @categories.each do |category| %>
+        <%= link_to category.name, category_path(category.id), class: 'sh-tag' %>
+      <% end %>
+    </div>
+  </section>
+  <% end %>
+</div>

@@ -60,11 +60,11 @@ RSpec.describe SlidesController, type: :controller do
       ApplicationSetting['site.header_inverse'] = 1
       get :index
       expect(response.status).to eq(200)
-      expect(response.body).to include('navbar-dark')
+      expect(response.body).to include('site-header-inverse navbar-dark')
       begin
         ApplicationSetting['site.header_inverse'] = 0
         get :index
-        expect(response.body).to include('navbar-light')
+        expect(response.body).not_to include('site-header-inverse')
       ensure
         ApplicationSetting['site.header_inverse'] = inverse
         ApplicationSetting['site.theme'] = theme

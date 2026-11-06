@@ -1,35 +1,19 @@
-<div class="mb-4"></div>
 <% content_for :title, t(:my_slides) %>
-<div class="row">
-  <div class="col-md-9">
+<% content_for :full_bleed, true %>
+<% content_for :top_band, 'paper' %>
 
-    <h3><%= t :my_slides %></h3>
-    <div style="margin-bottom:10px;">
-      <% if params['sort_by'] != 'popularity' %>
-        <a class="btn btn-primary active" style="color:#fff;"><%= t :order_by_uploaded_date %></a>
-        <a href="?sort_by=popularity" class="btn btn-secondary"><%= t :order_by_popularity %></a>
-      <% else %>
-        <a href="?sort_by=date" class="btn btn-secondary"><%= t :order_by_uploaded_date %></a>
-        <a class="btn btn-primary active" style="color:#fff;"><%= t :order_by_popularity %></a>
+<%= render 'users/profile', user: @user, slides: @slides, tags: @tags, heading: t(:my_slides) %>
+
+<div class="container site-page">
+  <% if @slides.empty? %>
+    <div class="sh-empty">
+      <p><%= t(:no_my_slides) %></p>
+      <% if (ApplicationSetting['site.only_admin_can_upload']).to_i == 0 || current_user.admin == true %>
+        <%= link_to t('upload'), new_slide_path, class: 'btn btn-primary' %>
       <% end %>
     </div>
-    <%= render 'slides/thumbnail_template', column_class: 'col-md-4 col-sm-8', slides: @slides %>
-    <div>
-      <%= will_paginate @slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <%= render 'users/right_side_bar', user: @user %>
-    <br clear="all" />
-
-    <div class="card card-default">
-      <div class="card-heading"><%= t :popular_tags %></div>
-      <div class="card-body">
-        <% tag_cloud(@tags, %w(tag1 tag2 tag3 tag4)) do |tag, css_class| %>
-          <%= link_to tag.name, "/search?q%5Btag_search%5D=#{tag.name}", :class => css_class %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <% else %>
+    <%= render 'slides/thumbnail_template', slides: @slides %>
+    <%= will_paginate @slides, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
+  <% end %>
 </div>

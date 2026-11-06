@@ -46,16 +46,12 @@
       <%= f.text_field :tag_search, :value => v, :class => 'form-control' %>
     </div>
   </div>
-  <div class="col-md-12">
-    <br clear="all" />
-    <%= f.submit :class => 'btn btn-primary' %>&nbsp;&nbsp;
-    <%= f.button t(:reset), :class => 'btn btn-outline-secondary', :id => 'reset' %>
+  <div class="col-md-12 d-flex gap-2">
+    <%= f.submit t(:search), :class => 'btn btn-primary', :name => nil %>
+    <%= f.button t(:reset), :class => 'btn btn-sh-quiet', :id => 'reset', :type => 'button' %>
   </div>
 </div>
-<br clear="all" />
-
 <% end %>
-<br clear="all" />
 
 <%= render 'shared/reset' %>
 
