@@ -893,6 +893,15 @@ body.slidehub_body {
   text-align: left;
 }
 
+/* スマホでは、ページ番号の列を詰めて本文の幅を広げる（3 桁のページ番号まで収まる幅） */
+@media (max-width: 575.98px) {
+  .slide_description .item {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+}
+
 /* コメント */
 .slidehub_body .sh-comment {
   display: grid;
