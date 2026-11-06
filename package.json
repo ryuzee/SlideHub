@@ -25,5 +25,8 @@
   "devDependencies": {
     "bootswatch": "^5.3",
     "sass": "^1"
+  },
+  "engines": {
+    "node": ">=20.19"
   }
 }
