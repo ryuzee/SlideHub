@@ -1778,6 +1778,7 @@ GEM
     crass (1.0.7)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
+    csv (3.3.7)
     database_cleaner (2.1.0)
       database_cleaner-active_record (>= 2, < 3)
     database_cleaner-active_record (2.2.0)
@@ -2330,6 +2331,7 @@ DEPENDENCIES
   capybara
   counter_culture
   cssbundling-rails
+  csv
   database_cleaner
   devise
   devise-i18n

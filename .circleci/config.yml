@@ -2,12 +2,15 @@
 # https://circleci.com/docs/configuration-reference/
 version: 2.1
 
+orbs:
+  # イメージ付属の Node は古い（20.18）ので、.node-version と同じ 22 系を入れる
+  node: circleci/node@7
+
 jobs:
   build:
     working_directory: ~/SlideHub
-    shell: /bin/bash --login
     docker:
-      - image: cimg/ruby:3.3.6-node
+      - image: cimg/ruby:3.4.12-node
         environment:
           OSS_DB_URL_TEST: 127.0.0.1
           OSS_DB_USERNAME_TEST: 'root'
@@ -25,6 +28,9 @@ jobs:
 
     steps:
       - checkout
+      - node/install:
+          node-version: '22'
+          install-yarn: true
       - run:
           name: Install system packages
           command: |
