@@ -258,3 +258,11 @@ en:
     right_top: "Right Top"
     header_menus: "Header Menus"
     css: "Custom CSS"
+    in_use: "In use"
+    save_all_tabs: "Saves the contents of all tabs"
+    hints:
+      center_top: "Shown at the top of every public page, below the header. Use it for announcements or ads."
+      center_bottom: "Shown below the main content of every public page, above the footer."
+      right_top: "Shown on the slide page, right after the tags."
+      header_menus: 'Links added to the header menu, written as JSON. Example: [{"label": "About", "url": "/pages/about"}]'
+      css: "CSS loaded on every public page. No <style> tag needed."

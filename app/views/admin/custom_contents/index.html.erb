@@ -1,34 +1,58 @@
-
 <%= admin_page_header(section: link_to(t(:custom_contents), admin_custom_contents_path)) do %><%= t(:custom_contents) %><% end %>
 
+<%# 項目ごとにタブで分け、入力欄を画面の高さいっぱいに使う。保存はすべてのタブをまとめて行う %>
+<% order = %w[center_top center_bottom right_top header_menus css] %>
+<% settings = @settings.sort_by { |s| order.index(s.var.delete_prefix('custom_content.')) || order.size } %>
+
 <section class="content">
-<%= form_tag update_admin_custom_contents_path, method: :post, class: 'form-horizontal slide' do %>
+<%= form_tag update_admin_custom_contents_path, method: :post, class: 'custom-contents-form' do %>
   <div class="card card-warning card-outline">
-    <div class="card-body p-0">
-    <!-- Table -->
-    <table class="table table-striped small">
-      <thead>
-        <tr>
-          <th class="col-md-2"><%= t(:key) %></th>
-          <th class="col-md-10"><%= t(:value) %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% index = 0 %>
-        <% @settings.each do |s| %>
+    <div class="card-header p-0 border-bottom-0">
+      <ul class="nav nav-tabs" role="tablist">
+        <% settings.each_with_index do |s, i| %>
+          <% name = s.var.delete_prefix('custom_content.') %>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link<%= ' active' if i.zero? %>" id="tab-<%= name %>" data-bs-toggle="tab" data-bs-target="#pane-<%= name %>" type="button" role="tab" aria-controls="pane-<%= name %>" aria-selected="<%= i.zero? %>">
+              <%= t(s.var) %>
+              <% if s.value.present? %><span class="custom-content-dot" title="<%= t('custom_content.in_use') %>"></span><% end %>
+            </button>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content">
+        <% settings.each_with_index do |s, i| %>
+          <% name = s.var.delete_prefix('custom_content.') %>
           <%= fields_for('settings[]', s, index: nil) do |fh| %>
-            <tr>
-              <td><%= t(s.var) %><%= fh.hidden_field :var %></td>
-              <td><%= generate_form_field(s, fh) %></td>
-            </tr>
-            <% index += 1 %>
+            <div class="tab-pane fade<%= ' show active' if i.zero? %>" id="pane-<%= name %>" role="tabpanel" aria-labelledby="tab-<%= name %>" tabindex="0">
+              <%= fh.hidden_field :var %>
+              <% hint = t("custom_content.hints.#{name}", default: '') %>
+              <% if hint.present? %><p class="text-body-secondary small mb-2"><%= hint %></p><% end %>
+              <%= fh.text_area :value, class: 'form-control font-monospace custom-content-editor', id: setting_field_id(s), spellcheck: false, aria: { label: t(s.var) } %>
+            </div>
           <% end %>
         <% end %>
-      </tbody>
-    </table>
+      </div>
+    </div>
+    <div class="card-footer">
+      <%= submit_tag t(:save_settings), class: 'btn btn-primary' %>
+      <span class="text-body-secondary small ms-2"><%= t('custom_content.save_all_tabs') %></span>
     </div>
   </div>
-
-  <%= submit_tag t(:save_settings), class: 'btn btn-primary' %>
 <% end %>
 </section>
+
+<script>
+  // 保存後も、最後に開いていたタブを開く
+  document.addEventListener('DOMContentLoaded', function () {
+    var key = 'slidehub.custom_contents.tab';
+    var saved = sessionStorage.getItem(key);
+    if (saved && document.getElementById(saved) && window.bootstrap) {
+      bootstrap.Tab.getOrCreateInstance(document.getElementById(saved)).show();
+    }
+    document.querySelectorAll('.custom-contents-form [data-bs-toggle="tab"]').forEach(function (tab) {
+      tab.addEventListener('shown.bs.tab', function () { sessionStorage.setItem(key, tab.id); });
+    });
+  });
+</script>

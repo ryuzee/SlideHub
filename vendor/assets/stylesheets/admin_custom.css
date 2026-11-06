@@ -65,3 +65,24 @@ abbr {
 .app-content a.fw-semibold:hover {
   text-decoration: underline;
 }
+
+/* カスタムコンテンツ設定。入力欄を画面の高さいっぱいに使う */
+.custom-content-editor {
+  min-height: 20rem;
+  height: calc(100vh - 22rem);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  tab-size: 2;
+  resize: vertical;
+}
+
+/* 中身が入っているタブの印 */
+.custom-content-dot {
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-left: 0.35rem;
+  border-radius: 50%;
+  background: var(--bs-success);
+  vertical-align: middle;
+}

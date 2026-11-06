@@ -258,3 +258,11 @@ ja:
     right_top: "右上部"
     header_menus: "ヘッダー追加メニュー"
     css: "カスタムCSS"
+    in_use: "設定あり"
+    save_all_tabs: "すべてのタブの内容をまとめて保存します"
+    hints:
+      center_top: "すべての公開ページの最上部（ヘッダーの下）に表示します。お知らせや広告向けです。"
+      center_bottom: "すべての公開ページの本文の下（フッターの上）に表示します。"
+      right_top: "スライド詳細ページの、タグの直後に表示します。"
+      header_menus: 'ヘッダーのメニューに追加するリンクを JSON で書きます。例: [{"label": "このサイトについて", "url": "/pages/about"}]'
+      css: "すべての公開ページに読み込む CSS です。<style> タグは不要です。"
