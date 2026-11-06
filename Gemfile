@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'json', '~> 2.12'
+gem 'json', '~> 2.21'
 # Ruby 3.4 で標準ライブラリから外れた（管理画面のスライド一覧の CSV 出力で使う）
 gem 'csv'
 # gem 'rails', '5.2.7.1'
