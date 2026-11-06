@@ -6,11 +6,12 @@ preload_app true
 listen '/tmp/unicorn.sock'
 pid '/tmp/unicorn.pid'
 
-before_fork do |_server, _worker|
+before_fork do |server, _worker|
   ENV['BUNDLE_GEMFILE'] = File.expand_path('Gemfile', ENV.fetch('RAILS_ROOT', nil))
 
   Signal.trap 'TERM' do
-    logger.info('Unicorn master intercepting TERM and sending myself QUIT instead')
+    # 設定ファイルの中の logger は「ロガーを設定する」メソッドなので、server のロガーを使う
+    server.logger.info('Unicorn master intercepting TERM and sending myself QUIT instead')
     Process.kill 'QUIT', Process.pid
   end
 
@@ -18,9 +19,9 @@ before_fork do |_server, _worker|
     ActiveRecord::Base.connection.disconnect!
 end
 
-after_fork do |_server, _worker|
+after_fork do |server, _worker|
   Signal.trap 'TERM' do
-    logger.info('Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT')
+    server.logger.info('Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT')
   end
 
   defined?(ActiveRecord::Base) and

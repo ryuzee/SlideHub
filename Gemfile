@@ -70,10 +70,9 @@ gem 'rmagick'
 gem 'pdf-reader'
 # counter cache transaction
 gem 'counter_culture'
-# AP Server
 gem 'momentjs-rails'
-gem 'unicorn', '~> 5'
-gem 'unicorn-rails'
+# AP Server。supervisor から unicorn_rails で起動する（rack 3 に対応した 6 系）
+gem 'unicorn', '~> 6'
 # https://github.com/alexspeller/non-stupid-digest-assets
 # gem 'non-stupid-digest-assets'
 
