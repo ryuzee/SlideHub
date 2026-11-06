@@ -235,6 +235,17 @@ describe 'SlideHub::Cloud::Engine::Aws' do
       end
     end
 
+    it 'uploads files with the content type of their extension' do
+      client = Aws::S3::DummyClient.new
+      allow(Aws::S3::Client).to receive(:new).and_return(client)
+      expect(client).to receive(:put_object).with(hash_including(key: 'custom-files/custom.css', content_type: 'text/css'))
+      Dir.mktmpdir do |dir|
+        css = File.join(dir, 'custom.css')
+        File.write(css, 'body {}')
+        SlideHub::Cloud::Engine::Aws.upload_files('bucket', [css], 'custom-files')
+      end
+    end
+
     it 'succeeds to get file list' do
       expect(SlideHub::Cloud::Engine::Aws.get_file_list('container', 'prefix').class.name).to eq('Array')
     end
