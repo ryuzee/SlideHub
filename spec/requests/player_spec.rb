@@ -8,7 +8,7 @@ describe 'Player' do
       allow_any_instance_of(Transcript).to receive(:lines).and_return([])
       get "/player/#{slide.id}"
       expect(response.status).to eq(200)
-      expect(response.body).to include("getElementById")
+      expect(response.body).to include('getElementById')
     end
   end
 
@@ -19,7 +19,7 @@ describe 'Player' do
       allow_any_instance_of(Transcript).to receive(:lines).and_return([])
       get "/player/v2/#{slide.id}"
       expect(response.status).to eq(200)
-      expect(response.body).to include("getElementById")
+      expect(response.body).to include('getElementById')
     end
   end
 end

@@ -168,12 +168,12 @@ describe 'SlideHub::Cloud::Engine::Azure' do
     end
 
     it 'returns when the copy finishes right away' do
-      expect(blob_service).to receive(:copy_blob).with(container, 'new', container, 'old').and_return(['id', 'success'])
+      expect(blob_service).to receive(:copy_blob).with(container, 'new', container, 'old').and_return(%w[id success])
       expect(SlideHub::Cloud::Engine::Azure.copy_slide('old', 'new')).to eq(true)
     end
 
     it 'waits until a pending copy finishes' do
-      allow(blob_service).to receive(:copy_blob).and_return(['id', 'pending'])
+      allow(blob_service).to receive(:copy_blob).and_return(%w[id pending])
       properties = double(properties: { copy_status: 'success' })
       expect(blob_service).to receive(:get_blob_properties).with(container, 'new').and_return(properties)
       allow(SlideHub::Cloud::Engine::Azure).to receive(:sleep)
@@ -181,7 +181,7 @@ describe 'SlideHub::Cloud::Engine::Azure' do
     end
 
     it 'raises when the copy fails' do
-      allow(blob_service).to receive(:copy_blob).and_return(['id', 'failed'])
+      allow(blob_service).to receive(:copy_blob).and_return(%w[id failed])
       expect { SlideHub::Cloud::Engine::Azure.copy_slide('old', 'new') }.to raise_error(RuntimeError, /failed/)
     end
   end

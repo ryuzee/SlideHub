@@ -13,15 +13,15 @@ RSpec.describe SlideHub::Batch do
 
     it 'converts the slide for messages without a type' do
       procedure = instance_double(SlideHub::ConvertProcedure, run: true)
-      expect(SlideHub::ConvertProcedure).to receive(:new)
-        .with(object_key: 'abc', new_object_key: nil, previous_object_key: nil, logger: logger).and_return(procedure)
+      expect(SlideHub::ConvertProcedure).to receive(:new).
+        with(object_key: 'abc', new_object_key: nil, previous_object_key: nil, logger: logger).and_return(procedure)
       expect(described_class.process({ 'id' => 1, 'object_key' => 'abc' }, logger)).to be(true)
     end
 
     it 'passes the new and previous keys to the conversion' do
       procedure = instance_double(SlideHub::ConvertProcedure, run: true)
-      expect(SlideHub::ConvertProcedure).to receive(:new)
-        .with(object_key: 'abc', new_object_key: 'def', previous_object_key: 'xyz', logger: logger).and_return(procedure)
+      expect(SlideHub::ConvertProcedure).to receive(:new).
+        with(object_key: 'abc', new_object_key: 'def', previous_object_key: 'xyz', logger: logger).and_return(procedure)
       described_class.process({ 'id' => 1, 'object_key' => 'abc', 'new_object_key' => 'def', 'previous_object_key' => 'xyz' }, logger)
     end
   end

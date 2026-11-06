@@ -5,8 +5,8 @@ module ActiveStorage
   class Service::AzureStorageService < Service
     attr_reader :client, :container, :signer
 
-    def initialize(storage_account_name:, storage_access_key:, container:, public: false, **options)
-      @client = Azure::Storage::Blob::BlobService.create(storage_account_name: storage_account_name, storage_access_key: storage_access_key, **options)
+    def initialize(storage_account_name:, storage_access_key:, container:, public: false, **)
+      @client = Azure::Storage::Blob::BlobService.create(storage_account_name: storage_account_name, storage_access_key: storage_access_key, **)
       @signer = Azure::Storage::Common::Core::Auth::SharedAccessSignature.new(storage_account_name, storage_access_key)
       @container = container
       @public = public
@@ -23,10 +23,10 @@ module ActiveStorage
       end
     end
 
-    def download(key, &block)
+    def download(key, &)
       if block_given?
         instrument :streaming_download, key: key do
-          stream(key, &block)
+          stream(key, &)
         end
       else
         instrument :download, key: key do
