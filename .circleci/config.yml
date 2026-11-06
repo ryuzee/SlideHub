@@ -1,20 +1,14 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
-version: 2
+# CircleCI の設定（config version 2.1）
+# https://circleci.com/docs/configuration-reference/
+version: 2.1
+
 jobs:
   build:
-    working_directory: /tmp/SlideHub
-    parallelism: 1
+    working_directory: ~/SlideHub
     shell: /bin/bash --login
-
     docker:
       - image: cimg/ruby:3.3.6-node
         environment:
-          CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-          CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-          CIRCLE_ENV: test
           OSS_DB_URL_TEST: 127.0.0.1
           OSS_DB_USERNAME_TEST: 'root'
           OSS_DB_PASSWORD_TEST: ''
@@ -23,55 +17,67 @@ jobs:
           OSS_SECRET_KEY_BASE: dummy
           OSS_USE_AZURE: 0
           RAILS_ENV: test
-      - image: circleci/mysql:5.7
+          RACK_ENV: test
+          CIRCLE_ARTIFACTS: /tmp/artifacts
+      - image: cimg/mysql:5.7
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
 
     steps:
       - checkout
-      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS/rspec
-      - run: sudo apt-get update
-      - run: sudo mkdir -p ~/.config
-      - run: sudo chown -R circleci:circleci ~/.config
-      - run: sudo chmod -R 777 ~/.config
-      - run: sudo mkdir -p ~/.npm
-      - run: sudo chown -R circleci:circleci ~/.npm
-      - run: sudo chmod -R 777 ~/.npm
-      - run: sudo apt-get install -y build-essential ruby-dev libmagic-dev libmysqlclient-dev libsqlite3-dev pkg-config libmagickcore-dev libmagickwand-dev
-      - run: node --version
-      - run: yarn install --frozen-lockfile
-      - run: yarn build && yarn build:css
+      - run:
+          name: Install system packages
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y build-essential ruby-dev libmagic-dev libmysqlclient-dev libsqlite3-dev pkg-config libmagickcore-dev libmagickwand-dev
+
+      - run:
+          name: Build JavaScript and CSS
+          command: |
+            node --version
+            yarn install --frozen-lockfile
+            yarn build
+            yarn build:css
 
       - restore_cache:
           keys:
-          # This branch if available
-          - v1-dep-{{ .Branch }}-
-          # Default branch if not
-          - v1-dep-master-
-          - v1-dep-
-
-      - run: gem install bundler:2.3.27
-      - run: 'bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3 '
-
+            - v2-dep-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - v2-dep-{{ .Branch }}-
+            - v2-dep-master-
+      - run:
+          name: Install gems
+          command: |
+            gem install bundler:2.3.27
+            bundle config set --local path vendor/bundle
+            bundle check || bundle install --jobs=4 --retry=3
       - save_cache:
-          key: v1-dep-{{ .Branch }}-{{ epoch }}
+          key: v2-dep-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
-          - vendor/bundle
-          - ~/.bundle
+            - vendor/bundle
 
       - run:
+          name: Wait for MySQL
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 2m
+      - run:
+          name: Set up database
           command: bundle exec rake db:create db:migrate
-          environment:
-            RAILS_ENV: test
-            RACK_ENV: test
 
       - run:
-          command: bundle exec rspec --color --require spec_helper --format documentation --format RspecJunitFormatter --out $CIRCLE_TEST_REPORTS/rspec/rspec.xml --format progress spec
-          environment:
-            RAILS_ENV: test
-            RACK_ENV: test
+          name: Run specs
+          command: |
+            mkdir -p /tmp/test-results/rspec /tmp/artifacts
+            bundle exec rspec --color --require spec_helper \
+              --format RspecJunitFormatter --out /tmp/test-results/rspec/rspec.xml \
+              --format progress spec
 
       - store_test_results:
-          path: $CIRCLE_TEST_REPORTS
+          path: /tmp/test-results
       - store_artifacts:
-          path: $CIRCLE_ARTIFACTS
+          path: /tmp/test-results
       - store_artifacts:
-          path: $CIRCLE_TEST_REPORTS
+          path: /tmp/artifacts
+
+workflows:
+  build:
+    jobs:
+      - build
