@@ -9,6 +9,13 @@
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 <% require_relative '../lib/slide_hub/env_util' %>
+<%#
+  ssl_mode: 既定では TLS で暗号化して接続する（required）。
+  コンテナの MySQL クライアント（MariaDB Connector/C）は、指定しないと暗号化せず、
+  「使えれば暗号化する」（preferred）にも対応していないので、required を既定にする。
+  Azure Database for MySQL - Flexible Server のように暗号化した接続しか受け付けないサーバーにも、これでつながる。
+  TLS に対応していないサーバーにつなぐときは、環境変数 SLIDEHUB_DB_SSL_MODE（_DEV、_TEST）を disabled にする
+%>
 
 development:
   adapter: <%= SlideHub::EnvUtil.fetch('DB_ENGINE_DEV', 'mysql2') %>
@@ -19,6 +26,7 @@ development:
   password: <%= SlideHub::EnvUtil.fetch('DB_PASSWORD_DEV') %>
   host: <%= SlideHub::EnvUtil.fetch('DB_URL_DEV') %>
   port: <%= SlideHub::EnvUtil.fetch('DB_PORT_DEV', '3306') %>
+  ssl_mode: <%= SlideHub::EnvUtil.fetch('DB_SSL_MODE_DEV', 'required') %>
   azure: <%= SlideHub::EnvUtil.fetch('DB_USE_AZURE_DEV', 'false') %>
 
 # Warning: The database defined as "test" will be erased and
@@ -33,6 +41,7 @@ test:
   password: <%= SlideHub::EnvUtil.fetch('DB_PASSWORD_TEST') %>
   host: <%= SlideHub::EnvUtil.fetch('DB_URL_TEST') %>
   port: <%= SlideHub::EnvUtil.fetch('DB_PORT_TEST', '3306') %>
+  ssl_mode: <%= SlideHub::EnvUtil.fetch('DB_SSL_MODE_TEST', 'required') %>
   azure: <%= SlideHub::EnvUtil.fetch('DB_USE_AZURE_TEST', 'false') %>
 
 production:
@@ -44,4 +53,5 @@ production:
   password: <%= SlideHub::EnvUtil.fetch('DB_PASSWORD') %>
   host: <%= SlideHub::EnvUtil.fetch('DB_URL') %>
   port: <%= SlideHub::EnvUtil.fetch('DB_PORT', '3306') %>
+  ssl_mode: <%= SlideHub::EnvUtil.fetch('DB_SSL_MODE', 'required') %>
   azure: <%= SlideHub::EnvUtil.fetch('DB_USE_AZURE', 'false') %>
