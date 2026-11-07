@@ -107,6 +107,7 @@ RSpec.configure do |config|
   require 'support/omniauth_macros'
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Devise::Test::IntegrationHelpers, type: :request
   config.include ControllerMacros, type: :controller
 
   require 'support/cloud_helpers'
