@@ -5,6 +5,7 @@ defaults: &defaults
     signup_enabled: "1"
     name: "SlideHub"
     description: ""
+    og_image: ""
     header_inverse: "1"
     theme: "default"
     thumbnail_aspect_ratio: "4:3"

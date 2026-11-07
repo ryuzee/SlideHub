@@ -136,6 +136,47 @@ describe 'SEO' do
     end
   end
 
+  describe 'share cards of the other pages' do
+    def og(path)
+      get path
+      doc = Nokogiri::HTML(response.body)
+      %w[title description url image].to_h { |key| [key, doc.at(%(meta[property="og:#{key}"]))&.[]('content')] }.
+        merge('card' => doc.at('meta[name="twitter:card"]')&.[]('content'))
+    end
+
+    it 'fills the title, the description and the URL from the page' do
+      expect(og('/latest?page=2')).to include(
+        'title' => '最新のスライド',
+        'description' => 'SlideHubに新しく公開されたスライドの一覧です。（2ページ目）',
+        'url' => 'http://www.example.com/latest?page=2',
+        'image' => nil,
+        'card' => 'summary',
+      )
+    end
+
+    it 'uses the site name as the title of the top page' do
+      ApplicationSetting['site.name'] = 'Sushi Slides'
+      expect(og('/')['title']).to eq('Sushi Slides')
+    end
+
+    it 'uses the share image of the site settings with the large card' do
+      ApplicationSetting['site.og_image'] = 'https://example.com/ogp.png'
+      user = create(:default_user)
+      expect(og("/users/#{user.id}")).to include(
+        'title' => 'User01さんのスライド',
+        'url' => 'http://www.example.com/user01',
+        'image' => 'https://example.com/ogp.png',
+        'card' => 'summary_large_image',
+      )
+    end
+
+    it 'keeps the image of the slide on a slide page' do
+      ApplicationSetting['site.og_image'] = 'https://example.com/ogp.png'
+      slide = create(:slide)
+      expect(og("/slides/#{slide.id}")['image']).not_to eq('https://example.com/ogp.png')
+    end
+  end
+
   describe 'GET /search' do
     it 'is noindex' do
       get '/search'

@@ -22,6 +22,7 @@ class ApplicationSetting
     'site.signup_enabled',
     'site.name',
     'site.description',
+    'site.og_image',
     'site.header_inverse',
     'custom_content.center_top',
     'custom_content.center_bottom',
