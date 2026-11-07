@@ -3,9 +3,17 @@
 <div class="sh-auth sh-auth-wide">
   <h1 class="sh-auth-title"><%= t('.sign_up', :default => "Sign up") %></h1>
 
-  <%= render "devise/shared/signin_with_omniauth" %>
-
-  <%= bootstrap_devise_error_messages! %>
+  <%# X・Facebook などで認証したあと、足りない項目を入力して登録を終える場合 %>
+  <% provider = session['devise.user_attributes'].present? ? resource.provider.presence : nil %>
+  <% if provider %>
+    <% provider_name = provider.to_s.titleize %>
+    <p class="sh-auth-notice"><%= t(:signup_with_provider, provider: provider_name) %></p>
+    <%# 最初に開いたときは、受け取れなかった項目をエラーとしては出さない（送信して足りなければ出す） %>
+    <%= bootstrap_devise_error_messages! unless action_name == 'new' %>
+  <% else %>
+    <%= render "devise/shared/signin_with_omniauth" %>
+    <%= bootstrap_devise_error_messages! %>
+  <% end %>
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { role: "form", class: "sh-auth-form" }) do |f| %>
     <div class="mb-3">
       <%= f.label :email, class: "form-label" %>

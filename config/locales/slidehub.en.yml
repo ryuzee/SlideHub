@@ -201,6 +201,7 @@ en:
   signin_with_provider: "Signin with %{provider}"
   signup: "Signup"
   or_use_email: "or use your email"
+  signup_with_provider: "You are signing up with your %{provider} account. Enter the details we could not get from %{provider}, such as your email address, to finish."
   no_account_yet: "No account yet?"
   account_not_registered: "This account is not registered. New accounts are not being accepted"
   show_embedded_code: "Show Embedded Code"

@@ -204,6 +204,7 @@ ja:
   signin_with_provider: "%{provider}でサインイン"
   signup: "サインアップ"
   or_use_email: "またはメールアドレスで"
+  signup_with_provider: "%{provider} のアカウントで登録します。%{provider} から受け取れなかったメールアドレスなどを入力して、登録を完了してください。"
   no_account_yet: "アカウントをお持ちでない場合は"
   account_not_registered: "このアカウントは登録されていません。新しいアカウントの登録は受け付けていません"
   site_settings: "サイト設定"

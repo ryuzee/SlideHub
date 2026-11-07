@@ -1028,6 +1028,16 @@ body.slidehub_body {
   margin-bottom: 1.5rem;
 }
 
+.slidehub_body .sh-auth-notice {
+  margin-bottom: 1.25rem;
+  padding: 0.875rem 1rem;
+  background: var(--sh-paper);
+  border: 1px solid var(--sh-rule);
+  border-left: 3px solid var(--sh-accent);
+  border-radius: var(--sh-radius);
+  font-size: 0.9375rem;
+}
+
 .slidehub_body .sh-auth-providers {
   display: grid;
   gap: 0.5rem;
