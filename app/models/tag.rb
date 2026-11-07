@@ -6,6 +6,5 @@
 #  name           :string(255)
 #  taggings_count :integer          default(0)
 #
-
 class Tag < ApplicationRecord
 end

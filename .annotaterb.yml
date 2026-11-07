@@ -1,0 +1,17 @@
+# annotaterb の設定。テーブルの列の説明を、モデルのファイルの先頭にだけ書く。
+# 列を変えたら `bundle exec annotaterb models` で書き直す
+:models: true
+:routes: false
+:position: before
+:show_indexes: false
+:show_foreign_keys: false
+:exclude_tests: true
+:exclude_fixtures: true
+:exclude_factories: true
+:exclude_serializers: true
+:exclude_scaffolds: true
+:exclude_controllers: true
+:exclude_helpers: true
+:exclude_sti_subclasses: false
+:classified_sort: true
+:with_comment: false

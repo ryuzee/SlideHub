@@ -3,12 +3,11 @@
 # Table name: categories
 #
 #  id         :integer          not null, primary key
-#  created_at :datetime
-#  updated_at :datetime
 #  name_en    :string(255)      default(""), not null
 #  name_ja    :string(255)      default(""), not null
+#  created_at :datetime
+#  updated_at :datetime
 #
-
 class Category < ApplicationRecord
   validates :name_en, presence: true, length: { maximum: 32 }
   validates :name_ja, presence: true, length: { maximum: 32 }

@@ -100,7 +100,7 @@ end
 
 group :development do
   # Insert Annotation to files
-  gem 'annotate'
+  gem 'annotaterb'
   # Display nice error screen
   gem 'better_errors'
   gem 'binding_of_caller'

@@ -2,11 +2,10 @@
 #
 # Table name: custom_files
 #
-#  id          :bigint(8)        not null, primary key
-#  path        :string(255)      not null
+#  id          :bigint           not null, primary key
 #  description :string(255)
+#  path        :string(255)      not null
 #
-
 class CustomFile < ApplicationRecord
   validates :path, presence: true
   validates :path, length: { maximum: 255 }

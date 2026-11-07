@@ -3,12 +3,11 @@
 # Table name: featured_slides
 #
 #  id         :integer          not null, primary key
-#  slide_id   :integer          not null
 #  position   :integer          default(0), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  slide_id   :integer          not null
 #
-
 class FeaturedSlide < ApplicationRecord
   # トップページに表示する件数（SlideIndex#featured_slides）
   TOP_PAGE_LIMIT = 4

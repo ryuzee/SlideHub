@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: slidehub.tenants
+#
+#  id         :bigint           not null, primary key
+#  name       :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class Tenant < ApplicationRecord
   VALID_TENANTNAME_REGEX = /\A[a-zA-Z0-9]{3,32}\z/
   validates :name, uniqueness: true,

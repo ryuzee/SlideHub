@@ -90,9 +90,9 @@ GEM
     afm (1.0.1)
     amazing_print (3.0.0)
     anbt-sql-formatter (0.1.2)
-    annotate (2.6.5)
-      activerecord (>= 2.3.0)
-      rake (>= 0.8.7)
+    annotaterb (4.26.0)
+      activerecord (>= 6.0.0)
+      activesupport (>= 6.0.0)
     anonymous_loader (0.1.5)
       version_gem (~> 1.1, >= 1.1.17)
     ast (2.4.3)
@@ -745,7 +745,7 @@ DEPENDENCIES
   activerecord-session_store
   acts-as-taggable-on
   addressable
-  annotate
+  annotaterb
   aws-sdk-s3
   aws-sdk-sqs
   azure-storage-blob

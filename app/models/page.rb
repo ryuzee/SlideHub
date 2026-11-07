@@ -2,14 +2,13 @@
 #
 # Table name: pages
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :bigint           not null, primary key
+#  content    :text(4294967295)
 #  path       :string(30)       not null
 #  title      :string(255)      not null
-#  content    :text(4294967295)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
 class Page < ApplicationRecord
   validates :path, presence: true
   validates :path, uniqueness: true, length: { minimum: 3, maximum: 32 }

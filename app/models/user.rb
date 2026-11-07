@@ -3,35 +3,31 @@
 # Table name: users
 #
 #  id                     :integer          not null, primary key
-#  email                  :string(32)       not null
-#  display_name           :string(128)      not null
-#  password               :string(255)      default(""), not null
 #  admin                  :boolean          default(FALSE), not null
-#  disabled               :boolean          default(FALSE)
-#  created_at             :datetime         not null
-#  updated_at             :datetime
+#  avatar                 :binary(65535)
 #  biography              :text(65535)
-#  slides_count           :integer          default(0)
-#  encrypted_password     :string(255)      default(""), not null
-#  reset_password_token   :string(255)
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer          default(0), not null
 #  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
 #  current_sign_in_ip     :string(255)
+#  disabled               :boolean          default(FALSE)
+#  display_name           :string(128)      not null
+#  email                  :string(32)       not null
+#  encrypted_password     :string(255)      default(""), not null
+#  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string(255)
-#  avatar_file_name       :string(255)
-#  avatar_content_type    :string(255)
-#  avatar_file_size       :integer
-#  avatar_updated_at      :datetime
-#  username               :string(255)      not null
+#  password               :string(255)      default(""), not null
 #  provider               :string(255)
-#  uid                    :string(255)
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string(255)
+#  sign_in_count          :integer          default(0), not null
+#  slides_count           :integer          default(0)
 #  token                  :string(255)
 #  twitter_account        :string(15)
+#  uid                    :string(255)
+#  username               :string(255)      not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime
 #
-
 class User < ApplicationRecord
   attr_accessor :skip_password_validation, :current_password
 

@@ -7,25 +7,24 @@ require 'securerandom'
 # Table name: slides
 #
 #  id             :integer          not null, primary key
-#  user_id        :integer          not null
-#  name           :string(255)      not null
+#  comments_count :integer          default(0), not null
+#  convert_status :integer          default("unconverted")
 #  description    :text(65535)      not null
+#  download_count :integer          default(0), not null
 #  downloadable   :boolean          default(FALSE), not null
-#  category_id    :integer          not null
+#  embedded_view  :integer          default(0), not null
+#  extension      :string(10)       default(""), not null
+#  name           :string(255)      not null
+#  num_of_pages   :integer          default(0)
+#  object_key     :string(255)      default("")
+#  page_view      :integer          default(0)
+#  private        :boolean          default(FALSE), not null
+#  total_view     :integer          default(0), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime
-#  object_key     :string(255)      default("")
-#  extension      :string(10)       default(""), not null
-#  convert_status :integer          default("unconverted")
-#  total_view     :integer          default(0), not null
-#  page_view      :integer          default(0)
-#  download_count :integer          default(0), not null
-#  embedded_view  :integer          default(0), not null
-#  num_of_pages   :integer          default(0)
-#  comments_count :integer          default(0), not null
-#  private        :boolean          default(FALSE), not null
+#  category_id    :integer          not null
+#  user_id        :integer          not null
 #
-
 class Slide < ApplicationRecord
   include WebResource
   belongs_to :user
