@@ -15,6 +15,13 @@ RSpec.describe Admin::TenantsController, type: :controller do
         expect(response.status).to eq(200)
         expect(response.body).to include('tenant1')
       end
+
+      it 'links the name and the edit button to the edit page' do
+        tenant = create(:default_tenant)
+        get 'index'
+        links = Nokogiri::HTML(response.body).css("tbody a[href='#{edit_admin_tenant_path(tenant.id)}']")
+        expect(links.map { |link| link.text.strip }).to eq(['tenant1', I18n.t(:edit)])
+      end
     end
 
     describe 'GET /admin/tenants/new' do

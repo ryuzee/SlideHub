@@ -25,17 +25,18 @@
             <th class="col-md-2"><%= t('activerecord.attributes.tenant.name') %></th>
             <th class="col-md-2"><%= t('activerecord.attributes.tenant.created_at') %></th>
             <th class="col-md-2"><%= t('activerecord.attributes.tenant.updated_at') %></th>
-            <th class="col-md-1"><%= t(:operation) %></th>
+            <th class="col-md-1 text-end"><%= t(:operation) %></th>
           </tr>
         </thead>
         <tbody>
           <% @tenants.each do |tenant| %>
             <tr>
-              <td><%= link_to tenant.id, edit_admin_tenant_path(tenant.id) %> &nbsp;</td>
-              <td><%= tenant.name %></td>
+              <td><%= tenant.id %></td>
+              <td><%= link_to tenant.name, edit_admin_tenant_path(tenant.id), class: 'fw-semibold' %></td>
               <td><%= tenant.created_at %></td>
               <td><%= tenant.updated_at %></td>
-              <td>
+              <td class="text-end text-nowrap">
+                <%= link_to t(:edit), edit_admin_tenant_path(tenant.id), class: 'btn btn-primary btn-sm' %>
                 <%= button_to t(:delete), admin_tenant_path(tenant.id), method: :delete, class: 'btn btn-outline-danger btn-sm', form_class: 'd-inline', data: { confirm: t(:confirm_to_delete) } %>
               </td>
             </tr>

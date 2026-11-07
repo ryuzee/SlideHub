@@ -26,18 +26,20 @@
             <th class="col-md-4"><%= sort_link(@search, :title) %></th>
             <th class="col-md-2"><%= sort_link(@search, :created_at) %></th>
             <th class="col-md-2"><%= sort_link(@search, :updated_at) %></th>
-            <th class="col-md-1"><%= t(:operation) %></th>
+            <th class="col-md-1 text-end"><%= t(:operation) %></th>
           </tr>
         </thead>
         <tbody>
           <% @pages.each do |page| %>
             <tr>
-              <td><%= link_to page.id, edit_admin_page_path(page.id) %> &nbsp;</td>
+              <td><%= page.id %></td>
               <td><%= page.path %></td>
-              <td><%= page.title %></td>
+              <td><%= link_to page.title, edit_admin_page_path(page.id), class: 'fw-semibold' %></td>
               <td><%= page.created_at %></td>
               <td><%= page.updated_at %></td>
-              <td>
+              <td class="text-end text-nowrap">
+                <%= link_to t(:edit), edit_admin_page_path(page.id), class: 'btn btn-primary btn-sm' %>
+                <%= link_to static_page_path(path: page.path), class: 'btn btn-outline-secondary btn-sm', target: '_blank', rel: 'noopener', title: t(:open_public_page), aria: { label: t(:open_public_page) } do %><i class="fa fa-arrow-up-right-from-square"></i><% end %>
                 <%= button_to t(:delete), admin_page_path(page.id), method: :delete, class: 'btn btn-outline-danger btn-sm', form_class: 'd-inline', data: { confirm: t(:confirm_to_delete) } %>
               </td>
             </tr>

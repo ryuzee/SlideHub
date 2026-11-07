@@ -16,6 +16,15 @@ RSpec.describe Admin::PagesController, type: :controller do
       expect(response.body).to include('About this site')
     end
 
+    it 'links the title and the edit button to the edit page, and opens the public page' do
+      page = create(:default_page, path: 'about', title: 'About this site')
+      get 'index'
+      html = Nokogiri::HTML(response.body)
+      links = html.css("tbody a[href='#{edit_admin_page_path(page.id)}']")
+      expect(links.map { |link| link.text.strip }).to eq(['About this site', I18n.t(:edit)])
+      expect(html.css("tbody a[href='#{static_page_path(path: 'about')}']")).to be_present
+    end
+
     it 'sorts the pages by the title' do
       create(:default_page, path: 'about', title: 'About this site')
       create(:default_page, path: 'terms', title: 'Terms of use')
