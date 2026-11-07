@@ -3,7 +3,7 @@ module Admin
     before_action :set_slide, only: [:edit, :update]
 
     def index
-      slide_search = SlideSearch.new(params[:q])
+      slide_search = SlideSearch.new(params[:q], auth_object: :admin)
       @search = slide_search.search
       respond_to do |format|
         format.html do

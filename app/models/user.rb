@@ -62,8 +62,16 @@ class User < ApplicationRecord
   attribute :admin, :boolean, default: false
   attribute :disabled, :boolean, default: false
 
+  # 検索・並べ替えに使ってよい項目。管理画面（auth_object が :admin）では一覧の項目すべて、
+  # それ以外（公開の検索でスライドの投稿者を探すとき）は名前だけにする
+  ADMIN_RANSACKABLE_ATTRIBUTES = %w[
+    display_name username email provider admin disabled slides_count
+    sign_in_count last_sign_in_at created_at
+  ].freeze
+  PUBLIC_RANSACKABLE_ATTRIBUTES = %w[display_name username].freeze
+
   def self.ransackable_attributes(auth_object = nil)
-    %w[display_name username avatar_attachment avatar_blob slides email provider admin]
+    auth_object == :admin ? ADMIN_RANSACKABLE_ATTRIBUTES : PUBLIC_RANSACKABLE_ATTRIBUTES
   end
 
   # 投稿者から先の関連（スライドなど）では検索しない

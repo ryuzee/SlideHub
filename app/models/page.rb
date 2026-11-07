@@ -19,4 +19,13 @@ class Page < ApplicationRecord
   validates :title, length: { minimum: 2, maximum: 255 }
   validates :content, presence: true
   validates :content, length: { maximum: 4_294_967_295 }
+
+  # 管理画面の一覧で並べ替えに使う項目
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id path title created_at updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    []
+  end
 end

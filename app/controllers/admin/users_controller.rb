@@ -4,7 +4,7 @@ module Admin
 
     def index
       ransack_params = params[:q]
-      @search = User.ransack(ransack_params)
+      @search = User.ransack(ransack_params, auth_object: :admin)
       @users = @search.result(distinct: true).
                paginate(page: params[:page], per_page: 20)
     end

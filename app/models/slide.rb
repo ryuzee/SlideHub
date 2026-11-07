@@ -57,8 +57,17 @@ class Slide < ApplicationRecord
   scope :category, ->(category_id) { where('category_id = ?', category_id) }
   scope :owner, ->(user_id) { where('user_id = ?', user_id) }
 
+  # 検索・並べ替えに使ってよい項目。auth_object が :admin のとき（管理画面）はすべて、
+  # それ以外（公開の検索や統計）は画面にある項目だけにする。投稿者についても名前でしか検索させない
+  PUBLIC_RANSACKABLE_ATTRIBUTES = %w[
+    name description created_at updated_at tag_search category_id
+    convert_status page_view embedded_view download_count total_view
+  ].freeze
+
   def self.ransackable_associations(auth_object = nil)
-    %w[base_tags category comments tag_taggings taggings tags user]
+    return %w[base_tags category comments tag_taggings taggings tags user] if auth_object == :admin
+
+    %w[user]
   end
 
   def record_access(access_type)
@@ -66,9 +75,10 @@ class Slide < ApplicationRecord
     increment!(:embedded_view).increment!(:total_view) if access_type == :embedded_view
   end
 
-  # :reek:UnusedParameters { enabled: false }
   def self.ransackable_attributes(auth_object = nil)
-    (column_names + ['tag_search']) + _ransackers.keys
+    return (column_names + ['tag_search']) + _ransackers.keys if auth_object == :admin
+
+    PUBLIC_RANSACKABLE_ATTRIBUTES
   end
 
   def self.key_exist?(key)

@@ -17,6 +17,22 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
     end
 
+    describe 'GET /admin/users/ with sorting' do
+      it 'sorts by the sign-in count' do
+        create(:default_user).update!(sign_in_count: 5)
+        create(:another_user).update!(sign_in_count: 9)
+        admin_user.update!(sign_in_count: 1)
+        get 'index', params: { q: { s: 'sign_in_count desc' } }
+        expect(assigns(:users).map(&:sign_in_count)).to eq([9, 5, 1])
+      end
+
+      it 'can search by the e-mail address' do
+        create(:default_user)
+        get 'index', params: { q: { email_cont: 'user01' } }
+        expect(assigns(:users).map(&:email)).to eq(['user01@example.com'])
+      end
+    end
+
     describe 'GET /admin/users/edit/1' do
       it 'shows the form filled with the current user' do
         target = create(:default_user)

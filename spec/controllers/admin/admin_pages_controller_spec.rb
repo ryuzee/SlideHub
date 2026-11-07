@@ -15,6 +15,14 @@ RSpec.describe Admin::PagesController, type: :controller do
       expect(response.status).to eq(200)
       expect(response.body).to include('About this site')
     end
+
+    it 'sorts the pages by the title' do
+      create(:default_page, path: 'about', title: 'About this site')
+      create(:default_page, path: 'terms', title: 'Terms of use')
+      get 'index', params: { q: { s: 'title desc' } }
+      expect(response.status).to eq(200)
+      expect(assigns(:pages).map(&:title)).to eq(['Terms of use', 'About this site'])
+    end
   end
 
   describe 'GET /admin/pages/new' do

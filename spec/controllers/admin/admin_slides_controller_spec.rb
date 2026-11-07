@@ -18,6 +18,13 @@ RSpec.describe Admin::SlidesController, type: :controller do
       expect(response.content_type).to match(%r{text/html})
     end
 
+    it 'can search by any column, including the e-mail address of the author' do
+      mine = create(:slide, user: create(:default_user))
+      create(:slide, user: create(:another_user))
+      get 'index', params: { q: { user_email_start: 'user01' } }
+      expect(assigns(:slides)).to eq([mine])
+    end
+
     it 'loads the authors together with the slides' do
       create_list(:slide, 2)
       get 'index'
