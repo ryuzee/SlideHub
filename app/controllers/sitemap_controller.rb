@@ -2,7 +2,7 @@ class SitemapController < ApplicationController
   def index
     @slides = Slide.published.latest
     # 公開中のスライドがあるカテゴリだけ（空のカテゴリは中身がないので検索エンジンに知らせない）
-    @categories = Category.where(id: Slide.published.select(:category_id)).order('id asc')
+    @categories = Category.with_published_slides.order('id asc')
     @pages = Page.order('id asc')
     @users = User.where(id: Slide.published.select(:user_id))
 

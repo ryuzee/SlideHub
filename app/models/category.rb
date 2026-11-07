@@ -13,6 +13,10 @@ class Category < ApplicationRecord
   validates :name_en, presence: true, length: { maximum: 32 }
   validates :name_ja, presence: true, length: { maximum: 32 }
   has_many :slides, dependent: false
+
+  # 公開中のスライドが 1 枚以上あるカテゴリ。押しても 0 件のカテゴリは、公開画面に出さない
+  scope :with_published_slides, -> { where(id: Slide.published.select(:category_id)) }
+
   def name
     if I18n.locale.to_s == 'ja'
       name_ja

@@ -90,6 +90,7 @@
           <ul class="navbar-nav me-lg-auto">
             <li class="nav-item"><%= link_to t("popular"), popular_index_path, class: "nav-link#{' active' if controller.controller_name == 'popular'}" %></li>
             <li class="nav-item"><%= link_to t("latest"), latest_index_path, class: "nav-link#{' active' if controller.controller_name == 'latest'}" %></li>
+            <% if @categories.present? %>
             <li class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle<%= ' active' if controller.controller_name == 'categories' %>" data-bs-toggle="dropdown" role="button" aria-expanded="false"><%= t 'category' %></a>
               <div class="dropdown-menu">
@@ -98,6 +99,7 @@
                 <% end %>
               </div>
             </li>
+            <% end %>
             <%= raw custom_links(controller) %>
           </ul>
 

@@ -23,8 +23,9 @@ class ApplicationController < ActionController::Base
       I18n.locale = SlideHub::LocaleUtil.locale(request)
     end
 
+    # 公開画面のカテゴリの一覧（ヘッダーのメニュー、トップページ、カテゴリのページ）
     def set_category_data
-      @categories = Category.order('id asc')
+      @categories = Category.with_published_slides.order('id asc')
     end
 
     def set_uploadable

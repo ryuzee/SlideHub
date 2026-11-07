@@ -108,6 +108,30 @@ describe 'Public pages' do
     end
   end
 
+  describe 'category lists' do
+    let!(:with_slide) { create(:slide).category }
+    let!(:empty) { Category.create!(name_en: 'Empty', name_ja: 'Empty_ja') }
+    let!(:only_private) do
+      Category.create!(name_en: 'Private', name_ja: 'Private_ja').tap { |category| create(:slide, category: category, private: true) }
+    end
+
+    # 押しても 0 件になるカテゴリは出さない
+    def category_links(selector)
+      page_html.css("#{selector} a").map { |link| link['href'] }
+    end
+
+    it 'shows only the categories with a published slide on the top page and in the header' do
+      get '/'
+      expect(category_links('#categories')).to eq(["/categories/#{with_slide.id}"])
+      expect(category_links('.navbar .dropdown-menu')).to eq(["/categories/#{with_slide.id}"])
+    end
+
+    it 'shows only the categories with a published slide on a category page' do
+      get "/categories/#{with_slide.id}"
+      expect(category_links('.sh-chips')).to eq(["/categories/#{with_slide.id}"])
+    end
+  end
+
   describe 'slide page' do
     let(:slide) { create(:slide, name: 'Sushi Talk', tag_list: 'Sushi,Toro', num_of_pages: 2) }
 
