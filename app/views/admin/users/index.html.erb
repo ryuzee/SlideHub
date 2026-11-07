@@ -122,8 +122,8 @@ $(function(){
   var td1 = new tempusDominus.TempusDominus(
     document.getElementById('datetimepicker1'),
     {
-      localization: {locale: 'ja'},
-      display: {sideBySide: true, components: {useTwentyfourHour:true}},
+      localization: {locale: 'ja', hourCycle: 'h23'},
+      display: {sideBySide: true},
     }
   ) ;
   td1.dates.formatInput = function(date) { {return moment(date).format('YYYY/MM/DD HH:mm') } }
@@ -132,8 +132,8 @@ $(function(){
   var td2 = new tempusDominus.TempusDominus(
     document.getElementById('datetimepicker2'),
     {
-      localization: {locale: 'ja'},
-      display: {sideBySide: true, components: {useTwentyfourHour:true}},
+      localization: {locale: 'ja', hourCycle: 'h23'},
+      display: {sideBySide: true},
     }
   ) ;
   td2.dates.formatInput = function(date) { {return moment(date).format('YYYY/MM/DD HH:mm') } }

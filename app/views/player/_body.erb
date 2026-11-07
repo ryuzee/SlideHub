@@ -1,5 +1,3 @@
-<%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" %>
-
 <%= render 'css', prefix: prefix %>
 
 <% default_image = asset_url("loading.jpg") %>
@@ -15,17 +13,17 @@
     </div>
     <div id="<%= prefix %>command_area">
       <div id="<%= prefix %>command_inner">
-        <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="#" id="<%= prefix %>full_screen_icon"><i id="slide_control_fullscreen" class="fa fa-television"></i>&nbsp;</a>
-        <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="<%= slide_url(slide.id) %>"><i id="slide_control_home_link" class="fa fa-link"></i>&nbsp;</a>
+        <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="#" id="<%= prefix %>full_screen_icon"><%= player_icon(:fullscreen, id: 'slide_control_fullscreen') %>&nbsp;</a>
+        <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="<%= slide_url(slide.id) %>"><%= player_icon(:link, id: 'slide_control_home_link') %>&nbsp;</a>
         <% if slide.downloadable %>
-          <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="<%= slide_download_url(slide.id) %>"><i id="slide_control_download_link" class="fa fa-download"></i>&nbsp;</a>
+          <a class="<%= prefix %>icon" style="float:left;margin-right:4px;" href="<%= slide_download_url(slide.id) %>"><%= player_icon(:download, id: 'slide_control_download_link') %>&nbsp;</a>
         <% end %>
         <ul style="list-style-image:none; list-style-type:none">
-          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(0);">&nbsp;<i class="fa fa-fast-backward"></i>&nbsp;</a></li>
-          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex-1);">&nbsp<i class="fa fa-step-backward"></i>&nbsp;</a></li>
+          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(0);">&nbsp;<%= player_icon(:first) %>&nbsp;</a></li>
+          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex-1);">&nbsp<%= player_icon(:previous) %>&nbsp;</a></li>
           <li style="display:inline; margin:0 0px;"><div id="<%= prefix %>page_positions" style="padding-left:0px;"></div></li>
-          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex+1);">&nbsp;<i class="fa fa-step-forward"></i>&nbsp;</a></li>
-          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.slides.length-1);">&nbsp;<i class="fa fa-fast-forward"></i>&nbsp;</a></li>
+          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.currentPageIndex+1);">&nbsp;<%= player_icon(:next) %>&nbsp;</a></li>
+          <li style="display:inline; margin:0 0px;"><a href="javascript:OSSJSPARTS<%= prefix %>.moveTo(OSSJSPARTS<%= prefix %>.slides.length-1);">&nbsp;<%= player_icon(:last) %>&nbsp;</a></li>
         </ul>
         <span class="<%= prefix %>clearfix"></span>
       </div>
