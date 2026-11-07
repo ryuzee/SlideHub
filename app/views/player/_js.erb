@@ -7,7 +7,8 @@
     return OSSJSPARTS.classPrefix.concat(classVar);
   };
   OSSJSPARTS.name = "SlideHub Javascript Player";
-  OSSJSPARTS.currentPageIndex = <%= start_position - 1 %>;
+  <%# 開始ページは、圧縮したあとで PlayerScript が差し替える %>
+  OSSJSPARTS.currentPageIndex = <%= PlayerScript::START_INDEX %>;
   OSSJSPARTS.slides = [];
   OSSJSPARTS.classPrefix = "PREFIX"
   OSSJSPARTS.aspect = 0.75;

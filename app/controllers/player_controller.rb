@@ -21,7 +21,8 @@ class PlayerController < ApplicationController
         @slide.record_access(:embedded_view)
       end
 
-      @prefix = if params.key?(:prefix) && !params[:prefix].empty?
+      # JavaScript の名前と要素の id の一部になるので、英数字と下線だけを受け付ける
+      @prefix = if params[:prefix].to_s.match?(/\A[0-9A-Za-z_]{1,64}\z/)
                   params[:prefix]
                 else
                   view_context.js_prefix
@@ -29,8 +30,9 @@ class PlayerController < ApplicationController
 
       @start_position = slide_position
       @body = render_to_string partial: 'body', locals: { slide: @slide, prefix: @prefix }
-      script = render_to_string partial: 'js', locals: { prefix: @prefix, start_position: @start_position }
-      @script = script.gsub!('OSSJSPARTS', "OSSJSPARTS#{@prefix}").gsub('PREFIX', @prefix)
+      # プレイヤーの動きの JavaScript は、目印のまま描画して圧縮済みのものを使い回す（PlayerScript）
+      template = render_to_string partial: 'js'
+      @script = PlayerScript.build(template, prefix: @prefix, start_index: @start_position - 1)
     end
 
     def slide_position
