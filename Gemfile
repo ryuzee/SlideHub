@@ -54,8 +54,9 @@ gem 'ransack'
 # Manage Title and meta tags
 gem 'meta-tags'
 # AWS
-gem 'aws-sdk', '~> 3'
+# 使う AWS のサービス（S3 と SQS）の gem だけを入れる。aws-sdk は全サービス分（400 以上）を入れてしまう
 gem 'aws-sdk-s3'
+gem 'aws-sdk-sqs'
 # Azure
 gem 'addressable', require: 'addressable/uri'
 gem 'azure-storage-blob'

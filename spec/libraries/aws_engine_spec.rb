@@ -74,34 +74,6 @@ module Aws
       end
     end
   end
-
-  module EC2
-    class DummyClient
-      class DummyCredential
-        class DummyCredentialCredential
-          def access_key_id
-            'iam_access_key'
-          end
-
-          def secret_access_key
-            'iam_secret_access_key'
-          end
-
-          def session_token
-            'iam_session_token'
-          end
-        end
-
-        def credentials
-          DummyCredentialCredential.new
-        end
-      end
-
-      def config
-        { credentials: DummyCredential.new }
-      end
-    end
-  end
 end
 
 describe 'SlideHub::Cloud::Engine::Aws' do
@@ -295,7 +267,12 @@ describe 'SlideHub::Cloud::Engine::AWS without access_id and secret_key' do
 
   describe 'create_policy_proc' do
     it 'returns policy' do
-      allow(Aws::EC2::Client).to receive(:new).and_return(Aws::EC2::DummyClient.new)
+      # インスタンスロールなどから得た認証情報があることにする
+      credentials = instance_double(Aws::Credentials, access_key_id: 'iam_access_key',
+                                                      secret_access_key: 'iam_secret_access_key',
+                                                      session_token: 'iam_session_token')
+      client = double('S3 client', config: double(credentials: double(credentials: credentials)))
+      allow(Aws::S3::Client).to receive(:new).and_return(client)
       base_time = Time.utc(2016, 1, 1, 23, 59, 59, 0)
       value = SlideHub::Cloud::Engine::Aws.create_policy_proc(base_time)
       expect(value['signature']).to eq('2a6bee16e76dc0ff59eb057922a305b118ef89cff677507181e54ea65c779875')
