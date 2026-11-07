@@ -18,6 +18,16 @@ xml.urlset xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' do
     end
   end
 
+  # 固定ページ（このサイトについて など）
+  @pages.each do |page|
+    xml.url do
+      xml.loc static_page_url(path: page.path)
+      xml.changefreq 'monthly'
+      xml.priority '0.4'
+      xml.lastmod page.updated_at.iso8601
+    end
+  end
+
   # 公開スライドを持つユーザー
   @users.each do |user|
     xml.url do

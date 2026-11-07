@@ -1,5 +1,7 @@
 <% content_for :title, @category.name %>
 <% canonical category_url(@category.id) %>
+<%# スライドが 1 枚もないカテゴリは中身がないので、検索結果に出さない（サイトマップにも載せない） %>
+<% set_meta_tags noindex: true if @slides.total_entries.zero? %>
 <% page_description t('page_descriptions.category', site: description_site_name, category: @category.name, count: @slides.total_entries) %>
 <%= json_ld_tag(collection_structured_data(name: @category.name, url: category_url(@category.id))) %>
 <%= json_ld_tag(category_breadcrumb_structured_data(@category)) %>

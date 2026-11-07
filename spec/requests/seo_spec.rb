@@ -275,5 +275,45 @@ describe 'SEO' do
       expect(locs).to include("http://www.example.com/slides/#{published.id}")
       expect(locs).not_to include("http://www.example.com/slides/#{hidden.id}")
     end
+
+    def sitemap_locs
+      get '/sitemap.xml'
+      Nokogiri::XML(response.body).remove_namespaces!.xpath('//url/loc').map(&:text)
+    end
+
+    it 'lists only the categories that have a published slide' do
+      published = create(:slide)
+      empty = Category.create!(name_en: 'Empty', name_ja: 'Empty_ja')
+      only_private = Category.create!(name_en: 'Private', name_ja: 'Private_ja')
+      create(:slide, category: only_private, private: true)
+      expect(sitemap_locs).to include("http://www.example.com/categories/#{published.category_id}")
+      expect(sitemap_locs).not_to include("http://www.example.com/categories/#{empty.id}",
+                                          "http://www.example.com/categories/#{only_private.id}")
+    end
+
+    it 'lists the pages' do
+      create(:default_page, path: 'about', title: 'About this site')
+      expect(sitemap_locs).to include('http://www.example.com/pages/about')
+    end
+  end
+
+  describe 'GET /categories/:id' do
+    def robots_of(category)
+      get "/categories/#{category.id}"
+      Nokogiri::HTML(response.body).at('meta[name="robots"]')&.[]('content')
+    end
+
+    it 'is noindex when the category has no published slide' do
+      empty = Category.create!(name_en: 'Empty', name_ja: 'Empty_ja')
+      robots = robots_of(empty)
+      expect(response.status).to eq(200)
+      expect(robots).to include('noindex')
+      expect(robots).not_to include('nofollow')
+    end
+
+    it 'can be indexed when the category has a slide' do
+      slide = create(:slide)
+      expect(robots_of(slide.category)).to be_nil
+    end
   end
 end
