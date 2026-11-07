@@ -74,6 +74,19 @@ describe 'Slide' do
       slide = Slide.new(data)
       expect(slide.valid?).to eq(false)
     end
+
+    # belongs_to は必須（Rails の標準）。番号だけあっても、そのカテゴリーや投稿者がいなければ保存しない
+    it 'is invalid with a category that does not exist' do
+      slide = Slide.new(success_data.merge(category_id: 0))
+      expect(slide.valid?).to eq(false)
+      expect(slide.errors).to include(:category)
+    end
+
+    it 'is invalid with a user that does not exist' do
+      slide = Slide.new(success_data.merge(user_id: 0))
+      expect(slide.valid?).to eq(false)
+      expect(slide.errors).to include(:user)
+    end
   end
 
   describe 'Method "update_after_convert"' do

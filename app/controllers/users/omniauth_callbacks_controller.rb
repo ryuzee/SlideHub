@@ -2,6 +2,8 @@ module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # See https://github.com/heartcombo/devise/issues/3119
     skip_before_action :verify_authenticity_token, only: :saml
+    # SAML の応答は IdP のサイトから送られてくるので、Origin が違って当然（ログに残さない）
+    skip_before_action :log_origin_mismatch, only: :saml
 
     def facebook
       @user = UserFinder.find_for_facebook_oauth(request.env['omniauth.auth'], create: signup_allowed?)

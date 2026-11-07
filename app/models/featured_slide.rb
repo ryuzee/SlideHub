@@ -13,7 +13,8 @@ class FeaturedSlide < ApplicationRecord
   # トップページに表示する件数（SlideIndex#featured_slides）
   TOP_PAGE_LIMIT = 4
 
-  belongs_to :slide
+  # 公開中のスライドかどうかは exsitence_of_slide_id で確かめる（メッセージが二重にならないよう、ここでは確かめない）
+  belongs_to :slide, optional: true
   validates :slide_id, uniqueness: true
   validate :exsitence_of_slide_id
 

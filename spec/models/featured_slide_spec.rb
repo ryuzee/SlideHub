@@ -23,6 +23,8 @@ describe 'FeaturedSlide' do
       failed_data = { slide_id: 123456 }
       featured_slide = FeaturedSlide.new(failed_data)
       expect(featured_slide.valid?).to eq(false)
+      # 管理画面にはエラーをまとめて出すので、同じことを 2 回言わない
+      expect(featured_slide.errors.full_messages.size).to eq(1)
     end
   end
 

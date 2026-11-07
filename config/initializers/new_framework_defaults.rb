@@ -1,19 +1,7 @@
-# Be sure to restart your server when you modify this file.
-#
-# This file contains migration options to ease your Rails 5.0 upgrade.
-#
-# Once upgraded flip defaults one by one to migrate to the new default.
-#
-# Read the Rails 5.0 release notes for more info on each option.
+# Rails 5.0 のときから古い動きのまま固定している設定。
+# フォームごとの CSRF トークンと belongs_to の必須化は、いまの Rails の標準（load_defaults 8.1）に戻した。
 
-# Enable per-form CSRF tokens. Previous versions had false.
-Rails.application.config.action_controller.per_form_csrf_tokens = false
-
-# Enable origin-checking CSRF mitigation. Previous versions had false.
+# Origin ヘッダーの確認は、本番の前段（Azure 側）が Host や X-Forwarded-Proto をどう渡すかによって、
+# ログインなどの送信がすべて弾かれるおそれがある。先に OriginCheckLogging で食い違いがないかをログで確かめ、
+# 出ていなければこの行を消して有効にする
 Rails.application.config.action_controller.forgery_protection_origin_check = false
-
-# Require `belongs_to` associations by default. Previous versions had false.
-Rails.application.config.active_record.belongs_to_required_by_default = false
-
-# Do not halt callback chains when a callback returns false. Previous versions had true.
-# ActiveSupport.halt_callback_chains_on_return_false = true
