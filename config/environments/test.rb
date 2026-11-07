@@ -27,8 +27,8 @@ Rails.application.configure do
   # データベースを巻き戻したあとも次のテストや次の実行に持ち越される
   config.cache_store = :null_store
 
-  # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  # 見つからないページ（404）などは画面として返し、それ以外の例外はそのまま上げる
+  config.action_dispatch.show_exceptions = :rescuable
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false

@@ -146,11 +146,11 @@ FactoryBot.use_parent_strategy = false
 
 require 'capybara/rails'
 
-Capybara.server = :webrick
-Capybara.app = Rails.application
-Capybara.server_host = '127.0.0.1'
-Capybara.app_host = 'http://127.0.0.1:3001'
-Capybara.server_port = 3001
+# 画面の操作を確かめるテスト（spec/system）は、ブラウザを使わずアプリを直接呼ぶ rack_test で動かす。
+# JavaScript を動かすテストを足すときは、そのテストだけ別のドライバーにする
 Capybara.default_max_wait_time = 10
-Capybara.default_driver = :rack_test
-Capybara.current_driver = :rack_test
+RSpec.configure do |config|
+  config.before(type: :system) do
+    driven_by :rack_test
+  end
+end
