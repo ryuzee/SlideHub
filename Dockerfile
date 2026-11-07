@@ -4,7 +4,8 @@
 #
 # - base        : 動かすのに要るものだけを入れた土台（公式の Ruby イメージ）
 # - build       : gem と JavaScript のパッケージを入れ、CSS・JavaScript をビルドする
-# - production  : base に、build で作った gem とアプリだけを移す。Node.js もコンパイラも入らない
+# - production  : base に、build で作った gem とアプリを移す。コンパイラや yarn は入らない
+#                 （Node.js は、プレイヤーの JavaScript を terser で圧縮するために node だけ入れる）
 # - development : build に、開発用の gem と mailcatcher を足す（docker-compose.yml で使う）
 #
 # スライドの変換に使うのは mutool（PDF→JPEG）と pdftotext（ページの文字）と ImageMagick（サムネイル）
@@ -83,9 +84,16 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.conf"]
 # 何も指定しないでビルドしたときは本番用（最後の段）になる
 FROM base AS production
 
+# プレイヤーの JavaScript は、表示するときに terser で圧縮する（PlayerScript）。
+# terser は ExecJS を通して Node.js で動くので、node だけは本番にも入れる（npm や yarn は入れない）
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build --exclude=node_modules --exclude=tmp/cache /opt/application/current /opt/application/current
 ENV BUNDLE_WITHOUT="development:test:doc"
+
+# JavaScript を動かせることを、ビルドの時点で確かめる（動かせないとプレイヤーが 500 になる）
+RUN bundle exec ruby -e 'require "terser"; Terser.new.compile("var a = 1;")'
 
 COPY script/oss_docker_supervisor.conf /etc/supervisor.conf
 
