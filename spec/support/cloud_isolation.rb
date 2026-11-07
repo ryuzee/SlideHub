@@ -8,7 +8,7 @@ module CloudIsolation
   def self.snapshot
     {
       provider: CloudConfig.provider,
-      engines: ENGINES.to_h { |engine| [engine, engine.config.config.to_h.dup] },
+      engines: ENGINES.to_h { |engine| [engine, engine.config.to_h] },
       aws: ::Aws.config.dup,
     }
   end
@@ -16,9 +16,7 @@ module CloudIsolation
   def self.restore(saved)
     CloudConfig.provider = saved[:provider]
     saved[:engines].each do |engine, values|
-      options = engine.config.config
-      (options.keys - values.keys).each { |key| options.delete(key) }
-      values.each { |key, value| options[key] = value }
+      values.each { |key, value| engine.config.public_send("#{key}=", value) }
     end
     ::Aws.config.replace(saved[:aws])
   end

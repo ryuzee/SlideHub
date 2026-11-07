@@ -2,16 +2,24 @@ module SlideHub
   module Cloud
     module Engine
       class Aws
+        # エンジンの設定（バケット名やキューなど）。configure の中で値を入れる
         class Config
-          include ActiveSupport::Configurable
-          config_accessor :bucket_name
-          config_accessor :image_bucket_name
-          config_accessor :use_s3_static_hosting
-          config_accessor :region
-          config_accessor :cdn_base_url
-          config_accessor :sqs_url
-          config_accessor :aws_access_id
-          config_accessor :aws_secret_key
+          ATTRIBUTES = %i[
+            bucket_name
+            image_bucket_name
+            use_s3_static_hosting
+            region
+            cdn_base_url
+            sqs_url
+            aws_access_id
+            aws_secret_key
+          ].freeze
+
+          attr_accessor(*ATTRIBUTES)
+
+          def to_h
+            ATTRIBUTES.to_h { |name| [name, public_send(name)] }
+          end
         end
 
         def self.configure(&)

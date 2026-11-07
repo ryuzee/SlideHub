@@ -78,7 +78,7 @@ Rails.application.routes.draw do
     get 'logs/download' => 'logs#download', as: :logs_download
   end
 
-  namespace :api, { format: 'json' } do
+  namespace :api, format: 'json' do
     namespace :v1 do
       resources :slides, only: [:show, :index]
       resources :users, only: [:show]
@@ -86,7 +86,7 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :custom, { format: 'css' } do
+  namespace :custom, format: 'css' do
     get 'override' => 'css#show'
   end
 

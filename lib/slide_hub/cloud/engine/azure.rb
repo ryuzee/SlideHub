@@ -7,14 +7,22 @@ module SlideHub
   module Cloud
     module Engine
       class Azure
+        # エンジンの設定（バケット名やキューなど）。configure の中で値を入れる
         class Config
-          include ActiveSupport::Configurable
-          config_accessor :bucket_name
-          config_accessor :image_bucket_name
-          config_accessor :cdn_base_url
-          config_accessor :queue_name
-          config_accessor :azure_storage_access_key
-          config_accessor :azure_storage_account_name
+          ATTRIBUTES = %i[
+            bucket_name
+            image_bucket_name
+            cdn_base_url
+            queue_name
+            azure_storage_access_key
+            azure_storage_account_name
+          ].freeze
+
+          attr_accessor(*ATTRIBUTES)
+
+          def to_h
+            ATTRIBUTES.to_h { |name| [name, public_send(name)] }
+          end
         end
 
         def self.configure(&)

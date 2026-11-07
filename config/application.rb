@@ -12,6 +12,8 @@ module SlideHub
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
     config.autoloader = :zeitwerk
+    # Active Storage の画像の変換（variant）は使わない（アバターは元の画像をそのまま出す）
+    config.active_storage.variant_processor = :disabled
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
