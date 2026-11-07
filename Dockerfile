@@ -11,7 +11,7 @@ ENV PATH /root/.rbenv/bin:$PATH
 ENV RAILS_ROOT /opt/application/current
 RUN bash -c "source /root/.bashrc && rbenv install 3.4.12"
 RUN bash -c "source /root/.bashrc && rbenv global 3.4.12"
-RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler -v 2.3.27"
+RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler -v 4.0.24"
 RUN bash -c "source /root/.bashrc && rbenv rehash"
 
 ENV PATH /root/.nodebrew/current/bin:$PATH

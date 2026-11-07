@@ -57,7 +57,7 @@ jobs:
       - run:
           name: Install gems
           command: |
-            gem install bundler:2.3.27
+            gem install bundler:4.0.24
             bundle config set --local path vendor/bundle
             bundle check || bundle install --jobs=4 --retry=3
       - save_cache:
