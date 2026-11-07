@@ -1,5 +1,7 @@
 class PlayerController < ApplicationController
   include SlideUtil
+  include CrossOriginAccess
+  allow_cross_origin_access
   before_action :set_slide
   skip_forgery_protection
 

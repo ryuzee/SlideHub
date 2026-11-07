@@ -54,10 +54,15 @@ module SlideHub
       generator.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
 
-    # For API Cross Origin Access
+    # すべての応答に付けるヘッダー（いまの Rails の標準と同じ）。
+    # ほかのサイトに枠で表示してよいのは埋め込み用のプレイヤー（HtmlPlayerController）だけ、
+    # ほかのサイトから読んでよいのは API と埋め込み用の JavaScript だけで、それぞれのコントローラーで変える
     config.action_dispatch.default_headers = {
-      'Access-Control-Allow-Origin' => '*',
-      'Access-Control-Request-Method' => %w[GET POST OPTIONS].join(','),
+      'X-Frame-Options' => 'SAMEORIGIN',
+      'X-XSS-Protection' => '0',
+      'X-Content-Type-Options' => 'nosniff',
+      'X-Permitted-Cross-Domain-Policies' => 'none',
+      'Referrer-Policy' => 'strict-origin-when-cross-origin',
     }
   end
 end

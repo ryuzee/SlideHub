@@ -28,6 +28,8 @@
 #
 
 class UsersController < ApplicationController
+  include CrossOriginAccess
+  allow_cross_origin_access only: :embedded
   before_action :authenticate_user!, only: [:index]
   before_action :username_to_id, only: [:show, :embedded]
   skip_forgery_protection only: [:embedded]
