@@ -22,14 +22,17 @@ class FeaturedSlide < ApplicationRecord
 
   scope :ordered, -> { order(:position, :id) }
 
-  # トップページの注目のスライドは 3 分間キャッシュしている（slides/index の cache 'featured_slides'）。
-  # 追加・削除・並べ替えをすぐに反映させるため、キャッシュを消す
-  TOP_PAGE_CACHE_KEY = 'views/featured_slides'.freeze
+  # トップページの注目のスライドは、言語ごとに 3 分間キャッシュしている
+  # （slides/index の cache ['featured_slides', I18n.locale]）。
+  # 追加・削除・並べ替えをすぐに反映させるため、すべての言語のキャッシュを消す
+  def self.top_page_cache_keys
+    I18n.available_locales.map { |locale| "views/featured_slides/#{locale}" }
+  end
 
   after_commit { self.class.expire_top_page_cache }
 
   def self.expire_top_page_cache
-    Rails.cache.delete(TOP_PAGE_CACHE_KEY)
+    top_page_cache_keys.each { |key| Rails.cache.delete(key) }
   end
 
   # 指定した ID の順に並べ直す。指定されなかったものは後ろに回す

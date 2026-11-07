@@ -35,7 +35,9 @@ describe 'FeaturedSlide' do
 
     it 'expires the cached featured slides on the top page' do
       a = create(:featured_slide)
-      expect(Rails.cache).to receive(:delete).with('views/featured_slides').at_least(:once)
+      allow(Rails.cache).to receive(:delete)
+      expect(Rails.cache).to receive(:delete).with('views/featured_slides/ja').at_least(:once)
+      expect(Rails.cache).to receive(:delete).with('views/featured_slides/en').at_least(:once)
       FeaturedSlide.reorder_by_ids([a.id])
     end
   end

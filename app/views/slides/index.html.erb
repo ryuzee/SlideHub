@@ -17,7 +17,7 @@
 <%# 注目のスライド。1件目を大きく映し、2件目以降はその下に並べる %>
 <section class="sh-stage sh-hero" id="featured" aria-labelledby="featured-heading">
   <div class="container">
-    <% cache 'featured_slides', expires_in: 3.minutes, skip_digest: true do %>
+    <% cache ['featured_slides', I18n.locale], expires_in: 3.minutes, skip_digest: true do %>
       <% lead = featured.first %>
       <% lead_title = strip_tags(lead.name) %>
       <% first_page = slide_page_image_urls(lead, count: 1).first %>
@@ -70,7 +70,7 @@
       <h2 id="latest-heading"><%= t :latest_slides %></h2>
       <%= link_to t(:see_all), latest_index_path %>
     </div>
-    <% cache 'latest_slides', expires_in: 1.minutes, skip_digest: true do %>
+    <% cache ['latest_slides', I18n.locale], expires_in: 1.minutes, skip_digest: true do %>
       <%= render 'slides/thumbnail_template', slides: @slide_index.latest_slides %>
     <% end %>
   </section>
@@ -80,7 +80,7 @@
       <h2 id="popular-heading"><%= t :popular_slides %></h2>
       <%= link_to t(:see_all), popular_index_path %>
     </div>
-    <% cache 'popular_slides', expires_in: 3.minutes, skip_digest: true do %>
+    <% cache ['popular_slides', I18n.locale], expires_in: 3.minutes, skip_digest: true do %>
       <%= render 'slides/thumbnail_template', slides: @slide_index.popular_slides %>
     <% end %>
   </section>
