@@ -21,6 +21,18 @@ class ApplicationController < ActionController::Base
     def set_locale
       require Rails.root.join('lib', 'slide_hub', 'locale_util')
       I18n.locale = SlideHub::LocaleUtil.locale(request)
+      # 同じ URL でも、ブラウザの言語設定で日本語と英語の画面を出し分けている。
+      # 手前の CDN などが、違う言語の画面をキャッシュから返さないよう伝える
+      response.headers['Vary'] = 'Accept-Language'
+    end
+
+    # 一覧のページ番号が範囲外（スライドのある最後のページより後ろ）なら 404 にする。
+    # 空のページを返すと、検索エンジンに中身のない重複ページとして扱われる。
+    # 1 ページ目は、スライドが 0 件でも表示する
+    def ensure_page_in_range(collection)
+      return if collection.current_page <= 1 || collection.current_page <= collection.total_pages
+
+      raise ActionController::RoutingError, 'Not Found'
     end
 
     # 公開画面のカテゴリの一覧（ヘッダーのメニュー、トップページ、カテゴリのページ）

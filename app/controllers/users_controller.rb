@@ -47,6 +47,7 @@ class UsersController < ApplicationController
     user_id = params[:id]
     @user = User.find(user_id)
     @slides = user_slide_with_paginate(user_id)
+    ensure_page_in_range(@slides)
     @tags = Slide.published.
             owner(user_id).
             tag_counts_on(:tags).order('count DESC')

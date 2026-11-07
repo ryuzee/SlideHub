@@ -5,6 +5,11 @@ describe 'SEO' do
     Nokogiri::HTML(body).css('script[type="application/ld+json"]').map { |s| JSON.parse(s.text) }
   end
 
+  # 一覧は 1 ページ 20 件で、スライドのないページ番号は 404 になる。2 ページ目を開けるだけ作る
+  def fill_two_pages(**attributes)
+    create_list(:slide, 21, **attributes)
+  end
+
   describe 'GET /slides/:id' do
     let(:slide) { create(:slide, name: 'My </script> Slide', description: "line1\nline2", num_of_pages: 2) }
 
@@ -65,13 +70,15 @@ describe 'SEO' do
     end
 
     it 'keeps the page number from the second page on' do
+      fill_two_pages
       expect(canonical_of('/latest?page=1')).to eq("#{host}/latest")
       expect(canonical_of('/latest?page=2')).to eq("#{host}/latest?page=2")
     end
 
     it 'points a category to its URL' do
       category = create(:default_category)
-      expect(canonical_of("/categories/#{category.id}?page=3")).to eq("#{host}/categories/#{category.id}?page=3")
+      fill_two_pages(category: category)
+      expect(canonical_of("/categories/#{category.id}?page=2")).to eq("#{host}/categories/#{category.id}?page=2")
     end
 
     # 同じユーザーのページが /users/:id、/users/view/:id、/:username のどれでも出る
@@ -104,6 +111,7 @@ describe 'SEO' do
     end
 
     it 'describes the list pages and adds the page number from the second page on' do
+      fill_two_pages
       expect(description_of('/latest')).to eq('SlideHubに新しく公開されたスライドの一覧です。')
       expect(description_of('/latest?page=2')).to eq('SlideHubに新しく公開されたスライドの一覧です。（2ページ目）')
       expect(description_of('/popular')).to eq('SlideHubでよく見られているスライドの一覧です。')
@@ -145,6 +153,7 @@ describe 'SEO' do
     end
 
     it 'fills the title, the description and the URL from the page' do
+      fill_two_pages
       expect(og('/latest?page=2')).to include(
         'title' => '最新のスライド',
         'description' => 'SlideHubに新しく公開されたスライドの一覧です。（2ページ目）',
@@ -235,6 +244,7 @@ describe 'SEO' do
 
     it 'describes a category as a collection with the breadcrumb' do
       category = create(:default_category)
+      fill_two_pages(category: category)
       data = types_and_data("/categories/#{category.id}?page=2")
       expect(data['CollectionPage']).to include('name' => 'Category1_ja', 'url' => "http://www.example.com/categories/#{category.id}?page=2")
       expect(data['BreadcrumbList']['itemListElement'].map { |item| item['name'] }).to eq(%w[SlideHub Category1_ja])
