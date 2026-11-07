@@ -1,0 +1,7 @@
+# devise-i18n の訳を、サイトの表記に合わせて上書きする
+en:
+  devise:
+    sessions:
+      new:
+        # ヘッダーのリンクやボタンと同じく「Sign in」にする（devise-i18n では「Log in」）
+        sign_in: "Sign in"

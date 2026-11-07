@@ -13,21 +13,17 @@ gem 'rails', '8.1.4.1'
 gem 'cssbundling-rails'
 gem 'jsbundling-rails'
 gem 'propshaft'
-# プレイヤー (app/views/player/show*.html.erb) が埋め込み用 JS を実行時に圧縮するのに使う
+# プレイヤーの JavaScript を圧縮する（PlayerScript。1 回だけ圧縮して使い回す）
 # https://github.com/lautis/uglifier/issues/173#issuecomment-857616825
 gem 'uglifier', '= 4.1.0'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 # Store session to database
 gem 'activerecord-session_store'
-# Use sqlite3 as the database for Active Record
-# gem 'sqlite3'
-gem 'sqlite3'
 
-# Use mysql
+# Uglifier が JavaScript を動かすのに使う
 gem 'execjs'
+# Use mysql
 gem 'mysql2', '~> 0.5'
 # gem 'sprockets', '3.7.2'
 # Paginate
@@ -36,7 +32,6 @@ gem 'will_paginate-bootstrap-style'
 # Authentication
 gem 'devise'
 gem 'devise-i18n'
-gem 'devise-i18n-views'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-rails_csrf_protection'
@@ -65,13 +60,11 @@ gem 'mime-types'
 # Find file type
 gem 'ruby-filemagic'
 # Handle images
-gem 'mini_magick'
 gem 'rmagick'
 # retrieve page count of pdf
 gem 'pdf-reader'
 # counter cache transaction
 gem 'counter_culture'
-gem 'momentjs-rails'
 # AP Server。supervisor から unicorn_rails で起動する（rack 3 に対応した 6 系）
 gem 'unicorn', '~> 6'
 # https://github.com/alexspeller/non-stupid-digest-assets
