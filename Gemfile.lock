@@ -2064,6 +2064,8 @@ GEM
       date
       stringio
     public_suffix (6.0.1)
+    puma (8.0.2)
+      nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.8)
     rack-contrib (2.5.0)
@@ -2384,6 +2386,7 @@ DEPENDENCIES
   php-serialization
   propshaft
   psych (~> 5)
+  puma
   rack-dev-mark
   rails (= 8.1.4.1)
   rails-controller-testing

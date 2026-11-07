@@ -112,6 +112,7 @@ RSpec.configure do |config|
 
   require 'support/cloud_helpers'
   require 'support/cloud_isolation'
+  require 'support/browser'
 
   # DatabaseCleaner
   require 'database_cleaner'
@@ -120,8 +121,10 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
+  config.before(:each) do |example|
+    # ブラウザを使うテスト（js: true）では、アプリが別のスレッドで動く。
+    # テストで作ったデータが見えるよう、トランザクションではなく削除で後片付けする
+    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
     DatabaseCleaner.start
   end
 
@@ -147,10 +150,10 @@ FactoryBot.use_parent_strategy = false
 require 'capybara/rails'
 
 # 画面の操作を確かめるテスト（spec/system）は、ブラウザを使わずアプリを直接呼ぶ rack_test で動かす。
-# JavaScript を動かすテストを足すときは、そのテストだけ別のドライバーにする
+# js: true を付けたテストだけ、ブラウザ（spec/support/browser.rb）で動かす
 Capybara.default_max_wait_time = 10
 RSpec.configure do |config|
-  config.before(type: :system) do
-    driven_by :rack_test
+  config.before(type: :system) do |example|
+    driven_by :rack_test unless example.metadata[:js]
   end
 end

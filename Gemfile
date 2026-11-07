@@ -151,6 +151,8 @@ group :test do
   gem 'database_cleaner'
   gem 'faker'
   gem 'launchy'
+  # ブラウザを使うテストで、Capybara がアプリを動かすサーバー（本番は unicorn のまま）
+  gem 'puma'
   gem 'selenium-webdriver'
   gem 'webmock'
 end

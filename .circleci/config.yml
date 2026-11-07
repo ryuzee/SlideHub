@@ -5,6 +5,8 @@ version: 2.1
 orbs:
   # イメージ付属の Node は古い（20.18）ので、.node-version と同じ 22 系を入れる
   node: circleci/node@7
+  # ブラウザを使うテスト（spec/system の js: true）のための Chrome と ChromeDriver
+  browser-tools: circleci/browser-tools@1
 
 jobs:
   build:
@@ -36,6 +38,8 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y build-essential ruby-dev libmagic-dev libmysqlclient-dev libsqlite3-dev pkg-config libmagickcore-dev libmagickwand-dev mupdf-tools poppler-utils
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
 
       - run:
           name: Build JavaScript and CSS

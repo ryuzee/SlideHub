@@ -59,12 +59,19 @@ services:
       OSS_ROOT_URL: http://localhost:3000
       OSS_LOGIN_REQUIRED: $OSS_LOGIN_REQUIRED
       OSS_TIMEZONE: 'Asia/Tokyo'
+      # ブラウザを使うテストは、下の chrome コンテナの Chrome を使う
+      SELENIUM_REMOTE_URL: http://chrome:4444
     ports:
       - '3000:3000'
       - '1080:1080'
     volumes:
       - .:/opt/application/current:cached
       - ./bundle_cache:/usr/local/bundle
+  # ブラウザを使うテスト用の Chrome。必要なときだけ起動する: docker compose --profile test up -d chrome
+  chrome:
+    image: selenium/standalone-chromium:latest
+    profiles: ['test']
+    shm_size: 2gb
 
 volumes:
   mysql-data:

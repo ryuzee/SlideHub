@@ -296,6 +296,12 @@ docker-compose run app bash -l -c 'bundle exec rake db:test:prepare'
 docker-compose run app bash -l -c 'bundle exec rspec'
 ```
 
+Tests tagged `js: true` in `spec/system` run in Chrome. Start the Chrome container before running them; otherwise they are skipped.
+
+```
+docker compose --profile test up -d chrome
+```
+
 If you want to run conversion process in the development environment, run the command as follows.
 
 ```
