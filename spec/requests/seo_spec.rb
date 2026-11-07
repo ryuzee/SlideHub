@@ -210,6 +210,42 @@ describe 'SEO' do
     end
   end
 
+  describe 'structured data of the other pages' do
+    def types_and_data(path)
+      get path
+      json_ld_blocks(response.body).index_by { |data| data['@type'] }
+    end
+
+    it 'describes the site on the top page' do
+      ApplicationSetting['site.name'] = 'Sushi Slides'
+      ApplicationSetting['site.description'] = 'Slides about sushi'
+      site = types_and_data('/')['WebSite']
+      expect(site).to include('name' => 'Sushi Slides', 'url' => 'http://www.example.com/', 'description' => 'Slides about sushi')
+    end
+
+    it 'describes a user as a profile page' do
+      user = create(:default_user, biography: '<b>Sushi</b> lover', twitter_account: 'sushi_chef')
+      profile = types_and_data("/users/#{user.id}")['ProfilePage']
+      expect(profile['url']).to eq('http://www.example.com/user01')
+      expect(profile['mainEntity']).to include(
+        '@type' => 'Person', 'name' => 'User01', 'alternateName' => 'user01',
+        'description' => 'Sushi lover', 'sameAs' => ['https://x.com/sushi_chef']
+      )
+    end
+
+    it 'describes a category as a collection with the breadcrumb' do
+      category = create(:default_category)
+      data = types_and_data("/categories/#{category.id}?page=2")
+      expect(data['CollectionPage']).to include('name' => 'Category1_ja', 'url' => "http://www.example.com/categories/#{category.id}?page=2")
+      expect(data['BreadcrumbList']['itemListElement'].map { |item| item['name'] }).to eq(%w[SlideHub Category1_ja])
+    end
+
+    it 'describes the latest and popular lists as collections' do
+      expect(types_and_data('/latest')['CollectionPage']['description']).to eq('SlideHubに新しく公開されたスライドの一覧です。')
+      expect(types_and_data('/popular')['CollectionPage']['url']).to eq('http://www.example.com/popular')
+    end
+  end
+
   describe 'GET /search' do
     it 'is noindex' do
       get '/search'

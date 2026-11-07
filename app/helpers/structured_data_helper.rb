@@ -41,9 +41,59 @@ module StructuredDataHelper
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: ApplicationSetting['site.name'].presence || 'SlideHub', item: root_url },
+        { '@type': 'ListItem', position: 1, name: description_site_name, item: root_url },
         { '@type': 'ListItem', position: 2, name: slide.category_name, item: category_url(slide.category_id) },
         { '@type': 'ListItem', position: 3, name: slide.name, item: slide_url(slide.id) },
+      ],
+    }
+  end
+
+  # トップページ：サイトそのもの（検索結果にサイト名を出すときの手がかりになる）
+  def site_structured_data
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: description_site_name,
+      url: root_url,
+      description: site_description,
+      inLanguage: I18n.locale.to_s,
+    }
+  end
+
+  # ユーザーのページ：その人のプロフィール
+  def user_profile_structured_data(user)
+    url = user_by_username_url(username: user.username)
+    person = {
+      '@type': 'Person',
+      name: strip_tags(user.display_name),
+      alternateName: user.username,
+      description: strip_tags(user.biography.to_s).squish.presence,
+      url: url,
+      sameAs: (["https://x.com/#{user.twitter_account}"] if user.twitter_account.present?),
+    }.compact
+    { '@context': 'https://schema.org', '@type': 'ProfilePage', url: url, mainEntity: person }
+  end
+
+  # 一覧のページ（最新・人気・カテゴリ）。description は meta description と同じ文にする
+  def collection_structured_data(name:, url:)
+    {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: name,
+      url: canonical_with_page(url),
+      description: meta_tags[:description],
+      isPartOf: { '@type': 'WebSite', name: description_site_name, url: root_url },
+    }.compact
+  end
+
+  # トップ > カテゴリ のパンくず
+  def category_breadcrumb_structured_data(category)
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: description_site_name, item: root_url },
+        { '@type': 'ListItem', position: 2, name: category.name, item: category_url(category.id) },
       ],
     }
   end

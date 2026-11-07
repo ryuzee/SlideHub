@@ -1,4 +1,5 @@
 <% content_for :title, t(:popular_slides) %>
 <% canonical popular_index_url %>
 <% page_description t('page_descriptions.popular', site: description_site_name) %>
+<%= json_ld_tag(collection_structured_data(name: t(:popular_slides), url: popular_index_url)) %>
 <%= render 'slides/list_page', heading: t(:popular_slides), slides: @slides %>

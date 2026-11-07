@@ -1,4 +1,5 @@
 <% content_for :title, t('latest_slides') %>
 <% canonical latest_index_url %>
 <% page_description t('page_descriptions.latest', site: description_site_name) %>
+<%= json_ld_tag(collection_structured_data(name: t(:latest_slides), url: latest_index_url)) %>
 <%= render 'slides/list_page', heading: t(:latest_slides), slides: @slides %>
