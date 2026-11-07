@@ -1,4 +1,6 @@
-<% content_for :title, t(:top_page) %>
+<%# 題名は「サイト名 | キャッチコピー」（キャッチコピーが空ならサイト名だけ） %>
+<% content_for :title, ApplicationSetting['site.tagline'].to_s %>
+<% content_for :site_name_first, true %>
 <% canonical root_url %>
 <% page_description site_description %>
 <%# 共有したときの題名は「トップページ」ではなくサイト名にする %>
@@ -6,6 +8,9 @@
 <% content_for :full_bleed, true %>
 <% featured = @slide_index.featured_slides %>
 <% content_for :top_band, 'stage' if featured.any? %>
+
+<%# トップページの主題はサイトそのものなので、H1 は常にサイト名にする（画面には出さない） %>
+<h1 class="visually-hidden"><%= ApplicationSetting['site.name'] %></h1>
 
 <% if featured.any? %>
 <%# 注目のスライド。1件目を大きく映し、2件目以降はその下に並べる %>
@@ -26,7 +31,7 @@
         </a>
         <div>
           <p class="sh-hero-label" id="featured-heading"><%= t(:featured_slides) %></p>
-          <h1 class="sh-hero-title"><%= link_to lead_title, slide_path(lead.id) %></h1>
+          <h2 class="sh-hero-title"><%= link_to lead_title, slide_path(lead.id) %></h2>
           <% description = strip_tags(lead.description).strip %>
           <% if description.present? %><p class="sh-hero-description"><%= description %></p><% end %>
           <div class="sh-byline">
@@ -56,8 +61,6 @@
     <% end %>
   </div>
 </section>
-<% else %>
-<h1 class="visually-hidden"><%= ApplicationSetting['site.name'] %></h1>
 <% end %>
 
 <div class="container pb-5">

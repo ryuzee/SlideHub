@@ -1,7 +1,7 @@
 module SettingsHelper
   # サイト設定画面のまとまり。ここに無い site.* の設定は「その他」に出す
   SETTING_GROUPS = {
-    'general' => %w[site.name site.description site.og_image site.footer site.favicon],
+    'general' => %w[site.name site.tagline site.description site.og_image site.footer site.favicon],
     'display' => %w[site.theme site.header_inverse site.thumbnail_aspect_ratio],
     'account' => %w[site.display_login_link site.signup_enabled site.only_admin_can_upload],
   }.freeze
@@ -38,7 +38,7 @@ module SettingsHelper
       return form.select :value, [%w[4:3 4:3], %w[16:9 16:9]], {}, { class: 'form-select', id: setting_field_id(setting) }
     end
 
-    if %w[site.name site.favicon site.footer site.og_image].include?(var)
+    if %w[site.name site.tagline site.favicon site.footer site.og_image].include?(var)
       return form.text_field :value, class: 'form-control', id: setting_field_id(setting)
     end
 

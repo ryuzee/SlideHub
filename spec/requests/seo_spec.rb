@@ -177,6 +177,39 @@ describe 'SEO' do
     end
   end
 
+  describe 'GET / (title and heading)' do
+    def top_page
+      get '/'
+      Nokogiri::HTML(response.body)
+    end
+
+    it 'puts the site name first and the tagline after it' do
+      ApplicationSetting['site.name'] = 'Sushi Slides'
+      ApplicationSetting['site.tagline'] = 'Talks on sushi'
+      expect(top_page.at('title').text).to eq('Sushi Slides | Talks on sushi')
+    end
+
+    it 'uses only the site name when the tagline is empty' do
+      ApplicationSetting['site.name'] = 'Sushi Slides'
+      ApplicationSetting['site.tagline'] = ''
+      expect(top_page.at('title').text).to eq('Sushi Slides')
+    end
+
+    it 'keeps the order of the other pages' do
+      ApplicationSetting['site.name'] = 'Sushi Slides'
+      get '/latest'
+      expect(Nokogiri::HTML(response.body).at('title').text).to eq('最新のスライド | Sushi Slides')
+    end
+
+    it 'has the site name as the only H1, even with a featured slide' do
+      ApplicationSetting['site.name'] = 'Sushi Slides'
+      create(:featured_slide, slide: create(:slide, name: 'Featured Talk'))
+      doc = top_page
+      expect(doc.css('h1').map(&:text)).to eq(['Sushi Slides'])
+      expect(doc.at('h2.sh-hero-title').text).to include('Featured Talk')
+    end
+  end
+
   describe 'GET /search' do
     it 'is noindex' do
       get '/search'

@@ -21,6 +21,7 @@ class ApplicationSetting
     'site.only_admin_can_upload',
     'site.signup_enabled',
     'site.name',
+    'site.tagline',
     'site.description',
     'site.og_image',
     'site.header_inverse',

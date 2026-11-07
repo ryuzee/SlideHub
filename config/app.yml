@@ -4,6 +4,7 @@ defaults: &defaults
     only_admin_can_upload: "0"
     signup_enabled: "1"
     name: "SlideHub"
+    tagline: ""
     description: ""
     og_image: ""
     header_inverse: "1"

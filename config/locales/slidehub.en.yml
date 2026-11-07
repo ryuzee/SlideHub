@@ -153,6 +153,7 @@ en:
   setting_descriptions:
     site:
       name: "Shown in the header and page titles."
+      tagline: "Added after the site name in the title of the top page (e.g. Talks on agile and product development). About 60 characters at most."
       description: "Used as the description of the top page, for example in search results. About 160 characters at most. Leave blank to use a standard text."
       og_image: "The image shown when a page is shared on social media. 1200 x 630 is recommended. Slide pages use the image of the slide."
       footer: "Shown in the footer of the public site. HTML is allowed."
@@ -259,6 +260,7 @@ en:
     only_admin_can_upload: "Only administrators can upload slides"
     signup_enabled: "Signup Enabled"
     name: "Site Name"
+    tagline: "Tagline"
     description: "Site Description"
     og_image: "Share Image URL"
     header_inverse: "Inverse Header Color"
