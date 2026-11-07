@@ -1,3 +1,4 @@
+<% content_for :page_scripts, javascript_include_tag('date_picker', defer: true) %>
 <%= search_form_for search_q, url: search_index_path, :html => { :class => "slide" } do |f| %>
 
 <div class="row">
@@ -56,7 +57,7 @@
 <%= render 'shared/reset' %>
 
 <script type="text/javascript">
-$(function(){
+document.addEventListener('DOMContentLoaded', function() {
   var td1 = new tempusDominus.TempusDominus(
     document.getElementById('datetimepicker1'),
     {

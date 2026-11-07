@@ -20,7 +20,9 @@
   <% else %>
     <%= favicon_link_tag ApplicationSetting['site.favicon'], :rel => 'shortcut icon' %>
   <% end %>
-    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+    <%# defer：読み込みで表示を止めない（ビューのスクリプトは DOMContentLoaded のあとに動かす） %>
+    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true %>
+    <%= yield :page_scripts %>
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:latest_slides) %>)" href="<%= latest_index_path(format: "rss") %>" />
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= t(:popular_slides) %>)" href="<%= popular_index_path(format: "rss") %>" />
     <link rel="preconnect" href="https://fonts.googleapis.com">

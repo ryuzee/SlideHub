@@ -19,7 +19,7 @@
       }
     </script>
     <script type="text/javascript">
-      $(document).ready(function(){
+      document.addEventListener('DOMContentLoaded', function() {
         var timer = setInterval( updateDiv, 10 * 1000);
         function updateDiv() {
           var pages = <%= slide.num_of_pages %>;

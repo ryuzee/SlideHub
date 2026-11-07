@@ -17,7 +17,7 @@ function base64encode(str) {
   return window.btoa(str);
 }
 
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
   var send_block_list = function(sas_base_url, block_prefix, block_num) {
     var defer = $.Deferred();
     var put_to = sas_base_url + '&comp=blocklist';
