@@ -232,6 +232,7 @@ SLIDEHUB_FROM_EMAIL=[Email address that will be used sender]
 SLIDEHUB_PRODUCTION_HOST=[hoge.example.com]
 SLIDEHUB_ROOT_URL=[http://your_root_url]
 SLIDEHUB_LOGIN_REQUIRED=[1] # set the variable if you would like to force users login to view any pages
+SLIDEHUB_HSTS_MAX_AGE=[86400] # seconds. Set it only when the site is served over https. Sends Strict-Transport-Security in production
 
 # For production (closely related to rails environment)
 SLIDEHUB_DB_NAME=[DB name for Prod] # Set openslideshare if using installer

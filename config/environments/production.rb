@@ -44,6 +44,14 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
+  # 常に https で開くよう、ブラウザに覚えさせる（Strict-Transport-Security）。
+  # 環境変数 SLIDEHUB_HSTS_MAX_AGE に秒数を入れたときだけ付ける。http で動かすサイトもあるので、初期値では付けない。
+  # 一度付けると、その期限まではブラウザがこのホストを http で開かなくなる
+  hsts_max_age = SlideHub::EnvUtil.fetch('HSTS_MAX_AGE').to_s
+  if hsts_max_age.match?(/\A\d+\z/)
+    config.action_dispatch.default_headers['Strict-Transport-Security'] = "max-age=#{hsts_max_age}"
+  end
+
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
   config.log_level = :warn
