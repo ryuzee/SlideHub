@@ -24,6 +24,8 @@ Rails.application.configure do
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = true
+  # public のファイルは 1 時間キャッシュしてもらう（指紋付きの /assets/ は 1 年。config/initializers/static_asset_delivery.rb）
+  config.public_file_server.headers = { 'cache-control' => 'public, max-age=3600' }
 
   # JS/CSS は esbuild で圧縮済み。public/assets は rails assets:precompile で生成する（Dockerfile 参照）
 
