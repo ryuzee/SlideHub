@@ -1,8 +1,7 @@
 services:
   mysql:
-    # image: mysql:5.7.21
-    image: mysql:8.0.26
-    platform: linux/x86_64
+    # 本番（Azure Database for MySQL）と同じ 8.4 系に合わせる
+    image: mysql:8.4
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     hostname: 'mysql'
     environment:
