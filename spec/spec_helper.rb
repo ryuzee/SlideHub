@@ -13,8 +13,8 @@ if ENV['CIRCLE_ARTIFACTS']
 end
 
 SimpleCov.start do
-  add_filter '/vendor/'
-  add_filter '/spec/'
+  skip '/vendor/'
+  skip '/spec/'
 
   SimpleCov.formatters = [
     SimpleCov::Formatter::HTMLFormatter,

@@ -66,6 +66,11 @@ class User < ApplicationRecord
     %w[display_name username avatar_attachment avatar_blob slides email provider admin]
   end
 
+  # 投稿者から先の関連（スライドなど）では検索しない
+  def self.ransackable_associations(_auth_object = nil)
+    []
+  end
+
   def password_required?
     return false if skip_password_validation
     return false if provider.present?

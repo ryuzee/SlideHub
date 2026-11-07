@@ -246,29 +246,6 @@
         79
       ],
       "note": "カスタムコンテンツは管理者が HTML を書いて表示する機能"
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "75bde6e1d70d1c05625ded01dd0fa6a608dbf570fdb0d207ad512513fa152a68",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "lib/slide_hub/convert_util.rb",
-      "line": 50,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "Open3.capture3(\"mutool\", \"info\", \"#{file}.pdf\", :chdir => dir)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "SlideHub::ConvertUtil",
-        "method": "pdf_page_count"
-      },
-      "user_input": "file",
-      "confidence": "Medium",
-      "cwe_id": [
-        77
-      ],
-      "note": "シェルを通さずに引数を分けて実行している。file はこちらで作ったランダムな文字列"
     }
   ],
   "brakeman_version": "7.0.2"

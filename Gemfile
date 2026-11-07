@@ -98,7 +98,6 @@ group :development, :test do
   # gem 'ruby-debug-ide'
   gem 'shoulda-matchers', require: false
   gem 'simplecov'
-  gem 'simplecov-html'
 end
 
 group :development do
