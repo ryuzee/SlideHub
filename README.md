@@ -279,8 +279,11 @@ You can use docker-compose for development. Try the commands as follows.
 Before running the command, please set several environmental variables in your computer.
 See docker-compose.yml
 
+Gems for development are kept in the `bundle-data` volume, so they survive when the container is recreated. Install them once after building (and again whenever `Gemfile.lock` changes).
+
 ```
 docker-compose build
+docker-compose run app bash -l -c 'bundle install'
 docker-compose run app bash -l -c 'bundle exec rake db:create RAILS_ENV=development'
 docker-compose run app bash -l -c 'bundle exec rake db:migrate RAILS_ENV=development'
 docker-compose run app bash -l -c 'bundle exec rake db:seed RAILS_ENV=development'

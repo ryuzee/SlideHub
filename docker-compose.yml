@@ -61,12 +61,14 @@ services:
       OSS_TIMEZONE: 'Asia/Tokyo'
       # ブラウザを使うテストは、下の chrome コンテナの Chrome を使う
       SELENIUM_REMOTE_URL: http://chrome:4444
+      # gem は下の bundle-data ボリュームに入れる。コンテナを作り直しても消えない
+      BUNDLE_PATH: /usr/local/bundle
     ports:
       - '3000:3000'
       - '1080:1080'
     volumes:
       - .:/opt/application/current:cached
-      - ./bundle_cache:/usr/local/bundle
+      - bundle-data:/usr/local/bundle
   # ブラウザを使うテスト用の Chrome。必要なときだけ起動する: docker compose --profile test up -d chrome
   chrome:
     image: selenium/standalone-chromium:latest
@@ -75,4 +77,6 @@ services:
 
 volumes:
   mysql-data:
+    driver: local
+  bundle-data:
     driver: local

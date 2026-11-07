@@ -60,6 +60,8 @@ services:
       OSS_LOGIN_REQUIRED: $OSS_LOGIN_REQUIRED
       RAILS_LOG_TO_STDOUT: 'yes'
       OSS_TIMEZONE: 'Asia/Tokyo'
+      # gem は下の bundle-data ボリュームに入れる。コンテナを作り直しても消えない
+      BUNDLE_PATH: /usr/local/bundle
     ports:
       - '3000:3000'
       - '1080:1080'
@@ -67,8 +69,10 @@ services:
       - '26162:26162'
     volumes:
       - .:/opt/application/current:cached
-      - ./bundle_cache:/usr/local/bundle
+      - bundle-data:/usr/local/bundle
 
 volumes:
   mysql-data:
+    driver: local
+  bundle-data:
     driver: local
