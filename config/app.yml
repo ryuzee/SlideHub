@@ -4,6 +4,7 @@ defaults: &defaults
     only_admin_can_upload: "0"
     signup_enabled: "1"
     name: "SlideHub"
+    description: ""
     header_inverse: "1"
     theme: "default"
     thumbnail_aspect_ratio: "4:3"

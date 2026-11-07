@@ -138,6 +138,13 @@ ja:
   no_my_slides: "まだスライドを投稿していません。"
   no_search_results: "条件に合うスライドはありません。キーワードを短くするか、条件を減らしてください。"
   collapse: "折りたたむ"
+  page_descriptions:
+    default: "%{site}は、スライドを公開して共有できるサイトです。新しいスライドや人気のスライドを、カテゴリやタグから探せます。"
+    latest: "%{site}に新しく公開されたスライドの一覧です。"
+    popular: "%{site}でよく見られているスライドの一覧です。"
+    category: "%{site}の「%{category}」カテゴリのスライド（%{count}件）の一覧です。"
+    user: "%{user}さんが%{site}で公開しているスライド（%{count}件）の一覧です。"
+    page_number: "（%{page}ページ目）"
   setting_groups:
     general: "サイト全体"
     display: "表示"
@@ -146,6 +153,7 @@ ja:
   setting_descriptions:
     site:
       name: "ヘッダーやページのタイトルに表示します。"
+      description: "トップページの説明文として、検索結果などに出ます。120 字くらいまでが目安です。空欄なら決まった文を使います。"
       footer: "公開画面のフッターに表示します。HTML も使えます。"
       favicon: "空欄なら SlideHub のアイコンを使います。"
       theme: "公開画面の配色です。"
@@ -250,6 +258,7 @@ ja:
     only_admin_can_upload: "管理者のみアップロード可能にする"
     signup_enabled: "サインアップを有効にする"
     name: "サイト名"
+    description: "サイトの説明"
     header_inverse: "ヘッダー色を反転する"
     favicon: "favicionのURL"
     footer: "フッターの文字列"

@@ -1,7 +1,7 @@
 module SettingsHelper
   # サイト設定画面のまとまり。ここに無い site.* の設定は「その他」に出す
   SETTING_GROUPS = {
-    'general' => %w[site.name site.footer site.favicon],
+    'general' => %w[site.name site.description site.footer site.favicon],
     'display' => %w[site.theme site.header_inverse site.thumbnail_aspect_ratio],
     'account' => %w[site.display_login_link site.signup_enabled site.only_admin_can_upload],
   }.freeze

@@ -1,5 +1,7 @@
 <% content_for :title, t(:slides_by_user, user: @user.display_name) %>
 <% canonical user_by_username_url(username: @user.username) %>
+<%# 決まった文のあとに自己紹介を続ける（自己紹介だけだと何のページかわからないことがある） %>
+<% page_description [t('page_descriptions.user', site: description_site_name, user: @user.display_name, count: @slides.total_entries), @user.biography].compact_blank.join(I18n.locale == :ja ? '' : ' ') %>
 <% content_for :full_bleed, true %>
 <% content_for :top_band, 'paper' %>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= "#{strip_tags(@user.display_name)}'s Slides" %>)" href="<%= user_by_username_path(username: @user.username, format: "rss") %>" />

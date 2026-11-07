@@ -88,6 +88,54 @@ describe 'SEO' do
     end
   end
 
+  describe 'descriptions of the other pages' do
+    def description_of(path, headers: {})
+      get path, headers: headers
+      expect(response.status).to eq(200)
+      Nokogiri::HTML(response.body).at('meta[name="description"]')&.[]('content')
+    end
+
+    it 'uses the site description on the top page, or a standard text when it is empty' do
+      ApplicationSetting['site.name'] = 'Sushi Slides'
+      ApplicationSetting['site.description'] = ''
+      expect(description_of('/')).to eq('Sushi Slidesは、スライドを公開して共有できるサイトです。新しいスライドや人気のスライドを、カテゴリやタグから探せます。')
+      ApplicationSetting['site.description'] = '<b>Slides</b> about sushi'
+      expect(description_of('/')).to eq('Slides about sushi')
+    end
+
+    it 'describes the list pages and adds the page number from the second page on' do
+      expect(description_of('/latest')).to eq('SlideHubに新しく公開されたスライドの一覧です。')
+      expect(description_of('/latest?page=2')).to eq('SlideHubに新しく公開されたスライドの一覧です。（2ページ目）')
+      expect(description_of('/popular')).to eq('SlideHubでよく見られているスライドの一覧です。')
+    end
+
+    it 'tells the name and the number of slides of a category' do
+      slide = create(:slide)
+      create(:slide, category: slide.category)
+      expect(description_of("/categories/#{slide.category_id}")).to eq('SlideHubの「Category1_ja」カテゴリのスライド（2件）の一覧です。')
+    end
+
+    it 'describes a user with the biography' do
+      user = create(:default_user, biography: 'Sushi lover')
+      create(:slide, user: user)
+      expect(description_of('/user01')).to eq('User01さんがSlideHubで公開しているスライド（1件）の一覧です。Sushi lover')
+    end
+
+    it 'escapes the marks only once' do
+      create(:default_category, name_en: 'Books & "Magazines"')
+      category = Category.find_by(name_en: 'Books & "Magazines"')
+      get "/categories/#{category.id}", headers: { 'Accept-Language' => 'en' }
+      expect(response.body).to include('content="Slides in the &quot;Books &amp; &quot;Magazines&quot;&quot; category')
+    end
+
+    it 'cuts a long text of a page' do
+      create(:default_page, path: 'about', title: 'About', content: "<p>#{'word ' * 100}</p>")
+      text = description_of('/pages/about')
+      expect(text.length).to be <= 160
+      expect(text).to start_with('word word')
+    end
+  end
+
   describe 'GET /search' do
     it 'is noindex' do
       get '/search'

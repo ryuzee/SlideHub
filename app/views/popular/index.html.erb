@@ -1,3 +1,4 @@
 <% content_for :title, t(:popular_slides) %>
 <% canonical popular_index_url %>
+<% page_description t('page_descriptions.popular', site: description_site_name) %>
 <%= render 'slides/list_page', heading: t(:popular_slides), slides: @slides %>

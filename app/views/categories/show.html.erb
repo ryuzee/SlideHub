@@ -1,5 +1,6 @@
 <% content_for :title, @category.name %>
 <% canonical category_url(@category.id) %>
+<% page_description t('page_descriptions.category', site: description_site_name, category: @category.name, count: @slides.total_entries) %>
 <% filters = capture do %>
   <nav class="sh-chips" aria-label="<%= t(:category) %>">
     <% @categories.each do |category| %>

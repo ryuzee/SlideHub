@@ -138,6 +138,13 @@ en:
   no_my_slides: "You haven't uploaded any slides yet."
   no_search_results: "No slides match. Try a shorter keyword or fewer conditions."
   collapse: "Collapse"
+  page_descriptions:
+    default: "%{site} is a place to publish and share slides. Find new and popular slides by category or tag."
+    latest: "The latest slides published on %{site}."
+    popular: "The most viewed slides on %{site}."
+    category: "Slides in the \"%{category}\" category on %{site} (%{count})."
+    user: "Slides published by %{user} on %{site} (%{count})."
+    page_number: " (page %{page})"
   setting_groups:
     general: "General"
     display: "Display"
@@ -146,6 +153,7 @@ en:
   setting_descriptions:
     site:
       name: "Shown in the header and page titles."
+      description: "Used as the description of the top page, for example in search results. About 160 characters at most. Leave blank to use a standard text."
       footer: "Shown in the footer of the public site. HTML is allowed."
       favicon: "Leave blank to use the SlideHub icon."
       theme: "Color scheme of the public site."
@@ -250,6 +258,7 @@ en:
     only_admin_can_upload: "Only administrators can upload slides"
     signup_enabled: "Signup Enabled"
     name: "Site Name"
+    description: "Site Description"
     header_inverse: "Inverse Header Color"
     favicon: "favicion URL"
     footer: "Footer"
