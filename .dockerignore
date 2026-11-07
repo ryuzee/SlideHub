@@ -35,4 +35,8 @@ vendor/bundle
 Guardfile
 Vagrantfile
 lib/tasks/docker.rake
-bundle_cache/
+bundle_cache/node_modules
+public/assets
+app/assets/builds/*
+!app/assets/builds/.keep
+tmp/*

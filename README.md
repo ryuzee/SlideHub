@@ -280,7 +280,7 @@ You can use docker-compose for development. Try the commands as follows.
 Before running the command, please set several environmental variables in your computer.
 See docker-compose.yml
 
-Gems for development are kept in the `bundle-data` volume, so they survive when the container is recreated. Install them once after building (and again whenever `Gemfile.lock` changes).
+Gems and JavaScript packages for development are kept in the `gems` and `node-modules` volumes, so they survive when the container is recreated. The volumes start with what the image has, so run `bundle install` (or `yarn install`) only when `Gemfile.lock` (or `yarn.lock`) changes.
 
 ```
 docker-compose build

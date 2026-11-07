@@ -15,10 +15,11 @@ services:
     build:
       context: .
       dockerfile: 'Dockerfile'
+      # 開発用の段（開発・テスト用の gem、Node.js、mailcatcher が入る）
+      target: development
       args:
-        INSTALL_MAILCATCHER: "true" # 開発環境用
-        SUPERVISOR_CONF: "script/oss_docker_supervisor_dev.conf"
-        EXPOSE_PORTS: "3000 1080"
+        BUNDLE_WITHOUT: ""
+        BUNDLE_PATH: /bundle
     depends_on:
       - mysql
     environment:
@@ -59,14 +60,16 @@ services:
       OSS_TIMEZONE: 'Asia/Tokyo'
       # ブラウザを使うテストは、下の chrome コンテナの Chrome を使う
       SELENIUM_REMOTE_URL: http://chrome:4444
-      # gem は下の bundle-data ボリュームに入れる。コンテナを作り直しても消えない
-      BUNDLE_PATH: /usr/local/bundle
+      # gem は下の gems ボリュームに、JavaScript のパッケージは node-modules ボリュームに入れる。
+      # コンテナを作り直しても消えない。初めて使うときは、イメージに入っている中身から始まる
+      BUNDLE_PATH: /bundle
     ports:
       - '3000:3000'
       - '1080:1080'
     volumes:
       - .:/opt/application/current:cached
-      - bundle-data:/usr/local/bundle
+      - gems:/bundle
+      - node-modules:/opt/application/current/node_modules
   # ブラウザを使うテスト用の Chrome。必要なときだけ起動する: docker compose --profile test up -d chrome
   chrome:
     image: selenium/standalone-chromium:latest
@@ -76,5 +79,7 @@ services:
 volumes:
   mysql-data:
     driver: local
-  bundle-data:
+  gems:
+    driver: local
+  node-modules:
     driver: local

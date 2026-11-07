@@ -1,66 +1,93 @@
-FROM --platform=linux/amd64 ubuntu:22.04
-ENV DEBIAN_FRONTEND=noninteractive
+# syntax=docker/dockerfile:1
+#
+# 本番用（既定）と開発用（--target development）のイメージを作る。
+#
+# - base        : 動かすのに要るものだけを入れた土台（公式の Ruby イメージ）
+# - build       : gem と JavaScript のパッケージを入れ、CSS・JavaScript をビルドする
+# - production  : base に、build で作った gem とアプリだけを移す。Node.js もコンパイラも入らない
+# - development : build に、開発用の gem と mailcatcher を足す（docker-compose.yml で使う）
+#
+# スライドの変換に使うのは mutool（PDF→JPEG）と pdftotext（ページの文字）と ImageMagick（サムネイル）
+ARG RUBY_VERSION=3.4.12
+ARG NODE_VERSION=24
 
-RUN apt-get update && apt-get -y install wget curl zip unzip git sqlite3 libsqlite3-dev build-essential libssl-dev libreadline-dev imagemagick libmagickcore-dev libmagickwand-dev graphviz nginx language-pack-ja ntp libmysqlclient-dev libyaml-dev supervisor unoconv poppler-utils mupdf-tools xvfb fonts-vlgothic fonts-mplus fonts-migmix && update-locale LANGUAGE=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 LANG=ja_JP.UTF-8 && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+FROM node:${NODE_VERSION}-trixie-slim AS node
 
-RUN git clone https://github.com/sstephenson/rbenv.git /root/.rbenv
-RUN echo "export PATH=/root/.rbenv/shims:/root/.rbenv/bin:/root/.nodebrew/current/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /root/.bashrc
-RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
-RUN git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build
-ENV PATH /root/.rbenv/bin:$PATH
-ENV RAILS_ROOT /opt/application/current
-RUN bash -c "source /root/.bashrc && rbenv install 3.4.12"
-RUN bash -c "source /root/.bashrc && rbenv global 3.4.12"
-RUN bash -c "source /root/.bashrc && rbenv exec gem install bundler -v 4.0.24"
-RUN bash -c "source /root/.bashrc && rbenv rehash"
+FROM ruby:${RUBY_VERSION}-slim-trixie AS base
 
-ENV PATH /root/.nodebrew/current/bin:$PATH
-# nodebrewはArchive::Tarで展開するが、Ubuntuの patched Archive::Tar が相対シンボリック
-# リンクの展開を拒否するためnpm等が入らない。公式tarballをGNU tarで展開する。
-ARG NODE_VERSION=v22.23.4
-RUN mkdir -p /root/.nodebrew/node \
-    && curl -fsSL -o /tmp/node.tar.gz "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz" \
-    && tar -xzf /tmp/node.tar.gz -C /root/.nodebrew/node \
-    && mv "/root/.nodebrew/node/node-${NODE_VERSION}-linux-x64" "/root/.nodebrew/node/${NODE_VERSION}" \
-    && ln -sfn "/root/.nodebrew/node/${NODE_VERSION}" /root/.nodebrew/current \
-    && rm -f /tmp/node.tar.gz \
-    && node -v && npm -v \
-    && npm install --g yarn \
-    && yarn -v
+ENV LANG=C.UTF-8 \
+    TZ=Asia/Tokyo \
+    RAILS_ROOT=/opt/application/current \
+    BUNDLE_PATH=/usr/local/bundle
 
-RUN apt-get -y autoremove && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       imagemagick mupdf-tools poppler-utils fonts-vlgothic \
+       libmariadb3 libyaml-0-2 tzdata supervisor curl ca-certificates procps \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN sed -i -e 's/mesg n || true/tty -s \&\& mesg n/' /root/.profile
+# bash -l で開いても、gem で入れたコマンド（/usr/local/bundle/bin）が使えるようにする
+RUN echo 'export PATH="/usr/local/bundle/bin:$PATH"' > /etc/profile.d/bundle_path.sh
 
-RUN mkdir -p /opt/application/current/
-WORKDIR /opt/application/current/
+RUN gem install bundler -v 4.0.24
 
-COPY Gemfile /opt/application/current/
-COPY Gemfile.lock /opt/application/current/
+WORKDIR /opt/application/current
 
-RUN bash -l -c 'export PATH="/root/.rbenv/bin:$PATH" ; eval "$(rbenv init -)"; cd /opt/application/current ; bundle install'
+FROM base AS build
 
-# 開発環境専用の処理をオプション化
-ARG INSTALL_MAILCATCHER=false
-RUN bash -l -c "if [ \"$INSTALL_MAILCATCHER\" = \"true\" ]; then gem install mailcatcher -v 0.10.0; fi"
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       build-essential pkg-config git default-libmysqlclient-dev libmagickwand-dev libyaml-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY package.json /opt/application/current/
-COPY yarn.lock /opt/application/current/
-RUN yarn
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+    && npm install -g yarn \
+    && node -v && yarn -v
 
-COPY . /opt/application/current
-RUN chmod 755 /opt/application/current/script/*.sh
+# 本番では開発用・テスト用の gem を入れない。開発用のイメージでは空にして全部入れる。
+# 開発用では、gem を docker-compose.yml のボリュームと同じ場所（/bundle）に入れる
+ARG BUNDLE_WITHOUT="development:test:doc"
+ARG BUNDLE_PATH=/usr/local/bundle
+ENV BUNDLE_WITHOUT=${BUNDLE_WITHOUT} \
+    BUNDLE_PATH=${BUNDLE_PATH}
 
-# supervisor.confの切り替え
-ARG SUPERVISOR_CONF=script/oss_docker_supervisor.conf
-COPY $SUPERVISOR_CONF /etc/supervisor.conf
+COPY Gemfile Gemfile.lock ./
+RUN bundle install && rm -rf "${BUNDLE_PATH}/cache"
 
-# yarn build / yarn build:css (esbuild) を実行し、その結果を public/assets にダイジェスト付きで配置する。
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+COPY . .
+RUN chmod 755 script/*.sh
+
+# CSS・JavaScript をビルドし、public/assets にダイジェスト付きで置く。
 # ビルド時は DB が無いので、ros-apartment の起動時テナント初期化を無効にする
-RUN bash -l -c 'APARTMENT_DISABLE_INIT=1 SECRET_KEY_BASE_DUMMY=1 RAILS_ENV=production bin/rails assets:precompile'
+RUN APARTMENT_DISABLE_INIT=1 SECRET_KEY_BASE_DUMMY=1 RAILS_ENV=production bin/rails assets:precompile
 
-# ポートの切り替え
-ARG EXPOSE_PORTS="3000"
-EXPOSE ${EXPOSE_PORTS}
+FROM build AS development
 
+# 開発用のメールの受け口。docker-compose.yml がアプリの gem 用に別の場所をつなぐので、
+# 見えなくならないよう専用の場所に入れ、/usr/local/bin から呼べるようにする
+RUN gem install mailcatcher -v 0.10.0 --install-dir /opt/mailcatcher --no-document \
+    && printf '#!/bin/sh\nexport GEM_HOME=/opt/mailcatcher GEM_PATH=/opt/mailcatcher\nexec /opt/mailcatcher/bin/mailcatcher "$@"\n' > /usr/local/bin/mailcatcher \
+    && chmod 755 /usr/local/bin/mailcatcher
+
+COPY script/oss_docker_supervisor_dev.conf /etc/supervisor.conf
+
+EXPOSE 3000 1080
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.conf"]
+
+# 何も指定しないでビルドしたときは本番用（最後の段）になる
+FROM base AS production
+
+COPY --from=build /usr/local/bundle /usr/local/bundle
+COPY --from=build --exclude=node_modules --exclude=tmp/cache /opt/application/current /opt/application/current
+ENV BUNDLE_WITHOUT="development:test:doc"
+
+COPY script/oss_docker_supervisor.conf /etc/supervisor.conf
+
+EXPOSE 3000
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor.conf"]
