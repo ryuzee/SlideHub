@@ -14,14 +14,13 @@ gem 'cssbundling-rails'
 gem 'jsbundling-rails'
 gem 'propshaft'
 # プレイヤーの JavaScript を圧縮する（PlayerScript。1 回だけ圧縮して使い回す）
-# https://github.com/lautis/uglifier/issues/173#issuecomment-857616825
-gem 'uglifier', '= 4.1.0'
+gem 'terser'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 # Store session to database
 gem 'activerecord-session_store'
 
-# Uglifier が JavaScript を動かすのに使う
+# terser が JavaScript を動かすのに使う
 gem 'execjs'
 # Use mysql
 gem 'mysql2', '~> 0.5'

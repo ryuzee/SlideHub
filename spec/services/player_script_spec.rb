@@ -19,7 +19,7 @@ RSpec.describe PlayerScript do
   end
 
   it 'minifies a template only once, whatever the prefix and the start page' do
-    expect(Uglifier).to receive(:new).once.and_call_original
+    expect(Terser).to receive(:new).once.and_call_original
     first = described_class.build(template, prefix: 'jsone', start_index: 0)
     second = described_class.build(template, prefix: 'jstwo', start_index: 9)
     expect(first).to include('OSSJSPARTSjsone.currentPageIndex=0')
@@ -27,7 +27,7 @@ RSpec.describe PlayerScript do
   end
 
   it 'minifies again when the template changes' do
-    expect(Uglifier).to receive(:new).twice.and_call_original
+    expect(Terser).to receive(:new).twice.and_call_original
     described_class.build(template, prefix: 'jsone', start_index: 0)
     described_class.build("#{template}\nOSSJSPARTS.version = 2;", prefix: 'jsone', start_index: 0)
   end

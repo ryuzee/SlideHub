@@ -1,6 +1,6 @@
 # プレイヤーの JavaScript（ページ送りなどの動き）を、読みにくくするために圧縮して返す。
 #
-# 圧縮（Uglifier）は 1 回に 1 秒近くかかるので、表示のたびには行わない。
+# 圧縮（terser）は 1 回に 1 秒近くかかるので、表示のたびには行わない。
 # ページごとに変わる値（名前の接頭辞と開始ページ）を目印の名前のまま圧縮して覚えておき、
 # 表示のたびには目印をそのページの値に差し替えるだけにする。
 #
@@ -27,7 +27,7 @@ class PlayerScript
     def minified(template)
       key = Digest::SHA256.hexdigest(template)
       @mutex.synchronize do
-        @minified[key] ||= Uglifier.new(harmony: true).compile(template)
+        @minified[key] ||= Terser.new.compile(template)
       end
     end
 

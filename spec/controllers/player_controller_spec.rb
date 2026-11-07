@@ -26,7 +26,7 @@ RSpec.describe PlayerController, type: :controller do
     before { PlayerScript.clear }
 
     it 'is minified once and reused for later requests' do
-      expect(Uglifier).to receive(:new).once.and_call_original
+      expect(Terser).to receive(:new).once.and_call_original
       get :show_v2, params: { id: slide.id, prefix: 'jsfirst', inside: 1 }
       get :show_v2, params: { id: slide.id, prefix: 'jssecond', inside: 1 }
       expect(response.body).to include('OSSJSPARTSjssecond')
