@@ -38,4 +38,50 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
       expect(response).to redirect_to(new_user_registration_url)
     end
   end
+
+  describe 'Facebook' do
+    let(:auth) do
+      OmniAuth::AuthHash.new(provider: 'facebook', uid: 'fb-1', info: { email: 'fb@example.com' },
+                             extra: { raw_info: { username: 'fbuser', name: 'FB User' } }, credentials: { token: 't' })
+    end
+
+    it 'signs in someone who has already registered' do
+      user = create(:default_user, provider: 'facebook', uid: 'fb-1')
+      get :facebook
+      expect(controller.current_user).to eq(user)
+    end
+
+    it 'does not create an account for someone new while sign-up is disabled' do
+      ApplicationSetting['site.signup_enabled'] = '0'
+      expect { get :facebook }.not_to change(User, :count)
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it 'sends someone new to the sign-up page with what Facebook told us' do
+      ApplicationSetting['site.signup_enabled'] = '1'
+      get :facebook
+      expect(response).to redirect_to(new_user_registration_url)
+      expect(session['devise.user_attributes']).to include('email' => 'fb@example.com', 'username' => 'fbuser')
+    end
+  end
+
+  describe 'SAML' do
+    let(:auth) do
+      OmniAuth::AuthHash.new(provider: 'saml', uid: 'saml-1', info: { email: 'saml@example.com' },
+                             extra: { raw_info: { 'username' => 'samluser', 'first_name' => 'Taro', 'last_name' => 'Yamada' } })
+    end
+
+    it 'signs in someone who has already registered' do
+      user = create(:default_user, provider: 'saml', uid: 'saml-1')
+      post :saml
+      expect(controller.current_user).to eq(user)
+    end
+
+    it 'sends someone new to the sign-up page with the attributes from the identity provider' do
+      post :saml
+      expect(response).to redirect_to(new_user_registration_url)
+      expect(session['devise.user_attributes']).to include('username' => 'samluser', 'display_name' => 'Yamada Taro',
+                                                           'email' => 'saml@example.com')
+    end
+  end
 end

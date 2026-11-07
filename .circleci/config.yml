@@ -35,7 +35,7 @@ jobs:
           name: Install system packages
           command: |
             sudo apt-get update
-            sudo apt-get install -y build-essential ruby-dev libmagic-dev libmysqlclient-dev libsqlite3-dev pkg-config libmagickcore-dev libmagickwand-dev
+            sudo apt-get install -y build-essential ruby-dev libmagic-dev libmysqlclient-dev libsqlite3-dev pkg-config libmagickcore-dev libmagickwand-dev mupdf-tools poppler-utils
 
       - run:
           name: Build JavaScript and CSS

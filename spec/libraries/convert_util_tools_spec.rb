@@ -1,0 +1,49 @@
+require 'rails_helper'
+
+# 本物のコマンド（mutool、pdftotext）と ImageMagick を使って、変換の各段階を確かめる
+RSpec.describe SlideHub::ConvertUtil do
+  let(:logger) { instance_double(Logger, info: nil, error: nil) }
+  let(:util) { described_class.new(logger) }
+  let(:fixture) { Rails.root.join('spec/fixtures/files/two_pages.pdf') }
+
+  # 変換の作業フォルダに、ダウンロード直後と同じ「拡張子なしのファイル」を置く
+  around do |example|
+    Dir.mktmpdir do |dir|
+      @dir = dir
+      FileUtils.cp(fixture, File.join(dir, 'work'))
+      example.run
+    end
+  end
+
+  it 'recognizes a PDF and rejects other files' do
+    expect(util.get_slide_file_type(File.join(@dir, 'work'))).to eq('pdf')
+    expect(util.get_slide_file_type(Rails.root.join('spec/fixtures/dummy.txt').to_s)).to be(false)
+  end
+
+  it 'makes one image per page with the same numbering as SlidePages' do
+    expect(util.rename_to_pdf(@dir, 'work')).to be(true)
+    expect(util.pdf_page_count(@dir, 'work')).to eq(2)
+    images = util.pdf_to_jpg(@dir, 'work')
+    expect(images.map { |path| File.basename(path) }).to eq(%w[slide-1.jpg slide-2.jpg])
+    expect(SlidePages.new('key', 2).list).to eq(%w[key/slide-1.jpg key/slide-2.jpg])
+  end
+
+  it 'extracts the text of each page' do
+    util.rename_to_pdf(@dir, 'work')
+    path = util.pdf_to_transcript(@dir, 'work.pdf')
+    require 'php_serialization/unserializer'
+    lines = PhpSerialization::Unserializer.new.run(File.read(path))
+    expect(lines.map(&:strip)).to eq(['First page text', 'Second page text'])
+  end
+
+  it 'makes the list thumbnails, the middle-sized image and a small image per page' do
+    util.rename_to_pdf(@dir, 'work')
+    images = util.pdf_to_jpg(@dir, 'work')
+    made = util.jpg_to_thumbnail(images).map { |path| File.basename(path) }
+    expect(made).to contain_exactly('thumbnail.jpg', 'thumbnail-16x9.jpg', 'thumbnail-middle.jpg',
+                                    'slide-1-small.jpg', 'slide-2-small.jpg')
+    size = ->(name) { Magick::Image.ping(File.join(@dir, name)).first.then { |img| [img.columns, img.rows] } }
+    expect(size.call('thumbnail.jpg')).to eq([320, 240])
+    expect(size.call('thumbnail-16x9.jpg')).to eq([480, 270])
+  end
+end

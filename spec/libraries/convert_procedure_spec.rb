@@ -67,4 +67,32 @@ RSpec.describe SlideHub::ConvertProcedure do
     expect(logger).to receive(:error).with(/boom/)
     expect(build(object_key: slide.object_key, previous_object_key: 'oldkey').run).to be(true)
   end
+
+  describe 'with the real conversion steps' do
+    # 保存先のクラウドだけを差し替え、ダウンロードの代わりにテスト用の PDF を置く
+    it 'converts a PDF into page images, thumbnails, a page list and text, then marks the slide as converted' do
+      slide = create(:slide, convert_status: :unconverted, num_of_pages: 0)
+      fixture = Rails.root.join('spec/fixtures/files/two_pages.pdf')
+      allow(provider).to receive(:save_file) do |_bucket, _key, destination|
+        FileUtils.cp(fixture, destination)
+        true
+      end
+      allow(provider).to receive(:copy_slide)
+      uploaded = nil
+      list_json = nil
+      allow(provider).to receive(:upload_files) do |bucket, files, prefix|
+        uploaded = { bucket: bucket, prefix: prefix, names: files.map { |path| File.basename(path) } }
+        list_json = JSON.parse(File.read(files.find { |path| path.end_with?('list.json') }))
+      end
+
+      expect(described_class.new(object_key: slide.object_key, new_object_key: 'newkey', logger: logger).run).to be(true)
+
+      expect(uploaded[:prefix]).to eq('newkey')
+      expect(uploaded[:names]).to include('slide-1.jpg', 'slide-2.jpg', 'slide-1-small.jpg', 'thumbnail.jpg',
+                                          'thumbnail-16x9.jpg', 'thumbnail-middle.jpg', 'transcript.txt', 'list.json')
+      expect(list_json).to eq(%w[newkey/slide-1.jpg newkey/slide-2.jpg])
+      saved = Slide.find(slide.id)
+      expect([saved.object_key, saved.convert_status, saved.num_of_pages, saved.extension]).to eq(['newkey', 'converted', 2, '.pdf'])
+    end
+  end
 end
