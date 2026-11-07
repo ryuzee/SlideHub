@@ -10,5 +10,5 @@
 #
 
 class Setting < ApplicationRecord
-  serialize :value
+  serialize :value, coder: YAML
 end
