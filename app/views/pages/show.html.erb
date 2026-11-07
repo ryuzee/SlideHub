@@ -1,5 +1,6 @@
 <div class="mb-4"></div>
 <% content_for :title, @page.title %>
+<% canonical static_page_url(path: @page.path) %>
 <div class="row">
   <div class="col-md-12">
     <h3><%= @page.title %></h3>

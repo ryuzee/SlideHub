@@ -1,4 +1,5 @@
 <% content_for :title, t(:slides_by_user, user: @user.display_name) %>
+<% canonical user_by_username_url(username: @user.username) %>
 <% content_for :full_bleed, true %>
 <% content_for :top_band, 'paper' %>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0 (<%= "#{strip_tags(@user.display_name)}'s Slides" %>)" href="<%= user_by_username_path(username: @user.username, format: "rss") %>" />

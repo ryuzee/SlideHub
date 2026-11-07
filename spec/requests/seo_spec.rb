@@ -47,6 +47,47 @@ describe 'SEO' do
     end
   end
 
+  describe 'canonical URLs of the other pages' do
+    let(:host) { 'http://www.example.com' }
+
+    def canonical_of(path)
+      get path
+      expect(response.status).to eq(200)
+      Nokogiri::HTML(response.body).at('link[rel="canonical"]')&.[]('href')
+    end
+
+    it 'points the top and list pages to their main URLs' do
+      expect(canonical_of('/')).to eq("#{host}/")
+      expect(canonical_of('/slides/index')).to eq("#{host}/")
+      expect(canonical_of('/latest')).to eq("#{host}/latest")
+      expect(canonical_of('/slides/latest')).to eq("#{host}/latest")
+      expect(canonical_of('/popular?utm_source=x')).to eq("#{host}/popular")
+    end
+
+    it 'keeps the page number from the second page on' do
+      expect(canonical_of('/latest?page=1')).to eq("#{host}/latest")
+      expect(canonical_of('/latest?page=2')).to eq("#{host}/latest?page=2")
+    end
+
+    it 'points a category to its URL' do
+      category = create(:default_category)
+      expect(canonical_of("/categories/#{category.id}?page=3")).to eq("#{host}/categories/#{category.id}?page=3")
+    end
+
+    # 同じユーザーのページが /users/:id、/users/view/:id、/:username のどれでも出る
+    it 'points every URL of a user to the one with the username' do
+      user = create(:default_user)
+      expect(canonical_of("/users/#{user.id}")).to eq("#{host}/user01")
+      expect(canonical_of("/users/view/#{user.id}")).to eq("#{host}/user01")
+      expect(canonical_of('/user01')).to eq("#{host}/user01")
+    end
+
+    it 'points a page to its URL' do
+      create(:default_page, path: 'about', title: 'About this site')
+      expect(canonical_of('/pages/about')).to eq("#{host}/pages/about")
+    end
+  end
+
   describe 'GET /search' do
     it 'is noindex' do
       get '/search'

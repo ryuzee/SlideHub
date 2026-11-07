@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     get ':username/embedded' => 'users#embedded', as: :user_embedded_by_username
   end
 
-  get 'pages/:path' => 'pages#show'
+  get 'pages/:path' => 'pages#show', as: :static_page
   get 'statistics' => 'statistics#index'
   get 'statistics/index' => 'statistics#index'
 

@@ -1,2 +1,3 @@
 <% content_for :title, t(:popular_slides) %>
+<% canonical popular_index_url %>
 <%= render 'slides/list_page', heading: t(:popular_slides), slides: @slides %>

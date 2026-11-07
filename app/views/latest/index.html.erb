@@ -1,2 +1,3 @@
 <% content_for :title, t('latest_slides') %>
+<% canonical latest_index_url %>
 <%= render 'slides/list_page', heading: t(:latest_slides), slides: @slides %>

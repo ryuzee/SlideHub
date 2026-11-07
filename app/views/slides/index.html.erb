@@ -1,4 +1,5 @@
 <% content_for :title, t(:top_page) %>
+<% canonical root_url %>
 <% content_for :full_bleed, true %>
 <% featured = @slide_index.featured_slides %>
 <% content_for :top_band, 'stage' if featured.any? %>
