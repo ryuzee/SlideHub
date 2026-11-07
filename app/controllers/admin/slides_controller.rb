@@ -7,7 +7,8 @@ module Admin
       @search = slide_search.search
       respond_to do |format|
         format.html do
-          @slides = slide_search.slides.latest.paginate(page: params[:page], per_page: 20)
+          # 一覧に投稿者の名前を出すので、投稿者もまとめて読み込む
+          @slides = slide_search.slides.latest.includes(:user).paginate(page: params[:page], per_page: 20)
         end
         format.csv do
           @slides = slide_search.slides.latest

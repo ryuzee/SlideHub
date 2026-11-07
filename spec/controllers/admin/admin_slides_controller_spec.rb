@@ -17,6 +17,12 @@ RSpec.describe Admin::SlidesController, type: :controller do
       expect(response).to render_template :index
       expect(response.content_type).to match(%r{text/html})
     end
+
+    it 'loads the authors together with the slides' do
+      create_list(:slide, 2)
+      get 'index'
+      expect(assigns(:slides).map { |slide| slide.association(:user).loaded? }).to all(be(true))
+    end
   end
 
   describe 'GET /admin/slides/index.csv' do
@@ -27,6 +33,19 @@ RSpec.describe Admin::SlidesController, type: :controller do
       expect(assigns(:slides)).to eq(slides)
       expect(response).to render_template :index
       expect(response.content_type).to match(%r{text/csv})
+    end
+
+    it 'puts each value under its own heading' do
+      slide = create(:slide, page_view: 12, embedded_view: 34, download_count: 56)
+      create(:comment_for_slide, slide: slide)
+      get 'index', params: { format: 'csv' }
+      rows = CSV.parse(response.body, headers: true)
+      row = rows.find { |r| r[I18n.t('activerecord.attributes.slide.id')] == slide.id.to_s }
+      expect(row[I18n.t('activerecord.attributes.slide.convert_status')]).to eq(slide.convert_status_i18n)
+      expect(row[I18n.t('activerecord.attributes.slide.page_view')]).to eq('12')
+      expect(row[I18n.t('activerecord.attributes.slide.embedded_view')]).to eq('34')
+      expect(row[I18n.t('activerecord.attributes.slide.download_count')]).to eq('56')
+      expect(row[I18n.t('activerecord.attributes.slide.comments')]).to eq(slide.reload.comments_count.to_s)
     end
   end
 

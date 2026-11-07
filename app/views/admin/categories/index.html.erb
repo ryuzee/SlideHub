@@ -36,7 +36,7 @@
           <td><%= category.id %></td>
           <td><%= category.name_en %></td>
           <td><%= category.name_ja %></td>
-          <td><%= category.slides.count %></td>
+          <td><%= @slide_counts.fetch(category.id, 0) %></td>
           <td>
             <%= link_to t(:edit), edit_admin_category_path(category.id), class: 'btn btn-primary btn-sm' %>
           </td>

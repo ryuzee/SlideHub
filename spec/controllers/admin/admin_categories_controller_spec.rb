@@ -9,6 +9,17 @@ RSpec.describe Admin::CategoriesController, type: :controller do
   end
 
   describe 'GET /admin/categories/' do
+    it 'shows the number of slides in each category' do
+      sushi = create(:default_category, name_en: 'Sushi', name_ja: 'すし')
+      create_list(:slide, 2, category: sushi)
+      empty = create(:default_category, name_en: 'Empty', name_ja: '空')
+      get 'index'
+      expect(assigns(:slide_counts).fetch(sushi.id, 0)).to eq(2)
+      expect(assigns(:slide_counts).fetch(empty.id, 0)).to eq(0)
+      row = Nokogiri::HTML(response.body).css('tbody tr').find { |tr| tr.text.include?('Sushi') }
+      expect(row.css('td').map { |td| td.text.strip }).to include('2')
+    end
+
     it 'lists the categories' do
       create(:default_category, name_en: 'Sushi', name_ja: 'すし')
       get 'index'

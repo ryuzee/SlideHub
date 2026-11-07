@@ -4,7 +4,9 @@ module Admin
     after_action :clear_cache
 
     def index
-      @categories = Category.all.order(:id).includes(:slides)
+      @categories = Category.all.order(:id)
+      # カテゴリーごとのスライドの数を、1 回の問い合わせで数える
+      @slide_counts = Slide.group(:category_id).count
     end
 
     def edit; end
@@ -19,7 +21,7 @@ module Admin
     end
 
     def destroy
-      if @category.slides.count.positive?
+      if @category.slides.exists?
         redirect_to admin_categories_path, alert: t(:category_can_not_be_deleted_because_of_existing_slides)
       else
         @category.destroy
@@ -43,11 +45,11 @@ module Admin
     private
 
       def set_category
-        @category = Category.includes(:slides).find(params[:id])
+        @category = Category.find(params[:id])
       end
 
       def category_params
-        params.require(:category).permit(:id, :name_en, :name_ja)
+        params.require(:category).permit(:name_en, :name_ja)
       end
 
       def clear_cache

@@ -26,11 +26,11 @@ CSV.generate do |csv|
       slide_url(slide.id),
       slide.user_id,
       slide.description,
-      slide.page_view,
       slide.convert_status_i18n,
+      slide.page_view,
       slide.embedded_view,
       slide.download_count,
-      slide.comments.count,
+      slide.comments_count,
       slide.created_at,
       slide.updated_at,
     ]
