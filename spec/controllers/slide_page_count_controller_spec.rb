@@ -1,31 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe SlidePageCountController, type: :controller do
-  let(:slide) { create(:slide) }
-
   describe 'GET #show' do
-    it 'succeeds to retrieve json' do
-      allow_any_instance_of(SlidePages).to receive(:list).and_return(['a'])
+    it 'returns the number of pages of the slide' do
+      slide = create(:slide, num_of_pages: 3)
       get :show, params: { id: slide.id }
       expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
-      expect(json['page_count']).to eq(1)
+      expect(JSON.parse(response.body)['page_count']).to eq(3)
     end
 
-    it 'returns 0' do
-      allow_any_instance_of(SlidePages).to receive(:list).and_return(['a'])
+    it 'returns 0 for a slide that does not exist' do
       get :show, params: { id: 65535 }
       expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
-      expect(json['page_count']).to eq(0)
+      expect(JSON.parse(response.body)['page_count']).to eq(0)
     end
 
-    it 'returns 0 because of a failure of retrieving json' do
-      allow_any_instance_of(SlidePages).to receive(:list).and_return(false)
+    it 'returns 0 for a slide that has not been converted yet' do
+      slide = create(:slide, convert_status: :unconverted, num_of_pages: 0)
       get :show, params: { id: slide.id }
-      expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
-      expect(json['page_count']).to eq(0)
+      expect(JSON.parse(response.body)['page_count']).to eq(0)
     end
   end
 end

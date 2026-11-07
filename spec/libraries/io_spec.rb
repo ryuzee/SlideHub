@@ -5,7 +5,7 @@ describe 'Class IO' do
   path = "#{File.dirname(__FILE__, 2)}/fixtures/dummy.txt"
 
   describe 'tail' do
-    it 'works' do
+    it 'returns the last lines' do
       File.open(path) do |io|
         io.tail(1).each do |line|
           expect(line).to eq("DUMMY005\n")
@@ -23,7 +23,7 @@ describe 'Class IO' do
   end
 
   describe 'head' do
-    it 'works' do
+    it 'returns the first lines' do
       File.open(path) do |io|
         io.head(1).each do |line|
           expect(line).to eq("DUMMY001\n")

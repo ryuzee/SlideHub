@@ -6,12 +6,7 @@ describe 'SEO' do
   end
 
   describe 'GET /slides/:id' do
-    let(:slide) { create(:slide, name: 'My </script> Slide', description: "line1\nline2") }
-
-    before do
-      allow_any_instance_of(SlidePages).to receive(:list).and_return(['abc/slide-1.jpg', 'abc/slide-2.jpg'])
-      allow_any_instance_of(Transcript).to receive(:lines).and_return([])
-    end
+    let(:slide) { create(:slide, name: 'My </script> Slide', description: "line1\nline2", num_of_pages: 2) }
 
     it 'sets lang, h1, canonical and OGP/Twitter tags' do
       get "/slides/#{slide.id}/2?vertical=1"
@@ -41,7 +36,7 @@ describe 'SEO' do
     it 'renders the first slide image for crawlers without JS' do
       get "/slides/#{slide.id}"
       img = Nokogiri::HTML(response.body).at('noscript img')
-      expect(img['src']).to end_with('abc/slide-1.jpg')
+      expect(img['src']).to end_with("#{slide.object_key}/slide-1.jpg")
       expect(img['alt']).to eq('My  Slide')
     end
 

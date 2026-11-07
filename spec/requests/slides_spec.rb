@@ -25,19 +25,21 @@ require 'rails_helper'
 
 describe 'Slides' do
   describe 'GET /slides' do
-    it 'works!' do
+    it 'shows the top page with the latest slides' do
+      create(:slide, name: 'Sushi Talk')
       get '/slides'
       expect(response.status).to eq(200)
+      expect(response.body).to include('Sushi Talk')
     end
   end
 
   describe 'GET /slides/1' do
-    it 'works!' do
-      slides = create_list(:slide, 2)
-      allow_any_instance_of(SlidePages).to receive(:list).and_return(['/aaa/1.jpg', '/aaa/2.jpg'])
-      allow_any_instance_of(Transcript).to receive(:lines).and_return([])
-      get "/slides/#{slides[0].id}"
+    it 'shows the slide with its first page' do
+      slide = create(:slide, name: 'Sushi Talk', num_of_pages: 2)
+      get "/slides/#{slide.id}"
       expect(response.status).to eq(200)
+      expect(response.body).to include('Sushi Talk')
+      expect(response.body).to include("#{slide.object_key}/slide-1.jpg")
     end
   end
 end

@@ -1,6 +1,8 @@
 module Admin
   class CustomContentsController < Admin::BaseController
     def index
+      # まだ行の無い項目（新しく入れたサイトなど）も、タブとして出るよう既定値で作る
+      ApplicationSetting.save_default
       @settings = ApplicationSetting.unscoped.where("var like 'custom_content.%'")
     end
 

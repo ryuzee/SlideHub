@@ -9,9 +9,11 @@ RSpec.describe Admin::SiteSettingsController, type: :controller do
     end
 
     describe 'GET /admin/site_settings' do
-      it 'works!' do
+      it 'shows a field for each setting with its current value' do
+        ApplicationSetting['site.name'] = 'My SlideHub'
         get 'index'
         expect(response.status).to eq(200)
+        expect(response.body).to include('id="setting_site_name"', 'value="My SlideHub"')
       end
 
       it 'creates rows for settings added later and shows the regeneration button' do
@@ -31,7 +33,7 @@ RSpec.describe Admin::SiteSettingsController, type: :controller do
         expect(ApplicationSetting['site.Neta4']).to eq('Ika')
       end
 
-      it 'works!' do
+      it 'saves every setting sent from the form' do
         data = [{ 'var' => 'site.Neta1', 'value' => 'Toro' }, { 'var' => 'site.Neta2', 'value' => 'Unit' }]
         post :update, params: { settings: data }
         expect(response.status).to eq(302)

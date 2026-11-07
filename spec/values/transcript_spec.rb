@@ -8,8 +8,7 @@ describe 'Transcript' do
 
   describe 'Transcript' do
     it 'can be retrieved and put it into array' do
-      allow_any_instance_of(Transcript).to receive(:url).and_return('http://www.example.com/transcript.txt')
-      stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
+      stub_request(:get, Transcript.new('an_object_key').url).to_return(
         body: 'a:1:{i:0;s:4:"Test";}',
         status: 200,
       )
@@ -18,9 +17,8 @@ describe 'Transcript' do
       expect(transcript.exist?).to eq(true)
     end
 
-    it 'can not be ritrieved because of 404' do
-      allow_any_instance_of(Transcript).to receive(:url).and_return('http://www.example.com/transcript.txt')
-      stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
+    it 'returns no lines when the file does not exist' do
+      stub_request(:get, Transcript.new('an_object_key').url).to_return(
         status: 404,
       )
       transcript = Transcript.new('an_object_key')
@@ -29,8 +27,7 @@ describe 'Transcript' do
     end
 
     it 'can be retrieved. however the result is empty' do
-      allow_any_instance_of(Transcript).to receive(:url).and_return('http://www.example.com/transcript.txt')
-      stub_request(:any, 'http://www.example.com/transcript.txt').to_return(
+      stub_request(:get, Transcript.new('an_object_key').url).to_return(
         body: 'a:1:{i:0;s:0:"";}',
         status: 200,
       )

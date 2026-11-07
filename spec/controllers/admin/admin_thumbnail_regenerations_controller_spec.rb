@@ -14,7 +14,7 @@ RSpec.describe Admin::ThumbnailRegenerationsController, type: :controller do
 
   describe 'POST /admin/thumbnail_regeneration' do
     it 'queues regeneration, records the request and redirects to site settings' do
-      allow_any_instance_of(ThumbnailRegenerationService).to receive(:request_all).and_return(3)
+      allow(ThumbnailRegenerationService).to receive(:new).and_return(instance_double(ThumbnailRegenerationService, request_all: 3))
       post :create
       expect(response).to redirect_to '/admin/site_settings/'
       expect(flash[:notice]).to eq(I18n.t(:regenerate_thumbnails_requested, count: 3))

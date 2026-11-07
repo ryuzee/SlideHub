@@ -1,67 +1,58 @@
 require 'rails_helper'
 
 RSpec.describe Admin::SlidesController, type: :controller do
-  describe 'Slides' do
-    render_views
-    let(:admin_user) { create(:admin_user) }
-    before do
-      login_by_admin_user admin_user
+  render_views
+  let(:admin_user) { create(:admin_user) }
+
+  before do
+    login_by_admin_user admin_user
+  end
+
+  describe 'GET /admin/slides/' do
+    it 'shows all slides regardless of the conversion status' do
+      slides = create_list(:slide, 3, convert_status: -1)
+      get 'index'
+      expect(response.status).to eq(200)
+      expect(assigns(:slides)).to eq(slides)
+      expect(response).to render_template :index
+      expect(response.content_type).to match(%r{text/html})
+    end
+  end
+
+  describe 'GET /admin/slides/index.csv' do
+    it 'returns csv that includes all slides' do
+      slides = create_list(:slide, 3, convert_status: -1)
+      get 'index', params: { format: 'csv' }
+      expect(response.status).to eq(200)
+      expect(assigns(:slides)).to eq(slides)
+      expect(response).to render_template :index
+      expect(response.content_type).to match(%r{text/csv})
+    end
+  end
+
+  describe 'GET /admin/slides/edit/1' do
+    it 'shows the form filled with the current slide' do
+      slide = create(:slide, name: 'Sushi Talk')
+      get 'edit', params: { id: slide.id }
+      expect(response.status).to eq(200)
+      expect(response.body).to include('value="Sushi Talk"')
+    end
+  end
+
+  describe 'POST /admin/slides/update' do
+    it 'updates the slide when the values are valid' do
+      slide = create(:slide)
+      post :update, params: { id: slide.id, slide: slide.attributes.merge('name' => 'SushiKuitai') }
+      expect(response.status).to eq(302)
+      expect(Slide.find(slide.id).name).to eq('SushiKuitai')
     end
 
-    describe 'GET /admin/slides/' do
-      render_views
-      it 'shows all slides regardless of the conversion status' do
-        slides = create_list(:slide, 3, convert_status: -1)
-        get 'index'
-        expect(response.status).to eq(200)
-        expect(assigns(:slides)).to eq(slides)
-        expect(response).to render_template :index
-        expect(response.content_type).to match(%r{text/html})
-      end
-    end
-
-    describe 'GET /admin/slides/index.csv' do
-      it 'returns csv that includes all slides' do
-        slides = create_list(:slide, 3, convert_status: -1)
-        get 'index', params: { format: 'csv' }
-        expect(response.status).to eq(200)
-        expect(assigns(:slides)).to eq(slides)
-        expect(response).to render_template :index
-        expect(response.content_type).to match(%r{text/csv})
-      end
-    end
-
-    describe 'GET /admin/slides/edit/1' do
-      it 'shows the form to edit slide' do
-        slide = create(:slide)
-        get 'edit', params: { id: slide.id }
-        expect(response.status).to eq(200)
-      end
-    end
-
-    describe 'POST /admin/slides/update' do
-      it 'succeeds to update slide if parameters are valid' do
-        slide = create(:slide)
-        data = Slide.find(slide.id)
-        update_name = 'SushiKuitai'
-        data[:name] = update_name
-        post :update, params: { id: data.id, slide: data.attributes }
-        expect(response.status).to eq(302)
-        new_name = Slide.find(slide.id).name
-        expect(update_name).to eq(new_name)
-      end
-    end
-
-    describe 'POST /admin/slides/update' do
-      it 'failed to update slide and shows the form again if parameters are invalid' do
-        slide = create(:slide)
-        data = Slide.find(slide.id)
-        update_name = '' # validation error
-        data[:name] = update_name
-        post :update, params: { id: data.id, slide: data.attributes }
-        expect(response.status).to eq(200)
-        expect(response).to render_template :edit
-      end
+    it 'shows the form again and keeps the old name when the name is empty' do
+      slide = create(:slide, name: 'Sushi Talk')
+      post :update, params: { id: slide.id, slide: slide.attributes.merge('name' => '') }
+      expect(response.status).to eq(200)
+      expect(response).to render_template :edit
+      expect(Slide.find(slide.id).name).to eq('Sushi Talk')
     end
   end
 end

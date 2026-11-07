@@ -9,16 +9,19 @@ RSpec.describe Admin::TenantsController, type: :controller do
     end
 
     describe 'GET /admin/tenants/' do
-      it 'works!' do
+      it 'lists the tenants' do
+        create(:default_tenant)
         get 'index'
         expect(response.status).to eq(200)
+        expect(response.body).to include('tenant1')
       end
     end
 
     describe 'GET /admin/tenants/new' do
-      it 'works!' do
+      it 'shows the form to create a tenant' do
         get 'new'
         expect(response.status).to eq(200)
+        expect(response.body).to include('name="tenant[name]"')
       end
     end
 

@@ -19,7 +19,7 @@ RSpec.describe CommentsController, type: :controller do
     let(:another_user) { create(:another_user) }
 
     describe 'add new comments by login user' do
-      it 'works!' do
+      it 'adds the comment and goes back to the slide' do
         login_by_user another_user
         comment_data = {}
         comment_data[:slide_id] = data[:id]
@@ -35,7 +35,7 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     describe 'fail to add new comments by anonymous user' do
-      it 'works!' do
+      it 'does not add a comment and asks to sign in' do
         comment_data = {}
         comment_data[:slide_id] = data[:id]
         comment_data[:user_id] = another_user.id
@@ -49,7 +49,7 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     describe 'delete comment by login user' do
-      it 'works!' do
+      it 'deletes the comment and goes back to the slide' do
         c = create(:comment_for_slide)
         login_by_user another_user
         get :destroy, params: { id: c.id }
@@ -61,7 +61,7 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     describe 'fail to delete comment by anonymous user' do
-      it 'works!' do
+      it 'does not delete the comment and asks to sign in' do
         c = create(:comment_for_slide)
         get :destroy, params: { id: c.id }
         expect(response.status).to eq(302)

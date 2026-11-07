@@ -230,7 +230,6 @@ describe 'SlideHub::Cloud::Engine::Aws' do
       files = []
       Tempfile.create('foo') do |f|
         files.push(f.path)
-        puts files.inspect
         expect(SlideHub::Cloud::Engine::Aws.upload_files('container', files, 'test').class.name).to eq('Array')
       end
     end

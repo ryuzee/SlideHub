@@ -33,10 +33,12 @@ RSpec.describe SlidesController, type: :controller do
   end
 
   describe 'GET #index' do
-    it 'render index' do
+    it 'shows the latest and popular sections' do
+      create(:slide, name: 'Fresh Sushi')
       get :index
       expect(response.status).to eq(200)
       expect(response).to render_template :index
+      expect(response.body).to include(I18n.t(:latest_slides), I18n.t(:popular_slides), 'Fresh Sushi')
     end
 
     it 'assigns the @latest_slides' do
@@ -73,68 +75,75 @@ RSpec.describe SlidesController, type: :controller do
   end
 
   describe 'GET #show' do
-    it 'assigns @comment if user logged in' do
-      slide = create(:slide)
+    it 'shows the slide and a comment form to a signed-in user' do
+      slide = create(:slide, name: 'Sushi Talk')
       login_by_user default_user
       get :show, params: { id: slide.id }
       expect(response.status).to eq(200)
       expect(assigns(:comment)).to be_an_instance_of(Comment)
+      expect(response.body).to include('Sushi Talk', 'name="comment[comment]"')
+    end
+
+    it 'counts the page view' do
+      slide = create(:slide)
+      expect { get :show, params: { id: slide.id } }.to change { slide.reload.page_view }.by(1)
     end
   end
 
   describe 'GET #new' do
-    it 'render new' do
+    it 'shows the upload form' do
       login_by_user default_user
       get :new
       expect(response.status).to eq(200)
       expect(response).to render_template :new
+      expect(response.body).to include('id="file"', 'name="slide[name]"', 'id="SlideKey"')
     end
   end
 
   describe 'POST #create' do
-    it 'succeed to create record' do
-      allow(SlideHub::Cloud::Engine::Aws).to receive(:send_message).and_return(true)
-      allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
-      data = build(:slide)
+    it 'creates the slide for the signed-in user and asks to convert it' do
+      data = build(:slide, name: 'New Talk')
       login_by_user default_user
+      expect(CloudConfig.provider).to receive(:send_message) do |message|
+        expect(JSON.parse(message)['object_key']).to eq(data.object_key)
+      end
       post :create, params: { slide: data.attributes }
-      id = Slide.where(object_key: data.object_key).first.id
-      expect(response.status).to eq(302)
-      expect(response).to redirect_to "/slides/#{id}"
+      created = Slide.find_by(object_key: data.object_key)
+      expect(response).to redirect_to "/slides/#{created.id}"
+      expect(created).to have_attributes(name: 'New Talk', user_id: default_user.id)
     end
 
-    it 'faled to create record because of validation' do
-      allow(SlideHub::Cloud::Engine::Aws).to receive(:send_message).and_return(true)
-      allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
+    it 'shows the form again without creating anything when the category is missing' do
       data = build(:slide)
-      data.category_id = nil # cause validation error
+      data.category_id = nil
       login_by_user default_user
-      post :create, params: { slide: data.attributes }
+      expect(CloudConfig.provider).not_to receive(:send_message)
+      expect { post :create, params: { slide: data.attributes } }.not_to change(Slide, :count)
       expect(response.status).to eq(200)
       expect(response).to render_template "slides/#{CloudConfig.service_name}/new"
     end
 
-    it 'failed to create record because of duplicate key' do
-      allow(SlideHub::Cloud::Engine::Aws).to receive(:send_message).and_return(true)
-      allow(SlideHub::Cloud::Engine::Azure).to receive(:send_message).and_return(true)
-      slides = create_list(:slide, 2)
-      first_key = slides[0].object_key
+    it 'does not create a second slide with a key that is already used' do
+      existing = create(:slide)
+      data = build(:slide, object_key: existing.object_key)
       login_by_user default_user
-      slides[1].object_key = first_key
-      post :create, params: { slide: slides[1].attributes }
-      expect(response.status).to eq(302)
+      expect(CloudConfig.provider).not_to receive(:send_message)
+      expect { post :create, params: { slide: data.attributes } }.not_to change(Slide, :count)
       expect(response).to redirect_to slides_path
     end
   end
 
   describe 'GET #edit' do
-    it 'render edit' do
-      create(:slide)
+    it 'shows the form, with a new key for replacing the file' do
+      slide = create(:slide, name: 'Sushi Talk', user: default_user)
       login_by_user default_user
-      slide_id = Slide.where("user_id = #{default_user.id}").first.id
-      get :edit, params: { id: slide_id }
+      get :edit, params: { id: slide.id }
       expect(response.status).to eq(200)
       expect(response).to render_template "slides/#{CloudConfig.service_name}/edit"
+      expect(response.body).to include('value="Sushi Talk"')
+      upload_key = response.body[/id="key" name="key" value='([0-9a-f]{32})'/, 1]
+      expect(upload_key).to be_present
+      expect(upload_key).not_to eq(slide.object_key)
     end
 
     it 'redirect to show' do
@@ -153,9 +162,9 @@ RSpec.describe SlidesController, type: :controller do
       data = create(:slide)
       another_user = create(:another_user)
       login_by_user another_user
-      post :update, params: { id: data.id, slide: data.attributes }
-      expect(response.status).to eq(302)
+      post :update, params: { id: data.id, slide: data.attributes.merge('name' => 'Taken over') }
       expect(response).to redirect_to "/slides/#{data.id}"
+      expect(Slide.find(data.id).name).to eq(data.name)
     end
 
     it 'failed to update the record because of validation error and then render edit' do
@@ -166,6 +175,7 @@ RSpec.describe SlidesController, type: :controller do
       post :update, params: { id: data.id, slide: data.attributes }
       expect(response.status).to eq(200)
       expect(response).to render_template "slides/#{CloudConfig.service_name}/edit"
+      expect(Slide.find(data.id).name).to eq('Hoge')
     end
 
     it 'succeeds to update the record without running conversion' do
@@ -222,14 +232,14 @@ RSpec.describe SlidesController, type: :controller do
       another_user = create(:another_user)
       login_by_user another_user
       delete :destroy, params: { id: data.id }
-      expect(response.status).to eq(302)
       expect(response).to redirect_to "/slides/#{data.id}"
+      expect(Slide.exists?(data.id)).to be(true)
     end
 
-    it 'succeeds to update the record with running conversion' do
-      allow(SlideHub::Cloud::Engine::Aws).to receive(:delete_slide).and_return(true)
-      allow(SlideHub::Cloud::Engine::Aws).to receive(:delete_generated_files).and_return(true)
+    it 'deletes the slide and its files' do
       data = create(:slide)
+      expect(CloudConfig.provider).to receive(:delete_slide).with(data.object_key)
+      expect(CloudConfig.provider).to receive(:delete_generated_files).with(data.object_key)
       login_by_user default_user
       delete :destroy, params: { id: data.id }
       expect(response.status).to eq(302)

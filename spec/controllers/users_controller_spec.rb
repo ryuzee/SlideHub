@@ -38,32 +38,43 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'GET /users/index' do
-      it 'shows the page for the user' do
+      it 'shows all of my slides, including private ones' do
+        public_slide = create(:slide, user: default_user)
+        private_slide = create(:slide, user: default_user, private: true)
         get 'index'
         expect(response.status).to eq(200)
+        expect(assigns(:slides)).to contain_exactly(public_slide, private_slide)
       end
     end
   end
 
   describe 'When the user has not logged in' do
     describe 'GET /users/1' do
-      it 'shows the user public page via user_id' do
+      it 'shows only the published slides of the user' do
+        public_slide = create(:slide, user: default_user)
+        create(:slide, user: default_user, private: true)
         get 'show', params: { id: default_user.id }
         expect(response.status).to eq(200)
+        expect(assigns(:user)).to eq(default_user)
+        expect(assigns(:slides)).to eq([public_slide])
       end
     end
 
     describe 'GET /users/user01' do
-      it 'shows the user public page via username' do
+      it 'finds the user by username' do
         get 'show', params: { username: default_user.username }
         expect(response.status).to eq(200)
+        expect(assigns(:user)).to eq(default_user)
       end
     end
 
     describe 'GET /users/1?sort_by=popularity' do
-      it 'shows the user public page and the slides are sorted by popularity' do
+      it 'sorts the slides by the number of views' do
+        less = create(:slide, user: default_user, total_view: 1)
+        more = create(:slide, user: default_user, total_view: 100)
         get 'show', params: { id: default_user.id, sort_by: 'popularity' }
         expect(response.status).to eq(200)
+        expect(assigns(:slides).to_a).to eq([more, less])
       end
     end
 
@@ -73,6 +84,7 @@ RSpec.describe UsersController, type: :controller do
       it 'returns javascript for embedding' do
         get 'embedded', params: { id: default_user.id }
         expect(response.status).to eq(200)
+        expect(response.media_type).to eq('application/javascript')
       end
 
       it 'embeds the HTML as a plain string, so slide names are never run as code' do

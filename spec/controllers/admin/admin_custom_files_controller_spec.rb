@@ -9,21 +9,24 @@ RSpec.describe Admin::CustomFilesController, type: :controller do
     end
 
     describe 'GET /admin/custom_files/' do
-      it 'works!' do
+      it 'lists the uploaded files' do
+        create(:default_custom_file)
         get 'index'
         expect(response.status).to eq(200)
+        expect(response.body).to include('dummy.txt', 'description1')
       end
     end
 
     describe 'GET /admin/custom_files/new' do
-      it 'works!' do
+      it 'shows the upload form' do
         get 'new'
         expect(response.status).to eq(200)
+        expect(response.body).to include('type="file"', 'name="custom_file[description]"')
       end
     end
 
     describe 'POST /admin/custom_files' do
-      it 'works!' do
+      it 'uploads the file and removes the temporary copy' do
         allow(SlideHub::Cloud::Engine::Aws).to receive(:upload_files).and_return(true)
         allow(SlideHub::Cloud::Engine::Azure).to receive(:upload_files).and_return(true)
         post 'create', params: {
@@ -54,7 +57,7 @@ RSpec.describe Admin::CustomFilesController, type: :controller do
     end
 
     describe 'DELETE /admin/custom_files/1' do
-      it 'works!' do
+      it 'deletes the file' do
         allow(SlideHub::Cloud::Engine::Aws).to receive(:delete_files).and_return(true)
         allow(SlideHub::Cloud::Engine::Azure).to receive(:delete_files).and_return(true)
         custom_file = create(:default_custom_file)

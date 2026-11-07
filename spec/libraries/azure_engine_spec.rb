@@ -197,7 +197,6 @@ describe 'SlideHub::Cloud::Engine::Azure' do
       files = []
       Tempfile.create('foo') do |f|
         files.push(f.path)
-        puts files.inspect
         expect(SlideHub::Cloud::Engine::Azure.upload_files('container', files, 'test').class.name).to eq('Array')
       end
     end

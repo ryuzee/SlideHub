@@ -9,11 +9,6 @@ RSpec.describe Admin::FeaturedSlidesController, type: :controller do
     end
 
     describe 'GET /admin/featured_slides/' do
-      it 'works!' do
-        get 'index'
-        expect(response.status).to eq(200)
-      end
-
       it 'lists published candidates that are not featured yet, filtered by title' do
         featured = create(:featured_slide, slide: create(:slide, name: 'Featured Sushi'))
         candidate = create(:slide, name: 'Candidate Sushi')

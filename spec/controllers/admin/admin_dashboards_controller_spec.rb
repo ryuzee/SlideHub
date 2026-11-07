@@ -11,11 +11,6 @@ RSpec.describe Admin::DashboardsController, type: :controller do
         allow(CloudConfig.provider).to receive(:queue_length).and_return(3)
       end
 
-      it 'works!' do
-        get 'show'
-        expect(response.status).to eq(200)
-      end
-
       it 'shows the monthly chart, the queue length and a link to failed slides' do
         create(:slide, convert_status: Slide.convert_statuses[:convert_error])
         get 'show'
