@@ -3,7 +3,8 @@ require 'webmock/rspec'
 require 'shoulda/matchers'
 require 'omniauth'
 
-WebMock.allow_net_connect!
+# 本物のサービスには通信しない（必要な通信は stub_request で用意する）
+WebMock.disable_net_connect!(allow_localhost: true)
 
 # save to CircleCI's artifacts directory if we're on CircleCI
 if ENV['CIRCLE_ARTIFACTS']
@@ -29,6 +30,11 @@ RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
+
+  # テストは毎回ランダムな順で流す。順番に頼るテストがあれば、すぐ分かるようにするため。
+  # 落ちたときは、出力の「Randomized with seed」の値を --seed に渡すと同じ順で再現できる
+  config.order = :random
+  Kernel.srand config.seed
 end
 
 OmniAuth.config.test_mode = true

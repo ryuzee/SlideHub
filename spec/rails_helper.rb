@@ -1,11 +1,47 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] = 'test'
-ENV['OSS_USE_AZURE'] ||= '0'
-ENV['OSS_TWITTER_CONSUMER_KEY'] ||= 'dummy'
-ENV['OSS_TWITTER_CONSUMER_SECRET'] ||= 'dummy'
-ENV['OSS_FACEBOOK_APP_ID'] ||= 'dummy'
-ENV['OSS_FACEBOOK_APP_SECRET'] ||= 'dummy'
-ENV['OSS_LOGIN_REQUIRED'] = '0'
+
+# アプリが環境変数から読む設定は、テストでは決まった値にする。
+# 開発環境のコンテナの値（本物のバケット名や CDN の URL など）が入ると、
+# 人や CI によって結果が変わり、本物のサービスに通信してしまうため
+{
+  'USE_AZURE' => '0',
+  'USE_S3_STATIC_HOSTING' => '0',
+  'MULTI_TENANT' => '0',
+  'MULTI_TENANT_EXCLUDED_SUBDOMAINS' => '',
+  'TIMEZONE' => 'Asia/Tokyo',
+  'AWS_ACCESS_ID' => 'test-access-id',
+  'AWS_SECRET_KEY' => 'test-secret-key',
+  'REGION' => 'ap-northeast-1',
+  'BUCKET_NAME' => 'test-bucket',
+  'IMAGE_BUCKET_NAME' => 'test-image-bucket',
+  'CDN_BASE_URL' => '',
+  'SQS_URL' => 'https://sqs.ap-northeast-1.amazonaws.com/000000000000/test-queue',
+  'AZURE_CDN_BASE_URL' => '',
+  'AZURE_CONTAINER_NAME' => 'test-container',
+  'AZURE_IMAGE_CONTAINER_NAME' => 'test-image-container',
+  'AZURE_QUEUE_NAME' => 'test-queue',
+  'AZURE_STORAGE_ACCESS_KEY' => 'dGVzdA==',
+  'AZURE_STORAGE_ACCOUNT_NAME' => 'testaccount',
+  'FACEBOOK_APP_ID' => 'dummy',
+  'FACEBOOK_APP_SECRET' => 'dummy',
+  'TWITTER_CONSUMER_KEY' => 'dummy',
+  'TWITTER_CONSUMER_SECRET' => 'dummy',
+  'TWITTER_CALLBACK_URL' => 'http://test.host/users/auth/twitter/callback',
+  'IDP_CERT_FINGERPRINT' => '',
+  'IDP_SSO_TARGET_URL' => '',
+  'FROM_EMAIL' => 'test@example.com',
+  'SMTP_SERVER' => '',
+  'SMTP_PORT' => '',
+  'SMTP_AUTH_METHOD' => '',
+  'SMTP_USERNAME' => '',
+  'SMTP_PASSWORD' => '',
+  'ROOT_URL' => 'http://test.host',
+  'LOGIN_REQUIRED' => '0',
+}.each do |key, value|
+  ENV.delete("SLIDEHUB_#{key}")
+  ENV["OSS_#{key}"] = value
+end
 
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
@@ -74,6 +110,7 @@ RSpec.configure do |config|
   config.include ControllerMacros, type: :controller
 
   require 'support/cloud_helpers'
+  require 'support/cloud_isolation'
 
   # DatabaseCleaner
   require 'database_cleaner'

@@ -9,7 +9,6 @@ module Admin
       @result = []
       return redirect_to admin_logs_index_path, alert: t(:no_logs) unless @files.include?(@path)
 
-      require 'io'
       File.open(@path) do |io|
         io.tail(300).each do |line|
           @result.push SlideHub::LogUtil.escape_to_html(line)

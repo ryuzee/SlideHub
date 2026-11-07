@@ -1,16 +1,6 @@
 module SlideHub
   module Cloud
     module Queue
-      class Message
-        attr_accessor :id, :body, :handle
-
-        def initialize(id, body, handle)
-          @id = id
-          @body = body
-          @handle = handle
-        end
-      end
-
       class Response
         attr_reader :messages
 

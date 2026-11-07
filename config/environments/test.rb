@@ -23,6 +23,9 @@ Rails.application.configure do
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
+  # キャッシュは使わない。指定しないとファイル（tmp/cache）に残り、サイト設定の値などが
+  # データベースを巻き戻したあとも次のテストや次の実行に持ち越される
+  config.cache_store = :null_store
 
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
