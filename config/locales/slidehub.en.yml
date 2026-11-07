@@ -133,6 +133,7 @@ en:
   no_transcript: "This slide has no text."
   comment_placeholder: "Write a comment"
   post_comment: "Post"
+  comment_not_posted: "Your comment was not posted."
   slides_count: "%{count} slides"
   sort_order: "Sort order"
   no_my_slides: "You haven't uploaded any slides yet."

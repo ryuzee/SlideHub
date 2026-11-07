@@ -133,6 +133,7 @@ ja:
   no_transcript: "このスライドにはテキストがありません。"
   comment_placeholder: "コメントを書く"
   post_comment: "投稿する"
+  comment_not_posted: "コメントを投稿できませんでした。"
   slides_count: "スライド %{count} 件"
   sort_order: "並び順"
   no_my_slides: "まだスライドを投稿していません。"

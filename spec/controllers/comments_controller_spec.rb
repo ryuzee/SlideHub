@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: comments
-#
-#  id               :integer          not null, primary key
-#  user_id          :integer          not null
-#  slide_id   :integer          not null
-#  comment          :text(65535)      not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime
-#
-
 require 'rails_helper'
 
 RSpec.describe CommentsController, type: :controller do
@@ -27,10 +15,27 @@ RSpec.describe CommentsController, type: :controller do
         comment_data[:comment] = 'Test'
         post :create, params: { comment: comment_data }
         expect(response.status).to eq(302)
-        expect(response).to redirect_to "/slides/#{data.id}"
+        expect(response).to redirect_to "/slides/#{data.id}#comments-heading"
         slide = Slide.find(data.id)
         expect(slide.comments.count).to be == 1
         expect(slide.comments[0].comment).to eq(comment_data[:comment])
+        expect(slide.comments[0].user_id).to eq(another_user.id)
+      end
+
+      it 'tells why the comment was not posted' do
+        login_by_user another_user
+        post :create, params: { comment: { slide_id: data.id, comment: '' } }
+        expect(response).to redirect_to "/slides/#{data.id}#comments-heading"
+        expect(flash[:alert]).to include(I18n.t(:comment_not_posted))
+        expect(Slide.find(data.id).comments.count).to eq(0)
+      end
+
+      it 'does not add a comment to a slide that does not exist' do
+        login_by_user another_user
+        expect do
+          post :create, params: { comment: { slide_id: 0, comment: 'Test' } }
+        end.to raise_error(ActiveRecord::RecordNotFound)
+        expect(Comment.count).to eq(0)
       end
     end
 

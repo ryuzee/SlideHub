@@ -1,28 +1,15 @@
-# == Schema Information
-#
-# Table name: comments
-#
-#  id               :integer          not null, primary key
-#  user_id          :integer          not null
-#  commentable_id   :integer          not null
-#  comment          :text(65535)      not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime
-#  commentable_type :string(255)      default("Slide")
-#  role             :string(255)      default("comments")
-#
-
 class CommentsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
 
+  # 投稿先のスライドが無ければ 404。保存できなかったときは、理由を添えてスライドの画面に戻す
   def create
-    comment = params.require(:comment).permit(:comment, :user_id, :slide_id)
-    @comment = Comment.new(comment)
-    @comment.user_id = current_user.id
-    unless @comment.save
-      # @TODO: show error message...
+    slide = Slide.find(params.require(:comment)[:slide_id])
+    comment = slide.comments.new(params.require(:comment).permit(:comment))
+    comment.user = current_user
+    unless comment.save
+      flash[:alert] = ERB::Util.html_escape(comment.errors.full_messages.unshift(t(:comment_not_posted)).join(' '))
     end
-    redirect_to slide_path(params[:comment][:slide_id])
+    redirect_to slide_path(slide.id, anchor: 'comments-heading')
   end
 
   def destroy
