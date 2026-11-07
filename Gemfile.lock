@@ -628,7 +628,6 @@ GEM
       lint_roller (~> 1.1)
       regexp_parser (>= 2.0)
       rubocop (~> 1.86, >= 1.86.2)
-    ruby-filemagic (0.7.3)
     ruby-progressbar (1.13.0)
     ruby-saml (1.18.1)
       nokogiri (>= 1.13.10)
@@ -807,7 +806,6 @@ DEPENDENCIES
   rubocop
   rubocop-rails
   rubocop-rspec
-  ruby-filemagic
   sdoc
   selenium-webdriver
   shoulda-matchers

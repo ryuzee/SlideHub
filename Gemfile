@@ -56,8 +56,6 @@ gem 'addressable', require: 'addressable/uri'
 gem 'azure-storage-blob'
 gem 'azure-storage-queue'
 gem 'mime-types'
-# Find file type
-gem 'ruby-filemagic'
 # Handle images
 gem 'rmagick'
 # retrieve page count of pdf

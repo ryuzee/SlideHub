@@ -90,18 +90,9 @@ module SlideHub
       "#{dir}/transcript.txt"
     end
 
+    # 拡張子のないファイルの中身を見て、変換できる形式（pdf・ppt・pptx）かを返す。変換できなければ false
     def get_slide_file_type(file)
-      ext = FileMagic.new(FileMagic::MAGIC_MIME).file(file).split(';').first
-      case ext
-      when 'application/pdf'
-        'pdf'
-      when 'application/vnd.ms-powerpoint'
-        'ppt'
-      when 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-        'pptx'
-      else
-        false
-      end
+      SlideFileType.detect(file)
     end
 
     def get_local_file_list(dir, extension)
