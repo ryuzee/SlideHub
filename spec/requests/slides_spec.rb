@@ -33,6 +33,14 @@ describe 'Slides' do
     end
   end
 
+  describe 'any page' do
+    it 'does not delete sessions while showing a page' do
+      expect(ActiveRecord::SessionStore::Session).not_to receive(:where)
+      get '/slides'
+      expect(response.status).to eq(200)
+    end
+  end
+
   describe 'GET /slides/1' do
     it 'shows the slide with its first page' do
       slide = create(:slide, name: 'Sushi Talk', num_of_pages: 2)

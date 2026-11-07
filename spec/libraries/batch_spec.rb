@@ -40,6 +40,12 @@ RSpec.describe SlideHub::Batch do
       allow(SlideHub::BatchLogger).to receive_messages(info: nil, error: nil)
     end
 
+    it 'deletes old sessions on every run, even when the queue is empty' do
+      allow(provider).to receive(:receive_message).and_return(SlideHub::Cloud::Queue::Response.new)
+      expect(SlideHub::SessionCleanup).to receive(:run).with(SlideHub::BatchLogger)
+      described_class.execute
+    end
+
     it 'does nothing when the queue is empty' do
       allow(provider).to receive(:receive_message).and_return(SlideHub::Cloud::Queue::Response.new)
       expect(described_class).not_to receive(:process)

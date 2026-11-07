@@ -8,6 +8,7 @@ module SlideHub
       logger = SlideHub::BatchLogger
 
       logger.info('Start convert process')
+      SessionCleanup.run(logger)
       resp = CloudConfig.provider.receive_message(5)
       unless resp.exist?
         logger.info('No Queue message found')
