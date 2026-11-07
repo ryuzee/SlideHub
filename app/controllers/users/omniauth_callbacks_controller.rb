@@ -4,7 +4,8 @@ module Users
     skip_before_action :verify_authenticity_token, only: :saml
 
     def facebook
-      @user = UserFinder.find_for_facebook_oauth(request.env['omniauth.auth'])
+      @user = UserFinder.find_for_facebook_oauth(request.env['omniauth.auth'], create: signup_allowed?)
+      return redirect_unregistered_account if @user.nil?
 
       if @user.persisted?
         set_flash_message(:notice, :success, kind: 'Facebook') if is_navigational_format?
@@ -16,7 +17,8 @@ module Users
     end
 
     def twitter
-      @user = UserFinder.find_for_twitter_oauth(request.env['omniauth.auth'])
+      @user = UserFinder.find_for_twitter_oauth(request.env['omniauth.auth'], create: signup_allowed?)
+      return redirect_unregistered_account if @user.nil?
 
       if @user.persisted?
         set_flash_message(:notice, :success, kind: 'Twitter') if is_navigational_format?
@@ -38,5 +40,17 @@ module Users
         redirect_to new_user_registration_url
       end
     end
+
+    private
+
+      # サインアップが無効なときは、まだ登録していない人のアカウントを作らない。
+      # SAML は会社などの認証基盤からのサインインなので、これまでどおり初回にアカウントを作る
+      def signup_allowed?
+        ApplicationSetting['site.signup_enabled'] == '1'
+      end
+
+      def redirect_unregistered_account
+        redirect_to new_user_session_path, alert: t(:account_not_registered)
+      end
   end
 end

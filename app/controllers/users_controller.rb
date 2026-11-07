@@ -57,7 +57,8 @@ class UsersController < ApplicationController
   def embedded
     @slides = user_slide_with_paginate(params[:id], per_page: 5)
 
-    @prefix = if params.key?(:prefix) && !params[:prefix].empty?
+    # 埋め込み先の要素の id に使う。英数字・ハイフン・下線だけを受け付ける
+    @prefix = if params[:prefix].to_s.match?(/\A[0-9A-Za-z_-]{1,64}\z/)
                 params[:prefix]
               else
                 view_context.js_prefix

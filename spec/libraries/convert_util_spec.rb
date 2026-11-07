@@ -16,4 +16,34 @@ RSpec.describe SlideHub::ConvertUtil do
       expect(described_class.page_number_width(1000)).to eq(4)
     end
   end
+
+  describe 'running commands' do
+    let(:logger) { instance_double(Logger, info: nil, error: nil) }
+    let(:util) { described_class.new(logger) }
+    let(:ok) { instance_double(Process::Status, success?: true) }
+
+    it 'passes the command and its arguments separately, without a shell' do
+      expect(Open3).to receive(:capture3).
+        with('mutool', 'draw', '-o', 'slide-%01d.jpg', '-r', '120', 'work.pdf', chdir: '/tmp/x').
+        and_return(['', '', ok])
+      allow(util).to receive(:pdf_page_count).and_return(5)
+      allow(util).to receive(:get_local_file_list).and_return(['/tmp/x/slide-1.jpg'])
+      expect(util.pdf_to_jpg('/tmp/x', 'work')).to eq(['/tmp/x/slide-1.jpg'])
+    end
+
+    it 'reads the page count from the output of mutool info' do
+      allow(Open3).to receive(:capture3).and_return(["PDF-1.7\nPages: 48\nRetrieving info from pages 1-48...\n", '', ok])
+      expect(util.pdf_page_count('/tmp/x', 'work')).to eq(48)
+    end
+
+    it 'renames the file even when its name has characters a shell would treat specially' do
+      Dir.mktmpdir do |dir|
+        name = 'a; touch hacked'
+        File.write(File.join(dir, name), 'x')
+        expect(util.rename_to_pdf(dir, name)).to be(true)
+        expect(File.exist?(File.join(dir, "#{name}.pdf"))).to be(true)
+        expect(File.exist?(File.join(dir, 'hacked'))).to be(false)
+      end
+    end
+  end
 end

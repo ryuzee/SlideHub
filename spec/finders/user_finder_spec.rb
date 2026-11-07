@@ -48,6 +48,10 @@ describe 'UserFinder' do
       expect(omniauth_user.id).to eq(nil)
       expect(omniauth_user.username).to eq('test')
     end
+
+    it 'does not create a user and returns nil when creating is not allowed' do
+      expect { expect(UserFinder.find_for_twitter_oauth(auth_hash, create: false)).to be_nil }.not_to change(User, :count)
+    end
   end
 
   describe 'omniauth_with_Facebook' do

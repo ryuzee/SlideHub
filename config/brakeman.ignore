@@ -1,124 +1,14 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Cross Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "03f2b6bb883d391b2b9689653430aa16e502e5971d9cc25b2684b8c35b530039",
-      "message": "Unescaped model attribute",
-      "file": "app/views/layouts/application.html.erb",
-      "line": 104,
-      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "CustomSetting[\"custom_content.center_top\"]",
-      "render_path": [{"type":"controller","class":"Admin::CustomContentsController","method":"index","line":6,"file":"app/controllers/admin/custom_contents_controller.rb"}],
-      "location": {
-        "type": "template",
-        "template": "layouts/application"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Cross Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "2bc46edb6591729b400142046266177a0c3056bfbbe762f9fbd3786bee586960",
-      "message": "Unescaped model attribute",
-      "file": "app/views/layouts/admin.html.erb",
-      "line": 45,
-      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "CustomSetting[\"site.name\"]",
-      "render_path": [{"type":"controller","class":"Admin::BaseController","method":"admin_user!","line":12,"file":"app/controllers/admin/base_controller.rb"}],
-      "location": {
-        "type": "template",
-        "template": "layouts/admin"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "2d3916e5a5ae937c79f599c12e038e20019086c2b6e6cc2a246e7f69810b4a32",
-      "message": "Possible command injection",
-      "file": "lib/slide_hub/convert_util.rb",
-      "line": 23,
-      "link": "http://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "system(\"cd #{dir} && mogrify -format jpg slide*.ppm\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "SlideHub::ConvertUtil",
-        "method": "ppm_to_jpg"
-      },
-      "user_input": "dir",
-      "confidence": "Medium",
-      "note": "This command is intentional and does not use any parameters coming from outside."
-    },
-    {
-      "warning_type": "Cross Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "8e0ea0607ccbcbaae939211700d60695b69557da11c6f624143770763ea1450d",
-      "message": "Unescaped model attribute",
-      "file": "app/views/slides/show.html.erb",
-      "line": 155,
-      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "CustomSetting[\"custom_content.right_top\"]",
-      "render_path": [{"type":"controller","class":"SlidesController","method":"show","line":46,"file":"app/controllers/slides_controller.rb"}],
-      "location": {
-        "type": "template",
-        "template": "slides/show"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "b08e9166f0ff45719a03ecd0f0263e9b3b0f97249b5f1f752ff2c23571b4d3af",
-      "message": "Possible command injection",
-      "file": "lib/slide_hub/convert_util.rb",
-      "line": 5,
-      "link": "http://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "system(\"cd #{dir} && mv #{file} #{file}.pdf\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "SlideHub::ConvertUtil",
-        "method": "rename_to_pdf"
-      },
-      "user_input": "dir",
-      "confidence": "Medium",
-      "note": "This command is intentional and does not use any parameters coming from outside."
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "eb28c8a260c4b02f85575023ef24ad57e2fce8cc993b81e16a958a4dcc887e12",
-      "message": "Possible command injection",
-      "file": "lib/slide_hub/convert_util.rb",
-      "line": 11,
-      "link": "http://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "system(\"cd #{dir} && pdftoppm #{file} slide\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "SlideHub::ConvertUtil",
-        "method": "pdf_to_ppm"
-      },
-      "user_input": "dir",
-      "confidence": "Medium",
-      "note": "This command is intentional and does not use any parameters coming from outside."
-    },
-    {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
       "fingerprint": "f069d4ee1a00f3bdddbe81fc071801207bea9d65517bb02275bccf81f3a3f1f6",
-      "message": "Parameters should be whitelisted for mass assignment",
+      "check_name": "MassAssignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/controllers/admin/slides_controller.rb",
-      "line": 22,
-      "link": "http://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "line": 21,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.permit!",
       "render_path": null,
       "location": {
@@ -128,65 +18,258 @@
       },
       "user_input": null,
       "confidence": "High",
-      "note": ""
+      "cwe_id": [
+        915
+      ],
+      "note": "管理者だけが使う画面"
     },
     {
-      "warning_type": "Cross Site Scripting",
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "25190b245f218beb001e59a55136f8a16331af450d5b7fa83eb6151bccfa6e00",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/admin/users_controller.rb",
+      "line": 40,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:user).permit(:username, :display_name, :email, :biography, :admin)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::UsersController",
+        "method": "user_params"
+      },
+      "user_input": ":admin",
+      "confidence": "High",
+      "cwe_id": [
+        915
+      ],
+      "note": "管理者だけが使う画面で、ほかのユーザーを管理者にするための項目"
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "f693de9d5c33ce60573edb4ceb85ea75bebfac93ce0ee29907fa3e5fde0683cb",
+      "fingerprint": "b4aa8031e3d04bec7d226148132890baec77440f4d6b4f4df4abcc6fb7d2d67b",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/layouts/admin.html.erb",
+      "line": 118,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "ApplicationSetting[\"site.footer\"]",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::BaseController",
+          "method": "admin?",
+          "line": 11,
+          "file": "app/controllers/admin/base_controller.rb",
+          "rendered": {
+            "name": "layouts/admin",
+            "file": "app/views/layouts/admin.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "layouts/admin"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        79
+      ],
+      "note": "フッターは管理者がリンクなどの HTML を書ける設定"
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "706ad1e07b4e7a8c6e3e5cc42e933f45f5b587c7786c1f4141779296c19cdd72",
+      "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/layouts/application.html.erb",
-      "line": 108,
-      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "CustomSetting[\"custom_content.center_bottom\"]",
-      "render_path": [{"type":"controller","class":"Admin::CustomContentsController","method":"index","line":6,"file":"app/controllers/admin/custom_contents_controller.rb"}],
+      "line": 144,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "ApplicationSetting[\"site.footer\"]",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::CategoriesController",
+          "method": "edit",
+          "line": 11,
+          "file": "app/controllers/admin/categories_controller.rb",
+          "rendered": {
+            "name": "layouts/application",
+            "file": "app/views/layouts/application.html.erb"
+          }
+        }
+      ],
       "location": {
         "type": "template",
         "template": "layouts/application"
       },
       "user_input": null,
       "confidence": "Medium",
-      "note": ""
+      "cwe_id": [
+        79
+      ],
+      "note": "フッターは管理者がリンクなどの HTML を書ける設定"
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "71658f661cb1923a8fb26f45e68eb6cb53f0727520db2cf16396b8b7d737a0ca",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/pages/show.html.erb",
+      "line": 6,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Page.find_by!(:path => params[:path]).content",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "PagesController",
+          "method": "show",
+          "line": 4,
+          "file": "app/controllers/pages_controller.rb",
+          "rendered": {
+            "name": "pages/show",
+            "file": "app/views/pages/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "pages/show"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        79
+      ],
+      "note": "固定ページの本文は管理者が HTML を書く機能"
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "f7d546ac0187f61df4b054a03944469bf737e9d55945ec9afeb78d826eb219d5",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/shared/_custom_content_center_bottom.erb",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "ApplicationSetting[\"custom_content.center_bottom\"]",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "layouts/application",
+          "line": 135,
+          "file": "app/views/layouts/application.html.erb",
+          "rendered": {
+            "name": "shared/_custom_content_center_bottom",
+            "file": "app/views/shared/_custom_content_center_bottom.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "shared/_custom_content_center_bottom"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        79
+      ],
+      "note": "カスタムコンテンツは管理者が HTML を書いて表示する機能"
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "1e4ecfacb697eba77ec5707b8eec83f973687d87ff093eff2c0db1948cf7a4d3",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/shared/_custom_content_center_top.erb",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "ApplicationSetting[\"custom_content.center_top\"]",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "layouts/application",
+          "line": 121,
+          "file": "app/views/layouts/application.html.erb",
+          "rendered": {
+            "name": "shared/_custom_content_center_top",
+            "file": "app/views/shared/_custom_content_center_top.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "shared/_custom_content_center_top"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        79
+      ],
+      "note": "カスタムコンテンツは管理者が HTML を書いて表示する機能"
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "11012dbb4266a2d4996dce57cb6d1c490677633b69d4a0e5f3939fed646aa8e8",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/shared/_custom_content_right_top.erb",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "ApplicationSetting[\"custom_content.right_top\"]",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "slides/show",
+          "line": 95,
+          "file": "app/views/slides/show.html.erb",
+          "rendered": {
+            "name": "shared/_custom_content_right_top",
+            "file": "app/views/shared/_custom_content_right_top.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "shared/_custom_content_right_top"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        79
+      ],
+      "note": "カスタムコンテンツは管理者が HTML を書いて表示する機能"
     },
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
-      "fingerprint": "f7c312b4ed096841bb037474ffebe67dd37ae4604af7e8389bea9e3f8e6cb4d4",
+      "fingerprint": "75bde6e1d70d1c05625ded01dd0fa6a608dbf570fdb0d207ad512513fa152a68",
+      "check_name": "Execute",
       "message": "Possible command injection",
       "file": "lib/slide_hub/convert_util.rb",
-      "line": 55,
-      "link": "http://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "system(\"cd #{dir} && pdftotext #{file} -f #{(i + 1)} -l #{(i + 1)} - > #{dir}/#{(i + 1)}.txt\")",
+      "line": 50,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "Open3.capture3(\"mutool\", \"info\", \"#{file}.pdf\", :chdir => dir)",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "SlideHub::ConvertUtil",
-        "method": "pdf_to_transcript"
+        "method": "pdf_page_count"
       },
-      "user_input": "dir",
+      "user_input": "file",
       "confidence": "Medium",
-      "note": "This command is intentional and does not use any parameters coming from outside."
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "fdb3b3d23a419a8a403b9706709a6a9b06026138f12e0a9d7ad90c39dfdd9bab",
-      "message": "Possible command injection",
-      "file": "lib/slide_hub/convert_util.rb",
-      "line": 17,
-      "link": "http://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "system(\"cd #{dir} && unoconv -f pdf -o #{file}.pdf #{file}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "SlideHub::ConvertUtil",
-        "method": "ppt_to_pdf"
-      },
-      "user_input": "dir",
-      "confidence": "Medium",
-      "note": "This command is intentional and does not use any parameters coming from outside."
+      "cwe_id": [
+        77
+      ],
+      "note": "シェルを通さずに引数を分けて実行している。file はこちらで作ったランダムな文字列"
     }
   ],
-  "updated": "2017-04-01 11:14:17 +0900",
-  "brakeman_version": "3.4.0"
+  "brakeman_version": "7.0.2"
 }

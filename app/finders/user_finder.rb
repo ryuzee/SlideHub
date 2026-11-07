@@ -3,8 +3,11 @@ class UserFinder
     User.find_by(username: username).id
   end
 
-  def self.find_for_facebook_oauth(auth)
+  # create: false のときは、まだ登録していない人のアカウントを作らず nil を返す
+  def self.find_for_facebook_oauth(auth, create: true)
     user = User.find_by(provider: auth.provider, uid: auth.uid)
+    return nil unless user || create
+
     user ||= User.create(username: auth.extra.raw_info.username,
                          display_name: auth.extra.raw_info.name,
                          biography: '',
@@ -17,8 +20,10 @@ class UserFinder
     user
   end
 
-  def self.find_for_twitter_oauth(auth)
+  def self.find_for_twitter_oauth(auth, create: true)
     user = User.find_by(provider: auth.provider, uid: auth.uid)
+    return nil unless user || create
+
     user ||= User.create(username: auth.info.nickname,
                          display_name: auth.info.name,
                          biography: auth.info.description,

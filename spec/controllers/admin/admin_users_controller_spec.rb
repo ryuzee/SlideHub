@@ -58,6 +58,28 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
     end
 
+    describe 'POST /admin/users/update (roles and ids)' do
+      it 'can make another user an administrator' do
+        target = create(:default_user)
+        post :update, params: { id: target.id, user: { display_name: target.display_name, admin: '1' } }
+        expect(User.find(target.id).admin).to be(true)
+        expect(flash[:notice]).to eq(I18n.t(:user_was_updated))
+      end
+
+      it 'keeps the administrator role of the user who is signed in' do
+        post :update, params: { id: admin_user.id, user: { display_name: admin_user.display_name, admin: '0' } }
+        expect(User.find(admin_user.id).admin).to be(true)
+        expect(flash[:notice]).to eq(I18n.t(:cannot_remove_own_admin))
+      end
+
+      it 'ignores the id sent from the form' do
+        target = create(:default_user)
+        post :update, params: { id: target.id, user: { id: target.id + 1000, display_name: 'Renamed' } }
+        expect(User.find(target.id).display_name).to eq('Renamed')
+        expect(User.exists?(target.id + 1000)).to be(false)
+      end
+    end
+
     describe 'DELETE /admin/users' do
       it 'works' do
         target = create(:default_user)

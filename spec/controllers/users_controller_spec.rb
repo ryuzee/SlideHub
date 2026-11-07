@@ -68,9 +68,28 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'GET /users/1/embedded' do
+      render_views
+
       it 'returns javascript for embedding' do
         get 'embedded', params: { id: default_user.id }
         expect(response.status).to eq(200)
+      end
+
+      it 'embeds the HTML as a plain string, so slide names are never run as code' do
+        create(:slide, user: default_user, name: '${window.hacked = 1}`</script>')
+        get 'embedded', params: { id: default_user.id }
+        body = response.body
+        expect(body).not_to include('innerHTML = `')
+        expect(body).not_to include('</script>')
+        html = JSON.parse(body[/elm\.innerHTML = (".*");/, 1])
+        expect(html).to include('${window.hacked = 1}')
+      end
+
+      it 'uses the given prefix only when it is a simple id' do
+        get 'embedded', params: { id: default_user.id, prefix: 'my-widget_1' }
+        expect(response.body).to include('getElementById("slidehub-my-widget_1")')
+        get 'embedded', params: { id: default_user.id, prefix: '");alert(1);("' }
+        expect(response.body).to match(/getElementById\("slidehub-js[0-9a-f]{32}"\)/)
       end
 
       it 'shows only published slides, 5 per page' do

@@ -32,11 +32,12 @@ class ApplicationController < ActionController::Base
       @uploadable = false if user_signed_in? && !current_user.admin && ApplicationSetting['site.only_admin_can_upload'] == '1'
     end
 
+    # サインアップが無効なときは、登録の画面表示と送信をどちらも 404 にする（HTTP メソッドに関係なく）
     def signup_enabled?
-      return unless request.get?
-      if request.path == '/users/sign_up' && ApplicationSetting['site.signup_enabled'] != '1'
-        raise ActionController::RoutingError, 'Not Found'
-      end
+      return if ApplicationSetting['site.signup_enabled'] == '1'
+      return unless controller_name == 'registrations' && %w[new create].include?(action_name)
+
+      raise ActionController::RoutingError, 'Not Found'
     end
 
     # TODO: move to specific controller??

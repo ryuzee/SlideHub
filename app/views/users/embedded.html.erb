@@ -1,6 +1,7 @@
 (function() {
-    var elm = document.getElementById("slidehub-<%= @prefix %>");
-    elm.innerHTML = `<%= raw @body.gsub!(/\n/, '').gsub!(/ {2,}/,' ') %>`;
+    var elm = document.getElementById(<%= raw "slidehub-#{@prefix}".to_json %>);
+    // HTML は JSON の文字列として埋め込む（<、>、& なども \u 形式になる）
+    elm.innerHTML = <%= raw @body.gsub(/\n/, '').gsub(/ {2,}/, ' ').to_json %>;
     // 埋め込み先のページでは application.js が無いので、ここでサムネイルの差し替えを行う
     // data-fallback-src に空白区切りで並べた候補を前から順に試す（image_fallback.js と同じ動き）
     elm.addEventListener("error", function(e) {
