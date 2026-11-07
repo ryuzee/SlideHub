@@ -164,7 +164,6 @@ GEM
     cgi (0.5.2)
     childprocess (5.1.0)
       logger (~> 1.5)
-    choice (0.2.0)
     code_analyzer (0.5.5)
       sexp_processor
     coderay (1.1.3)
@@ -506,10 +505,6 @@ GEM
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
-    rails-erd (2.2.0)
-      activerecord (>= 7.0)
-      activesupport (>= 7.0)
-      choice (~> 0.2.0)
     rails-flog (1.6.1)
       amazing_print
       anbt-sql-formatter (>= 0.0.7)
@@ -793,7 +788,6 @@ DEPENDENCIES
   rack-dev-mark
   rails (= 8.1.4.1)
   rails-controller-testing
-  rails-erd
   rails-flog
   rails_best_practices
   ransack

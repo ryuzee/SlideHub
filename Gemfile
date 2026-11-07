@@ -119,8 +119,6 @@ group :development do
   gem 'rack-dev-mark'
   # Rails Best Practice
   gem 'rails_best_practices'
-  # Generate ER
-  gem 'rails-erd'
   # Finding code smell
   gem 'reek'
   # Static Analysis
