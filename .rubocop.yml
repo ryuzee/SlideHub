@@ -10,6 +10,8 @@ AllCops:
     - "db/schema.rb"
     - "Vagrantfile"
     - "bin/*"
+    # Rails 7.1 で本体から消えた Azure 用の Active Storage サービスを写したもの。元のコードと見比べやすいよう手を入れない
+    - "lib/active_storage/service/azure_storage_service.rb"
   DisplayCopNames: true
 
 # Rails用
@@ -381,6 +383,8 @@ Metrics/BlockLength:
     - "lib/tasks/**/*.rb"
     - "lib/tasks/**/*.rake"
     - "spec/**/*.rb"
+    # XML の入れ子をそのまま書く Builder テンプレートは、外側のブロックが長くなる
+    - "app/views/**/*.builder"
     - "Gemfile"
 
 # 6 は強すぎるので緩める
@@ -388,6 +392,12 @@ Metrics/CyclomaticComplexity:
   Max: 10
 
 # 20 行超えるのは migration ファイル以外滅多に無い
+# クラウドのエンジンは、キュー・ストレージ・アップロード用の署名をまとめた窓口なので長くなる
+Metrics/ClassLength:
+  Exclude:
+    - "lib/slide_hub/cloud/engine/aws.rb"
+    - "lib/slide_hub/cloud/engine/azure.rb"
+
 Metrics/MethodLength:
   Max: 20
   Exclude:

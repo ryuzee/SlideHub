@@ -243,43 +243,13 @@ module SlideHub
           date_ymd = base_time.gmtime.strftime('%Y%m%d')
           date_gm = base_time.gmtime.strftime('%Y%m%dT%H%M%SZ')
           acl = 'public-read'
-          exp = base_time + (60 * 120)
-          expires = exp.gmtime.strftime('%Y-%m-%dT%H:%M:%SZ')
+          credential = "#{access_id}/#{date_ymd}/#{region}/s3/aws4_request"
 
-          #---------------------------------------------
           # 1. Create a policy using UTF-8 encoding.
-          # This includes custom meta data named "x-amz-meta-title" for example
-          #---------------------------------------------
-          p_array = {
-            'expiration' => expires,
-            'conditions' => [
-              { 'bucket' => bucket_name },
-              ['starts-with', '$key', ''],
-              { 'acl' => acl },
-              { 'success_action_status' => '201' },
-              ['starts-with', '$Content-Type', 'application/octetstream'],
-              { 'x-amz-meta-uuid' => '14365123651274' },
-              ['starts-with', '$x-amz-meta-tag', ''],
-              { 'x-amz-credential' => "#{access_id}/#{date_ymd}/#{region}/s3/aws4_request" },
-              { 'x-amz-algorithm' => 'AWS4-HMAC-SHA256' },
-              { 'x-amz-date' => date_gm },
-            ],
-          }
-
-          if security_token.present?
-            p_array['conditions'].push({ 'x-amz-security-token' => security_token })
-          end
-
-          policy = JSON.generate(p_array)
-
-          #---------------------------------------------
+          policy = JSON.generate(self.upload_policy_document(base_time, bucket_name, acl, credential, date_gm, security_token))
           # 2. Convert the UTF-8-encoded policy to Base64. The result is the string to sign.
-          #---------------------------------------------
           base64_policy = Base64.strict_encode64(policy)
-
-          #---------------------------------------------
-          # 3. Create the signature as an HMAC-SHA256 hash of the string to sign. You will provide the signing key as key to the hash function.
-          #---------------------------------------------
+          # 3. Create the signature as an HMAC-SHA256 hash of the string to sign.
           # https://github.com/aws/aws-sdk-php/blob/00c4d18d666d2da44814daca48deb33e20cc4d3c/src/Aws/Common/Signature/SignatureV4.php
           signinkey = self.get_signing_key(date_ymd, region, 's3', secret_key)
           signature = OpenSSL::HMAC.hexdigest('sha256', signinkey, base64_policy)
@@ -294,6 +264,28 @@ module SlideHub
             'signature' => signature,
             'success_action_status' => '201',
           }
+        end
+
+        # ブラウザから S3 へ直接アップロードするときのポリシー（2 時間有効）。
+        # This includes custom meta data named "x-amz-meta-title" for example
+        # :reek:LongParameterList
+        def self.upload_policy_document(base_time, bucket_name, acl, credential, date_gm, security_token)
+          conditions = [
+            { 'bucket' => bucket_name },
+            ['starts-with', '$key', ''],
+            { 'acl' => acl },
+            { 'success_action_status' => '201' },
+            ['starts-with', '$Content-Type', 'application/octetstream'],
+            { 'x-amz-meta-uuid' => '14365123651274' },
+            ['starts-with', '$x-amz-meta-tag', ''],
+            { 'x-amz-credential' => credential },
+            { 'x-amz-algorithm' => 'AWS4-HMAC-SHA256' },
+            { 'x-amz-date' => date_gm },
+          ]
+          conditions.push({ 'x-amz-security-token' => security_token }) if security_token.present?
+
+          expires = (base_time + (60 * 120)).gmtime.strftime('%Y-%m-%dT%H:%M:%SZ')
+          { 'expiration' => expires, 'conditions' => conditions }
         end
 
         # get several key for AWS API.

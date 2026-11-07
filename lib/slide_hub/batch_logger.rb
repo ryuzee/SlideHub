@@ -26,12 +26,13 @@ module SlideHub
 
           # ログの複数出力を管理するロガーを作成
           multi_logger = ActiveSupport::TaggedLogging.new(file_logger)
-          multi_logger.extend(Module.new {
+          both_outputs = Module.new do
             define_method(:add) do |severity, message = nil, progname = nil, &block|
               file_logger.add(severity, message, progname, &block)
               stdout_logger.add(severity, message, progname, &block)
             end
-          })
+          end
+          multi_logger.extend(both_outputs)
 
           multi_logger
         end

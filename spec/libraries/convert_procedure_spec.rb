@@ -51,6 +51,16 @@ RSpec.describe SlideHub::ConvertProcedure do
     build(object_key: slide.object_key, previous_object_key: other.object_key).run
   end
 
+  it 'marks the slide as a conversion error when the file is neither PDF nor PowerPoint' do
+    slide = create(:slide)
+    procedure = described_class.new(object_key: slide.object_key, logger: logger)
+    allow(procedure).to receive(:save_file) { procedure.instance_variable_set(:@file_type, 'txt') }
+    expect(procedure).not_to receive(:upload_files)
+    expect(logger).to receive(:error).with(/Unsupported file type/)
+    expect(procedure.run).to be(true)
+    expect(Slide.find(slide.id)).to be_convert_error
+  end
+
   it 'still succeeds when deleting the old files fails' do
     slide = create(:slide)
     allow(provider).to receive(:delete_slide).and_raise(StandardError, 'boom')

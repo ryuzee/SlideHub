@@ -23,6 +23,7 @@ module SlideHub
       @slide_image_list = []
       @upload_file_list = []
       @convert_util = SlideHub::ConvertUtil.new(logger)
+      @key_cleanup = SlideHub::SlideKeyCleanup.new(logger: logger)
     end
 
     def run
@@ -30,8 +31,8 @@ module SlideHub
         @work_dir = dir
         logger.info("Current directory is #{work_dir}")
         return false unless save_file
+        return give_up_unsupported_file unless convert_to_jpg
 
-        convert_to_jpg
         generate_json
         convert_to_thumbnail
         convert_to_transcript
@@ -45,7 +46,7 @@ module SlideHub
 
     private
 
-      attr_reader :logger, :work_dir, :object_key, :output_key, :previous_object_key, :work_file, :convert_util
+      attr_reader :logger, :work_dir, :object_key, :output_key, :previous_object_key, :work_file, :convert_util, :key_cleanup
 
       def save_file
         return false unless CloudConfig.provider.save_file(CloudConfig.provider.config.bucket_name, object_key, "#{work_dir}/#{work_file}")
@@ -63,7 +64,7 @@ module SlideHub
           logger.info('Start converting from PPT to PDF')
           convert_util.ppt_to_pdf(work_dir, work_file)
         else
-          false
+          return false
         end
         logger.info('Start converting from PDF to JPG')
         @slide_image_list = convert_util.pdf_to_jpg(work_dir, work_file.to_s)
@@ -76,9 +77,7 @@ module SlideHub
         logger.info('Generating thumbnails')
         logger.info(@slide_image_list.inspect)
         thumbnail_list = convert_util.jpg_to_thumbnail(@slide_image_list)
-        thumbnail_list.each do |tm|
-          @upload_file_list.push(tm)
-        end if thumbnail_list.instance_of?(Array)
+        @upload_file_list.concat(thumbnail_list) if thumbnail_list.instance_of?(Array)
       end
 
       def convert_to_transcript
@@ -87,13 +86,8 @@ module SlideHub
       end
 
       def generate_json
-        save_list = []
-        @slide_image_list.each do |item|
-          save_list.push("#{output_key}/#{File.basename(item)}")
-        end
-        File.open("#{work_dir}/list.json", 'w') do |io|
-          JSON.dump(save_list, io)
-        end
+        save_list = @slide_image_list.map { |item| "#{output_key}/#{File.basename(item)}" }
+        File.write("#{work_dir}/list.json", JSON.dump(save_list))
         @upload_file_list.push("#{work_dir}/list.json")
       end
 
@@ -102,58 +96,38 @@ module SlideHub
         CloudConfig.provider.upload_files(CloudConfig.provider.config.image_bucket_name, @upload_file_list, output_key)
       end
 
-      # 再変換では、元のファイルも新しいキーにコピーする（ダウンロードや次の再変換で使う）
+      # 再変換では、元のファイルも新しいキーにコピーする
       def copy_original_file
-        return if output_key == object_key
-
-        logger.info("Copy the original file from #{object_key} to #{output_key}")
-        CloudConfig.provider.copy_slide(object_key, output_key)
+        key_cleanup.copy_original(object_key, output_key) if output_key != object_key
       end
 
-      # もう使っていない古いキーのファイル（元のファイルと変換結果）を消す。
-      # どのスライドからも参照されていないことを確かめてから消す
       def delete_old_files
-        old_keys = [previous_object_key, (object_key if output_key != object_key)].compact.uniq - [output_key]
-        old_keys.each do |key|
-          if key_in_use?(key)
-            logger.info("Keep the files of #{key} because a slide still uses it")
-            next
-          end
-
-          logger.info("Delete the old files of #{key}")
-          CloudConfig.provider.delete_slide(key)
-          CloudConfig.provider.delete_generated_files(key)
-        end
-      rescue StandardError => e
-        # 消せなくても変換は済んでいるので、失敗扱いにはしない（メッセージを繰り返さない）
-        logger.error("Failed to delete the old files: #{e.message}")
-      end
-
-      def key_in_use?(key)
-        return true if Slide.key_exist?(key)
-        return false unless SlideHub::EnvUtil.fetch('MULTI_TENANT', false)
-
-        in_use = Tenant.pluck(:name).any? do |tenant|
-          Apartment::Tenant.switch(tenant) { Slide.key_exist?(key) }
-        end
-        Apartment::Tenant.reset
-        in_use
+        key_cleanup.delete_unused([previous_object_key, (object_key if output_key != object_key)].compact.uniq - [output_key])
       end
 
       def update_database
-        # If multi-tenanted, update all database which includes specified object_key
+        in_each_database do
+          Slide.update_after_convert(object_key, @file_type, @slide_image_list.count, new_object_key: output_key)
+        end
+      end
+
+      # PDF でも PowerPoint でもないファイルは変換できない。スライドを変換エラーにして終える
+      # （true を返してキューのメッセージを消し、同じ失敗を繰り返さない）
+      def give_up_unsupported_file
+        logger.error("Unsupported file type: #{@file_type.inspect} object_key=#{object_key}")
+        in_each_database { Slide.find_by(object_key: object_key)&.convert_error! }
+        true
+      end
+
+      # マルチテナントのときは、各テナントのデータベースでも同じ処理をする
+      def in_each_database(&)
         if SlideHub::EnvUtil.fetch('MULTI_TENANT', false)
-          tenants = Tenant.pluck(:name)
-          tenants.each do |tenant|
-            Apartment::Tenant.switch(tenant) do
-              logger.info("tenant is #{tenant}")
-              Slide.update_after_convert(object_key, @file_type, @slide_image_list.count, new_object_key: output_key)
-            end
+          Tenant.pluck(:name).each do |tenant|
+            Apartment::Tenant.switch(tenant, &)
           end
           Apartment::Tenant.reset
         end
-        # Update main database
-        Slide.update_after_convert(object_key, @file_type, @slide_image_list.count, new_object_key: output_key)
+        yield
       end
   end
 end

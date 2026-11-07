@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   def index
     user_id = current_user.id
     @user = User.find(user_id)
-    @slides = user_slide_with_paginate(user_id, true)
+    @slides = user_slide_with_paginate(user_id, include_private_and_non_published: true)
     @tags = Slide.
             owner(user_id).
             tag_counts_on(:tags).order('count DESC')
@@ -49,13 +49,13 @@ class UsersController < ApplicationController
             owner(user_id).
             tag_counts_on(:tags).order('count DESC')
     respond_to do |format|
-      format.html {}
-      format.rss {}
+      format.html
+      format.rss
     end
   end
 
   def embedded
-    @slides = user_slide_with_paginate(params[:id], 5)
+    @slides = user_slide_with_paginate(params[:id], per_page: 5)
 
     @prefix = if params.key?(:prefix) && !params[:prefix].empty?
                 params[:prefix]
@@ -69,7 +69,8 @@ class UsersController < ApplicationController
 
   private
 
-    def user_slide_with_paginate(user_id, include_private_and_non_published = false, slides_per_page = 30)
+    # 真偽値や件数を位置で渡すと取り違えるので、キーワード引数にする
+    def user_slide_with_paginate(user_id, include_private_and_non_published: false, per_page: 30)
       slides = if params[:sort_by] == 'popularity'
                  Slide.popular
                else
@@ -80,7 +81,7 @@ class UsersController < ApplicationController
       end
       slides.owner(user_id).
         includes(:user).
-        paginate(page: params[:page], per_page: slides_per_page)
+        paginate(page: params[:page], per_page: per_page)
     end
 
     def username_to_id

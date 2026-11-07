@@ -72,6 +72,17 @@ RSpec.describe UsersController, type: :controller do
         get 'embedded', params: { id: default_user.id }
         expect(response.status).to eq(200)
       end
+
+      it 'shows only published slides, 5 per page' do
+        create_list(:slide, 6, user: default_user)
+        create(:slide, user: default_user, private: true)
+        create(:slide, user: default_user, convert_status: Slide.convert_statuses[:unconverted])
+        get 'embedded', params: { id: default_user.id }
+        slides = assigns(:slides)
+        expect(slides.size).to eq(5)
+        expect(slides.map(&:private)).to all(be(false))
+        expect(slides.map(&:convert_status)).to all(eq('converted'))
+      end
     end
 
     describe 'GET /users/index' do
