@@ -51,7 +51,7 @@ RSpec.describe SlideHub::ConvertProcedure do
     build(object_key: slide.object_key, previous_object_key: other.object_key).run
   end
 
-  it 'marks the slide as a conversion error when the file is neither PDF nor PowerPoint' do
+  it 'marks the slide as a conversion error when the file is not a PDF' do
     slide = create(:slide)
     procedure = described_class.new(object_key: slide.object_key, logger: logger)
     allow(procedure).to receive(:save_file) { procedure.instance_variable_set(:@file_type, 'txt') }

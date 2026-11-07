@@ -20,38 +20,10 @@ RSpec.describe SlideHub::ConvertUtil do
     expect(util.get_slide_file_type(Rails.root.join('spec/fixtures/dummy.txt').to_s)).to be(false)
   end
 
-  describe 'PowerPoint files without the extension' do
-    # OLE（PowerPoint 97-2003 や Word 97-2003 の入れ物）の先頭の印
-    let(:ole_header) { ['D0CF11E0A1B11AE1'].pack('H*') }
-
-    def write_work(bytes)
-      File.binwrite(File.join(@dir, 'office'), bytes)
-      File.join(@dir, 'office')
-    end
-
-    def stream_name(name)
-      name.encode('UTF-16LE').b
-    end
-
-    it 'recognizes a PowerPoint 2007 or later file' do
-      FileUtils.cp(Rails.root.join('spec/fixtures/files/one_page.pptx'), File.join(@dir, 'office'))
-      expect(util.get_slide_file_type(File.join(@dir, 'office'))).to eq('pptx')
-    end
-
-    it 'recognizes a PowerPoint 97-2003 file by the name of its contents' do
-      file = write_work(ole_header + ("\0".b * 600) + stream_name('PowerPoint Document'))
-      expect(util.get_slide_file_type(file)).to eq('ppt')
-    end
-
-    it 'finds the name even when it lies across the boundary of the reading' do
-      file = write_work(ole_header + ("\0".b * ((1024 * 1024) - 8 - 10)) + stream_name('PowerPoint Document'))
-      expect(util.get_slide_file_type(file)).to eq('ppt')
-    end
-
-    it 'rejects a Word 97-2003 file, which uses the same container' do
-      file = write_work(ole_header + ("\0".b * 600) + stream_name('WordDocument'))
-      expect(util.get_slide_file_type(file)).to be(false)
-    end
+  # PowerPoint は受け付けない（3.0.10 でやめた）
+  it 'rejects a PowerPoint file' do
+    FileUtils.cp(Rails.root.join('spec/fixtures/files/one_page.pptx'), File.join(@dir, 'office'))
+    expect(util.get_slide_file_type(File.join(@dir, 'office'))).to be(false)
   end
 
   it 'makes one image per page with the same numbering as SlidePages' do

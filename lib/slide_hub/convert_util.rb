@@ -23,10 +23,6 @@ module SlideHub
       exec_command('pdftoppm', file, 'slide', chdir: dir)
     end
 
-    def ppt_to_pdf(dir, file)
-      exec_command('unoconv', '-f', 'pdf', '-o', "#{file}.pdf", file, chdir: dir)
-    end
-
     def pdf_to_jpg(dir, file)
       # 歴史的経緯で、過去のツールでは0埋め連番だったのを再現する
       width = self.class.page_number_width(pdf_page_count(dir, file))
@@ -90,7 +86,7 @@ module SlideHub
       "#{dir}/transcript.txt"
     end
 
-    # 拡張子のないファイルの中身を見て、変換できる形式（pdf・ppt・pptx）かを返す。変換できなければ false
+    # 拡張子のないファイルの中身を見て、変換できる形式（pdf）かを返す。変換できなければ false
     def get_slide_file_type(file)
       SlideFileType.detect(file)
     end

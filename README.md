@@ -16,7 +16,7 @@ You can see other screenshot [here](docs/images/capture2.png).
 
 ## Features
 
-- Uploading slides (pptx, pdf)
+- Uploading slides (pdf)
 - Listing slides by category, user and so on
 - Showing slide without Flash Player
 - Showing slide vertically

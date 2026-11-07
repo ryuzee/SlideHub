@@ -56,16 +56,10 @@ module SlideHub
       end
 
       def convert_to_jpg
-        case @file_type
-        when 'pdf'
-          logger.info('Rename to PDF')
-          convert_util.rename_to_pdf(work_dir, work_file)
-        when 'ppt', 'pptx'
-          logger.info('Start converting from PPT to PDF')
-          convert_util.ppt_to_pdf(work_dir, work_file)
-        else
-          return false
-        end
+        return false unless @file_type == 'pdf'
+
+        logger.info('Rename to PDF')
+        convert_util.rename_to_pdf(work_dir, work_file)
         logger.info('Start converting from PDF to JPG')
         @slide_image_list = convert_util.pdf_to_jpg(work_dir, work_file.to_s)
         logger.info(convert_util.get_local_file_list(work_dir, '').inspect)
@@ -111,7 +105,7 @@ module SlideHub
         end
       end
 
-      # PDF でも PowerPoint でもないファイルは変換できない。スライドを変換エラーにして終える
+      # PDF ではないファイルは変換できない。スライドを変換エラーにして終える
       # （true を返してキューのメッセージを消し、同じ失敗を繰り返さない）
       def give_up_unsupported_file
         logger.error("Unsupported file type: #{@file_type.inspect} object_key=#{object_key}")
