@@ -45,7 +45,7 @@
 
     <nav class="navbar navbar-expand-lg sticky-top site-header <%= header_class %>">
       <div class="container">
-        <a class="navbar-brand" href="<%= slides_path %>"><%= ApplicationSetting['site.name'] %></a>
+        <a class="navbar-brand" href="<%= root_path %>"><%= ApplicationSetting['site.name'] %></a>
 
         <div class="d-flex align-items-center gap-1 order-lg-last">
           <% if user_signed_in? %>

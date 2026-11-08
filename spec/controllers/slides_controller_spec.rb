@@ -106,7 +106,7 @@ RSpec.describe SlidesController, type: :controller do
       login_by_user default_user
       expect(CloudConfig.provider).not_to receive(:send_message)
       expect { post :create, params: { slide: data.attributes } }.not_to change(Slide, :count)
-      expect(response).to redirect_to slides_path
+      expect(response).to redirect_to root_path
     end
   end
 
@@ -220,7 +220,7 @@ RSpec.describe SlidesController, type: :controller do
       login_by_user default_user
       delete :destroy, params: { id: data.id }
       expect(response.status).to eq(302)
-      expect(response).to redirect_to '/slides'
+      expect(response).to redirect_to '/'
       expect(Slide.exists?(data.id)).to eq(false)
     end
   end

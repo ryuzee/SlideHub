@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'slides#index'
+
   # route to user
   get 'users/view/:id' => 'users#show'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations' }
@@ -9,14 +11,17 @@ Rails.application.routes.draw do
   get 'slides/latest' => 'latest#index'
   get 'slides/popular' => 'popular#index'
   get 'slides/view/:id' => 'slides#show'
-  get 'slides/index' => 'slides#index'
+  # トップページの URL は / にそろえる。前の URL（/slides と /slides/index）は、ページ番号などを付けたまま / へ移す
+  top_page = redirect(status: 301) { |_params, request| request.query_string.present? ? "/?#{request.query_string}" : '/' }
+  get 'slides' => top_page
+  get 'slides/index' => top_page
   get 'slides/download/:id' => 'slide_download#show'
   get 'slides/:id/download' => 'slide_download#show'
   get 'slides/embedded/:id' => 'player#show'
   get 'slides/embedded/:id/:page' => 'player#show'
   get 'slides/:id/embedded' => 'player#show'
   get 'slides/:id/embedded/:page' => 'player#show'
-  resources :slides
+  resources :slides, except: :index
   get 'slides/:id/:page' => 'slides#show'
 
   # route to player
@@ -92,9 +97,4 @@ Rails.application.routes.draw do
 
   get 'sitemap.xml', to: 'sitemap#index', format: 'xml', as: :sitemap
   get 'robots.txt', to: 'robots#index', format: false, as: :robots
-
-  # config/routes.rb
-  Rails.application.routes.draw do
-    root 'slides#index'
-  end
 end

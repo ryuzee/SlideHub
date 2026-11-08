@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe SlidesController do
   describe 'routing' do
-    it 'routes to #index' do
-      expect(get('/slides')).to route_to('slides#index')
+    it 'routes the top page to #index' do
+      expect(get('/')).to route_to('slides#index')
     end
 
     it 'routes to #new' do
@@ -31,10 +31,6 @@ describe SlidesController do
     end
 
     # backward compatibility
-    it 'routes to #index (BC)' do
-      expect(get('/slides/index')).to route_to('slides#index')
-    end
-
     it 'routes to #show (BC)' do
       expect(get('/slides/view/1')).to route_to('slides#show', id: '1')
     end

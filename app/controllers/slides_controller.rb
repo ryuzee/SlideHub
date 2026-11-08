@@ -35,7 +35,7 @@ class SlidesController < ApplicationController
   def destroy
     SlideFileService.new(@slide).delete_files
     @slide.destroy
-    redirect_to slides_path
+    redirect_to root_path
   end
 
   def create
@@ -84,10 +84,10 @@ class SlidesController < ApplicationController
     end
 
     def uploadable?
-      redirect_to slides_path, flash: { warning: t(:no_permission) } unless @uploadable
+      redirect_to root_path, flash: { warning: t(:no_permission) } unless @uploadable
     end
 
     def duplicate_key?
-      redirect_to slides_path if Slide.key_exist?(params[:slide][:object_key])
+      redirect_to root_path if Slide.key_exist?(params[:slide][:object_key])
     end
 end

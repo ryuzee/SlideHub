@@ -63,7 +63,6 @@ describe 'SEO' do
 
     it 'points the top and list pages to their main URLs' do
       expect(canonical_of('/')).to eq("#{host}/")
-      expect(canonical_of('/slides/index')).to eq("#{host}/")
       expect(canonical_of('/latest')).to eq("#{host}/latest")
       expect(canonical_of('/slides/latest')).to eq("#{host}/latest")
       expect(canonical_of('/popular?utm_source=x')).to eq("#{host}/popular")
