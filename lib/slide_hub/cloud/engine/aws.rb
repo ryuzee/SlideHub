@@ -173,6 +173,16 @@ module SlideHub
           false
         end
 
+        # ファイルが無いと確かめられたときだけ true。通信の失敗など、わからないときは false
+        def self.file_missing?(bucket, key)
+          ::Aws::S3::Client.new(region: @config.region).head_object(bucket: bucket, key: key)
+          false
+        rescue ::Aws::S3::Errors::NotFound, ::Aws::S3::Errors::NoSuchKey
+          true
+        rescue StandardError
+          false
+        end
+
         def self.delete_slide(key)
           if key.empty?
             return false

@@ -139,6 +139,16 @@ module SlideHub
           false
         end
 
+        # ファイルが無いと確かめられたときだけ true。通信の失敗など、わからないときは false
+        def self.file_missing?(container, key)
+          create_bs.get_blob_properties(container, key)
+          false
+        rescue ::Azure::Core::Http::HTTPError => e
+          e.status_code == 404
+        rescue StandardError
+          false
+        end
+
         def self.delete_slide(key)
           if key.empty?
             return false

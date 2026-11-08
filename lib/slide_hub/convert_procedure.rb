@@ -30,7 +30,7 @@ module SlideHub
       Dir.mktmpdir do |dir|
         @work_dir = dir
         logger.info("Current directory is #{work_dir}")
-        return false unless save_file
+        return (original_file_missing? ? give_up_missing_file : false) unless save_file
         return give_up_unsupported_file unless convert_to_jpg
 
         generate_json
@@ -110,6 +110,19 @@ module SlideHub
       def give_up_unsupported_file
         logger.error("Unsupported file type: #{@file_type.inspect} object_key=#{object_key}")
         in_each_database { Slide.find_by(object_key: object_key)&.convert_error! }
+        true
+      end
+
+      def original_file_missing?
+        CloudConfig.provider.file_missing?(CloudConfig.provider.config.bucket_name, object_key)
+      end
+
+      # 元のファイルが無いときは、やり直しても変換できない。
+      # true を返してキューのメッセージを消し、同じ失敗を繰り返さない。
+      # 変換済みのスライド（再変換の依頼など）は今の画像のまま残し、まだ変換していないものだけ変換エラーにする
+      def give_up_missing_file
+        logger.error("Original file not found. object_key=#{object_key}")
+        in_each_database { Slide.where(object_key: object_key).where.not(convert_status: :converted).find_each(&:convert_error!) }
         true
       end
 

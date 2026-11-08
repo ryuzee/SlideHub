@@ -241,6 +241,17 @@ describe 'SlideHub::Cloud::Engine::Aws' do
       expect(SlideHub::Cloud::Engine::Aws.get_slide_download_url('myblob')).to eq('https://signed.example.com')
     end
 
+    it 'tells that a file is missing only when S3 says it is not found' do
+      client = double('S3 client')
+      allow(Aws::S3::Client).to receive(:new).and_return(client)
+      allow(client).to receive(:head_object).with(bucket: 'bucket', key: 'gone').and_raise(Aws::S3::Errors::NotFound.new(nil, 'Not Found'))
+      allow(client).to receive(:head_object).with(bucket: 'bucket', key: 'here').and_return(double('head'))
+      allow(client).to receive(:head_object).with(bucket: 'bucket', key: 'unknown').and_raise(Seahorse::Client::NetworkingError.new(StandardError.new('timeout')))
+      expect(SlideHub::Cloud::Engine::Aws.file_missing?('bucket', 'gone')).to eq(true)
+      expect(SlideHub::Cloud::Engine::Aws.file_missing?('bucket', 'here')).to eq(false)
+      expect(SlideHub::Cloud::Engine::Aws.file_missing?('bucket', 'unknown')).to eq(false)
+    end
+
     it 'copies the original file to another key in the same bucket' do
       client = double('S3 client')
       allow(Aws::S3::Client).to receive(:new).and_return(client)

@@ -221,6 +221,20 @@ describe 'SlideHub::Cloud::Engine::Azure' do
       expect(SlideHub::Cloud::Engine::Azure.delete_generated_files('hoge')).to eq(true)
     end
 
+    it 'tells that a file is missing only when Blob Storage answers 404' do
+      service = double('Blob service')
+      allow(Azure::Storage::Blob::BlobService).to receive(:create).and_return(service)
+      error = lambda do |status|
+        Azure::Core::Http::HTTPError.allocate.tap { |e| e.instance_variable_set(:@status_code, status) }
+      end
+      allow(service).to receive(:get_blob_properties).with('container', 'gone').and_raise(error.call(404))
+      allow(service).to receive(:get_blob_properties).with('container', 'here').and_return(double('blob'))
+      allow(service).to receive(:get_blob_properties).with('container', 'busy').and_raise(error.call(503))
+      expect(SlideHub::Cloud::Engine::Azure.file_missing?('container', 'gone')).to eq(true)
+      expect(SlideHub::Cloud::Engine::Azure.file_missing?('container', 'here')).to eq(false)
+      expect(SlideHub::Cloud::Engine::Azure.file_missing?('container', 'busy')).to eq(false)
+    end
+
     it 'succeeds to generate SAS url' do
       expect(SlideHub::Cloud::Engine::Azure.generate_sas_url('myblob')).to eq('https://signed.example.com')
     end

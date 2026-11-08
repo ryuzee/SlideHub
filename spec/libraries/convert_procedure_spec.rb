@@ -61,6 +61,36 @@ RSpec.describe SlideHub::ConvertProcedure do
     expect(Slide.find(slide.id)).to be_convert_error
   end
 
+  describe 'when the original file cannot be downloaded' do
+    def procedure_for(slide, missing:, **keys)
+      procedure = described_class.new(object_key: slide.object_key, logger: logger, **keys)
+      allow(procedure).to receive(:save_file).and_return(false)
+      allow(provider).to receive(:file_missing?).with(provider.config.bucket_name, slide.object_key).and_return(missing)
+      expect(procedure).not_to receive(:upload_files)
+      procedure
+    end
+
+    it 'gives up and keeps a converted slide as it is when the file is gone' do
+      slide = create(:slide)
+      expect(logger).to receive(:error).with(/Original file not found/)
+      expect(procedure_for(slide, missing: true, new_object_key: 'newkey').run).to be(true)
+      expect(Slide.find(slide.id)).to be_converted
+      expect(Slide.find(slide.id).object_key).to eq(slide.object_key)
+    end
+
+    it 'gives up and marks a slide not converted yet as a conversion error when the file is gone' do
+      slide = create(:slide, convert_status: :unconverted)
+      expect(procedure_for(slide, missing: true).run).to be(true)
+      expect(Slide.find(slide.id)).to be_convert_error
+    end
+
+    it 'tries again later when it is not sure that the file is gone' do
+      slide = create(:slide, convert_status: :unconverted)
+      expect(procedure_for(slide, missing: false).run).to be(false)
+      expect(Slide.find(slide.id)).to be_unconverted
+    end
+  end
+
   it 'still succeeds when deleting the old files fails' do
     slide = create(:slide)
     allow(provider).to receive(:delete_slide).and_raise(StandardError, 'boom')
