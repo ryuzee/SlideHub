@@ -50,8 +50,13 @@ namespace :docker do
 
   task :push do
     Dir.chdir("#{File.dirname(__FILE__)}/../../") do
-      tags = ["ryuzee/slidehub:#{SlideHub::VERSION}"]
-      tags << 'ryuzee/slidehub:latest' if ENV.fetch('latest', 0).to_i == 1
+      version_tag = "ryuzee/slidehub:#{SlideHub::VERSION}"
+      tags = [version_tag]
+      if ENV.fetch('latest', 0).to_i == 1
+        # build を latest=1 なしで実行していても latest を上げられるよう、ここでバージョンのイメージに付ける
+        execute_command("docker tag #{version_tag} ryuzee/slidehub:latest")
+        tags << 'ryuzee/slidehub:latest'
+      end
 
       tags.each do |tag|
         cmd = "docker push #{tag}"
