@@ -6,9 +6,9 @@ If you use or like this project, please give it a star ★. Feedback is always w
 
 SlideHub is built with Ruby on Rails 8.1 and Ruby 3.4. It succeeds an earlier version of SlideHub that was built with CakePHP.
 
-![Screenshot](docs/images/capture1.png)
+![Top page of SlideHub](docs/images/capture1.png)
 
-See [another screenshot](docs/images/capture2.png).
+See also [a slide page](docs/images/capture2.png).
 
 ## Notice
 
