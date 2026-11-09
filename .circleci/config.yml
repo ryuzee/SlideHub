@@ -76,7 +76,7 @@ jobs:
       - run:
           name: Run specs
           command: |
-            mkdir -p /tmp/test-results/rspec /tmp/artifacts
+            mkdir -p /tmp/test-results/rspec
             bundle exec rspec --color --require spec_helper \
               --format RspecJunitFormatter --out /tmp/test-results/rspec/rspec.xml \
               --format progress spec
@@ -85,8 +85,9 @@ jobs:
           path: /tmp/test-results
       - store_artifacts:
           path: /tmp/test-results
+      # カバレッジの結果（SimpleCov の HTML）
       - store_artifacts:
-          path: /tmp/artifacts
+          path: coverage
 
 workflows:
   build:

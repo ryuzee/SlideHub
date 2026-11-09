@@ -6,12 +6,6 @@ require 'omniauth'
 # 本物のサービスには通信しない（必要な通信は stub_request で用意する）
 WebMock.disable_net_connect!(allow_localhost: true)
 
-# save to CircleCI's artifacts directory if we're on CircleCI
-if ENV['CIRCLE_ARTIFACTS']
-  dir = File.join(ENV.fetch('CIRCLE_ARTIFACTS', nil), 'coverage')
-  SimpleCov.coverage_dir(dir)
-end
-
 SimpleCov.start do
   skip '/vendor/'
   skip '/spec/'

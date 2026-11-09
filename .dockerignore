@@ -1,5 +1,4 @@
 .bundle
-.codeclimate.yml
 .circleci/*
 .dockerignore
 .env*
