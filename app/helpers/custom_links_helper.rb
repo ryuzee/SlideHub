@@ -4,7 +4,7 @@ module CustomLinksHelper
     result = ''
     source = ApplicationSetting['custom_content.header_menus']
     begin
-      json = JSON.parse(source, quirks_mode: true)
+      json = JSON.parse(source)
       json.each do |elm|
         active_class = ''
         if elm['url'].start_with?("#{root_url}pages/", '/pages/') && controller.controller_name == 'pages'
