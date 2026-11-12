@@ -256,6 +256,11 @@ ja:
   regenerate_thumbnails_unavailable: "キューの件数を取得できなかったため、進捗を表示できません"
   regenerate_thumbnails_minutes: "約 %{minutes} 分"
   regenerate_thumbnails_progress_note: "進捗はキューに残っている件数からの概算です。スライドの変換待ちも件数に含まれます。"
+  bulk_reconversion: "スライドを一括で再変換"
+  bulk_reconversion_description: "ページ画像とサムネイルが前の形式（JPEG）のままの変換済みスライドを、すべて再変換して WebP にします。画像が軽くなり、表示が速くなります。変換バッチが 1 件ずつ処理するので、終わるまで時間がかかります。再変換が終わるまでは、今の画像がそのまま表示されます。"
+  bulk_reconversion_remaining: "再変換が済んでいないスライド：%{count} 件"
+  bulk_reconversion_confirm: "%{count} 件のスライドを再変換します。よろしいですか？"
+  bulk_reconversion_requested: "%{count} 件のスライドの再変換をリクエストしました"
   site:
     display_login_link: "ログインリンクを表示する"
     only_admin_can_upload: "管理者のみアップロード可能にする"

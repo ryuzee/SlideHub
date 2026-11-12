@@ -23,6 +23,13 @@ RSpec.describe Admin::SiteSettingsController, type: :controller do
         expect(response.body).to include(I18n.t('site.thumbnail_aspect_ratio'))
         expect(response.body).to include(admin_thumbnail_regeneration_path)
       end
+
+      it 'shows how many slides are left to reconvert' do
+        create(:slide)
+        create(:slide, image_format: 'webp')
+        get 'index'
+        expect(response.body).to include(admin_bulk_reconversion_path, I18n.t(:bulk_reconversion_remaining, count: 1))
+      end
     end
 
     describe 'POST /admin/site_settings/update' do

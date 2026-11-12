@@ -70,6 +70,18 @@
   </div>
 </div>
 
+<div class="card card-secondary card-outline mt-4">
+  <div class="card-body">
+    <h3 class="h5 mb-2"><%= t(:bulk_reconversion) %></h3>
+    <p class="text-muted small mb-2"><%= t(:bulk_reconversion_description) %></p>
+    <%# 件数はスライドの表から数えるので正確。変換が終わったスライドは image_format が変わり、ここから減っていく %>
+    <p class="mb-3"><%= t(:bulk_reconversion_remaining, count: @reconversion_target_count) %></p>
+    <%= button_to t(:bulk_reconversion), admin_bulk_reconversion_path, method: :post,
+                  class: 'btn btn-outline-secondary', disabled: @reconversion_target_count.zero?,
+                  data: { confirm: t(:bulk_reconversion_confirm, count: @reconversion_target_count) } %>
+  </div>
+</div>
+
 <script type="text/javascript">
   (function() {
     var box = document.getElementById('thumbnail-regeneration-progress');

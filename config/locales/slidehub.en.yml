@@ -256,6 +256,11 @@ en:
   regenerate_thumbnails_unavailable: "Could not read the queue length, so progress is unavailable"
   regenerate_thumbnails_minutes: "%{minutes} min"
   regenerate_thumbnails_progress_note: "Progress is estimated from the number of messages left in the queue, which also includes slides waiting for conversion."
+  bulk_reconversion: "Reconvert all slides"
+  bulk_reconversion_description: "Reconverts every converted slide whose page images and thumbnails are still in the old format (JPEG), turning them into WebP. The images get smaller and load faster. The conversion batch processes the slides one by one, so it takes a while to finish. Each slide keeps showing its current images until its reconversion is done."
+  bulk_reconversion_remaining: "Slides not yet reconverted: %{count}"
+  bulk_reconversion_confirm: "Reconvert %{count} slides?"
+  bulk_reconversion_requested: "Requested reconversion for %{count} slides"
   site:
     display_login_link: "Display Login Link"
     only_admin_can_upload: "Only administrators can upload slides"

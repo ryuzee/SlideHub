@@ -83,20 +83,20 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "706ad1e07b4e7a8c6e3e5cc42e933f45f5b587c7786c1f4141779296c19cdd72",
+      "fingerprint": "be63f72adbac4673301ef02db7d63646c66a2fe68e592d3e555923393b160964",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/layouts/application.html.erb",
-      "line": 144,
+      "line": 150,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "ApplicationSetting[\"site.footer\"]",
       "render_path": [
         {
           "type": "controller",
-          "class": "Admin::CategoriesController",
-          "method": "edit",
-          "line": 11,
-          "file": "app/controllers/admin/categories_controller.rb",
+          "class": "Admin::BulkReconversionsController",
+          "method": "create",
+          "line": 6,
+          "file": "app/controllers/admin/bulk_reconversions_controller.rb",
           "rendered": {
             "name": "layouts/application",
             "file": "app/views/layouts/application.html.erb"
