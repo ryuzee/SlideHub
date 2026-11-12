@@ -24,11 +24,12 @@ RSpec.describe SlideHub::ConvertUtil do
 
     it 'passes the command and its arguments separately, without a shell' do
       expect(Open3).to receive(:capture3).
-        with('mutool', 'draw', '-o', 'slide-%01d.jpg', '-r', '120', 'work.pdf', chdir: '/tmp/x').
+        with('mutool', 'draw', '-o', 'slide-%01d.png', '-r', '120', 'work.pdf', chdir: '/tmp/x').
         and_return(['', '', ok])
       allow(util).to receive(:pdf_page_count).and_return(5)
-      allow(util).to receive(:get_local_file_list).and_return(['/tmp/x/slide-1.jpg'])
-      expect(util.pdf_to_jpg('/tmp/x', 'work')).to eq(['/tmp/x/slide-1.jpg'])
+      allow(util).to receive(:get_local_file_list).and_return(['/tmp/x/slide-1.png'])
+      allow_any_instance_of(SlideHub::Image).to receive(:page_image)
+      expect(util.pdf_to_images('/tmp/x', 'work')).to eq(['/tmp/x/slide-1.webp'])
     end
 
     it 'reads the page count from the output of mutool info' do

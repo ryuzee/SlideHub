@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_06_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_12_120000) do
   create_table "active_storage_attachments", charset: "utf8mb3", collation: "utf8_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -117,6 +117,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_120000) do
     t.integer "num_of_pages", default: 0
     t.integer "comments_count", default: 0, null: false
     t.boolean "private", default: false, null: false
+    t.string "image_format", limit: 10, default: "jpg", null: false
     t.index ["category_id"], name: "idx_slides_category_id_key"
     t.index ["object_key"], name: "index_slides_on_object_key", unique: true
     t.index ["page_view"], name: "idx_slides_page_view_key"

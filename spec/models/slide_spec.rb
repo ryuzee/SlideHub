@@ -88,6 +88,14 @@ describe 'Slide' do
       expect(saved.convert_status).to eq('converted')
       expect(saved.num_of_pages).to eq(12)
     end
+
+    it 'keeps the image format of a slide converted before, unless a new one is given' do
+      slide = FactoryBot.create(:slide)
+      Slide.update_after_convert(slide.object_key, 'pdf', 3)
+      expect(Slide.find(slide.id).image_format).to eq('jpg')
+      Slide.update_after_convert(slide.object_key, 'pdf', 3, image_format: 'webp')
+      expect(Slide.find(slide.id).image_format).to eq('webp')
+    end
   end
 
   describe 'Method "generate_object_key"' do

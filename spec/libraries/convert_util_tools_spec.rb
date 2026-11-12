@@ -29,9 +29,11 @@ RSpec.describe SlideHub::ConvertUtil do
   it 'makes one image per page with the same numbering as SlidePages' do
     expect(util.rename_to_pdf(@dir, 'work')).to be(true)
     expect(util.pdf_page_count(@dir, 'work')).to eq(2)
-    images = util.pdf_to_jpg(@dir, 'work')
-    expect(images.map { |path| File.basename(path) }).to eq(%w[slide-1.jpg slide-2.jpg])
-    expect(SlidePages.new('key', 2).list).to eq(%w[key/slide-1.jpg key/slide-2.jpg])
+    images = util.pdf_to_images(@dir, 'work')
+    expect(images.map { |path| File.basename(path) }).to eq(%w[slide-1.webp slide-2.webp])
+    expect(SlidePages.new('key', 2, 'webp').list).to eq(%w[key/slide-1.webp key/slide-2.webp])
+    # 名前だけでなく、中身も WebP にする（mutool は .jpg と付けても PNG で書き出していた）
+    expect(Magick::Image.ping(images.first).first.format).to eq('WEBP')
   end
 
   it 'extracts the text of each page' do
@@ -42,14 +44,13 @@ RSpec.describe SlideHub::ConvertUtil do
     expect(lines.map(&:strip)).to eq(['First page text', 'Second page text'])
   end
 
-  it 'makes the list thumbnails, the middle-sized image and a small image per page' do
+  it 'makes the list thumbnails and the middle-sized image in the same format as the pages' do
     util.rename_to_pdf(@dir, 'work')
-    images = util.pdf_to_jpg(@dir, 'work')
-    made = util.jpg_to_thumbnail(images).map { |path| File.basename(path) }
-    expect(made).to contain_exactly('thumbnail.jpg', 'thumbnail-16x9.jpg', 'thumbnail-middle.jpg',
-                                    'slide-1-small.jpg', 'slide-2-small.jpg')
-    size = ->(name) { Magick::Image.ping(File.join(@dir, name)).first.then { |img| [img.columns, img.rows] } }
-    expect(size.call('thumbnail.jpg')).to eq([320, 240])
-    expect(size.call('thumbnail-16x9.jpg')).to eq([480, 270])
+    images = util.pdf_to_images(@dir, 'work')
+    made = util.make_thumbnails(images).map { |path| File.basename(path) }
+    expect(made).to contain_exactly('thumbnail.webp', 'thumbnail-16x9.webp', 'thumbnail-middle.webp')
+    size = ->(name) { Magick::Image.ping(File.join(@dir, name)).first.then { |img| [img.columns, img.rows, img.format] } }
+    expect(size.call('thumbnail.webp')).to eq([320, 240, 'WEBP'])
+    expect(size.call('thumbnail-16x9.webp')).to eq([480, 270, 'WEBP'])
   end
 end

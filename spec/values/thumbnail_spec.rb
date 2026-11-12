@@ -11,6 +11,12 @@ describe 'Thumbnail' do
       thumbnail = Thumbnail.new('an-object-key')
       expect(thumbnail.url).to eq('https://my-image-bucket.s3-ap-northeast-1.amazonaws.com/an-object-key/thumbnail.jpg')
     end
+
+    it 'uses the image format of the slide' do
+      thumbnail = Thumbnail.new('k', 'webp')
+      expect([thumbnail.url, thumbnail.url_wide, thumbnail.url_middle].map { |url| File.basename(url) }).
+        to eq(%w[thumbnail.webp thumbnail-16x9.webp thumbnail-middle.webp])
+    end
   end
 end
 

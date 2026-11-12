@@ -7,7 +7,7 @@ RSpec.describe SlideHub::ConvertProcedure do
   # 変換そのもの（ダウンロード、画像化、アップロード）は止めて、キーの扱いと後片付けだけを確かめる
   def build(**keys)
     procedure = described_class.new(logger: logger, **keys)
-    %i[save_file convert_to_jpg generate_json convert_to_thumbnail convert_to_transcript upload_files].each do |step|
+    %i[save_file convert_to_images generate_json convert_to_thumbnail convert_to_transcript upload_files].each do |step|
       allow(procedure).to receive(step).and_return(true)
     end
     procedure
@@ -118,11 +118,13 @@ RSpec.describe SlideHub::ConvertProcedure do
       expect(described_class.new(object_key: slide.object_key, new_object_key: 'newkey', logger: logger).run).to be(true)
 
       expect(uploaded[:prefix]).to eq('newkey')
-      expect(uploaded[:names]).to include('slide-1.jpg', 'slide-2.jpg', 'slide-1-small.jpg', 'thumbnail.jpg',
-                                          'thumbnail-16x9.jpg', 'thumbnail-middle.jpg', 'transcript.txt', 'list.json')
-      expect(list_json).to eq(%w[newkey/slide-1.jpg newkey/slide-2.jpg])
+      expect(uploaded[:names]).to contain_exactly('slide-1.webp', 'slide-2.webp', 'thumbnail.webp', 'thumbnail-16x9.webp',
+                                                  'thumbnail-middle.webp', 'transcript.txt', 'list.json')
+      expect(list_json).to eq(%w[newkey/slide-1.webp newkey/slide-2.webp])
       saved = Slide.find(slide.id)
-      expect([saved.object_key, saved.convert_status, saved.num_of_pages, saved.extension]).to eq(['newkey', 'converted', 2, '.pdf'])
+      expect([saved.object_key, saved.convert_status, saved.num_of_pages, saved.extension, saved.image_format]).
+        to eq(['newkey', 'converted', 2, '.pdf', 'webp'])
+      expect(saved.pages.list).to eq(list_json)
     end
   end
 end

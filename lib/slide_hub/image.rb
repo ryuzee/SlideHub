@@ -3,19 +3,33 @@ require 'rmagick'
 
 module SlideHub
   class Image
-    # 一覧用サムネイルのファイル名と大きさ。サイト設定 site.thumbnail_aspect_ratio で表示する方を選ぶ
+    # 一覧用サムネイルのファイル名（拡張子なし）と大きさ。サイト設定 site.thumbnail_aspect_ratio で表示する方を選ぶ
     LIST_THUMBNAILS = {
-      'thumbnail.jpg' => { width: 320, height: 240 },
-      'thumbnail-16x9.jpg' => { width: 480, height: 270 },
+      'thumbnail' => { width: 320, height: 240 },
+      'thumbnail-16x9' => { width: 480, height: 270 },
     }.freeze
 
-    # 1ページ目の画像から一覧用サムネイル（4:3 と 16:9）を同じディレクトリに作り、作ったファイルのパスを返す
+    # ページ画像の横幅の上限。PDF のページが大きいと、120dpi で描いても横 3000 ピクセルを超えることがある
+    PAGE_MAX_WIDTH = 2560
+    # WebP と JPEG で保存するときの画質
+    QUALITY = 80
+
+    # 1ページ目の画像から一覧用サムネイル（4:3 と 16:9）を同じディレクトリに作り、作ったファイルのパスを返す。
+    # サムネイルの形式（拡張子）は1ページ目の画像と同じにする
     def list_thumbnails(first_page)
+      extension = File.extname(first_page)
       LIST_THUMBNAILS.map do |name, size|
-        save_to = "#{File.dirname(first_page)}/#{name}"
+        save_to = "#{File.dirname(first_page)}/#{name}#{extension}"
         thumbnail(first_page, save_to, **size)
         save_to
       end
+    end
+
+    # mutool で描いたページの画像を、配信する形式（dest の拡張子）で保存する。横幅が大きすぎるときは縮める
+    def page_image(src, dest)
+      image = Magick::Image.read(src).first
+      image.resize_to_fit!(PAGE_MAX_WIDTH, image.rows) if image.columns > PAGE_MAX_WIDTH
+      save(image, dest)
     end
 
     # 一覧用のサムネイル。既定は 4:3 (320x240)。16:9 用は width: 480, height: 270 で作る
@@ -26,7 +40,7 @@ module SlideHub
                   else
                     shrink_to_fill(thumb, width, height)
                   end
-      thumb_out.write(dest)
+      save(thumb_out, dest)
     end
 
     # Create Middle Sized Image
@@ -39,10 +53,14 @@ module SlideHub
                   else
                     shrink_to_fill(thumb, thumb.columns, thumb.rows)
                   end
-      thumb_out.write(dest)
+      save(thumb_out, dest)
     end
 
     private
+
+      def save(image, dest)
+        image.write(dest) { |options| options.quality = QUALITY }
+      end
 
       def shrink_to_fill(image, width, height)
         image.resize_to_fill!(width, height)

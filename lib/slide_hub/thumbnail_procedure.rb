@@ -36,11 +36,14 @@ module SlideHub
         CloudConfig.provider
       end
 
-      # ページ画像は slide-1.jpg / slide-01.jpg のように桁数がスライドごとに違うので、
-      # 一覧から slide-<数字>.jpg を探して番号が最小のものを1ページ目とする
+      # ページ画像は slide-1.jpg / slide-01.webp のように、桁数と形式がスライドごとに違うので、
+      # 一覧から slide-<数字>.jpg か .webp を探して番号が最小のものを1ページ目とする。
+      # サムネイルは1ページ目と同じ形式で作る
+      PAGE_IMAGE = %r{/slide-(\d+)\.(?:jpg|webp)\z}
+
       def first_page_key
         keys = provider.get_file_list(provider.config.image_bucket_name, "#{object_key}/slide-").map { |file| file[:key] }
-        keys.grep(%r{/slide-\d+\.jpg\z}).min_by { |key| key[/slide-(\d+)\.jpg\z/, 1].to_i }
+        keys.grep(PAGE_IMAGE).min_by { |key| key[PAGE_IMAGE, 1].to_i }
       end
   end
 end

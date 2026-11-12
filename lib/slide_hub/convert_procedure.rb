@@ -31,7 +31,7 @@ module SlideHub
         @work_dir = dir
         logger.info("Current directory is #{work_dir}")
         return (original_file_missing? ? give_up_missing_file : false) unless save_file
-        return give_up_unsupported_file unless convert_to_jpg
+        return give_up_unsupported_file unless convert_to_images
 
         generate_json
         convert_to_thumbnail
@@ -55,13 +55,13 @@ module SlideHub
         true
       end
 
-      def convert_to_jpg
+      def convert_to_images
         return false unless @file_type == 'pdf'
 
         logger.info('Rename to PDF')
         convert_util.rename_to_pdf(work_dir, work_file)
-        logger.info('Start converting from PDF to JPG')
-        @slide_image_list = convert_util.pdf_to_jpg(work_dir, work_file.to_s)
+        logger.info("Start converting from PDF to #{SlideHub::ConvertUtil::IMAGE_FORMAT}")
+        @slide_image_list = convert_util.pdf_to_images(work_dir, work_file.to_s)
         logger.info(convert_util.get_local_file_list(work_dir, '').inspect)
         @upload_file_list = @slide_image_list.dup
         true
@@ -70,7 +70,7 @@ module SlideHub
       def convert_to_thumbnail
         logger.info('Generating thumbnails')
         logger.info(@slide_image_list.inspect)
-        thumbnail_list = convert_util.jpg_to_thumbnail(@slide_image_list)
+        thumbnail_list = convert_util.make_thumbnails(@slide_image_list)
         @upload_file_list.concat(thumbnail_list) if thumbnail_list.instance_of?(Array)
       end
 
@@ -101,7 +101,8 @@ module SlideHub
 
       def update_database
         in_each_database do
-          Slide.update_after_convert(object_key, @file_type, @slide_image_list.count, new_object_key: output_key)
+          Slide.update_after_convert(object_key, @file_type, @slide_image_list.count,
+                                     new_object_key: output_key, image_format: SlideHub::ConvertUtil::IMAGE_FORMAT)
         end
       end
 

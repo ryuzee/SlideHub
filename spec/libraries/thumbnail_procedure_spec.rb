@@ -30,6 +30,22 @@ RSpec.describe SlideHub::ThumbnailProcedure do
     expect(uploaded).to eq('thumbnail.jpg' => [320, 240], 'thumbnail-16x9.jpg' => [480, 270])
   end
 
+  it 'makes WebP thumbnails for a slide whose pages are WebP' do
+    allow(provider).to receive(:get_file_list).and_return([{ key: 'abc/slide-2.webp' }, { key: 'abc/slide-1.webp' }])
+    allow(provider).to receive(:save_file) do |_bucket, key, destination|
+      expect(key).to eq('abc/slide-1.webp')
+      write_image(destination, 1280, 720)
+      true
+    end
+    uploaded = {}
+    allow(provider).to receive(:upload_files) do |_bucket, files, _prefix|
+      files.each { |file| uploaded[File.basename(file)] = Magick::Image.ping(file).first.format }
+    end
+
+    expect(described_class.new(object_key: 'abc', logger: logger).run).to be(true)
+    expect(uploaded).to eq('thumbnail.webp' => 'WEBP', 'thumbnail-16x9.webp' => 'WEBP')
+  end
+
   it 'fails when there is no page image' do
     allow(provider).to receive(:get_file_list).and_return([])
     expect(provider).not_to receive(:upload_files)

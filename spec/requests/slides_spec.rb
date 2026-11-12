@@ -47,5 +47,12 @@ describe 'Slides' do
       expect(response.body).to include('Sushi Talk')
       expect(response.body).to include("#{slide.object_key}/slide-1.jpg")
     end
+
+    it 'shows the WebP images of a slide converted as WebP' do
+      slide = create(:slide, num_of_pages: 2, image_format: 'webp')
+      get "/slides/#{slide.id}"
+      expect(response.body).to include("#{slide.object_key}/slide-1.webp", "#{slide.object_key}/thumbnail-middle.webp")
+      expect(response.body).not_to include("#{slide.object_key}/slide-1.jpg")
+    end
   end
 end

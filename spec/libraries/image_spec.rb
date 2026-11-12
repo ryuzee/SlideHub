@@ -52,4 +52,28 @@ RSpec.describe SlideHub::Image do
       expect(size_of(File.join(@dir, 'out.jpg'))).to eq([800, 600])
     end
   end
+
+  describe '#page_image' do
+    it 'saves a PNG page as a real WebP image' do
+      src = make_jpg('slide-1.png', 1600, 900)
+      dest = File.join(@dir, 'slide-1.webp')
+      image.page_image(src, dest)
+      expect(Magick::Image.ping(dest).first.format).to eq('WEBP')
+      expect(size_of(dest)).to eq([1600, 900])
+    end
+
+    it 'shrinks a page wider than 2560 pixels, keeping the aspect ratio' do
+      src = make_jpg('slide-1.png', 3200, 1800)
+      dest = File.join(@dir, 'slide-1.webp')
+      image.page_image(src, dest)
+      expect(size_of(dest)).to eq([2560, 1440])
+    end
+  end
+
+  describe '#list_thumbnails' do
+    it 'makes the thumbnails in the same format as the first page' do
+      made = image.list_thumbnails(make_jpg('slide-1.jpg', 1280, 720)).map { |path| File.basename(path) }
+      expect(made).to eq(%w[thumbnail.jpg thumbnail-16x9.jpg])
+    end
+  end
 end

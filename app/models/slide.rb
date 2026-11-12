@@ -91,13 +91,14 @@ class Slide < ApplicationRecord
   end
 
   # new_object_key を渡すと、変換後のファイルを置いた新しいキーに切り替える（再変換）
-  def self.update_after_convert(object_key, file_type, num_of_pages, new_object_key: nil)
+  def self.update_after_convert(object_key, file_type, num_of_pages, new_object_key: nil, image_format: nil)
     slide = Slide.find_by(object_key: object_key)
     if slide
       slide.convert_status = :converted
       slide.object_key = new_object_key if new_object_key.present?
       slide.extension = ".#{file_type}"
       slide.num_of_pages = num_of_pages
+      slide.image_format = image_format if image_format.present?
       slide.save
     else
       logger.info('There is no slide in this database...')
@@ -106,7 +107,7 @@ class Slide < ApplicationRecord
   end
 
   def pages
-    @pages ||= SlidePages.new(object_key, num_of_pages)
+    @pages ||= SlidePages.new(object_key, num_of_pages, image_format)
   end
 
   def transcript
@@ -114,6 +115,6 @@ class Slide < ApplicationRecord
   end
 
   def thumbnail
-    @thumbnail ||= Thumbnail.new(object_key)
+    @thumbnail ||= Thumbnail.new(object_key, image_format)
   end
 end

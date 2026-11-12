@@ -23,16 +23,25 @@ module SlideHub
       exec_command('pdftoppm', file, 'slide', chdir: dir)
     end
 
-    def pdf_to_jpg(dir, file)
+    # 配信するページ画像とサムネイルの形式（拡張子）
+    IMAGE_FORMAT = 'webp'.freeze
+
+    # PDF の各ページを画像（slide-1.webp など）にして、そのパスの一覧を返す。
+    # mutool は JPEG も WebP も書き出せないので、いったん PNG で描いてから変換する
+    def pdf_to_images(dir, file)
       # 歴史的経緯で、過去のツールでは0埋め連番だったのを再現する
       width = self.class.page_number_width(pdf_page_count(dir, file))
-      result = exec_command('mutool', 'draw', '-o', "slide-%0#{width}d.jpg", '-r', '120', "#{file}.pdf", chdir: dir)
-      if result
-        self.get_local_file_list(dir, '.jpg')
+      return false unless exec_command('mutool', 'draw', '-o', "slide-%0#{width}d.png", '-r', '120', "#{file}.pdf", chdir: dir)
 
-      else
-        false
+      image = SlideHub::Image.new
+      get_local_file_list(dir, '.png').map do |png|
+        dest = png.sub(/\.png\z/, ".#{IMAGE_FORMAT}")
+        image.page_image(png, dest)
+        dest
       end
+    rescue StandardError => e
+      logger.error(e.to_s)
+      false
     end
 
     # ページ番号の0埋めの桁数。表示側 (SlidePages#list) と同じく、ページ数の桁数にする。
@@ -50,20 +59,15 @@ module SlideHub
       0
     end
 
-    def jpg_to_thumbnail(list)
+    # 1ページ目の画像から、一覧用のサムネイル（4:3 と 16:9）と、共有用の中くらいの画像を作る。
+    # 形式（拡張子）はページ画像と同じにする
+    def make_thumbnails(list)
       slidehub_image = SlideHub::Image.new
       thumbnail_list = slidehub_image.list_thumbnails(list[0])
 
-      save_to = "#{File.dirname(list[0])}/thumbnail-middle.jpg"
+      save_to = "#{File.dirname(list[0])}/thumbnail-middle#{File.extname(list[0])}"
       slidehub_image.shrink(list[0], save_to)
       thumbnail_list.push(save_to)
-
-      list.each do |file|
-        save_to = "#{File.dirname(file)}/#{File.basename(file, '.jpg')}-small.jpg"
-        slidehub_image.thumbnail(file, save_to)
-        thumbnail_list.push(save_to)
-      end
-      thumbnail_list
     end
 
     def pdf_to_transcript(dir, file)

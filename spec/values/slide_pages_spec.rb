@@ -26,6 +26,10 @@ describe 'Slide' do
                   'a/slide-07.jpg', 'a/slide-08.jpg', 'a/slide-09.jpg', 'a/slide-10.jpg']
       expect(slide_pages.list).to eq(expected)
     end
+
+    it 'uses the image format of the slide' do
+      expect(SlidePages.new('a', 2, 'webp').list).to eq(['a/slide-1.webp', 'a/slide-2.webp'])
+    end
   end
 end
 
