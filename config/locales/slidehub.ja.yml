@@ -261,6 +261,9 @@ ja:
   bulk_reconversion_remaining: "再変換が済んでいないスライド：%{count} 件"
   bulk_reconversion_confirm: "%{count} 件のスライドを再変換します。よろしいですか？"
   bulk_reconversion_requested: "%{count} 件のスライドの再変換をリクエストしました"
+  bulk_reconversion_progress: "約 %{done} / %{count} 件完了（残り %{remaining} 件、推定残り %{time}）"
+  bulk_reconversion_finished: "%{count} 件の再変換が完了しました"
+  bulk_reconversion_progress_note: "進捗は、キューに残っている件数と、まだ WebP になっていないスライドの数からの概算です。元のファイルが無いスライドは変換できないので、上の件数に残ります。"
   site:
     display_login_link: "ログインリンクを表示する"
     only_admin_can_upload: "管理者のみアップロード可能にする"

@@ -261,6 +261,9 @@ en:
   bulk_reconversion_remaining: "Slides not yet reconverted: %{count}"
   bulk_reconversion_confirm: "Reconvert %{count} slides?"
   bulk_reconversion_requested: "Requested reconversion for %{count} slides"
+  bulk_reconversion_progress: "About %{done} / %{count} done (%{remaining} left, about %{time} remaining)"
+  bulk_reconversion_finished: "Reconverted %{count} slides"
+  bulk_reconversion_progress_note: "Progress is estimated from the messages left in the queue and the number of slides not yet in WebP. Slides whose original file is missing cannot be converted, so they stay in the count above."
   site:
     display_login_link: "Display Login Link"
     only_admin_can_upload: "Only administrators can upload slides"

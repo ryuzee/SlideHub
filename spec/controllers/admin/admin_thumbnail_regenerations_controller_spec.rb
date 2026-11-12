@@ -10,11 +10,13 @@ RSpec.describe Admin::ThumbnailRegenerationsController, type: :controller do
   after do
     ApplicationSetting[ThumbnailRegenerationProgress::REQUESTED_AT_KEY] = ''
     ApplicationSetting[ThumbnailRegenerationProgress::REQUESTED_COUNT_KEY] = '0'
+    ApplicationSetting[ThumbnailRegenerationProgress::FINISHED_AT_KEY] = ''
   end
 
   describe 'POST /admin/thumbnail_regeneration' do
     it 'queues regeneration, records the request and redirects to site settings' do
       allow(ThumbnailRegenerationService).to receive(:new).and_return(instance_double(ThumbnailRegenerationService, request_all: 3))
+      allow(CloudConfig.provider).to receive(:queue_length).and_return(0)
       post :create
       expect(response).to redirect_to '/admin/site_settings/'
       expect(flash[:notice]).to eq(I18n.t(:regenerate_thumbnails_requested, count: 3))
@@ -24,7 +26,7 @@ RSpec.describe Admin::ThumbnailRegenerationsController, type: :controller do
 
   describe 'GET /admin/thumbnail_regeneration.json' do
     it 'returns the estimated progress from the queue length' do
-      ThumbnailRegenerationProgress.record(10)
+      ThumbnailRegenerationProgress.record(10, now: 10.minutes.ago)
       allow(CloudConfig.provider).to receive(:queue_length).and_return(4)
       get :show, format: :json
       body = JSON.parse(response.body)

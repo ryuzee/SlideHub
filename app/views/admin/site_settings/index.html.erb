@@ -55,7 +55,7 @@
                   class: 'btn btn-outline-secondary', data: { confirm: t(:regenerate_thumbnails_confirm) } %>
 
     <%# 進捗はキューの残り件数からの概算。一括再生成を一度でも実行していれば表示する %>
-    <div id="thumbnail-regeneration-progress" class="mt-3 d-none"
+    <div id="thumbnail-regeneration-progress" class="js-bulk-progress mt-3 d-none"
          data-url="<%= admin_thumbnail_regeneration_path(format: :json) %>"
          data-text-progress="<%= t(:regenerate_thumbnails_progress) %>"
          data-text-finished="<%= t(:regenerate_thumbnails_finished) %>"
@@ -79,13 +79,26 @@
     <%= button_to t(:bulk_reconversion), admin_bulk_reconversion_path, method: :post,
                   class: 'btn btn-outline-secondary', disabled: @reconversion_target_count.zero?,
                   data: { confirm: t(:bulk_reconversion_confirm, count: @reconversion_target_count) } %>
+
+    <%# 進捗はキューの残り件数と、まだ WebP になっていないスライドの数からの概算 %>
+    <div id="bulk-reconversion-progress" class="js-bulk-progress mt-3 d-none"
+         data-url="<%= admin_bulk_reconversion_path(format: :json) %>"
+         data-text-progress="<%= t(:bulk_reconversion_progress) %>"
+         data-text-finished="<%= t(:bulk_reconversion_finished) %>"
+         data-text-unavailable="<%= t(:regenerate_thumbnails_unavailable) %>"
+         data-text-minutes="<%= t(:regenerate_thumbnails_minutes) %>">
+      <div class="progress mb-2" style="height: 1.25rem;">
+        <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <p class="small mb-0 js-progress-text"></p>
+      <p class="small text-muted mb-0"><%= t(:bulk_reconversion_progress_note) %></p>
+    </div>
   </div>
 </div>
 
 <script type="text/javascript">
-  (function() {
-    var box = document.getElementById('thumbnail-regeneration-progress');
-    if (!box) return;
+  // 一括処理（サムネイル再生成と再変換）の進捗を、それぞれの枠に数秒おきに表示する
+  document.querySelectorAll('.js-bulk-progress').forEach(function(box) {
     var bar = box.querySelector('.progress-bar');
     var text = box.querySelector('.js-progress-text');
 
@@ -125,6 +138,6 @@
     }
 
     poll();
-  })();
+  });
 </script>
 </section>
