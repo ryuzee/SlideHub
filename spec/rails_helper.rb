@@ -113,6 +113,7 @@ RSpec.configure do |config|
   require 'support/cloud_helpers'
   require 'support/cloud_isolation'
   require 'support/browser'
+  require 'support/chrome_reset'
 
   # DatabaseCleaner
   require 'database_cleaner'
