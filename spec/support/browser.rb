@@ -23,6 +23,16 @@ module BrowserTest
     @remote_available = false
   end
 
+  # テストで開くアプリの origin。後片付けで localStorage を消すのに使う（chrome_reset.rb）。
+  # 後片付けの前に Capybara.app_host が戻されることがあるので、ここに覚えておく
+  def self.app_origin
+    @app_origin || Capybara.current_session.server&.base_url
+  end
+
+  def self.app_origin=(origin)
+    @app_origin = origin
+  end
+
   def self.chrome_arguments
     %w[--headless=new --no-sandbox --disable-dev-shm-usage --window-size=1280,900]
   end
@@ -44,6 +54,7 @@ RSpec.configure do |config|
       Capybara.server_host = '0.0.0.0'
       Capybara.server_port = BrowserTest::SERVER_PORT
       Capybara.app_host = "http://#{Socket.gethostname}:#{BrowserTest::SERVER_PORT}"
+      BrowserTest.app_origin = Capybara.app_host
       driven_by :selenium, using: :headless_chrome, screen_size: [1280, 900],
                            options: { browser: :remote, url: BrowserTest.remote_url }
     else
