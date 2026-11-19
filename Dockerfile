@@ -9,7 +9,7 @@
 # - development : build に、開発用の gem と mailcatcher を足す（docker-compose.yml で使う）
 #
 # スライドの変換に使うのは mutool（PDF→JPEG）と pdftotext（ページの文字）と ImageMagick（サムネイル）
-ARG RUBY_VERSION=3.4.12
+ARG RUBY_VERSION=3.4.13
 ARG NODE_VERSION=24
 
 FROM node:${NODE_VERSION}-trixie-slim AS node
